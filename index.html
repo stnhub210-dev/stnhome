@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>미디어서포터즈 양성 프로젝트</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: #141414;
+      --lime: #7CFC00;
+      --text: #ffffff;
+      --muted: #bfbfbf;
+      --line: #2a2a2a;
+      --gold: #d4af37;
+      --max: 1160px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(92%, var(--max));
+      margin: 0 auto;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(10, 10, 10, 0.78);
+      border-bottom: 1px solid rgba(124, 252, 0, 0.25);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-inner {
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      color: var(--lime);
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      font-size: 0.92rem;
+      color: #dddddd;
+    }
+
+    .nav-links a:hover {
+      color: var(--lime);
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 96px 0 52px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(38px);
+      transition: opacity 0.85s ease, transform 0.85s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h1, h2, h3 {
+      line-height: 1.25;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      font-weight: 900;
+      letter-spacing: -0.8px;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 2.9vw, 2.8rem);
+      font-weight: 800;
+      margin-bottom: 22px;
+    }
+
+    .section-lead {
+      color: var(--muted);
+      margin-bottom: 24px;
+      font-size: 1.04rem;
+    }
+
+    .hero {
+      background: radial-gradient(circle at 20% 20%, rgba(124,252,0,0.17), transparent 38%), var(--bg);
+    }
+
+    .hero .sub {
+      margin-top: 10px;
+      font-size: clamp(1rem, 2vw, 1.32rem);
+      color: #e8e8e8;
+    }
+
+    .hero-highlight {
+      color: var(--lime);
+      text-shadow: 0 0 14px rgba(124, 252, 0, 0.2);
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 24px 0 18px;
+    }
+
+    .badge {
+      border: 1px solid rgba(124,252,0,0.5);
+      color: #d9ffd1;
+      background: rgba(124,252,0,0.07);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    .hero-info {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 28px;
+      color: #efefef;
+    }
+
+    .hero-info strong {
+      color: var(--lime);
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
+      border-radius: 10px;
+      border: 0;
+      background: var(--lime);
+      color: #101010;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 24px rgba(124,252,0,0.22);
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(124,252,0,0.28);
+    }
+
+    .grid-3, .grid-4 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+      border: 1px solid #262626;
+      border-radius: 14px;
+      padding: 22px;
+      height: 100%;
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+      color: var(--lime);
+    }
+
+    .card p, .card li {
+      color: #d8d8d8;
+      font-size: 0.96rem;
+    }
+
+    .card ul {
+      list-style: none;
+      display: grid;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .timeline-item {
+      border-left: 3px solid var(--lime);
+      padding: 8px 0 8px 14px;
+      background: rgba(124,252,0,0.03);
+      border-radius: 8px;
+    }
+
+    .timeline-time {
+      color: var(--lime);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .note-box {
+      background: #111;
+      border: 1px solid #2e2e2e;
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 8px;
+    }
+
+    .note-box strong {
+      color: var(--lime);
+    }
+
+    .revenue-flow {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px dashed rgba(124,252,0,0.4);
+      color: #f0f0f0;
+      background: rgba(124,252,0,0.04);
+      font-weight: 500;
+    }
+
+    .event {
+      background: linear-gradient(135deg, var(--lime), var(--gold));
+      color: #121212;
+      text-align: center;
+    }
+
+    .event h2 {
+      color: #0f0f0f;
+      margin-bottom: 14px;
+    }
+
+    .event .big {
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 900;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .event p {
+      font-size: 1.04rem;
+      font-weight: 600;
+    }
+
+    .faq-wrap {
+      display: grid;
+      gap: 12px;
+    }
+
+    details {
+      border: 1px solid #2f2f2f;
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: #121212;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: #f2f2f2;
+    }
+
+    details p {
+      margin-top: 10px;
+      color: #cfcfcf;
+      font-size: 0.95rem;
+    }
+
+    .final-cta {
+      text-align: center;
+    }
+
+    .final-cta h2 {
+      margin-bottom: 12px;
+    }
+
+    .final-cta .contact {
+      margin: 14px 0;
+      color: #e5e5e5;
+    }
+
+    .final-cta .early {
+      display: inline-block;
+      padding: 7px 12px;
+      border: 1px solid rgba(124,252,0,0.6);
+      border-radius: 999px;
+      color: var(--lime);
+      margin-bottom: 18px;
+      font-size: 0.92rem;
+    }
+
+    footer {
+      padding: 18px 0 28px;
+      text-align: center;
+      color: #909090;
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 1024px) {
+      .grid-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      section {
+        min-height: auto;
+        padding: 88px 0 48px;
+      }
+      .grid-3, .grid-4 {
+        grid-template-columns: 1fr;
+      }
+      .hero-info {
+        font-size: 0.96rem;
+      }
+      .badge {
+        font-size: 0.86rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a class="logo" href="#hero">STN 미디어서포터즈</a>
+      <div class="nav-links">
+        <a href="#problem">문제제기</a>
+        <a href="#solution">솔루션</a>
+        <a href="#tracks">트랙</a>
+        <a href="#schedule">일정</a>
+        <a href="#benefits">혜택</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </nav>
+
+  <section id="hero" class="hero reveal">
+    <div class="container">
+      <h1>미디어서포터즈 <span class="hero-highlight">양성 프로젝트</span></h1>
+      <p class="sub">에스티엔방송·에스티엔뉴스</p>
+      <div class="badges">
+        <span class="badge">기자부문</span>
+        <span class="badge">미디어부문</span>
+        <span class="badge">유튜브활용 부문(AI 완전 자동화)</span>
+      </div>
+      <div class="hero-info">
+        <p><strong>일정:</strong> 2026년 6월 19일(금)~6월 21일(일)</p>
+        <p><strong>수강료:</strong> 1,980,000원 | 선착순 500명 모집</p>
+      </div>
+      <button class="cta-btn apply-btn">지금 신청하기</button>
+    </div>
+  </section>
+
+  <section id="problem" class="reveal">
+    <div class="container">
+      <h2>유튜브 수익화, 왜 실패할까?</h2>
+      <div class="grid-3">
+        <article class="card">
+          <h3>① 자격 요건 미달</h3>
+          <p>구독자 1,000명 / 시청 4,000시간 조건을 채우지 못해 수익화 진입이 어렵습니다.</p>
+        </article>
+        <article class="card">
+          <h3>② 콘텐츠 전략 부재</h3>
+          <p>타겟과 포맷이 없는 채널 운영은 조회수와 구독자 전환을 만들기 어렵습니다.</p>
+        </article>
+        <article class="card">
+          <h3>③ 지속성 부족</h3>
+          <p>제작부터 편집, 업로드까지 반복 루틴이 무너지며 채널 성장이 멈춥니다.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="solution" class="reveal">
+    <div class="container">
+      <h2>STN이 3가지를 해결합니다</h2>
+      <div class="grid-3">
+        <article class="card">
+          <h3>자동 구독자 500명 보장</h3>
+          <p>초기 채널의 가장 큰 장벽을 빠르게 넘을 수 있도록 실전형 성장 구조를 제공합니다.</p>
+        </article>
+        <article class="card">
+          <h3>AI 자동화로 95% 시간 단축</h3>
+          <p>콘텐츠 제작 프로세스를 자동화해 직장인도 지속 가능한 운영 루틴을 구축합니다.</p>
+        </article>
+        <article class="card">
+          <h3>독립 채널 100% 수익 소유</h3>
+          <p>개인이 운영하는 채널에서 발생한 수익을 온전히 본인 명의로 확보할 수 있습니다.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="tracks" class="reveal">
+    <div class="container">
+      <h2>당신에게 맞는 트랙을 선택하세요</h2>
+      <div class="grid-3">
+        <article class="card">
+          <h3>기자 부문</h3>
+          <ul>
+            <li><strong>핵심목표:</strong> STN뉴스 기자활동 + 네이버 기사 송고</li>
+            <li><strong>최종혜택:</strong> 에스티엔뉴스 공식 기자증</li>
+            <li><strong>추천:</strong> 저널리즘 지망생, 스포츠 팬</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>미디어 부문</h3>
+          <ul>
+            <li><strong>핵심목표:</strong> SNS·카드뉴스·영상 콘텐츠 제작</li>
+            <li><strong>최종혜택:</strong> 에스티엔 미디어서포터즈 자격증</li>
+            <li><strong>추천:</strong> SNS마케터, 콘텐츠 크리에이터</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>유튜브 부문</h3>
+          <ul>
+            <li><strong>핵심목표:</strong> 유튜브 채널개설 + 숏츠 완전자동화</li>
+            <li><strong>최종혜택:</strong> YPP 수익화(팬펀딩·쇼핑·광고)</li>
+            <li><strong>추천:</strong> 유튜브 수익화 희망자</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="schedule" class="reveal">
+    <div class="container">
+      <h2>2박3일 집중 교육 일정</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-time">금요일 19:00</div>
+          <p>입실·숙소배치·저녁식사</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">금요일 20:00~21:30</div>
+          <p>오리엔테이션·트랙선택·특강</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">토요일 09:00~12:00</div>
+          <p>기자부문 - 기사작성, Claude AI 활용</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">토요일 13:00~16:00</div>
+          <p>미디어부문 - 영상촬영, Alpha Cut 실습</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">토요일 17:00~20:00</div>
+          <p>유튜브부문 - 채널설정, AI자동화, SNS배포전략</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">일요일 09:00~10:00</div>
+          <p>최종실습·발표·수료식·자격증 수여 후 귀가</p>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <p><strong>포함사항:</strong> 2박 숙박, 3끼 식사, 교재, 교육용 장비 현장제공</p>
+        <p><strong>필수지참:</strong> 개인 노트북 (최소 8GB RAM, 256GB SSD)</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="benefits" class="reveal">
+    <div class="container">
+      <h2>수강생이 얻는 것</h2>
+      <div class="grid-4">
+        <article class="card">
+          <h3>유튜브채널</h3>
+          <p>구독자 즉시 확보 기반으로 빠른 초기 성장 발판을 만듭니다.</p>
+        </article>
+        <article class="card">
+          <h3>AI자동화 마스터</h3>
+          <p>편집시간 95% 단축으로 제작 효율과 업로드 빈도를 동시에 개선합니다.</p>
+        </article>
+        <article class="card">
+          <h3>기자증 취득</h3>
+          <p>6개월 평가 합격 시 에스티엔뉴스 기자증 취득 기회를 제공합니다.</p>
+        </article>
+        <article class="card">
+          <h3>민간자격증</h3>
+          <p>에스티엔 미디어서포터즈 민간자격증(제2025-002178호)을 발급합니다.</p>
+        </article>
+      </div>
+      <div class="revenue-flow">
+        수익 예상: 첫 3개월 월 50만원 → 6개월 후 월 100만원 → 1년 후 월 200~500만원
+      </div>
+    </div>
+  </section>
+
+  <section id="event" class="event reveal">
+    <div class="container">
+      <h2>특별 이벤트</h2>
+      <p class="big">추첨을 통해 현금 1,000만원 지급!</p>
+      <p>수료 후 전체 수강생 중 1명 선정 (과제제출 + 출석률 80% 이상)</p>
+    </div>
+  </section>
+
+  <section id="overview" class="reveal">
+    <div class="container">
+      <h2>프로그램 개요</h2>
+      <div class="grid-3">
+        <article class="card">
+          <h3>사업명</h3>
+          <p>에스티엔방송 미디어서포터즈 양성 과정 1기</p>
+        </article>
+        <article class="card">
+          <h3>교육형태 / 기간</h3>
+          <p>온라인 모집 + 2박3일 오프라인 집중 교육</p>
+          <p>2026년 6월 19일~21일 (금·토·일)</p>
+        </article>
+        <article class="card">
+          <h3>수강료 / 정원</h3>
+          <p>1인당 1,980,000원 (VAT포함, 자격증 발급비 포함)</p>
+          <p>정원 500명</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="reveal">
+    <div class="container">
+      <h2>FAQ</h2>
+      <div class="faq-wrap">
+        <details>
+          <summary>Q. 초보자도 참여할 수 있나요?</summary>
+          <p>A. 가능합니다. 기초부터 실습 중심으로 진행해 초보자도 결과물을 만들 수 있도록 설계되어 있습니다.</p>
+        </details>
+        <details>
+          <summary>Q. 트랙은 언제 선택하나요?</summary>
+          <p>A. 교육 첫날 오리엔테이션에서 본인 목표에 맞춰 트랙을 선택합니다.</p>
+        </details>
+        <details>
+          <summary>Q. 수료 후에도 활용 가능한가요?</summary>
+          <p>A. 네. 독립 채널 운영과 콘텐츠 자동화 워크플로우를 익혀 교육 이후에도 바로 적용할 수 있습니다.</p>
+        </details>
+        <details>
+          <summary>Q. 준비물은 무엇인가요?</summary>
+          <p>A. 개인 노트북(최소 8GB RAM, 256GB SSD)만 지참하시면 됩니다.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="apply" class="final-cta reveal">
+    <div class="container">
+      <h2>지금 신청하세요</h2>
+      <p class="early">조기할인: 5월 31일까지 10% 할인</p>
+      <div>
+        <button class="cta-btn apply-btn">지금 신청하기</button>
+      </div>
+      <p class="contact">문의: 1599-1242 STN 방송 교육팀</p>
+      <p class="contact">모집페이지: www.stntv.co.kr</p>
+      <p class="contact">주최: ㈜에스티엔방송</p>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 STN Broadcasting. All Rights Reserved.
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+          }
+        });
+      },
+      { threshold: 0.18 }
+    );
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+    document.querySelectorAll(".apply-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        window.location.href = "https://www.stntv.co.kr";
+      });
+    });
+  </script>
+</body>
+</html>
