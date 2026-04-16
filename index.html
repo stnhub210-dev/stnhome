@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>미디어서포터즈 양성 프로젝트</title>
+  <title>STN미디어서포터즈 양성 프로젝트</title>
 
   <!-- 카카오톡 / SNS 공유 썸네일 설정 -->
   <meta property="og:type" content="website">
@@ -2047,6 +2047,31 @@
       .include-grid {
         grid-template-columns: 1fr;
       }
+
+      /* 모바일에서 문장 정렬/줄바꿈 가독성 개선 */
+      body { word-break: keep-all; line-break: strict; }
+      .track-card p,
+      .include-card p { white-space: normal; }
+
+      /* 모바일 달력(교육일정) 가독성 개선 */
+      .calendar-weekdays { gap: 6px; font-size: .92rem; }
+      .calendar-days { column-gap: 6px; row-gap: 6px; }
+      .calendar-day {
+        min-height: 70px;
+        padding: 8px 4px;
+        border-radius: 10px;
+      }
+      .cal-label { font-size: .64rem; line-height: 1.15; }
+
+      /* 날짜별 집중 교육 일정: 탭이 모바일에서 잘 보이게 2열 반응형 */
+      .intensive-tabs { gap: 10px; align-items: stretch; }
+      .intensive-tab {
+        flex: 1 1 calc(50% - 10px);
+        min-width: 0;
+        text-align: left;
+      }
+      .intensive-tab .t-date { font-size: 1.02rem; }
+      .intensive-cta { width: 100%; margin-left: 0; }
     }
     @media (prefers-reduced-motion: reduce) {
       .event-tagline, .event-cash, .hero-video-bg { animation: none; }
