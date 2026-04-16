@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -10,25 +10,14 @@
   <style>
     :root {
       --bg: #0a0a0a;
-      --card: #141414;
+      --line: #2a2a2a;
       --lime: #7CFC00;
       --text: #ffffff;
-      --muted: #bfbfbf;
-      --line: #2a2a2a;
-      --gold: #d4af37;
+      --muted: #bdbdbd;
       --max: 1160px;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: "Noto Sans KR", sans-serif;
       background: var(--bg);
@@ -36,56 +25,7 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .container {
-      width: min(92%, var(--max));
-      margin: 0 auto;
-    }
-
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      background: rgba(10, 10, 10, 0.78);
-      border-bottom: 1px solid rgba(124, 252, 0, 0.25);
-      backdrop-filter: blur(10px);
-    }
-
-    .nav-inner {
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .logo {
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      color: var(--lime);
-      white-space: nowrap;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      font-size: 0.92rem;
-      color: #dddddd;
-    }
-
-    .nav-links a:hover {
-      color: var(--lime);
-    }
-
+    .container { width: min(92%, var(--max)); margin: 0 auto; }
     section {
       min-height: 100vh;
       display: flex;
@@ -93,282 +33,2034 @@
       padding: 96px 0 52px;
       border-bottom: 1px solid var(--line);
     }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(38px);
-      transition: opacity 0.85s ease, transform 0.85s ease;
+    .reveal { opacity: 0; transform: translateY(34px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    h1 { font-size: clamp(2.2rem, 4vw, 3.8rem); font-weight: 900; line-height: 1.25; }
+    h2 { font-size: clamp(1.8rem, 2.9vw, 2.8rem); font-weight: 800; margin-bottom: 20px; line-height: 1.25; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+    .card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      padding: 22px;
     }
-
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
+    #tracks .card {
+      transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease, background-color .28s ease;
+      cursor: pointer;
+      border-color: rgba(124, 252, 0, 0.72);
+      border-width: 1.8px;
     }
-
-    h1, h2, h3 {
-      line-height: 1.25;
+    #tracks .card h3 {
+      font-size: clamp(1.65rem, 2.3vw, 1.9rem);
+      line-height: 1.24;
     }
-
-    h1 {
-      font-size: clamp(2.2rem, 4vw, 3.8rem);
+    #tracks .card:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: rgba(124, 252, 0, 0.78);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow:
+        0 0 0 1px rgba(124, 252, 0, 0.42),
+        0 0 14px rgba(124, 252, 0, 0.55),
+        0 0 32px rgba(124, 252, 0, 0.34),
+        0 10px 24px rgba(0, 0, 0, 0.42);
+    }
+    .tracks-title {
+      font-size: clamp(2rem, 3.8vw, 3.05rem);
+      line-height: 1.26;
+      margin-bottom: 18px;
+    }
+    .tracks-title-line {
+      display: block;
+    }
+    .tracks-title-em {
+      font-size: 1.13em;
       font-weight: 900;
-      letter-spacing: -0.8px;
+      letter-spacing: -0.01em;
     }
-
-    h2 {
-      font-size: clamp(1.8rem, 2.9vw, 2.8rem);
-      font-weight: 800;
-      margin-bottom: 22px;
-    }
-
-    .section-lead {
-      color: var(--muted);
-      margin-bottom: 24px;
-      font-size: 1.04rem;
-    }
-
-    .hero {
-      background: radial-gradient(circle at 20% 20%, rgba(124,252,0,0.17), transparent 38%), var(--bg);
-    }
-
-    .hero .sub {
-      margin-top: 10px;
-      font-size: clamp(1rem, 2vw, 1.32rem);
-      color: #e8e8e8;
-    }
-
-    .hero-highlight {
+    .tracks-title-lime {
       color: var(--lime);
-      text-shadow: 0 0 14px rgba(124, 252, 0, 0.2);
+      text-shadow: 0 0 10px rgba(124,252,0,.28);
     }
-
-    .badges {
+    .tracks-title-pink {
+      color: #ff2a2a;
+      text-shadow: 0 0 10px rgba(255, 42, 42, 0.35);
+    }
+    .curriculum-section {
+      min-height: auto;
+      align-items: stretch;
+      padding: 88px 0 64px;
+    }
+    .curriculum-title {
+      margin-bottom: 8px;
+    }
+    .curriculum-sub {
+      color: #cfcfcf;
+      margin-bottom: 22px;
+      font-size: clamp(.98rem, 1.8vw, 1.12rem);
+    }
+    .curriculum-tabs {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin: 24px 0 18px;
+      margin-bottom: 20px;
     }
-
-    .badge {
-      border: 1px solid rgba(124,252,0,0.5);
-      color: #d9ffd1;
-      background: rgba(124,252,0,0.07);
-      padding: 8px 14px;
+    .curriculum-tab {
+      border: 1px solid #3a3a3a;
+      background: #141414;
+      color: #d9d9d9;
       border-radius: 999px;
-      font-size: 0.92rem;
-      font-weight: 500;
+      padding: 10px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .25s ease;
     }
-
-    .hero-info {
+    .curriculum-tab:hover {
+      border-color: rgba(124,252,0,.58);
+      color: #f5fff0;
+    }
+    .curriculum-tab.active {
+      background: var(--lime);
+      border-color: var(--lime);
+      color: #111;
+      box-shadow: 0 0 18px rgba(124,252,0,.34);
+    }
+    .curriculum-panel {
+      display: none;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .28s ease, transform .28s ease;
+    }
+    .curriculum-panel.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .cur-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .cur-grid.youtube {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .cur-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      padding: 18px;
+      transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+    }
+    .cur-card:hover {
+      border-color: rgba(124,252,0,.8);
+      box-shadow: 0 0 0 1px rgba(124,252,0,.35), 0 0 24px rgba(124,252,0,.24);
+      transform: translateY(-2px);
+    }
+    .cur-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .cur-no {
+      color: var(--lime);
+      font-weight: 900;
+      font-size: 1.02rem;
+      letter-spacing: .05em;
+    }
+    .cur-time {
+      background: var(--lime);
+      color: #111;
+      font-weight: 800;
+      border-radius: 999px;
+      font-size: .82rem;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+    .cur-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .cur-meta {
       display: grid;
       gap: 8px;
-      margin-bottom: 28px;
-      color: #efefef;
     }
-
-    .hero-info strong {
-      color: var(--lime);
+    .cur-meta p {
+      color: #e4e4e4;
+      font-size: .93rem;
+      line-height: 1.65;
     }
-
-    .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 24px;
+    .cur-result {
+      margin-top: 18px;
+      border-left: 4px solid var(--lime);
+      background: #1a1a1a;
       border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .cur-result h4 {
+      color: var(--lime);
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+    .cur-result ul {
+      list-style: none;
+      display: grid;
+      gap: 6px;
+    }
+    .cur-result li {
+      color: #e8e8e8;
+      font-size: .94rem;
+    }
+    .cur-compare {
+      margin-top: 24px;
+    }
+    .cur-compare h3 {
+      font-size: 1.35rem;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .compare-wrap {
+      overflow-x: auto;
+      border: 1px solid #2d2d2d;
+      border-radius: 12px;
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      background: rgba(255,255,255,.03);
+    }
+    .compare-table th,
+    .compare-table td {
+      border-bottom: 1px solid #2d2d2d;
+      border-right: 1px solid #2d2d2d;
+      padding: 12px 14px;
+      text-align: left;
+      font-size: .92rem;
+      color: #e8e8e8;
+      vertical-align: top;
+    }
+    .compare-table th:last-child,
+    .compare-table td:last-child { border-right: 0; }
+    .compare-table thead th {
+      background: rgba(124,252,0,.12);
+      color: #f7fff2;
+      font-weight: 800;
+    }
+    .card h3 { color: var(--lime); margin-bottom: 10px; font-size: 1.15rem; }
+    .card p, .card li { color: #d8d8d8; font-size: .96rem; }
+    .card ul { list-style: none; display: grid; gap: 6px; }
+    #overview .card h3 {
+      font-size: 1.6rem;
+      letter-spacing: -0.01em;
+    }
+    #overview {
+      min-height: auto;
+      padding: 56px 0 40px;
+    }
+    #overview .card p {
+      font-size: 1.02rem;
+      line-height: 1.7;
+    }
+    .overview-em {
+      font-weight: 900;
+      font-size: 1.12em;
+      color: var(--lime);
+      text-shadow: 0 0 10px rgba(124,252,0,.18);
+    }
+    .overview-sub {
+      color: #ffffff;
+      opacity: 0.92;
+      font-size: .98rem;
+      margin-top: 8px;
+      line-height: 1.55;
+    }
+    @keyframes overview-glow {
+      0% {
+        border-color: rgba(124,252,0,.2);
+        box-shadow: 0 0 0 1px rgba(124,252,0,.08), 0 10px 24px rgba(0,0,0,.35);
+        filter: brightness(.98);
+      }
+      45% {
+        border-color: rgba(124,252,0,.95);
+        box-shadow:
+          0 0 0 1px rgba(124,252,0,.7),
+          0 0 14px rgba(124,252,0,.55),
+          0 0 30px rgba(124,252,0,.28),
+          0 12px 28px rgba(0,0,0,.38);
+        filter: brightness(1.08);
+      }
+      100% {
+        border-color: rgba(124,252,0,.32);
+        box-shadow: 0 0 24px rgba(124,252,0,.12);
+        filter: brightness(1);
+      }
+    }
+    #overview.reveal.active .card {
+      animation: overview-glow .9s ease both;
+    }
+    #overview.reveal.active .card:nth-child(1) { animation-delay: .15s; }
+    #overview.reveal.active .card:nth-child(2) { animation-delay: .45s; }
+    #overview.reveal.active .card:nth-child(3) { animation-delay: .75s; }
+    #overview .card {
+      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease, border-color .22s ease;
+    }
+    #overview .card:hover {
+      transform: translateY(-2px) scale(1.03);
+      filter: brightness(1.06);
+      border-color: rgba(124,252,0,.9);
+      box-shadow:
+        0 0 0 1px rgba(124,252,0,.55),
+        0 0 14px rgba(124,252,0,.45),
+        0 0 30px rgba(124,252,0,.26),
+        0 12px 28px rgba(0,0,0,.4);
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(10, 10, 10, .78);
+      border-bottom: 1px solid rgba(124, 252, 0, .25);
+      backdrop-filter: blur(8px);
+    }
+    .nav-inner { height: 68px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { color: var(--lime); font-weight: 800; text-decoration: none; }
+    .nav-links { display: flex; gap: 16px; font-size: .92rem; color: #dcdcdc; }
+    .nav-links a { color: inherit; text-decoration: none; }
+    .nav-links a:hover { color: var(--lime); }
+
+    .hero { position: relative; overflow: hidden; isolation: isolate; }
+    .hero-video-bg {
+      position: absolute; inset: -4%; width: 108%; height: 108%;
+      object-fit: cover; opacity: .94; z-index: 0;
+      animation: hero-pan 30s ease-in-out infinite alternate;
+    }
+    @keyframes hero-pan {
+      from { transform: scale(1.04) translate(0, 0); }
+      to { transform: scale(1.1) translate(-1%, -.5%); }
+    }
+    .hero-video-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(180deg, rgba(10,10,10,.45), rgba(10,10,10,.22), rgba(10,10,10,.52));
+    }
+    .hero .container { position: relative; z-index: 2; }
+    .hero-highlight { color: var(--lime); text-shadow: 0 0 16px rgba(124,252,0,.25); }
+    .hero .sub { margin-top: 10px; color: #ececec; font-size: clamp(1rem, 2vw, 1.32rem); }
+    .badges { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0 18px; }
+    .badge {
+      border: 1px solid rgba(124,252,0,.5);
+      background: rgba(124,252,0,.08);
+      color: #dbffd2;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: .92rem;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: transform .22s ease, filter .22s ease, border-color .22s ease, background-color .22s ease;
+    }
+    .badge::after {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: radial-gradient(circle at 30% 30%, rgba(124,252,0,.22), transparent 55%);
+      opacity: 0;
+      transition: opacity .22s ease;
+      pointer-events: none;
+    }
+    .badge:hover {
+      transform: translateY(-1px) scale(1.02);
+      border-color: rgba(124,252,0,.9);
+      background: rgba(124,252,0,.14);
+      filter: brightness(1.08);
+      box-shadow: 0 0 0 1px rgba(124,252,0,.22), 0 12px 30px rgba(124,252,0,.18);
+    }
+    .badge:hover::after { opacity: 1; }
+
+    @keyframes badge-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes badge-neon {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(124,252,0,.18), 0 0 0 rgba(124,252,0,0); }
+      50% { box-shadow: 0 0 0 1px rgba(124,252,0,.35), 0 0 22px rgba(124,252,0,.22); }
+    }
+    .hero.reveal.active .badge {
+      animation: badge-in .65s ease-out forwards, badge-neon 1.6s ease-in-out .65s 2;
+    }
+    .hero.reveal.active .badge:nth-child(1) { animation-delay: .05s, .70s; }
+    .hero.reveal.active .badge:nth-child(2) { animation-delay: .20s, .85s; }
+    .hero.reveal.active .badge:nth-child(3) { animation-delay: .35s, 1.00s; }
+    .hero-motto {
+      margin: 14px 0 0;
+      color: #bfe7ff;
+      font-size: clamp(1.55rem, 3.2vw, 2.25rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-shadow:
+        0 2px 0 rgba(0,0,0,.55),
+        0 0 18px rgba(120, 200, 255, .12);
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    @keyframes hero-motto-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero.reveal.active .hero-motto {
+      animation: hero-motto-in .9s ease-out .12s forwards;
+    }
+    .cta-btn {
       border: 0;
+      border-radius: 10px;
+      padding: 14px 24px;
       background: var(--lime);
       color: #101010;
       font-weight: 800;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 8px 24px rgba(124,252,0,0.22);
+      box-shadow: 0 8px 24px rgba(124,252,0,.22);
+    }
+    .cta-btn--hero {
+      padding: 20px 36px;
+      font-size: 1.15rem;
+      border-radius: 12px;
+      box-shadow:
+        0 0 0 1px rgba(124,252,0,.18),
+        0 12px 30px rgba(124,252,0,.18);
     }
 
-    .cta-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(124,252,0,0.28);
+    .section-calendar { min-height: auto; padding: 40px 0 48px; }
+    .welcome-fit {
+      min-height: auto;
+      padding: 58px 0 62px;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(124,252,0,.09), transparent 34%),
+        radial-gradient(circle at 85% 75%, rgba(124,252,0,.08), transparent 38%),
+        #070b08;
     }
-
-    .grid-3, .grid-4 {
+    .welcome-fit-wrap {
+      padding: 0;
+    }
+    .welcome-fit-title {
+      text-align: center;
+      margin-bottom: clamp(18px, 2.8vw, 28px);
+      font-size: clamp(1.95rem, 4.8vw, 3.25rem);
+      font-weight: 900;
+      color: var(--lime);
+      letter-spacing: -0.02em;
+      text-shadow: 0 0 12px rgba(124,252,0,.42), 0 0 30px rgba(124,252,0,.2);
+    }
+    .welcome-fit-list {
+      list-style: none;
       display: grid;
-      gap: 18px;
+      gap: 12px;
+      max-width: 860px;
+      margin: 0 auto;
     }
-
-    .grid-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .welcome-fit-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      border: 1.6px solid rgba(255,255,255,.1);
+      border-radius: 12px;
+      background: rgba(255,255,255,.03);
+      padding: 20px 18px;
+      font-size: clamp(1.08rem, 2.1vw, 1.45rem);
+      font-weight: 700;
+      line-height: 1.5;
+      color: #f1f1f1;
+      transition: border-color .26s ease, box-shadow .26s ease, background-color .26s ease, transform .26s ease;
+      opacity: 0;
+      transform: translateY(26px) scale(.97);
+      filter: brightness(.92);
     }
-
-    .grid-4 {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+    .welcome-fit-list li:hover {
+      border-color: rgba(124,252,0,.82);
+      background: rgba(124,252,0,.08);
+      transform: translateY(-2px);
+      box-shadow:
+        0 0 0 1px rgba(124,252,0,.55),
+        0 0 14px rgba(124,252,0,.58),
+        0 0 30px rgba(124,252,0,.3),
+        0 10px 24px rgba(0,0,0,.38);
     }
+    .welcome-fit-list li::before {
+      content: "✅";
+      line-height: 1.2;
+      font-size: 1.12em;
+      filter: drop-shadow(0 0 6px rgba(124,252,0,.36));
+      opacity: 1;
+      transform: none;
+    }
+    @keyframes welcome-item-in-neon {
+      0% {
+        opacity: 0;
+        transform: translateY(26px) scale(.97);
+        border-color: rgba(255,255,255,.08);
+        background: rgba(255,255,255,.02);
+        box-shadow: none;
+        filter: brightness(.9);
+      }
+      34% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        border-color: rgba(124,252,0,.95);
+        background: rgba(124,252,0,.1);
+        box-shadow:
+          0 0 0 1px rgba(124,252,0,.6),
+          0 0 16px rgba(124,252,0,.7),
+          0 0 34px rgba(124,252,0,.38),
+          0 10px 24px rgba(0,0,0,.36);
+        filter: brightness(1.08);
+      }
+      50% {
+        border-color: rgba(124,252,0,.45);
+        box-shadow:
+          0 0 0 1px rgba(124,252,0,.35),
+          0 0 9px rgba(124,252,0,.32),
+          0 8px 18px rgba(0,0,0,.32);
+        filter: brightness(.98);
+      }
+      68% {
+        border-color: rgba(124,252,0,.98);
+        background: rgba(124,252,0,.12);
+        box-shadow:
+          0 0 0 1px rgba(124,252,0,.68),
+          0 0 18px rgba(124,252,0,.78),
+          0 0 40px rgba(124,252,0,.44),
+          0 12px 28px rgba(0,0,0,.38);
+        filter: brightness(1.12);
+      }
+      82% {
+        border-color: rgba(124,252,0,.4);
+        box-shadow:
+          0 0 0 1px rgba(124,252,0,.28),
+          0 0 8px rgba(124,252,0,.26),
+          0 8px 16px rgba(0,0,0,.3);
+        filter: brightness(.97);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        border-color: rgba(255,255,255,.1);
+        background: rgba(255,255,255,.03);
+        box-shadow: none;
+        filter: brightness(1);
+      }
+    }
+    #welcome-fit.reveal.active .welcome-fit-list li {
+      animation: welcome-item-in-neon 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    #welcome-fit.reveal.active .welcome-fit-list li:nth-child(1) { animation-delay: .25s; }
+    #welcome-fit.reveal.active .welcome-fit-list li:nth-child(2) { animation-delay: .9s; }
+    #welcome-fit.reveal.active .welcome-fit-list li:nth-child(3) { animation-delay: 1.55s; }
+    #welcome-fit.reveal.active .welcome-fit-list li:nth-child(4) { animation-delay: 2.2s; }
+    #welcome-fit.reveal.active .welcome-fit-list li:nth-child(5) { animation-delay: 2.85s; }
+    #welcome-fit.reveal.active .welcome-fit-list li:nth-child(6) { animation-delay: 3.5s; }
+    @media (prefers-reduced-motion: reduce) {
+      .welcome-fit-list li,
+      .welcome-fit-list li::before {
+        opacity: 1;
+        transform: none;
+        animation: none !important;
+      }
+    }
+    .calendar-wrap { width: 100%; max-width: min(98vw, 980px); margin: 0 auto; }
+    .calendar-head { text-align: center; margin-bottom: 16px; }
+    .calendar-kicker { display: block; color: var(--lime); font-weight: 900; margin-bottom: 6px; letter-spacing: .08em; }
+    .calendar-title { font-size: clamp(1.45rem, 3.8vw, 2.1rem); font-weight: 800; }
+    .calendar-weekdays { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; text-align: center; color: #bcbcbc; margin-bottom: 8px; }
+    .calendar-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); column-gap: 10px; row-gap: 6px; }
+    .calendar-day {
+      min-height: clamp(56px, 11vw, 92px);
+      border: 1px solid #333;
+      border-radius: 12px;
+      background: rgba(124,252,0,.07);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 3px;
+      padding: 6px 4px;
+    }
+    .calendar-day.is-pad { visibility: hidden; }
+    .calendar-day.is-highlight {
+      background: linear-gradient(145deg, var(--lime), #5fd60a);
+      border-color: rgba(124,252,0,.85);
+      box-shadow: 0 0 0 1px rgba(124,252,0,.35), 0 8px 24px rgba(124,252,0,.18);
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+    }
+    .calendar-day.is-highlight:hover {
+      transform: translateY(-2px) scale(1.04);
+      filter: brightness(1.06);
+      box-shadow:
+        0 0 0 1px rgba(124,252,0,.45),
+        0 10px 28px rgba(124,252,0,.22),
+        0 0 22px rgba(124,252,0,.24);
+    }
+    .calendar-day.is-highlight:active {
+      transform: translateY(-1px) scale(1.02);
+      filter: brightness(1.02);
+    }
+    .calendar-day.is-highlight .cal-num,
+    .calendar-day.is-highlight .cal-label { color: #111; font-weight: 900; }
+    .cal-label { font-size: .74rem; line-height: 1.2; text-align: center; }
 
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
-      border: 1px solid #262626;
-      border-radius: 14px;
-      padding: 22px;
+    #problem {
+      align-items: stretch;
+    }
+    .problem-layout {
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(240px, 360px) minmax(0, 1fr);
+      gap: clamp(18px, 3vw, 44px);
+      align-items: stretch;
+    }
+    .problem-heading {
+      margin-bottom: 20px;
+    }
+    .problem-heading .problem-title {
+      font-size: clamp(2rem, 3.1vw, 2.85rem);
+      line-height: 1.2;
+    }
+    .problem-visual {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(124,252,0,.2), 0 14px 34px rgba(0,0,0,.45);
+      background: #0f0f0f;
+      position: relative;
+      min-height: clamp(340px, 45vw, 760px);
       height: 100%;
     }
+    .problem-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(to top, rgba(0,0,0,.74) 0%, rgba(0,0,0,.1) 55%, rgba(0,0,0,0) 100%);
+    }
+    .problem-visual img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .problem-title {
+      position: static;
+      transform: none;
+      margin: 0;
+      line-height: 1.22;
+      font-size: clamp(2.05rem, 3.35vw, 3.12rem);
+      font-weight: 800;
+    }
+    .problem-title-mango {
+      color: #ff9f3c;
+      font-weight: 900;
+      font-size: 1em;
+      text-shadow: 0 0 18px rgba(255, 159, 60, 0.45);
+    }
+    .problem-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
 
-    .card h3 {
-      font-size: 1.15rem;
-      margin-bottom: 10px;
+    #problem.reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    #problem.reveal:not(.active) .problem-heading,
+    #problem.reveal:not(.active) .problem-visual {
+      opacity: 0;
+    }
+    #problem.reveal:not(.active) .problem-cards .card {
+      opacity: 0;
+      transform: translateY(72px);
+    }
+    @keyframes problem-title-fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes problem-card-rise {
+      from {
+        opacity: 0;
+        transform: translateY(72px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    #problem.reveal.active .problem-visual {
+      animation: problem-title-fade 1.05s ease forwards;
+    }
+    #problem.reveal.active .problem-heading {
+      animation: problem-title-fade 1.1s ease forwards;
+    }
+    #problem.reveal.active .problem-cards .card:nth-child(1) {
+      animation: problem-card-rise 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: 0.95s;
+    }
+    #problem.reveal.active .problem-cards .card:nth-child(2) {
+      animation: problem-card-rise 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: 1.68s;
+    }
+    #problem.reveal.active .problem-cards .card:nth-child(3) {
+      animation: problem-card-rise 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: 2.4s;
+    }
+
+    .solution-layout {
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(240px, 360px) minmax(0, 1fr);
+      gap: clamp(18px, 3vw, 44px);
+      align-items: stretch;
+    }
+    .solution-heading {
+      margin-bottom: 20px;
+    }
+    .solution-heading .solution-title {
+      font-size: clamp(2rem, 3.1vw, 2.85rem);
+      line-height: 1.2;
+    }
+    .solution-visual {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(124,252,0,.2), 0 14px 34px rgba(0,0,0,.45);
+      background: #0f0f0f;
+      position: relative;
+      min-height: clamp(340px, 45vw, 760px);
+      height: 100%;
+    }
+    .solution-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(to top, rgba(0,0,0,.74) 0%, rgba(0,0,0,.1) 55%, rgba(0,0,0,0) 100%);
+    }
+    .solution-visual img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .solution-title {
+      position: static;
+      transform: none;
+      margin: 0;
+      line-height: 1.22;
+      font-size: clamp(2.05rem, 3.35vw, 3.12rem);
+      font-weight: 800;
+    }
+    .solution-title-em {
       color: var(--lime);
+      font-weight: 900;
+      font-size: 1em;
+      text-shadow: 0 0 14px rgba(124, 252, 0, 0.35);
+    }
+    .solution-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
     }
 
-    .card p, .card li {
+    #solution.reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    #solution.reveal:not(.active) .solution-heading,
+    #solution.reveal:not(.active) .solution-visual {
+      opacity: 0;
+    }
+    #solution.reveal:not(.active) .solution-cards .card {
+      opacity: 0;
+      transform: translateY(72px);
+    }
+    #solution.reveal.active .solution-heading {
+      animation: problem-title-fade 1.1s ease forwards;
+    }
+    #solution.reveal.active .solution-visual {
+      animation: problem-title-fade 1.05s ease forwards;
+    }
+    #solution.reveal.active .solution-cards .card:nth-child(1) {
+      animation: problem-card-rise 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: 0.95s;
+    }
+    #solution.reveal.active .solution-cards .card:nth-child(2) {
+      animation: problem-card-rise 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: 1.68s;
+    }
+    #solution.reveal.active .solution-cards .card:nth-child(3) {
+      animation: problem-card-rise 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: 2.4s;
+    }
+
+    #problem .card, #solution .card {
+      border-color: rgba(124,252,0,.32);
+      box-shadow: 0 0 24px rgba(124,252,0,.12);
+      transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease, background-color .35s ease;
+    }
+    #problem .card,
+    #solution .card {
+      transition: box-shadow .35s ease, border-color .35s ease, background-color .35s ease;
+    }
+    #problem .card:hover, #solution .card:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 36px rgba(124,252,0,.2);
+    }
+    #problem .card, #solution .card {
+      transform-origin: left center;
+      min-height: clamp(178px, 20vw, 228px);
+      padding: clamp(20px, 2.6vw, 30px) clamp(18px, 2.2vw, 28px);
+      border-width: 1.2px;
+      width: 100%;
+      max-width: 94%;
+    }
+    #problem .card:hover, #solution .card:hover {
+      transform: scale(1.03);
+      border-color: rgba(124,252,0,.95);
+      box-shadow:
+        0 0 0 1px rgba(124,252,0,.72),
+        0 0 12px rgba(124,252,0,.75),
+        0 0 30px rgba(124,252,0,.58),
+        0 0 66px rgba(124,252,0,.36),
+        0 14px 30px rgba(0, 0, 0, .5);
+    }
+    #problem .card:hover,
+    #solution .card:hover {
+      background-color: rgba(255, 255, 255, 0.13);
+    }
+    #problem .card h3, #solution .card h3 {
+      font-size: clamp(1.5rem, 2.45vw, 1.9rem);
+      font-weight: 900;
+      margin-bottom: 12px;
+      text-shadow: 0 0 10px rgba(124,252,0,.25);
+    }
+    #problem .card p,
+    #solution .card p {
+      font-size: clamp(1.08rem, 1.5vw, 1.24rem);
+      line-height: 1.72;
+      color: #efefef;
+    }
+    .card-em {
+      font-size: 1.12em;
+      font-weight: 900;
+      color: #ffb357;
+      letter-spacing: -0.01em;
+      text-shadow: 0 0 10px rgba(255, 179, 87, 0.26);
+    }
+    .stn-split {
+      min-height: auto;
+      padding: 90px 0;
+      background:
+        radial-gradient(circle at 12% 20%, rgba(124,252,0,.08), transparent 36%),
+        radial-gradient(circle at 85% 80%, rgba(124,252,0,.06), transparent 40%),
+        #070a08;
+    }
+    .stn-split-wrap {
+      display: grid;
+      grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr);
+      gap: clamp(18px, 3.2vw, 36px);
+      align-items: stretch;
+    }
+    .stn-video-card,
+    .stn-copy-card {
+      border-radius: 16px;
+      border: 1px solid rgba(124,252,0,.26);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 10px 26px rgba(0,0,0,.35);
+      overflow: hidden;
+      transition: border-color .26s ease, box-shadow .26s ease, background-color .26s ease, transform .26s ease;
+    }
+    .stn-video-card:hover,
+    .stn-copy-card:hover {
+      border-color: rgba(124,252,0,.86);
+      background: rgba(124,252,0,.08);
+      transform: translateY(-2px);
+      box-shadow:
+        0 0 0 1px rgba(124,252,0,.54),
+        0 0 14px rgba(124,252,0,.6),
+        0 0 30px rgba(124,252,0,.3),
+        0 12px 28px rgba(0,0,0,.38);
+    }
+    .stn-video-card iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 0;
+      display: block;
+    }
+    .stn-copy-card {
+      padding: clamp(20px, 3vw, 34px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .stn-copy-kicker {
+      color: var(--lime);
+      font-size: .85rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      margin-bottom: 10px;
+    }
+    .stn-copy-title {
+      font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .stn-copy-card p {
+      color: #e5e5e5;
+      font-size: clamp(1rem, 1.5vw, 1.13rem);
+      line-height: 1.72;
+      margin-bottom: 10px;
+    }
+    .stn-copy-em {
+      color: var(--lime);
+      font-weight: 800;
+    }
+    .stn-asset {
+      min-height: auto;
+      padding: 86px 0 76px;
+      background:
+        linear-gradient(180deg, rgba(6, 10, 7, 0.72) 0%, rgba(6, 10, 7, 0.64) 45%, rgba(6, 10, 7, 0.78) 100%),
+        radial-gradient(circle at 10% 20%, rgba(124,252,0,.08), transparent 34%),
+        radial-gradient(circle at 88% 78%, rgba(124,252,0,.06), transparent 42%),
+        url("image/stn01.jpg") center/cover no-repeat;
+    }
+    .stn-asset-wrap {
+      border: 1px solid rgba(124,252,0,.24);
+      border-radius: 18px;
+      background: linear-gradient(165deg, rgba(0,0,0,.68), rgba(0,0,0,.56));
+      padding: clamp(22px, 3vw, 36px);
+      box-shadow: 0 12px 28px rgba(0,0,0,.36);
+      transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease, background-color .25s ease;
+    }
+    .stn-asset-wrap:hover {
+      border-color: rgba(124,252,0,.55);
+      transform: translateY(-1px);
+      box-shadow:
+        0 0 0 1px rgba(124,252,0,.24),
+        0 0 26px rgba(124,252,0,.16),
+        0 16px 34px rgba(0,0,0,.42);
+    }
+    .stn-asset-title {
+      font-size: clamp(2.05rem, 3.8vw, 2.95rem);
+      line-height: 1.28;
+      margin-bottom: 14px;
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    .stn-asset-title .em {
+      color: var(--lime);
+      font-weight: 900;
+      text-shadow: 0 0 12px rgba(124,252,0,.3);
+    }
+    .stn-asset-lead {
+      color: #dfdfdf;
+      font-size: clamp(1rem, 1.45vw, 1.14rem);
+      line-height: 1.75;
+      margin-bottom: 18px;
+      max-width: 80ch;
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    .stn-asset-list {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .stn-asset-list li {
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.03);
+      border-radius: 12px;
+      padding: 18px 20px;
+      color: #f1f1f1;
+      font-weight: 500;
+      font-size: clamp(1.1rem, 2.05vw, 1.5rem);
+      line-height: 1.6;
+      min-height: clamp(72px, 7.4vw, 104px);
+      transition: border-color .25s ease, box-shadow .25s ease, background-color .25s ease, transform .25s ease;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    .stn-asset-list li strong,
+    .stn-asset-summary strong {
+      font-weight: 900;
+      font-size: 1.12em;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+    .stn-asset-list li:hover {
+      border-color: rgba(124,252,0,.82);
+      background: rgba(124,252,0,.09);
+      transform: translateY(-2px);
+      box-shadow:
+        0 0 0 1px rgba(124,252,0,.5),
+        0 0 12px rgba(124,252,0,.5),
+        0 0 26px rgba(124,252,0,.24),
+        0 10px 22px rgba(0,0,0,.34);
+    }
+    .stn-asset-list li::before {
+      content: "• ";
+      color: var(--lime);
+      font-weight: 900;
+    }
+    .stn-asset-summary {
+      border-left: 4px solid var(--lime);
+      background: rgba(124,252,0,.08);
+      border-radius: 10px;
+      padding: 22px 22px;
+      color: #e7e7e7;
+      line-height: 1.72;
+      font-size: clamp(1.15rem, 2.1vw, 1.5rem);
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    .intensive-schedule {
+      min-height: auto;
+      padding: 88px 0 72px;
+      background: #0a0a0a;
+    }
+    .intensive-head {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .intensive-head h2 {
+      font-size: clamp(1.95rem, 3.9vw, 2.9rem);
+      margin-bottom: 8px;
+    }
+    .intensive-head p {
+      color: #cfcfcf;
+      font-size: clamp(1rem, 1.8vw, 1.14rem);
+    }
+    .intensive-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      border-bottom: 1px solid #2f2f2f;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      align-items: flex-end;
+    }
+    .intensive-tab {
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      color: #919191;
+      padding: 12px 14px;
+      font-weight: 800;
+      cursor: pointer;
+      position: relative;
+      transition: color .25s ease;
+      font-size: clamp(.95rem, 1.8vw, 1.02rem);
+      text-align: left;
+      flex: 0 0 180px;
+      min-width: 180px;
+    }
+    .intensive-tab { border-width: 2px; }
+    /* DAY별 탭 박스 색상 구분 */
+    .intensive-tab:nth-child(1) {
+      --seq-rgb: 74 144 226;
+      border-color: rgba(74,144,226,.75);
+      background: linear-gradient(180deg, rgba(74,144,226,.32), rgba(74,144,226,.16));
+    }
+    .intensive-tab:nth-child(2) {
+      --seq-rgb: 155 89 182;
+      border-color: rgba(155,89,182,.75);
+      background: linear-gradient(180deg, rgba(155,89,182,.32), rgba(155,89,182,.16));
+    }
+    .intensive-tab:nth-child(3) {
+      --seq-rgb: 231 76 60;
+      border-color: rgba(231,76,60,.75);
+      background: linear-gradient(180deg, rgba(231,76,60,.32), rgba(231,76,60,.16));
+    }
+    .intensive-tab:hover {
+      animation: intensive-tab-hover-pop .42s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .intensive-tab:nth-child(1):hover { border-color: rgba(74,144,226,.92); }
+    .intensive-tab:nth-child(2):hover { border-color: rgba(155,89,182,.92); }
+    .intensive-tab:nth-child(3):hover { border-color: rgba(231,76,60,.92); }
+    @keyframes intensive-tab-hover-pop {
+      0% {
+        transform: scale(1);
+        filter: brightness(1);
+        box-shadow: none;
+        background: var(--base-bg, rgba(255,255,255,.02));
+      }
+      55% {
+        transform: scale(1.035);
+        filter: brightness(1.08);
+        background: var(--hover-bg-solid, var(--base-bg, rgba(255,255,255,.02)));
+        box-shadow:
+          0 0 0 2px var(--hover-glow-strong, rgb(124,252,0)),
+          0 0 18px var(--hover-glow, rgb(124,252,0)),
+          0 10px 24px rgba(0,0,0,.38);
+      }
+      100% {
+        transform: scale(1);
+        filter: brightness(1.02);
+        background: var(--base-bg, rgba(255,255,255,.02));
+        box-shadow:
+          0 0 0 1px var(--hover-glow-soft, rgb(124,252,0)),
+          0 0 12px var(--hover-glow-soft2, rgb(124,252,0));
+      }
+    }
+    .intensive-tab:nth-child(1):hover {
+      --base-bg: linear-gradient(180deg, rgba(74,144,226,.32), rgba(74,144,226,.16));
+      --hover-bg-solid: #4A90E2;
+      --hover-glow-strong: #4A90E2;
+      --hover-glow: #4A90E2;
+      --hover-glow-soft: #4A90E2;
+      --hover-glow-soft2: #4A90E2;
+    }
+    .intensive-tab:nth-child(2):hover {
+      --base-bg: linear-gradient(180deg, rgba(155,89,182,.32), rgba(155,89,182,.16));
+      --hover-bg-solid: #9B59B6;
+      --hover-glow-strong: #9B59B6;
+      --hover-glow: #9B59B6;
+      --hover-glow-soft: #9B59B6;
+      --hover-glow-soft2: #9B59B6;
+    }
+    .intensive-tab:nth-child(3):hover {
+      --base-bg: linear-gradient(180deg, rgba(231,76,60,.32), rgba(231,76,60,.16));
+      --hover-bg-solid: #E74C3C;
+      --hover-glow-strong: #E74C3C;
+      --hover-glow: #E74C3C;
+      --hover-glow-soft: #E74C3C;
+      --hover-glow-soft2: #E74C3C;
+    }
+    .intensive-tab .t-day {
+      display: block;
+      font-size: .82rem;
+      letter-spacing: .08em;
+      opacity: .9;
+      margin-bottom: 2px;
+    }
+    .intensive-tab .t-date {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: -0.01em;
       color: #d8d8d8;
-      font-size: 0.96rem;
     }
-
-    .card ul {
+    .intensive-tab .t-time {
+      display: block;
+      font-size: .88rem;
+      opacity: .85;
+      margin-top: 2px;
+    }
+    .intensive-tab:hover { color: #d8d8d8; }
+    .intensive-tab:hover .t-day,
+    .intensive-tab:hover .t-date,
+    .intensive-tab:hover .t-time {
+      color: var(--lime);
+      text-shadow: 0 0 12px rgba(124,252,0,.45);
+    }
+    .intensive-tab.active { color: var(--lime); }
+    .intensive-tab.active .t-date {
+      color: var(--lime);
+      text-shadow: 0 0 14px rgba(124,252,0,.45);
+    }
+    /* 선택(클릭)된 탭은 색상 변화로 명확히 표시 */
+    .intensive-tab.active {
+      border-color: rgba(124,252,0,.9);
+      background: linear-gradient(180deg, rgba(124,252,0,.18), rgba(124,252,0,.08));
+      box-shadow:
+        0 0 0 1px rgba(124,252,0,.35),
+        0 0 14px rgba(124,252,0,.28);
+    }
+    .intensive-cta {
+      margin-left: auto;
+      align-self: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      background: var(--lime);
+      color: #111;
+      font-weight: 900;
+      border: 1px solid rgba(124,252,0,.9);
+      box-shadow: 0 10px 22px rgba(124,252,0,.14);
+      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+      white-space: nowrap;
+    }
+    .intensive-cta:hover {
+      animation: intensive-cta-hover-pop .42s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes intensive-cta-hover-pop {
+      0% { transform: translateY(0) scale(1); filter: brightness(1); }
+      55% { transform: translateY(-2px) scale(1.03); filter: brightness(1.06); }
+      100% { transform: translateY(0) scale(1); filter: brightness(1.03); }
+    }
+    .intensive-tab.active::after {
+      content: "";
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: -12px;
+      height: 4px;
+      background: var(--lime);
+      border-radius: 999px;
+    }
+    @keyframes tab-seq-glow {
+      0% {
+        border-color: rgba(255,255,255,.08);
+        background: rgba(255,255,255,.02);
+        box-shadow: none;
+      }
+      35% {
+        border-color: rgb(var(--seq-rgb));
+        background: rgb(var(--seq-rgb));
+        box-shadow:
+          0 0 0 2px rgb(var(--seq-rgb)),
+          0 0 18px rgb(var(--seq-rgb)),
+          0 0 34px rgb(var(--seq-rgb));
+      }
+      100% {
+        border-color: rgba(255,255,255,.08);
+        background: rgba(255,255,255,.02);
+        box-shadow: none;
+      }
+    }
+    @keyframes tab-seq-text {
+      0% { color: #d8d8d8; text-shadow: none; }
+      35% { color: rgb(var(--seq-rgb)); text-shadow: 0 0 12px rgb(var(--seq-rgb)); }
+      100% { color: #d8d8d8; text-shadow: none; }
+    }
+    /* 섹션 진입 시 날짜 컬러를 DAY1→DAY2→DAY3 순서로 점등 */
+    #intensive-schedule.tab-anim .intensive-tab:nth-child(1) {
+      animation: tab-seq-glow 1.2s ease both;
+      animation-delay: .15s;
+    }
+    #intensive-schedule.tab-anim .intensive-tab:nth-child(2) {
+      animation: tab-seq-glow 1.2s ease both;
+      animation-delay: .95s;
+    }
+    #intensive-schedule.tab-anim .intensive-tab:nth-child(3) {
+      animation: tab-seq-glow 1.2s ease both;
+      animation-delay: 1.75s;
+    }
+    #intensive-schedule.tab-anim .intensive-tab:nth-child(1) .t-date {
+      animation: tab-seq-text 1.2s ease both;
+      animation-delay: .15s;
+    }
+    #intensive-schedule.tab-anim .intensive-tab:nth-child(2) .t-date {
+      animation: tab-seq-text 1.2s ease both;
+      animation-delay: .95s;
+    }
+    #intensive-schedule.tab-anim .intensive-tab:nth-child(3) .t-date {
+      animation: tab-seq-text 1.2s ease both;
+      animation-delay: 1.75s;
+    }
+    .timeline-content ul,
+    .track-card ul {
       list-style: none;
       display: grid;
       gap: 6px;
-      margin-top: 8px;
+      margin: 0;
+      padding: 0;
     }
-
-    .timeline {
+    .timeline-content li,
+    .track-card li {
+      color: #d8d8d8;
+      font-size: .95rem;
+      line-height: 1.65;
+      padding-left: 12px;
+      position: relative;
+    }
+    .timeline-content li::before,
+    .track-card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .7em;
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(124,252,0,.75);
+      transform: translateY(-50%);
+    }
+    .track-card li::before {
+      background: rgba(255,255,255,.28);
+    }
+    .track-card .practice-block li::before {
+      background: rgba(124,252,0,.85);
+    }
+    .intensive-day-panel {
+      display: none;
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    .intensive-day-panel.active {
+      display: block;
+      animation: intensive-fade .3s ease forwards;
+    }
+    @keyframes intensive-fade {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .day-timeline {
+      position: relative;
+      padding-left: 16px;
       display: grid;
       gap: 14px;
-      margin-bottom: 24px;
     }
-
-    .timeline-item {
-      border-left: 3px solid var(--lime);
-      padding: 8px 0 8px 14px;
-      background: rgba(124,252,0,0.03);
-      border-radius: 8px;
+    .day-timeline::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      bottom: 2px;
+      width: 1px;
+      background: #333;
     }
-
-    .timeline-time {
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 170px 18px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+    }
+    .timeline-time-col {
       color: var(--lime);
-      font-weight: 700;
-      margin-bottom: 4px;
+      font-weight: 800;
+      font-size: .98rem;
+      padding-top: 6px;
     }
-
-    .note-box {
-      background: #111;
-      border: 1px solid #2e2e2e;
+    .timeline-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #5a5a5a;
+      margin-top: 11px;
+      margin-left: 2px;
+    }
+    .timeline-row.current .timeline-dot { background: var(--lime); box-shadow: 0 0 10px rgba(124,252,0,.5); }
+    .timeline-content {
+      background: #141414;
       border-radius: 12px;
-      padding: 18px;
-      margin-top: 8px;
+      border: 1px solid #2e2e2e;
+      padding: 14px;
     }
-
-    .note-box strong {
+    .timeline-content h4 {
+      font-size: 1.08rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .timeline-content p {
+      color: #d8d8d8;
+      font-size: .95rem;
+      line-height: 1.65;
+    }
+    .timeline-content.common { border-left: 4px solid var(--lime); }
+    .track-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .track-card {
+      background: #141414;
+      border: 1px solid #2d2d2d;
+      border-top: 4px solid #2d2d2d;
+      border-radius: 12px;
+      padding: 14px;
+      transition: filter .22s ease, border-top-width .22s ease;
+    }
+    .track-card:hover {
+      filter: brightness(1.1);
+      border-top-width: 6px;
+    }
+    .track-card.journalist { border-top-color: #4A90E2; }
+    .track-card.media { border-top-color: #9B59B6; }
+    .track-card.youtube { border-top-color: #E74C3C; }
+    .track-card h5 {
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .track-card .track-time {
       color: var(--lime);
+      font-weight: 800;
+      font-size: .85rem;
+      margin-bottom: 8px;
+      display: block;
     }
-
-    .revenue-flow {
-      margin-top: 20px;
-      padding: 16px;
-      border-radius: 10px;
-      border: 1px dashed rgba(124,252,0,0.4);
-      color: #f0f0f0;
-      background: rgba(124,252,0,0.04);
-      font-weight: 500;
+    .track-card p {
+      color: #d7d7d7;
+      font-size: .9rem;
+      line-height: 1.6;
+      margin-bottom: 8px;
+      white-space: pre-line;
+    }
+    .practice-badge {
+      display: inline-block;
+      background: var(--lime);
+      color: #111;
+      font-weight: 900;
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: .78rem;
+      margin-right: 6px;
+    }
+    .include-grid {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .include-card {
+      background: #1a1a1a;
+      border: 1px solid #2f2f2f;
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .include-card h4 {
+      color: var(--lime);
+      margin-bottom: 8px;
+      font-size: 1.04rem;
+    }
+    .include-card p {
+      color: #d8d8d8;
+      font-size: .9rem;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+    @keyframes stn-asset-fade-up {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    #stn-asset.reveal.active .stn-asset-title {
+      animation: stn-asset-fade-up .62s ease forwards;
+      animation-delay: .08s;
+    }
+    #stn-asset.reveal.active .stn-asset-lead {
+      animation: stn-asset-fade-up .62s ease forwards;
+      animation-delay: .2s;
+    }
+    #stn-asset.reveal.active .stn-asset-list li {
+      animation: stn-asset-fade-up .62s ease forwards;
+    }
+    #stn-asset.reveal.active .stn-asset-list li:nth-child(1) { animation-delay: .38s; }
+    #stn-asset.reveal.active .stn-asset-list li:nth-child(2) { animation-delay: .56s; }
+    #stn-asset.reveal.active .stn-asset-list li:nth-child(3) { animation-delay: .74s; }
+    #stn-asset.reveal.active .stn-asset-list li:nth-child(4) { animation-delay: .92s; }
+    #stn-asset.reveal.active .stn-asset-list li:nth-child(5) { animation-delay: 1.1s; }
+    #stn-asset.reveal.active .stn-asset-list li:nth-child(6) { animation-delay: 1.28s; }
+    #stn-asset.reveal.active .stn-asset-list li:nth-child(7) { animation-delay: 1.46s; }
+    #stn-asset.reveal.active .stn-asset-summary {
+      animation: stn-asset-fade-up .62s ease forwards;
+      animation-delay: 1.68s;
     }
 
     .event {
-      background: linear-gradient(135deg, var(--lime), var(--gold));
-      color: #121212;
+      position: relative;
+      overflow: hidden;
+      background: #0a0612;
       text-align: center;
     }
-
-    .event h2 {
-      color: #0f0f0f;
-      margin-bottom: 14px;
+    .event-video-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; z-index: 0;
     }
-
-    .event .big {
-      font-size: clamp(2rem, 5vw, 3.6rem);
+    .event-vignette {
+      position: absolute; inset: 0; z-index: 1;
+      background: radial-gradient(ellipse 90% 75% at 50% 50%, transparent 22%, rgba(8,4,14,.35) 100%);
+    }
+    .event .container { position: relative; z-index: 2; }
+    .event h2 { color: var(--lime); margin-bottom: 16px; }
+    .event-tagline {
+      font-size: clamp(1.38rem, 4.2vw, 2.2rem);
+      font-weight: 800;
+      max-width: 22em;
+      margin: 0 auto 28px;
+      line-height: 1.58;
+      text-shadow: 0 1px 2px rgba(0,0,0,.92), 0 2px 16px rgba(0,0,0,.65), 0 0 18px rgba(124,252,0,.35);
+      animation: event-tagline-move 5s ease-in-out infinite;
+    }
+    .event-tagline .event-hero-word {
+      color: #ff9f3c;
       font-weight: 900;
-      margin-bottom: 10px;
-      line-height: 1.2;
+      font-size: 1.22em;
+      text-shadow: 0 0 18px rgba(255, 159, 60, 0.45);
     }
-
-    .event p {
-      font-size: 1.04rem;
-      font-weight: 600;
+    @keyframes event-tagline-move {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(4px, -10px) rotate(.35deg); }
+      50% { transform: translate(-5px, -4px) rotate(-.3deg); }
+      75% { transform: translate(3px, -12px) rotate(.2deg); }
     }
-
-    .faq-wrap {
-      display: grid;
-      gap: 12px;
+    .event-cash {
+      margin: 0 0 clamp(24px, 5vw, 40px);
+      font-size: clamp(3.1rem, 12vw, 7.2rem);
+      font-weight: 900;
+      line-height: 1.02;
+      animation: event-cash-pop 2.8s ease-in-out infinite;
     }
-
-    details {
-      border: 1px solid #2f2f2f;
-      border-radius: 10px;
-      padding: 12px 14px;
-      background: #121212;
+    @keyframes event-cash-pop {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
     }
-
-    summary {
-      cursor: pointer;
-      font-weight: 600;
-      color: #f2f2f2;
-    }
-
-    details p {
-      margin-top: 10px;
-      color: #cfcfcf;
-      font-size: 0.95rem;
-    }
-
-    .final-cta {
-      text-align: center;
-    }
-
-    .final-cta h2 {
-      margin-bottom: 12px;
-    }
-
-    .final-cta .contact {
-      margin: 14px 0;
-      color: #e5e5e5;
-    }
-
-    .final-cta .early {
+    .cash-counter, .event-won {
       display: inline-block;
-      padding: 7px 12px;
-      border: 1px solid rgba(124,252,0,0.6);
-      border-radius: 999px;
-      color: var(--lime);
-      margin-bottom: 18px;
-      font-size: 0.92rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      font-family: "Noto Sans KR", "Arial Black", "Helvetica Neue", sans-serif;
+      color: #f5fbff;
+      text-shadow:
+        0 2px 0 rgba(22, 60, 80, 0.9),
+        0 4px 0 rgba(15, 38, 52, 0.85),
+        0 8px 16px rgba(0, 0, 0, 0.58),
+        0 0 12px rgba(124, 252, 0, 0.42);
+      animation: event-neon-flicker 2.8s ease-in-out infinite;
+    }
+    .cash-counter {
+      transform: perspective(600px) rotateX(8deg);
+      color: #f9feff;
+      background-image: linear-gradient(90deg, #f6fffd 0%, #a3ffe8 28%, #66f7ff 62%, #7fb7ff 100%);
+      background-size: 0% 100%;
+      background-position: left center;
+      background-repeat: no-repeat;
+      transition: background-size 1.2s ease, text-shadow 1.2s ease, filter 1.2s ease;
+      text-shadow:
+        0 2px 0 rgba(24, 76, 104, 0.95),
+        0 5px 0 rgba(16, 48, 66, 0.88),
+        0 10px 18px rgba(0, 0, 0, 0.62),
+        0 0 18px rgba(124, 252, 0, 0.56);
+      filter: saturate(1.04) contrast(1.08);
+    }
+    .cash-counter.is-gradient {
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 100% 100%;
+      text-shadow:
+        0 0 1px rgba(230, 255, 250, 0.96),
+        0 0 10px rgba(102, 243, 255, 0.58),
+        0 0 22px rgba(127, 183, 255, 0.34),
+        0 10px 18px rgba(0, 0, 0, 0.54);
+    }
+    .event-won {
+      -webkit-text-stroke: 0;
+      color: #dff8ff;
+      text-shadow:
+        0 1px 0 rgba(20, 58, 78, 0.82),
+        0 3px 0 rgba(14, 40, 55, 0.8),
+        0 7px 12px rgba(0, 0, 0, 0.45),
+        0 0 9px rgba(124, 252, 0, 0.3);
+      filter: brightness(0.95);
+      opacity: 0.94;
+    }
+    @keyframes event-neon-flicker {
+      0%, 100% { filter: brightness(1); opacity: 1; }
+      45% { filter: brightness(1.06); opacity: .98; }
+      48% { filter: brightness(.98); opacity: .97; }
+      52% { filter: brightness(1.08); opacity: .99; }
+    }
+    .event-note {
+      font-size: clamp(.95rem, 2.35vw, 1.12rem);
+      color: rgba(220,220,220,.9);
     }
 
-    footer {
-      padding: 18px 0 28px;
-      text-align: center;
-      color: #909090;
-      font-size: 0.88rem;
+    .timeline { display: grid; gap: 14px; margin-bottom: 24px; }
+    .timeline-item { border-left: 3px solid var(--lime); padding: 8px 0 8px 14px; background: rgba(124,252,0,.03); border-radius: 8px; }
+    .timeline-time { color: var(--lime); font-weight: 700; margin-bottom: 4px; }
+    .note-box { border: 1px solid #2e2e2e; border-radius: 12px; padding: 18px; background: #111; }
+    .benefits-wrap {
+      margin-top: 18px;
+      display: grid;
+      gap: 14px;
     }
+    .benefits-layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+      gap: clamp(16px, 3vw, 36px);
+      align-items: start;
+    }
+    .benefits-title {
+      position: sticky;
+      top: 50%;
+      transform: translateY(-50%);
+      align-self: center;
+      margin: 0;
+    }
+    .benefits-scroll {
+      max-height: min(62vh, 640px);
+      overflow-y: auto;
+      overflow-x: visible;
+      padding-right: 10px;
+      padding-top: 6px;
+      padding-bottom: 6px;
+    }
+    .benefits-scroll::-webkit-scrollbar { width: 10px; }
+    .benefits-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,.04); border-radius: 999px; }
+    .benefits-scroll::-webkit-scrollbar-thumb { background: rgba(124,252,0,.28); border-radius: 999px; }
+    .benefits-scroll:hover::-webkit-scrollbar-thumb { background: rgba(124,252,0,.42); }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      max-width: 980px;
+      margin: 0;
+    }
+    .benefits-pre {
+      min-height: auto;
+      padding: 56px 0 6px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    #benefits {
+      padding: 44px 0 44px;
+      position: relative;
+      overflow: hidden;
+      background: #000;
+    }
+    .benefits-video-bg {
+      position: absolute;
+      inset: -2%;
+      width: 104%;
+      height: 104%;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 0.75;
+    }
+    .benefits-video-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(180deg, rgba(10,10,10,.72), rgba(10,10,10,.62), rgba(10,10,10,.78));
+    }
+    #benefits .container {
+      position: relative;
+      z-index: 2;
+    }
+    .price-cut {
+      min-height: auto;
+      padding: 88px 0 72px;
+      background: #0a0a0a;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .price-cut-layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+      gap: clamp(16px, 3vw, 44px);
+      align-items: center;
+    }
+    .price-cut-left {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      line-height: 1.15;
+      color: #fff;
+    }
+    .price-cut-sub {
+      margin-top: 10px;
+      color: rgba(255,255,255,.82);
+      font-size: .98rem;
+      line-height: 1.55;
+      font-weight: 500;
+      white-space: pre-line;
+    }
+    .price-cut-right {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      padding: 0;
+      box-shadow: none;
+    }
+    .price-cut-kicker {
+      color: var(--lime);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      font-size: clamp(1.35rem, 2.6vw, 2rem);
+      margin-bottom: 10px;
+      text-shadow: 0 0 14px rgba(124,252,0,.22);
+    }
+    .price-cut-amount {
+      font-size: clamp(3.2rem, 9vw, 6.6rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      line-height: 1.08;
+      text-shadow: 0 2px 0 rgba(0,0,0,.65), 0 10px 18px rgba(0,0,0,.35);
+      position: relative;
+      display: inline-block;
+    }
+    .price-odometer {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0;
+      font-variant-numeric: tabular-nums;
+    }
+    .price-sep {
+      display: inline-block;
+      width: .34em;
+      text-align: center;
+      opacity: 0.95;
+      transform: translateY(-0.02em);
+    }
+    .price-digit {
+      position: relative;
+      width: 0.72em;
+      height: 1em;
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: baseline;
+    }
+    .price-digit .stack {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      will-change: transform;
+      transform: translateY(var(--ty, 0));
+      transition: transform var(--dur, 1200ms) cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .price-digit .d {
+      height: 1em;
+      line-height: 1em;
+      text-align: center;
+    }
+    .price-cut-amount .won {
+      font-size: .45em;
+      font-weight: 900;
+      opacity: 0.92;
+      margin-left: 6px;
+    }
+    .installment {
+      min-height: auto;
+      padding: 54px 0 64px;
+      background: #0a0a0a;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .installment-layout {
+      display: grid;
+      grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+      gap: clamp(16px, 3vw, 44px);
+      align-items: center;
+    }
+    .installment-left {
+      font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+      font-weight: 900;
+      color: #ffffff;
+      opacity: 0.92;
+    }
+    .installment-right {
+      font-size: clamp(3.2rem, 8vw, 6rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--lime);
+      text-shadow: 0 0 18px rgba(124,252,0,.24), 0 10px 18px rgba(0,0,0,.35);
+      line-height: 1.05;
+    }
+    .installment-right .won {
+      font-size: .45em;
+      opacity: 0.9;
+      margin-left: 6px;
+    }
+    @media (max-width: 768px) {
+      .installment-layout {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+    }
+    .price-x {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 3.2em;
+      height: 3.2em;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      opacity: 0;
+      z-index: 3;
+    }
+    .price-x .l1,
+    .price-x .l2 {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 3.1em;
+      height: 18px;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          #ff3a3a 0px,
+          #ff3a3a 3px,
+          #e51313 3px,
+          #e51313 6px
+        );
+      border-radius: 999px;
+      transform-origin: center;
+      transform: translate(-50%, -50%) rotate(45deg) scaleX(0);
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,.25),
+        0 0 18px rgba(255,42,42,.55);
+      filter: saturate(1.15) contrast(1.08);
+    }
+    .price-x .l2 {
+      transform: translate(-50%, -50%) rotate(-45deg) scaleX(0);
+    }
+    @keyframes x-draw {
+      from { transform: translate(-50%, -50%) rotate(var(--rot)) scaleX(0); }
+      to { transform: translate(-50%, -50%) rotate(var(--rot)) scaleX(1); }
+    }
+    .price-cut-right.show-x .price-x {
+      opacity: 1;
+    }
+    .price-cut-right.show-x .price-x .l1 { --rot: 45deg; animation: x-draw .42s ease forwards; }
+    .price-cut-right.show-x .price-x .l2 { --rot: -45deg; animation: x-draw .42s ease .18s forwards; }
+    @keyframes price-pop {
+      0% { transform: scale(1); }
+      55% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+    .price-cut-right.is-pop .price-cut-amount {
+      animation: price-pop .5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .price-cut-right.is-final .price-cut-amount {
+      color: #ff2a2a;
+      transition: color 1.4s ease;
+      text-shadow:
+        0 2px 0 rgba(0,0,0,.65),
+        0 10px 18px rgba(0,0,0,.35),
+        0 0 18px rgba(255,42,42,.55),
+        0 0 38px rgba(255,42,42,.3);
+    }
+    @keyframes final-pop {
+      0% { transform: scale(1); }
+      55% { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+    @keyframes final-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+    .price-cut-right.is-final .price-cut-amount {
+      animation:
+        final-pop .72s cubic-bezier(0.22, 1, 0.36, 1),
+        final-pulse 1.25s ease-in-out .85s infinite;
+    }
+    @media (max-width: 768px) {
+      .price-cut-layout {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+    }
+    .benefits-pre .benefits-pre-text {
+      font-size: clamp(1.95rem, 3.9vw, 2.9rem);
+      font-weight: 900;
+      line-height: 1.28;
+      text-align: center;
+      color: #ffffff;
+      display: grid;
+      gap: 10px;
+    }
+    .benefits-pre-line {
+      opacity: 0;
+      transform: translateY(18px) scale(.98);
+      transform-origin: center;
+    }
+    .benefits-pre-em {
+      color: var(--lime);
+      font-weight: 900;
+      font-size: 1.18em;
+      text-shadow: 0 0 14px rgba(124,252,0,.32);
+      letter-spacing: -0.01em;
+    }
+    @keyframes benefits-pre-in-pop {
+      0% { opacity: 0; transform: translateY(18px) scale(.98); filter: blur(.2px); }
+      55% { opacity: 1; transform: translateY(0) scale(1.04); filter: blur(0); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .benefits-pre.reveal.active .benefits-pre-line {
+      animation: benefits-pre-in-pop .78s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .benefits-pre.reveal.active .benefits-pre-line:nth-child(1) { animation-delay: .08s; }
+    .benefits-pre.reveal.active .benefits-pre-line:nth-child(2) { animation-delay: .32s; }
+    .benefit-pill {
+      display: block;
+      width: 100%;
+      text-align: left;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 60, 60, 0.85);
+      background: #b41616;
+      color: #ffffff;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      padding: 18px 18px;
+      font-size: clamp(1.02rem, 1.8vw, 1.2rem);
+      min-height: 64px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      opacity: 0;
+      transform: translateY(14px);
+      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease, background-color .22s ease, border-color .22s ease;
+    }
+    .benefit-pill > * {
+      transition: transform .22s ease;
+      transform-origin: left center;
+    }
+    .benefit-pill:hover > * {
+      transform: scale(1.02);
+    }
+    .benefit-em {
+      font-weight: 900;
+      font-size: 1.12em;
+      color: #ffe45a;
+      letter-spacing: -0.01em;
+      text-shadow: 0 0 10px rgba(255, 228, 90, 0.22);
+    }
+    .benefit-note {
+      font-weight: 500;
+      opacity: 0.9;
+      font-size: 0.96em;
+    }
+    #benefits.reveal.active .benefit-pill {
+      animation: benefits-pill-in .6s ease forwards;
+    }
+    @keyframes benefits-pill-in {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    #benefits.reveal.active .benefit-pill:nth-child(1) { animation-delay: .12s; }
+    #benefits.reveal.active .benefit-pill:nth-child(2) { animation-delay: .26s; }
+    #benefits.reveal.active .benefit-pill:nth-child(3) { animation-delay: .4s; }
+    #benefits.reveal.active .benefit-pill:nth-child(4) { animation-delay: .54s; }
+    #benefits.reveal.active .benefit-pill:nth-child(5) { animation-delay: .68s; }
+    #benefits.reveal.active .benefit-pill:nth-child(6) { animation-delay: .82s; }
+    .benefit-pill:hover {
+      transform: translateY(-2px) scale(1.03);
+      filter: brightness(1.08);
+      border-color: rgba(255, 90, 90, 0.95);
+      background: #e02020;
+      box-shadow:
+        0 0 0 1px rgba(255, 70, 70, 0.65),
+        0 0 16px rgba(255, 70, 70, 0.45),
+        0 12px 28px rgba(0,0,0,.4);
+    }
+    .faq-wrap { display: grid; gap: 12px; }
+    #faq {
+      min-height: auto;
+      padding: 56px 0 52px;
+    }
+    details { border: 1px solid #2f2f2f; border-radius: 10px; padding: 12px 14px; background: #121212; }
+    summary { cursor: pointer; font-weight: 600; }
+    .final-cta { text-align: center; }
+    .early { display: inline-block; padding: 7px 12px; border: 1px solid rgba(124,252,0,.6); border-radius: 999px; color: var(--lime); margin-bottom: 16px; }
+    #apply.final-cta {
+      min-height: auto;
+      padding: 56px 0 60px;
+    }
+    .apply-contact {
+      font-size: clamp(1.35rem, 3.2vw, 2rem);
+      font-weight: 900;
+      margin-top: 14px;
+    }
+    footer { padding: 18px 0 28px; text-align: center; color: #909090; font-size: .88rem; }
 
     @media (max-width: 1024px) {
-      .grid-4 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .nav-links {
-        display: none;
-      }
+      .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .nav-links { display: none; }
     }
-
     @media (max-width: 768px) {
-      section {
-        min-height: auto;
-        padding: 88px 0 48px;
+      section { min-height: auto; padding: 88px 0 48px; }
+      .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .cur-grid, .cur-grid.youtube { grid-template-columns: 1fr; }
+      .problem-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
       }
-      .grid-3, .grid-4 {
+      .problem-visual {
+        min-height: clamp(220px, 62vw, 360px);
+      }
+      .solution-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .stn-split-wrap {
         grid-template-columns: 1fr;
       }
-      .hero-info {
-        font-size: 0.96rem;
+      .timeline-row {
+        grid-template-columns: 1fr;
       }
-      .badge {
-        font-size: 0.86rem;
+      .timeline-dot {
+        margin-top: 0;
+        margin-left: 0;
+      }
+      .track-grid {
+        grid-template-columns: 1fr;
+      }
+      .include-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+      .benefits-layout {
+        grid-template-columns: 1fr;
+      }
+      .benefits-title {
+        position: static;
+      }
+      .benefits-scroll {
+        max-height: none;
+        overflow: visible;
+        padding-right: 0;
+      }
+      .stn-asset-wrap {
+        padding: 20px 16px;
+      }
+      .solution-visual {
+        min-height: clamp(220px, 62vw, 360px);
+      }
+      .problem-title {
+        position: static;
+        transform: none;
+      }
+      #problem .card,
+      #solution .card {
+        transform-origin: center center;
+      }
+      .include-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .event-tagline, .event-cash, .hero-video-bg { animation: none; }
+      .cash-counter { transition: none; }
+      .stn-asset-title,
+      .stn-asset-lead,
+      .stn-asset-list li,
+      .stn-asset-summary {
+        opacity: 1;
+        transform: none;
+        animation: none !important;
+      }
+      #problem.reveal:not(.active) .problem-title,
+      #problem.reveal:not(.active) .problem-cards .card,
+      #solution.reveal:not(.active) .solution-heading,
+      #solution.reveal:not(.active) .solution-visual,
+      #solution.reveal:not(.active) .solution-cards .card {
+        opacity: 1;
+        transform: none;
+      }
+      #problem.reveal.active .problem-title,
+      #problem.reveal.active .problem-cards .card,
+      #solution.reveal.active .solution-heading,
+      #solution.reveal.active .solution-visual,
+      #solution.reveal.active .solution-cards .card {
+        animation: none;
       }
     }
   </style>
@@ -378,10 +2070,9 @@
     <div class="container nav-inner">
       <a class="logo" href="#hero">STN 미디어서포터즈</a>
       <div class="nav-links">
-        <a href="#problem">문제제기</a>
+        <a href="#problem">문제점</a>
         <a href="#solution">솔루션</a>
         <a href="#tracks">트랙</a>
-        <a href="#schedule">일정</a>
         <a href="#benefits">혜택</a>
         <a href="#faq">FAQ</a>
       </div>
@@ -389,6 +2080,10 @@
   </nav>
 
   <section id="hero" class="hero reveal">
+    <video class="hero-video-bg" autoplay muted loop playsinline preload="auto">
+      <source src="image/stn003.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-video-overlay"></div>
     <div class="container">
       <h1>미디어서포터즈 <span class="hero-highlight">양성 프로젝트</span></h1>
       <p class="sub">에스티엔방송·에스티엔뉴스</p>
@@ -397,155 +2092,7 @@
         <span class="badge">미디어부문</span>
         <span class="badge">유튜브활용 부문(AI 완전 자동화)</span>
       </div>
-      <div class="hero-info">
-        <p><strong>일정:</strong> 2026년 6월 19일(금)~6월 21일(일)</p>
-        <p><strong>수강료:</strong> 1,980,000원 | 선착순 500명 모집</p>
-      </div>
-      <button class="cta-btn apply-btn">지금 신청하기</button>
-    </div>
-  </section>
-
-  <section id="problem" class="reveal">
-    <div class="container">
-      <h2>유튜브 수익화, 왜 실패할까?</h2>
-      <div class="grid-3">
-        <article class="card">
-          <h3>① 자격 요건 미달</h3>
-          <p>구독자 1,000명 / 시청 4,000시간 조건을 채우지 못해 수익화 진입이 어렵습니다.</p>
-        </article>
-        <article class="card">
-          <h3>② 콘텐츠 전략 부재</h3>
-          <p>타겟과 포맷이 없는 채널 운영은 조회수와 구독자 전환을 만들기 어렵습니다.</p>
-        </article>
-        <article class="card">
-          <h3>③ 지속성 부족</h3>
-          <p>제작부터 편집, 업로드까지 반복 루틴이 무너지며 채널 성장이 멈춥니다.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="solution" class="reveal">
-    <div class="container">
-      <h2>STN이 3가지를 해결합니다</h2>
-      <div class="grid-3">
-        <article class="card">
-          <h3>자동 구독자 500명 보장</h3>
-          <p>초기 채널의 가장 큰 장벽을 빠르게 넘을 수 있도록 실전형 성장 구조를 제공합니다.</p>
-        </article>
-        <article class="card">
-          <h3>AI 자동화로 95% 시간 단축</h3>
-          <p>콘텐츠 제작 프로세스를 자동화해 직장인도 지속 가능한 운영 루틴을 구축합니다.</p>
-        </article>
-        <article class="card">
-          <h3>독립 채널 100% 수익 소유</h3>
-          <p>개인이 운영하는 채널에서 발생한 수익을 온전히 본인 명의로 확보할 수 있습니다.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="tracks" class="reveal">
-    <div class="container">
-      <h2>당신에게 맞는 트랙을 선택하세요</h2>
-      <div class="grid-3">
-        <article class="card">
-          <h3>기자 부문</h3>
-          <ul>
-            <li><strong>핵심목표:</strong> STN뉴스 기자활동 + 네이버 기사 송고</li>
-            <li><strong>최종혜택:</strong> 에스티엔뉴스 공식 기자증</li>
-            <li><strong>추천:</strong> 저널리즘 지망생, 스포츠 팬</li>
-          </ul>
-        </article>
-        <article class="card">
-          <h3>미디어 부문</h3>
-          <ul>
-            <li><strong>핵심목표:</strong> SNS·카드뉴스·영상 콘텐츠 제작</li>
-            <li><strong>최종혜택:</strong> 에스티엔 미디어서포터즈 자격증</li>
-            <li><strong>추천:</strong> SNS마케터, 콘텐츠 크리에이터</li>
-          </ul>
-        </article>
-        <article class="card">
-          <h3>유튜브 부문</h3>
-          <ul>
-            <li><strong>핵심목표:</strong> 유튜브 채널개설 + 숏츠 완전자동화</li>
-            <li><strong>최종혜택:</strong> YPP 수익화(팬펀딩·쇼핑·광고)</li>
-            <li><strong>추천:</strong> 유튜브 수익화 희망자</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="schedule" class="reveal">
-    <div class="container">
-      <h2>2박3일 집중 교육 일정</h2>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-time">금요일 19:00</div>
-          <p>입실·숙소배치·저녁식사</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-time">금요일 20:00~21:30</div>
-          <p>오리엔테이션·트랙선택·특강</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-time">토요일 09:00~12:00</div>
-          <p>기자부문 - 기사작성, Claude AI 활용</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-time">토요일 13:00~16:00</div>
-          <p>미디어부문 - 영상촬영, Alpha Cut 실습</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-time">토요일 17:00~20:00</div>
-          <p>유튜브부문 - 채널설정, AI자동화, SNS배포전략</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-time">일요일 09:00~10:00</div>
-          <p>최종실습·발표·수료식·자격증 수여 후 귀가</p>
-        </div>
-      </div>
-
-      <div class="note-box">
-        <p><strong>포함사항:</strong> 2박 숙박, 3끼 식사, 교재, 교육용 장비 현장제공</p>
-        <p><strong>필수지참:</strong> 개인 노트북 (최소 8GB RAM, 256GB SSD)</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="benefits" class="reveal">
-    <div class="container">
-      <h2>수강생이 얻는 것</h2>
-      <div class="grid-4">
-        <article class="card">
-          <h3>유튜브채널</h3>
-          <p>구독자 즉시 확보 기반으로 빠른 초기 성장 발판을 만듭니다.</p>
-        </article>
-        <article class="card">
-          <h3>AI자동화 마스터</h3>
-          <p>편집시간 95% 단축으로 제작 효율과 업로드 빈도를 동시에 개선합니다.</p>
-        </article>
-        <article class="card">
-          <h3>기자증 취득</h3>
-          <p>6개월 평가 합격 시 에스티엔뉴스 기자증 취득 기회를 제공합니다.</p>
-        </article>
-        <article class="card">
-          <h3>민간자격증</h3>
-          <p>에스티엔 미디어서포터즈 민간자격증(제2025-002178호)을 발급합니다.</p>
-        </article>
-      </div>
-      <div class="revenue-flow">
-        수익 예상: 첫 3개월 월 50만원 → 6개월 후 월 100만원 → 1년 후 월 200~500만원
-      </div>
-    </div>
-  </section>
-
-  <section id="event" class="event reveal">
-    <div class="container">
-      <h2>특별 이벤트</h2>
-      <p class="big">추첨을 통해 현금 1,000만원 지급!</p>
-      <p>수료 후 전체 수강생 중 1명 선정 (과제제출 + 출석률 80% 이상)</p>
+      <p class="hero-motto">STN은 언제나 최선을 다합니다.</p>
     </div>
   </section>
 
@@ -553,20 +2100,521 @@
     <div class="container">
       <h2>프로그램 개요</h2>
       <div class="grid-3">
-        <article class="card">
-          <h3>사업명</h3>
-          <p>에스티엔방송 미디어서포터즈 양성 과정 1기</p>
+        <article class="card"><h3>사업명</h3><p><span class="overview-em">STN미디어서포터즈 양성 과정 1기</span></p></article>
+        <article class="card"><h3>교육형태 / 기간</h3><p><span class="overview-em">온라인·오프라인 동시 집중교육</span></p><p>2026년 7월 10일~12일 (금·토·일)</p></article>
+        <article class="card"><h3>장소</h3><p><span class="overview-em">배제대학교</span></p><p class="overview-sub">(35345) 대전광역시 서구 배재로 155-40(도마동)</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="stn-split" class="stn-split reveal" aria-label="에스티엔 소개">
+    <div class="container">
+      <div class="stn-split-wrap">
+        <div class="stn-video-card">
+          <iframe src="https://www.youtube.com/embed/XFgFdenFJGA" title="STN 소개 영상" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <article class="stn-copy-card">
+          <span class="stn-copy-kicker">STN INTRO</span>
+          <h2 class="stn-copy-title">에스티엔은 <span class="stn-copy-em">실행 중심</span> 미디어 파트너입니다.</h2>
+          <p>에스티엔방송과 에스티엔뉴스는 콘텐츠 기획부터 제작, 송출, 기사 확산까지 하나의 흐름으로 연결해 빠른 성과를 만듭니다.</p>
+          <p>교육 참가자는 현업형 프로세스를 그대로 경험하며, 실무에 바로 적용 가능한 콘텐츠 운영 역량을 단계적으로 확보할 수 있습니다.</p>
         </article>
-        <article class="card">
-          <h3>교육형태 / 기간</h3>
-          <p>온라인 모집 + 2박3일 오프라인 집중 교육</p>
-          <p>2026년 6월 19일~21일 (금·토·일)</p>
-        </article>
-        <article class="card">
-          <h3>수강료 / 정원</h3>
-          <p>1인당 1,980,000원 (VAT포함, 자격증 발급비 포함)</p>
-          <p>정원 500명</p>
-        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="stn-asset" class="stn-asset reveal" aria-label="STN 미디어 자산">
+    <div class="container">
+      <div class="stn-asset-wrap">
+        <h2 class="stn-asset-title"><span class="em">STN의 19년 미디어 자산</span>, 개인에게 연결할 시점</h2>
+        <p class="stn-asset-lead">㈜에스티엔방송은 2006년부터 19년간 스포츠 방송 중계, 언론 운영, 콘텐츠 제작을 이어온 검증된 미디어 전문 기업입니다.</p>
+
+        <ul class="stn-asset-list">
+          <li><strong>KT GENIE TV ch.131</strong> <strong>24시간 방송 운영</strong></li>
+          <li><strong>KTX·SRT 전 객차</strong> <strong>일 33만명</strong> 도달 미디어 보유</li>
+          <li>유튜브 <strong>STN SPORTS</strong> <strong>구독자 10만</strong> 채널 운영</li>
+          <li><strong>네이버·카카오·구글 CP</strong> 제휴사</li>
+          <li><strong>연간 400경기 이상</strong> 중계 인프라 보유</li>
+          <li><strong>패럴림픽 2008~2022</strong> 공식 중계</li>
+          <li>에스티엔미디어마케터 <strong>민간자격 등록</strong> <strong>(제2025-002178호)</strong></li>
+        </ul>
+
+        <p class="stn-asset-summary">이 자산을 개인 크리에이터와 연결하면, 개인은 콘텐츠와 신뢰를 얻고 STN은 플랫폼과 네트워크를 확장하는 상호 성장 구조가 만들어집니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="welcome-fit" class="welcome-fit reveal" aria-label="추천 대상">
+    <div class="container">
+      <div class="welcome-fit-wrap">
+        <h2 class="welcome-fit-title">이런 분들 환영합니다!</h2>
+        <ul class="welcome-fit-list">
+          <li>빠르게 성과 내고 싶으신 분</li>
+          <li>유튜브로 수익 내보고 싶으신 분</li>
+          <li>시행착오 줄이고 싶으신 분</li>
+          <li>나이 때문에 망설이시는 분</li>
+          <li>혼자서 하기 막막하신 분</li>
+          <li>이번엔 진짜 해보고 싶으신 분</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="june-calendar" class="section-calendar reveal">
+    <div class="container calendar-wrap">
+      <h2 class="calendar-head">
+        <span class="calendar-kicker">교육일정</span>
+        <span class="calendar-title">2026년 7월</span>
+      </h2>
+      <div class="calendar-weekdays">
+        <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+      </div>
+      <div class="calendar-days">
+        <div class="calendar-day is-pad"></div><div class="calendar-day is-pad"></div><div class="calendar-day is-pad"></div>
+        <div class="calendar-day"><span class="cal-num">1</span></div><div class="calendar-day"><span class="cal-num">2</span></div><div class="calendar-day"><span class="cal-num">3</span></div><div class="calendar-day"><span class="cal-num">4</span></div>
+        <div class="calendar-day"><span class="cal-num">5</span></div><div class="calendar-day"><span class="cal-num">6</span></div><div class="calendar-day"><span class="cal-num">7</span></div><div class="calendar-day"><span class="cal-num">8</span></div><div class="calendar-day"><span class="cal-num">9</span></div>
+        <div class="calendar-day is-highlight" data-day="day1" role="button" tabindex="0" aria-label="7월 10일 교육 일정 보기"><span class="cal-num">10</span><span class="cal-label">STN<br>미디어서포터즈<br>교육</span></div>
+        <div class="calendar-day is-highlight" data-day="day2" role="button" tabindex="0" aria-label="7월 11일 교육 일정 보기"><span class="cal-num">11</span><span class="cal-label">STN<br>미디어서포터즈<br>교육</span></div>
+        <div class="calendar-day is-highlight" data-day="day3" role="button" tabindex="0" aria-label="7월 12일 교육 일정 보기"><span class="cal-num">12</span><span class="cal-label">STN<br>미디어서포터즈<br>교육</span></div>
+        <div class="calendar-day"><span class="cal-num">13</span></div><div class="calendar-day"><span class="cal-num">14</span></div><div class="calendar-day"><span class="cal-num">15</span></div><div class="calendar-day"><span class="cal-num">16</span></div><div class="calendar-day"><span class="cal-num">17</span></div><div class="calendar-day"><span class="cal-num">18</span></div>
+        <div class="calendar-day"><span class="cal-num">19</span></div><div class="calendar-day"><span class="cal-num">20</span></div><div class="calendar-day"><span class="cal-num">21</span></div><div class="calendar-day"><span class="cal-num">22</span></div><div class="calendar-day"><span class="cal-num">23</span></div><div class="calendar-day"><span class="cal-num">24</span></div><div class="calendar-day"><span class="cal-num">25</span></div>
+        <div class="calendar-day"><span class="cal-num">26</span></div><div class="calendar-day"><span class="cal-num">27</span></div><div class="calendar-day"><span class="cal-num">28</span></div><div class="calendar-day"><span class="cal-num">29</span></div><div class="calendar-day"><span class="cal-num">30</span></div><div class="calendar-day"><span class="cal-num">31</span></div>
+        <div class="calendar-day is-pad"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="event" class="event reveal">
+    <video class="event-video-bg" autoplay muted loop playsinline preload="auto">
+      <source src="image/mony.mp4" type="video/mp4" />
+    </video>
+    <div class="event-vignette"></div>
+    <div class="container">
+      <h2>STN 특별 이벤트</h2>
+      <p class="event-tagline">교육도 받고 천만원의 <span class="event-hero-word">주인공</span>이 되세요!</p>
+      <p class="event-cash">
+        <span class="cash-counter" data-target="10000000">0</span><span class="event-won">원</span>
+      </p>
+      <p class="event-note">수료 후 전체 수강생 중 1명 추첨</p>
+    </div>
+  </section>
+
+  <section id="problem" class="reveal">
+    <div class="container">
+      <div class="problem-heading">
+        <h2 class="problem-title">유튜브 수익화, 왜 <span class="problem-title-mango">실패</span>할까?</h2>
+      </div>
+      <div class="problem-layout">
+        <div class="problem-visual">
+          <img src="image/YOUTUB.jpg" alt="유튜브 관련 콘텐츠 제작 이미지" loading="lazy" decoding="async" />
+        </div>
+        <div class="problem-cards">
+          <article class="card"><h3>① 자격 요건 미달</h3><p>구독자 500명 / 시청 3,000시간 조건을 채우지 못해 <span class="card-em">수익화 진입</span>이 어렵습니다.</p></article>
+          <article class="card"><h3>② 콘텐츠 전략 부재</h3><p>타겟과 포맷이 없는 채널 운영은 <span class="card-em">조회수·구독자 전환</span>을 만들기 어렵습니다.</p></article>
+          <article class="card"><h3>③ 지속성 부족</h3><p>제작부터 편집, 업로드까지 반복 루틴이 무너지며 <span class="card-em">채널 성장</span>이 멈춥니다.</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="solution" class="reveal">
+    <div class="container">
+      <div class="solution-heading">
+        <h2 class="solution-title">STN이 3가지를 <span class="solution-title-em">해결</span>합니다.</h2>
+      </div>
+      <div class="solution-layout">
+        <div class="solution-visual">
+          <img src="image/stn02.jpg" alt="솔루션 섹션 소개 이미지" loading="lazy" decoding="async" />
+        </div>
+        <div class="solution-cards">
+          <article class="card"><h3>콘텐츠 제공</h3><p>초기 채널의 가장 큰 장벽을 빠르게 넘을 수 있도록 <span class="card-em">실전형 성장 구조</span>를 제공합니다.</p></article>
+          <article class="card"><h3>AI 자동화로 95% 시간 단축</h3><p>콘텐츠 제작 프로세스를 자동화해 직장인도 <span class="card-em">지속 가능한 운영 루틴</span>을 구축합니다.</p></article>
+          <article class="card"><h3>지속적 상품 소싱</h3><p>개인이 운영하는 채널에서 발생한 수익을 <span class="card-em">본인 명의로 지속 확보</span>할 수 있습니다.</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tracks" class="reveal">
+    <div class="container">
+      <h2 class="tracks-title"><span class="tracks-title-line">STN<span class="tracks-title-em tracks-title-lime">미디어서포터즈</span> 교육으로</span><span class="tracks-title-line"><span class="tracks-title-em tracks-title-pink">돈버는 유튜버</span>가 될 수 있습니다.</span></h2>
+      <div class="grid-3">
+        <article class="card"><h3>기자 부문(6개월 평가후)</h3><ul><li><strong>핵심목표:</strong> STN뉴스 기자활동 + 네이버 기사 송고</li><li><strong>최종혜택:</strong> 에스티엔뉴스 공식 기자권한 부여</li><li><strong>추천:</strong> 저널리즘 지망생, 스포츠 팬</li></ul></article>
+        <article class="card"><h3>미디어 부문</h3><ul><li><strong>핵심목표:</strong> SNS·카드뉴스·영상 콘텐츠 제작</li><li><strong>최종혜택:</strong> 에스티엔 미디어서포터즈 자격증</li><li><strong>추천:</strong> SNS마케터, 콘텐츠 크리에이터</li></ul></article>
+        <article class="card"><h3>유튜브 부문</h3><ul><li><strong>핵심목표:</strong> 유튜브 채널개설 + 숏츠 완전자동화</li><li><strong>최종혜택:</strong> YPP 수익화(팬펀딩·쇼핑·광고)</li><li><strong>추천:</strong> 유튜브 수익화 희망자</li></ul></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="intensive-schedule" class="intensive-schedule reveal">
+    <div class="container">
+      <div class="intensive-head">
+        <h2>2박 3일 집중 교육 일정</h2>
+        <p>2026년 7월 10일(금) ~ 7월 12일(일)</p>
+      </div>
+
+      <div class="intensive-tabs" role="tablist" aria-label="집중 교육 일정 탭">
+        <button class="intensive-tab active" type="button" data-day-tab="day1">
+          <span class="t-day">DAY 1</span>
+          <span class="t-date">7월 10일 (금)</span>
+          <span class="t-time">10:00 - 19:00</span>
+        </button>
+        <button class="intensive-tab" type="button" data-day-tab="day2">
+          <span class="t-day">DAY 2</span>
+          <span class="t-date">7월 11일 (토)</span>
+          <span class="t-time">10:00 - 19:00</span>
+        </button>
+        <button class="intensive-tab" type="button" data-day-tab="day3">
+          <span class="t-day">DAY 3</span>
+          <span class="t-date">7월 12일 (일)</span>
+          <span class="t-time">10:00 - 15:00</span>
+        </button>
+        <a class="intensive-cta" href="#apply">온라인강의 동시 진행</a>
+      </div>
+
+      <div class="intensive-day-panel active" data-day-panel="day1">
+        <div class="day-timeline">
+          <article class="timeline-row current">
+            <div class="timeline-time-col">10:00 - 10:30</div><div class="timeline-dot"></div>
+            <div class="timeline-content common">
+              <h4>오리엔테이션</h4>
+              <ul>
+                <li>전체 일정 안내</li>
+                <li>트랙 선택 안내</li>
+                <li>강사 소개</li>
+                <li>수강생 네트워킹</li>
+              </ul>
+            </div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">10:30 - 12:30</div><div class="timeline-dot"></div>
+            <div class="track-grid">
+              <div class="track-card journalist">
+                <h5>저널리즘 이론</h5><span class="track-time">2시간</span>
+                <ul>
+                  <li>저널리즘의 역할과 기능</li>
+                  <li>스포츠 저널리즘 특징</li>
+                  <li>기사 유형 이해 (스트레이트 / 기획 / 인터뷰)</li>
+                  <li>뉴스 가치 판단 기준 5W1H / 디지털 콘텐츠 흐름</li>
+                </ul>
+              </div>
+              <div class="track-card media">
+                <h5>영상 촬영 기초</h5><span class="track-time">2시간</span>
+                <ul>
+                  <li>스마트폰 촬영 세팅 (구도 / 조명 / 음향)</li>
+                  <li>숏폼 vs 롱폼 플랫폼별 포맷</li>
+                  <li>인스타 / 틱톡 / 유튜브 쇼츠 규격</li>
+                </ul>
+              </div>
+              <div class="track-card youtube">
+                <h5>수익화 구조 이해 + 채널 세팅</h5><span class="track-time">2시간</span>
+                <ul>
+                  <li>YPP 수익화 조건 / 수익 유형 3가지 (광고 / 팬펀딩 / 쇼핑태그)</li>
+                  <li>CTR / AVD 알고리즘 핵심</li>
+                  <li>유튜브 채널 개설 + 브랜딩 세팅</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">12:30 - 13:30</div><div class="timeline-dot"></div>
+            <div class="timeline-content common"><h4>점심 식사</h4><ul><li>중식 제공 (연수원 내 식당)</li></ul></div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">13:30 - 14:30</div><div class="timeline-dot"></div>
+            <div class="timeline-content common">
+              <h4>미디어 윤리 특강</h4>
+              <ul>
+                <li>공정성 / 객관성 / 정확성 원칙</li>
+                <li>선수 인권 / 편파 보도 / 가짜뉴스 대응</li>
+                <li>저작권 / 초상권 / AI 활용 윤리</li>
+                <li>논란 사례 분석</li>
+              </ul>
+            </div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">14:30 - 16:30</div><div class="timeline-dot"></div>
+            <div class="track-grid">
+              <div class="track-card journalist">
+                <h5>인터뷰 노하우</h5><span class="track-time">2시간</span>
+                <ul>
+                  <li>인터뷰 목적과 구조 / 좋은 질문 만드는 법</li>
+                  <li>선수 / 관계자 / 팬 인터뷰 유형</li>
+                  <li>현장 인터뷰 스킬 / 긴장 완화 / 자연스러운 대화 유도</li>
+                </ul>
+                <ul class="practice-block">
+                  <li><span class="practice-badge">실습</span>1:1 롤플레잉 / 질문지 작성 / 인터뷰 기사 전환</li>
+                </ul>
+              </div>
+              <div class="track-card media">
+                <h5>영상 편집 실습</h5><span class="track-time">2시간</span>
+                <ul>
+                  <li>Alpha Cut 사용법 / Filmora 자막 / 음악 / 색보정</li>
+                  <li>Canva AI 썸네일 제작</li>
+                </ul>
+                <ul class="practice-block">
+                  <li><span class="practice-badge">실습</span>촬영본 Alpha Cut 숏폼 자동편집 / 자막 자동생성 / 썸네일 3종</li>
+                </ul>
+              </div>
+              <div class="track-card youtube">
+                <h5>STN 콘텐츠 수신 자동화</h5><span class="track-time">2시간</span>
+                <ul>
+                  <li>Google Drive 자동 동기화 설정</li>
+                  <li>Zapier / Make 수신 트리거 구축</li>
+                  <li>STN 소스 자동 분류 파이프라인</li>
+                </ul>
+                <ul class="practice-block">
+                  <li><span class="practice-badge">실습</span>채널 + STN 콘텐츠 수신 파이프라인 연결</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">16:30 - 16:45</div><div class="timeline-dot"></div>
+            <div class="timeline-content common"><h4>휴식</h4><ul><li>15분 휴식</li></ul></div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">16:45 - 19:00</div><div class="timeline-dot"></div>
+            <div class="track-grid">
+              <div class="track-card journalist">
+                <h5>AI 홍보물 제작 1부</h5><span class="track-time">2시간 15분</span>
+                <ul>
+                  <li>생성형 AI 이해 / ChatGPT 기사 자동 생성</li>
+                  <li>SNS 홍보 문구 생성 / 영상 스크립트 제작</li>
+                </ul>
+                <ul class="practice-block">
+                  <li><span class="practice-badge">실습</span>경기 결과 기사 자동 생성 실습</li>
+                </ul>
+              </div>
+              <div class="track-card media">
+                <h5>SNS 콘텐츠 전략</h5><span class="track-time">2시간 15분</span>
+                <ul>
+                  <li>플랫폼별 알고리즘 (인스타 / 틱톡 / 유튜브)</li>
+                  <li>카드뉴스 제작 전략 / 해시태그 전략</li>
+                  <li>니치(niche) 설정법 / 브랜드 아이덴티티 구축</li>
+                </ul>
+                <ul class="practice-block">
+                  <li><span class="practice-badge">실습</span>STN 콘텐츠로 카드뉴스 1세트 제작</li>
+                </ul>
+              </div>
+              <div class="track-card youtube">
+                <h5>AI 숏폼 자동 편집</h5><span class="track-time">2시간 15분</span>
+                <ul>
+                  <li>Opus Clip 하이라이트 자동 감지</li>
+                  <li>Whisper AI 다국어 자막 생성</li>
+                  <li>Canva AI 썸네일 자동 제작</li>
+                </ul>
+                <ul class="practice-block">
+                  <li><span class="practice-badge">실습</span>STN 스포츠 영상 숏폼 10개 자동 생성</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="intensive-day-panel" data-day-panel="day2">
+        <div class="day-timeline">
+          <article class="timeline-row current">
+            <div class="timeline-time-col">10:00 - 12:00</div><div class="timeline-dot"></div>
+            <div class="track-grid">
+              <div class="track-card journalist">
+                <h5>AI 홍보물 제작 2부</h5><span class="track-time">2시간</span>
+                <ul>
+                  <li>SNS 카드뉴스 / 썸네일 / 스크립트 AI 제작</li>
+                  <li>이미지 생성 AI / 영상 편집 AI 활용</li>
+                </ul>
+                <ul class="practice-block">
+                  <li><span class="practice-badge">실습</span>인터뷰 내용 SNS 카드뉴스 제작</li>
+                  <li><span class="practice-badge">실습</span>스포츠 이벤트 홍보 콘텐츠 패키지 완성</li>
+                </ul>
+              </div>
+              <div class="track-card media">
+                <h5>MCN 파트너 실무</h5><span class="track-time">2시간</span>
+                <ul>
+                  <li>STN MCN 파트너 활동 방법</li>
+                  <li>콘텐츠 저작권 관리 / 수익 배분 구조</li>
+                  <li>협찬 / 광고 계약 기초</li>
+                </ul>
+                <ul class="practice-block">
+                  <li><span class="practice-badge">실습</span>STN 제공 콘텐츠 숏폼 패키지 완성</li>
+                  <li><span class="practice-badge">실습</span>5개 플랫폼 동시 배포</li>
+                </ul>
+              </div>
+              <div class="track-card youtube">
+                <h5>유튜브 자동 업로드 + 6플랫폼 배포</h5><span class="track-time">2시간</span>
+                <ul>
+                  <li>YouTube Data API 연동</li>
+                  <li>ChatGPT 제목 / 설명 / 태그 자동 생성</li>
+                  <li>TubeBuddy 최적 시간대 스케줄링</li>
+                  <li>Buffer / Later / Meta / TikTok API 연동</li>
+                </ul>
+                <ul class="practice-block">
+                  <li><span class="practice-badge">실습</span>영상 1개 업로드 6개 플랫폼 동시 배포</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">12:00 - 13:00</div><div class="timeline-dot"></div>
+            <div class="timeline-content common"><h4>점심 식사</h4><ul><li>중식 제공 (연수원 내 식당)</li></ul></div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">13:00 - 15:30</div><div class="timeline-dot"></div>
+            <div class="track-grid">
+              <div class="track-card journalist"><h5>종합 실습</h5><span class="track-time">2시간 30분</span><p>기사 1건 네이버 / 다음 실제 송고
+인터뷰 콘텐츠 1건 완성
+AI 홍보 콘텐츠 세트 (SNS 문구 + 이미지) 완성</p></div>
+              <div class="track-card media"><h5>종합 실습</h5><span class="track-time">2시간 30분</span><p>숏폼 영상 3편 완성 (인스타 / 틱톡 / 쇼츠 포맷)
+채널 브랜딩 세팅 완성
+카드뉴스 1세트 SNS 게시</p></div>
+              <div class="track-card youtube"><h5>쇼핑태그 + 파이프라인 통합</h5><span class="track-time">2시간 30분</span><p>쿠팡 파트너스 API 상품 자동 태그
+쇼츠 Product Sticker 삽입 자동화
+GA4 / Google Sheets 수익 대시보드 구축</p><p><span class="practice-badge">실습</span>Make(n8n) 전체 워크플로우 1개 연결
+STN 수신 AI 편집 업로드 배포 수익 추적</p></div>
+            </div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">15:30 - 15:45</div><div class="timeline-dot"></div>
+            <div class="timeline-content common"><h4>휴식</h4><ul><li>15분 휴식</li></ul></div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">15:45 - 17:45</div><div class="timeline-dot"></div>
+            <div class="track-grid">
+              <div class="track-card journalist"><h5>과제 최종 완성 + 강사 피드백</h5><span class="track-time">2시간</span><p>강사 1:1 개별 피드백
+기사 / 인터뷰 / AI 콘텐츠 최종 점검</p></div>
+              <div class="track-card media"><h5>과제 최종 완성 + 강사 피드백</h5><span class="track-time">2시간</span><p>강사 1:1 개별 피드백
+숏폼 / 카드뉴스 / 브랜딩 최종 점검</p></div>
+              <div class="track-card youtube"><h5>완전 자동화 최종 점검</h5><span class="track-time">2시간</span><p>1클릭 전체 파이프라인 가동 테스트
+수익 대시보드 실시간 확인
+오류 수정 및 최적화</p></div>
+            </div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">17:45 - 19:00</div><div class="timeline-dot"></div>
+            <div class="timeline-content common">
+              <h4>전체 Q&amp;A + 트랙 간 네트워킹</h4>
+              <ul>
+                <li>강사 전체 질의응답</li>
+                <li>트랙 간 수강생 네트워킹 시간</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="intensive-day-panel" data-day-panel="day3">
+        <div class="day-timeline">
+          <article class="timeline-row current">
+            <div class="timeline-time-col">10:00 - 11:30</div><div class="timeline-dot"></div>
+            <div class="track-grid">
+              <div class="track-card journalist"><h5>최종 결과물 점검</h5><span class="track-time">1시간 30분</span><p>기사 송고 최종 확인
+AI 홍보 콘텐츠 세트 완성 점검
+포트폴리오 정리</p></div>
+              <div class="track-card media"><h5>최종 결과물 점검</h5><span class="track-time">1시간 30분</span><p>숏폼 배포 완료 확인
+카드뉴스 SNS 게시 확인
+채널 브랜딩 최종 점검</p></div>
+              <div class="track-card youtube"><h5>최종 결과물 점검</h5><span class="track-time">1시간 30분</span><p>자동화 파이프라인 가동 최종 확인
+수익 대시보드 세팅 완료
+숏폼 자동 생성 시스템 점검</p></div>
+            </div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">11:30 - 12:00</div><div class="timeline-dot"></div>
+            <div class="timeline-content common">
+              <h4>트랙별 우수 결과물 발표</h4>
+              <ul>
+                <li>각 트랙 2명 선정</li>
+                <li>결과물 발표</li>
+                <li>강사 총평</li>
+              </ul>
+            </div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">12:00 - 13:00</div><div class="timeline-dot"></div>
+            <div class="timeline-content common"><h4>점심 식사</h4><ul><li>중식 제공 (연수원 내 식당)</li></ul></div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">13:00 - 15:00</div><div class="timeline-dot"></div>
+            <div class="timeline-content common">
+              <h4>수료식 + 기념 촬영 + 귀가</h4>
+              <ul>
+                <li>민간자격증 수여 (제2025-002178호)</li>
+                <li>에스티엔방송 대표 수료증 수여</li>
+                <li>단체 기념 촬영</li>
+                <li>귀가</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="include-grid">
+        <article class="include-card"><h4>숙박</h4><p>2박 전액 포함
+연수원 내 숙소 배정</p></article>
+        <article class="include-card"><h4>식사</h4><p>3일간 전 식사 제공
+1일 3식 (조식 / 중식 / 석식)</p></article>
+        <article class="include-card"><h4>교재 및 자료</h4><p>교재 및 실습 자료 전량 제공
+AI 도구 6개월 무료 이용권 포함</p></article>
+        <article class="include-card"><h4>필수 지참</h4><p>개인 노트북 필수 지참
+최소 사양: RAM 8GB / SSD 256GB</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="benefits-pre" class="benefits-pre reveal" aria-label="STN 미디어서포터즈 운영 원칙">
+    <div class="container">
+      <div class="benefits-pre-text">
+        <div class="benefits-pre-line">STN 미디어서포터즈는</div>
+        <div class="benefits-pre-line"><span class="benefits-pre-em">신뢰</span>와 <span class="benefits-pre-em">공정성</span>으로 유튜브를 운영합니다</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="benefits" class="reveal">
+    <video class="benefits-video-bg" autoplay muted loop playsinline preload="auto">
+      <source src="image/ta02400000144_01.mp4" type="video/mp4" />
+    </video>
+    <div class="benefits-video-overlay" aria-hidden="true"></div>
+    <div class="container">
+      <div class="benefits-wrap">
+        <div class="benefits-layout">
+          <h2 class="benefits-title">수강생 혜택</h2>
+          <div class="benefits-scroll" aria-label="수강생 혜택 목록">
+            <div class="benefits-grid">
+              <div class="benefit-pill">1. <span class="benefit-em">콘텐츠 제공</span> <span class="benefit-note">(수료후 3개월)</span></div>
+              <div class="benefit-pill">2. <span class="benefit-em">수강생에 한해</span> 유튜브 멤버쉽 운영</div>
+              <div class="benefit-pill">3. <span class="benefit-em">미디어서포터즈 자격증</span> <span class="benefit-note">(민간자격증)</span></div>
+              <div class="benefit-pill">4. <span class="benefit-em">AI자동화 마스터</span></div>
+              <div class="benefit-pill">5. <span class="benefit-em">STN 중계 및 촬영</span> 현장 투입가능</div>
+              <div class="benefit-pill">6. <span class="benefit-em">지속관리</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="price-cut" class="price-cut reveal" aria-label="수강료">
+    <div class="container">
+      <div class="price-cut-layout">
+        <div class="price-cut-left">수강료</div>
+        <div class="price-cut-right">
+          <div class="price-cut-kicker">거품을 뺀 가격!</div>
+          <div class="price-cut-amount">
+            <div class="price-x" aria-hidden="true"><span class="l1"></span><span class="l2"></span></div>
+            <span data-price-counter data-stop1="4500000" data-stop2="1980000">0</span><span class="won">원</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="installment" class="installment reveal" aria-label="할부 안내">
+    <div class="container">
+      <div class="installment-layout">
+        <div class="installment-left">12개월 할부시</div>
+        <div class="installment-right">165,000<span class="won">원</span></div>
       </div>
     </div>
   </section>
@@ -575,22 +2623,10 @@
     <div class="container">
       <h2>FAQ</h2>
       <div class="faq-wrap">
-        <details>
-          <summary>Q. 초보자도 참여할 수 있나요?</summary>
-          <p>A. 가능합니다. 기초부터 실습 중심으로 진행해 초보자도 결과물을 만들 수 있도록 설계되어 있습니다.</p>
-        </details>
-        <details>
-          <summary>Q. 트랙은 언제 선택하나요?</summary>
-          <p>A. 교육 첫날 오리엔테이션에서 본인 목표에 맞춰 트랙을 선택합니다.</p>
-        </details>
-        <details>
-          <summary>Q. 수료 후에도 활용 가능한가요?</summary>
-          <p>A. 네. 독립 채널 운영과 콘텐츠 자동화 워크플로우를 익혀 교육 이후에도 바로 적용할 수 있습니다.</p>
-        </details>
-        <details>
-          <summary>Q. 준비물은 무엇인가요?</summary>
-          <p>A. 개인 노트북(최소 8GB RAM, 256GB SSD)만 지참하시면 됩니다.</p>
-        </details>
+        <details><summary>Q. 초보자도 참여할 수 있나요?</summary><p>A. 가능합니다. 기초부터 실습 중심으로 진행해 초보자도 결과물을 만들 수 있도록 설계되어 있습니다.</p></details>
+        <details><summary>Q. 콘텐츠는 언제까지 제공하나요?</summary><p>A. 콘텐츠는 수료후 3개월까지 지원합니다. 이후에는 멤버쉽 가입후 지속적으로 분야별 제공받으실 수 있습니다.</p></details>
+        <details><summary>Q. 수료 후에도 관리 해주시나요?</summary><p>A. 네. 수료후에도 지속적으로 관리해드리고 수익이 날 수 있도록 최선을 다하겠습니다.</p></details>
+        <details><summary>Q. 준비물은 무엇인가요?</summary><p>A. 개인 노트북(최소 8GB RAM, 256GB SSD)만 지참하시면 됩니다.</p></details>
       </div>
     </div>
   </section>
@@ -598,39 +2634,210 @@
   <section id="apply" class="final-cta reveal">
     <div class="container">
       <h2>지금 신청하세요</h2>
-      <p class="early">조기할인: 5월 31일까지 10% 할인</p>
-      <div>
-        <button class="cta-btn apply-btn">지금 신청하기</button>
-      </div>
-      <p class="contact">문의: 1599-1242 STN 방송 교육팀</p>
-      <p class="contact">모집페이지: www.stntv.co.kr</p>
-      <p class="contact">주최: ㈜에스티엔방송</p>
+      <div><button class="cta-btn apply-btn">지금 신청하기</button></div>
+      <p class="apply-contact">문의: 1599-1242</p>
+      <p>주최: ㈜에스티엔방송</p>
     </div>
   </section>
 
-  <footer>
-    © 2026 STN Broadcasting. All Rights Reserved.
-  </footer>
+  <footer>© 2026 STN Broadcasting. All Rights Reserved.</footer>
 
   <script>
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-          }
-        });
-      },
-      { threshold: 0.18 }
-    );
-
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add("active");
+      });
+    }, { threshold: 0.18 });
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
     document.querySelectorAll(".apply-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        window.location.href = "https://www.stntv.co.kr";
-      });
+      btn.addEventListener("click", () => { window.location.href = "https://www.stntv.co.kr"; });
     });
+
+    // Badges: keep hover neon only (no auto scroll on hover)
+
+    const heroVideo = document.querySelector(".hero-video-bg");
+    if (heroVideo) heroVideo.play().catch(() => {});
+    const eventVideo = document.querySelector(".event-video-bg");
+    if (eventVideo) eventVideo.play().catch(() => {});
+
+    (function () {
+      const section = document.getElementById("event");
+      const counterEl = section && section.querySelector(".cash-counter");
+      if (!section || !counterEl) return;
+      const target = Number(counterEl.dataset.target) || 10000000;
+      let ran = false;
+      const format = (n) => n.toLocaleString("en-US");
+      const run = () => {
+        if (ran) return;
+        ran = true;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          counterEl.textContent = format(target);
+          counterEl.classList.add("is-gradient");
+          return;
+        }
+        const duration = 2400;
+        const start = performance.now();
+        const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+        const tick = (now) => {
+          const t = Math.min(1, (now - start) / duration);
+          counterEl.textContent = format(Math.floor(easeOutQuart(t) * target));
+          if (t < 1) requestAnimationFrame(tick);
+          else {
+            counterEl.textContent = format(target);
+            counterEl.classList.add("is-gradient");
+          }
+        };
+        requestAnimationFrame(tick);
+      };
+      new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) run(); });
+      }, { threshold: 0.28 }).observe(section);
+    })();
+
+    (function () {
+      const tabs = Array.from(document.querySelectorAll(".curriculum-tab"));
+      const panels = Array.from(document.querySelectorAll(".curriculum-panel"));
+      if (!tabs.length || !panels.length) return;
+
+      const activateTab = (tabName) => {
+        tabs.forEach((btn) => {
+          const active = btn.dataset.tab === tabName;
+          btn.classList.toggle("active", active);
+          btn.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        panels.forEach((panel) => {
+          panel.classList.toggle("active", panel.dataset.panel === tabName);
+        });
+      };
+
+      tabs.forEach((btn) => {
+        btn.addEventListener("click", () => activateTab(btn.dataset.tab));
+      });
+    })();
+
+    (function () {
+      const tabs = Array.from(document.querySelectorAll(".intensive-tab"));
+      const panels = Array.from(document.querySelectorAll(".intensive-day-panel"));
+      if (!tabs.length || !panels.length) return;
+
+      const activate = (dayName) => {
+        tabs.forEach((btn) => {
+          const isActive = btn.dataset.dayTab === dayName;
+          btn.classList.toggle("active", isActive);
+        });
+        panels.forEach((panel) => {
+          panel.classList.toggle("active", panel.dataset.dayPanel === dayName);
+        });
+      };
+
+      tabs.forEach((btn) => {
+        btn.addEventListener("click", () => activate(btn.dataset.dayTab));
+      });
+    })();
+
+    (function () {
+      const section = document.getElementById("intensive-schedule");
+      if (!section) return;
+
+      // 섹션이 처음 화면에 들어올 때만 1회 실행합니다.
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          section.classList.add("tab-anim");
+          io.disconnect();
+        });
+      }, { threshold: 0.2 });
+
+      io.observe(section);
+    })();
+
+    (function () {
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const schedule = document.getElementById("intensive-schedule");
+      if (!schedule) return;
+
+      const openDay = (day) => {
+        const tab = document.querySelector(`.intensive-tab[data-day-tab="${day}"]`);
+        if (tab) tab.click();
+        schedule.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth", block: "start" });
+      };
+
+      document.querySelectorAll('#june-calendar .calendar-day.is-highlight[data-day]').forEach((cell) => {
+        const day = cell.dataset.day;
+        cell.addEventListener("click", () => openDay(day));
+        cell.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openDay(day);
+          }
+        });
+      });
+    })();
+
+    (function () {
+      const section = document.getElementById("price-cut");
+      const cardEl = section && section.querySelector(".price-cut-right");
+      const counterEl = section && section.querySelector("[data-price-counter]");
+      if (!section || !counterEl) return;
+
+      const stop1 = Number(counterEl.dataset.stop1 || "4500000");
+      const stop2 = Number(counterEl.dataset.stop2 || "1980000");
+      const format = (n) => n.toLocaleString("en-US");
+
+      const setValue = (n) => {
+        counterEl.textContent = format(Math.round(n));
+      };
+
+      const animateTo = (from, to, durationMs) => new Promise((resolve) => {
+        const start = performance.now();
+        const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+
+        const tick = (now) => {
+          const t = Math.min(1, (now - start) / durationMs);
+          const v = from + (to - from) * easeOutQuart(t);
+          setValue(v);
+          if (t < 1) requestAnimationFrame(tick);
+          else resolve();
+        };
+        requestAnimationFrame(tick);
+      });
+
+      let ran = false;
+      const run = async () => {
+        if (ran) return;
+        ran = true;
+
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          setValue(stop2);
+          return;
+        }
+
+        setValue(0);
+        await animateTo(0, stop1, 1200);
+        setValue(stop1);
+        if (cardEl) {
+          cardEl.classList.add("show-x");
+          await new Promise((r) => setTimeout(r, 900));
+          cardEl.classList.remove("show-x");
+        }
+        await new Promise((r) => setTimeout(r, 1100));
+        await animateTo(stop1, stop2, 3600);
+        setValue(stop2);
+        if (cardEl) {
+          cardEl.classList.add("is-final");
+          cardEl.classList.remove("is-pop");
+          void cardEl.offsetWidth;
+          cardEl.classList.add("is-pop");
+          setTimeout(() => cardEl.classList.remove("is-pop"), 650);
+        }
+      };
+
+      new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) run(); });
+      }, { threshold: 0.28 }).observe(section);
+    })();
+
   </script>
 </body>
 </html>
