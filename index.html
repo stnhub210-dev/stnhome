@@ -1041,6 +1041,113 @@
       opacity: 0;
       transform: translateY(14px);
     }
+    .mentor-section {
+      min-height: auto;
+      align-items: stretch;
+      padding: 90px 0 84px;
+      background: #090909;
+    }
+    .mentor-layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+      gap: clamp(20px, 3vw, 48px);
+      align-items: start;
+    }
+    .mentor-sticky-col {
+      position: sticky;
+      top: 90px;
+      align-self: start;
+    }
+    .mentor-sticky-card {
+      border-radius: 16px;
+      border: 1px solid rgba(124,252,0,.26);
+      background: linear-gradient(160deg, rgba(124,252,0,.08), rgba(255,255,255,.03));
+      padding: 20px;
+      box-shadow: 0 12px 28px rgba(0,0,0,.35);
+    }
+    .mentor-badge {
+      display: inline-block;
+      font-weight: 900;
+      letter-spacing: .08em;
+      color: var(--lime);
+      margin-bottom: 10px;
+      font-size: .82rem;
+    }
+    .mentor-photo-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.14);
+      margin-bottom: 14px;
+      background: #111;
+      aspect-ratio: 4 / 5;
+    }
+    .mentor-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .mentor-sticky-card h3 {
+      font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+      margin-bottom: 4px;
+    }
+    .mentor-role {
+      color: #d8d8d8;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .mentor-bio {
+      color: #d0d0d0;
+      line-height: 1.7;
+      font-size: .98rem;
+    }
+    .mentor-steps {
+      display: grid;
+      gap: 12px;
+    }
+    .mentor-step {
+      min-height: 82vh;
+      border-radius: 16px;
+      border: 1px solid #2f2f2f;
+      background: #111;
+      padding: clamp(16px, 2.8vw, 26px);
+      display: grid;
+      align-content: center;
+      gap: 12px;
+      opacity: .45;
+      transform: scale(.985);
+      transition: opacity .25s ease, transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+    .mentor-step .step-label {
+      font-size: .86rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      color: #9f9f9f;
+    }
+    .mentor-step h4 {
+      font-size: clamp(1.45rem, 2.5vw, 2.1rem);
+      line-height: 1.3;
+    }
+    .mentor-step p {
+      color: #d8d8d8;
+      line-height: 1.75;
+      max-width: 62ch;
+    }
+    .mentor-highlight-title {
+      font-size: 1.18em;
+      letter-spacing: -0.01em;
+    }
+    .mentor-step.active {
+      opacity: 1;
+      transform: scale(1);
+      border-color: rgba(124,252,0,.7);
+      box-shadow: 0 0 0 1px rgba(124,252,0,.25), 0 0 24px rgba(124,252,0,.14);
+      background: linear-gradient(170deg, rgba(124,252,0,.1), rgba(255,255,255,.03));
+    }
+    .mentor-step.active .step-label {
+      color: var(--lime);
+    }
     .intensive-schedule {
       min-height: auto;
       padding: 88px 0 72px;
@@ -1974,6 +2081,12 @@
       min-height: auto;
       padding: 56px 0 60px;
     }
+    #apply .cta-btn {
+      padding: 28px 48px;
+      font-size: 2rem;
+      border-radius: 16px;
+      font-weight: 900;
+    }
     .apply-contact {
       font-size: clamp(1.35rem, 3.2vw, 2rem);
       font-weight: 900;
@@ -2040,6 +2153,17 @@
         position: static;
         transform: none;
       }
+      .mentor-layout {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .mentor-sticky-col {
+        position: static;
+        top: auto;
+      }
+      .mentor-step {
+        min-height: 62vh;
+      }
       #problem .card,
       #solution .card {
         transform-origin: center center;
@@ -2068,7 +2192,7 @@
       .intensive-tab {
         flex: 1 1 calc(50% - 10px);
         min-width: 0;
-        text-align: left;
+        text-align: center;
       }
       .intensive-tab .t-date { font-size: 1.02rem; }
       .intensive-cta { width: 100%; margin-left: 0; }
@@ -2279,6 +2403,69 @@
         <article class="card"><h3>기자 부문(6개월 평가후)</h3><ul><li><strong>핵심목표:</strong> STN뉴스 기자활동 + 네이버 기사 송고</li><li><strong>최종혜택:</strong> 에스티엔뉴스 공식 기자권한 부여</li><li><strong>추천:</strong> 저널리즘 지망생, 스포츠 팬</li></ul></article>
         <article class="card"><h3>미디어 부문</h3><ul><li><strong>핵심목표:</strong> SNS·카드뉴스·영상 콘텐츠 제작</li><li><strong>최종혜택:</strong> 에스티엔 미디어서포터즈 자격증</li><li><strong>추천:</strong> SNS마케터, 콘텐츠 크리에이터</li></ul></article>
         <article class="card"><h3>유튜브 부문</h3><ul><li><strong>핵심목표:</strong> 유튜브 채널개설 + 숏츠 완전자동화</li><li><strong>최종혜택:</strong> YPP 수익화(팬펀딩·쇼핑·광고)</li><li><strong>추천:</strong> 유튜브 수익화 희망자</li></ul></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="mentor-sticky" class="mentor-section reveal">
+    <div class="container">
+      <div class="intensive-head">
+        <h2>강사진 소개</h2>
+        <p>스크롤하며 확인하는 STN 실무형 전문 강사진</p>
+      </div>
+      <div class="mentor-layout">
+        <aside class="mentor-sticky-col">
+          <article class="mentor-sticky-card">
+            <span class="mentor-badge">강사진</span>
+            <div class="mentor-photo-wrap">
+              <img id="mentor-photo" src="박문성1.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
+            </div>
+            <h3 id="mentor-name">박문성 해설위원</h3>
+            <p id="mentor-role" class="mentor-role">축구 해설위원 · 스포츠 콘텐츠 전문가</p>
+            <p id="mentor-bio" class="mentor-bio">"당신의 첫 영상이 아니라,<br>19년 경기장 경험이 당신의 채널을 만듭니다"<br><br>- 축구 해설위원이 말하는 "시청자의 마음"<br>- 선수 심리를 아는 자만 할 수 있는 인터뷰<br>- 스포츠 팬 100만 명을 사로잡는 스토리텔링</p>
+          </article>
+        </aside>
+
+        <div class="mentor-steps">
+          <article
+            class="mentor-step active"
+            data-name="박문성 해설위원"
+            data-role="축구 해설위원 · 스포츠 콘텐츠 전문가"
+            data-image="박문성1.png"
+            data-bio="&quot;당신의 첫 영상이 아니라,<br>19년 경기장 경험이 당신의 채널을 만듭니다&quot;<br><br>- 축구 해설위원이 말하는 &quot;시청자의 마음&quot;<br>- 선수 심리를 아는 자만 할 수 있는 인터뷰<br>- 스포츠 팬 100만 명을 사로잡는 스토리텔링">
+            <span class="step-label">STEP 1</span>
+            <h4>경력사항</h4>
+            <p>1999년 축구전문지 베스트일레븐 취재기자 및 팀장, 2002년 FIFA 월드컵 공식가이드북 필진, 2002년 K리그 유럽축구 해설위원으로 데뷔했습니다. 2005~2020년 잉글랜드 프리미어리그 중계, 2008~2012년 올림픽 현장 중계, 2006~2022년 국내외 월드컵 현장 중계 등 풍부한 현장 경력을 보유하고 있습니다.</p>
+            <p><strong>전문 역량 및 대외 활동</strong><br>FIFA 온라인 한국어 버전 중계, 1000회 이상 축구중계 해설, 국민대학교 스포츠산업대학원 겸임교수, 성남FC 전략강화위원, 서울시 서울평양공동올림픽 추진위 및 2023 아시안컵 유치위 활동 등 해설·교육·자문 분야를 폭넓게 수행해 왔습니다.</p>
+            <p><strong>현재 활동</strong><br>숭실대 축구부 운영위원, MBC 웹킬 더 스포츠 고정 패널, 축구유튜브 달수네라이브 대표, 희망친구 기아대책 홍보대사, 메이크어위시 홍보대사, 세라비아 스포츠명예대사, 기업 전문 특강 강사 등으로 활발히 활동 중입니다.</p>
+          </article>
+
+          <article
+            class="mentor-step"
+            data-name="박문성 해설위원"
+            data-role="축구 해설위원 · 스포츠 콘텐츠 전문가"
+            data-image="박문성1.png"
+            data-bio="&quot;당신의 첫 영상이 아니라,<br>19년 경기장 경험이 당신의 채널을 만듭니다&quot;<br><br>- 축구 해설위원이 말하는 &quot;시청자의 마음&quot;<br>- 선수 심리를 아는 자만 할 수 있는 인터뷰<br>- 스포츠 팬 100만 명을 사로잡는 스토리텔링">
+            <span class="step-label">STEP 2</span>
+            <h4>스포츠 콘텐츠 스토리텔링</h4>
+            <p>유튜브 스포츠 채널의 성공 전략</p>
+            <p>1️⃣ 스포츠 현장의 스토리 찾기<br>- 선수 백스토리 발굴법<br>- 경기 흐름 속 "반전 포인트" 포착<br>- 19년 중계 경험에서 나온 현장 노하우</p>
+            <p>2️⃣ 유튜브/SNS용 "숏폼 스토리텔링"<br>- 90초 영상에 감정 담기<br>- 제목/썸네일로 클릭 유도하는 법<br>- 스포츠 팬의 심리 이해</p>
+            <p>3️⃣ 해설자의 목소리 = 브랜드<br>- 나만의 해설 톤 만들기<br>- 크리에이터로서의 개인 IP 구축<br>- 팬과 신뢰 관계 만들기</p>
+            <p>🎬 실습: 축구 경기 하이라이트로 3가지 각본 작성 (감정/재미/정보 중심 각각)</p>
+          </article>
+
+          <article
+            class="mentor-step"
+            data-name="박문성 해설위원"
+            data-role="축구 해설위원 · 스포츠 콘텐츠 전문가"
+            data-image="박문성1.png"
+            data-bio="&quot;당신의 첫 영상이 아니라,<br>19년 경기장 경험이 당신의 채널을 만듭니다&quot;<br><br>- 축구 해설위원이 말하는 &quot;시청자의 마음&quot;<br>- 선수 심리를 아는 자만 할 수 있는 인터뷰<br>- 스포츠 팬 100만 명을 사로잡는 스토리텔링">
+            <span class="step-label">STEP 3</span>
+            <h4>특별 특강</h4>
+            <p><strong class="mentor-highlight-title">"박문성의 19년 경험담"</strong><br><br>- 첫 취재부터 지금까지의 시행착오<br>- "이건 꼭 배워야 한다" Top 5<br>- Q&A로 실제 고민 해결</p>
+          </article>
+        </div>
       </div>
     </div>
   </section>
@@ -2688,7 +2875,7 @@ AI 도구 6개월 무료 이용권 포함</p></article>
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
     document.querySelectorAll(".apply-btn").forEach((btn) => {
-      btn.addEventListener("click", () => { window.location.href = "https://www.stntv.co.kr"; });
+      btn.addEventListener("click", () => { window.location.href = "https://stnedu.co.kr/product/media/"; });
     });
 
     // Badges: keep hover neon only (no auto scroll on hover)
@@ -2771,6 +2958,55 @@ AI 도구 6개월 무료 이용권 포함</p></article>
       tabs.forEach((btn) => {
         btn.addEventListener("click", () => activate(btn.dataset.dayTab));
       });
+    })();
+
+    (function () {
+      const section = document.getElementById("mentor-sticky");
+      if (!section) return;
+
+      const steps = Array.from(section.querySelectorAll(".mentor-step"));
+      const nameEl = document.getElementById("mentor-name");
+      const roleEl = document.getElementById("mentor-role");
+      const bioEl = document.getElementById("mentor-bio");
+      const photoEl = document.getElementById("mentor-photo");
+      if (!steps.length || !nameEl || !roleEl || !bioEl || !photoEl) return;
+
+      // 활성 step 기준으로 sticky 카드의 텍스트/이미지를 갱신합니다.
+      const applyStep = (step) => {
+        nameEl.textContent = step.dataset.name || "";
+        roleEl.textContent = step.dataset.role || "";
+        bioEl.innerHTML = step.dataset.bio || "";
+        if (step.dataset.image) photoEl.src = step.dataset.image;
+      };
+
+      const setActiveStep = (activeIndex) => {
+        steps.forEach((step, index) => {
+          step.classList.toggle("active", index === activeIndex);
+        });
+        applyStep(steps[activeIndex]);
+      };
+
+      // 스크롤 위치를 기준으로 현재 가장 가까운 step을 활성화합니다.
+      const updateByScroll = () => {
+        const anchorY = window.innerHeight * 0.35;
+        let nearestIndex = 0;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        steps.forEach((step, index) => {
+          const rect = step.getBoundingClientRect();
+          const distance = Math.abs(rect.top - anchorY);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+
+        setActiveStep(nearestIndex);
+      };
+
+      updateByScroll();
+      window.addEventListener("scroll", updateByScroll, { passive: true });
+      window.addEventListener("resize", updateByScroll);
     })();
 
     (function () {
