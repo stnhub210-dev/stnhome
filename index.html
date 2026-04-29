@@ -1047,6 +1047,76 @@
       padding: 90px 0 84px;
       background: #090909;
     }
+    .mentor-emphasis {
+      min-height: auto;
+      padding: 36px 0 24px;
+      background: #000;
+      position: relative;
+      overflow: hidden;
+    }
+    .mentor-emphasis-media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .mentor-emphasis-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .38;
+      filter: saturate(1.2) contrast(1.05);
+    }
+    .mentor-emphasis::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: rgba(0,0,0,.54);
+    }
+    .mentor-emphasis .container {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    .mentor-emphasis-message {
+      margin: 0;
+      font-weight: 900;
+      line-height: 1.4;
+      font-size: clamp(2.2rem, 5.4vw, 4.2rem);
+      color: #c7ff4f;
+      font-style: italic;
+      transition: transform .28s ease, text-shadow .28s ease, filter .28s ease, color .28s ease;
+      text-shadow:
+        0 0 10px rgba(124,252,0,.38),
+        0 0 22px rgba(124,252,0,.24);
+    }
+    .mentor-emphasis-message .mentor-emphasis-accent {
+      color: #ffb3e8;
+      text-shadow:
+        0 0 12px rgba(255,179,232,.46),
+        0 0 26px rgba(255,120,206,.32);
+    }
+    .mentor-emphasis:hover .mentor-emphasis-message {
+      transform: scale(1.08);
+      color: #e6ff96;
+      filter: brightness(1.2);
+      animation: mentor-emphasis-light-on .9s ease-in-out infinite;
+    }
+    @keyframes mentor-emphasis-light-on {
+      0%, 100% {
+        text-shadow:
+          0 0 10px rgba(124,252,0,.42),
+          0 0 24px rgba(124,252,0,.28),
+          0 0 38px rgba(124,252,0,.2);
+      }
+      50% {
+        text-shadow:
+          0 0 14px rgba(180,255,96,.7),
+          0 0 34px rgba(180,255,96,.5),
+          0 0 52px rgba(180,255,96,.32);
+      }
+    }
     .mentor-layout {
       display: grid;
       grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
@@ -1138,6 +1208,11 @@
       font-size: 1.18em;
       letter-spacing: -0.01em;
     }
+    .mentor-part-title {
+      font-weight: 900;
+      color: #ff9ed6;
+      text-shadow: 0 0 10px rgba(255, 140, 204, .42);
+    }
     .mentor-step.active {
       opacity: 1;
       transform: scale(1);
@@ -1147,6 +1222,117 @@
     }
     .mentor-step.active .step-label {
       color: var(--lime);
+    }
+    .mentor-step:hover {
+      border-color: rgba(124,252,0,.62);
+      box-shadow: 0 0 0 1px rgba(124,252,0,.22), 0 0 22px rgba(124,252,0,.16);
+      filter: brightness(1.05);
+    }
+    /* 조원희 섹션: 코발트블루 네온 테마 */
+    #mentor-sticky-dup .mentor-sticky-card {
+      border-color: rgba(59, 130, 246, .62);
+      background: linear-gradient(160deg, rgba(59, 130, 246, .11), rgba(255,255,255,.03));
+      box-shadow:
+        0 0 0 1px rgba(59, 130, 246, .22),
+        0 12px 28px rgba(0,0,0,.35),
+        0 0 24px rgba(59, 130, 246, .16);
+    }
+    #mentor-sticky-dup .mentor-badge {
+      color: #60a5fa;
+      text-shadow: 0 0 12px rgba(59, 130, 246, .4);
+    }
+    #mentor-sticky-dup .mentor-step.active {
+      border-color: rgba(59, 130, 246, .82);
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, .28), 0 0 24px rgba(59, 130, 246, .18);
+      background: linear-gradient(170deg, rgba(59, 130, 246, .13), rgba(255,255,255,.03));
+    }
+    #mentor-sticky-dup .mentor-step.active .step-label {
+      color: #60a5fa;
+    }
+    #mentor-sticky-dup .mentor-step:hover {
+      border-color: rgba(59, 130, 246, .72);
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, .26), 0 0 22px rgba(59, 130, 246, .18);
+    }
+    /* 2번째 강사진 섹션: 연핑크 네온 테마 */
+    #mentor-sticky-copy .mentor-sticky-card {
+      border-color: rgba(255, 160, 210, .55);
+      background: linear-gradient(160deg, rgba(255, 170, 220, .11), rgba(255,255,255,.03));
+      box-shadow:
+        0 0 0 1px rgba(255, 170, 220, .2),
+        0 14px 30px rgba(0,0,0,.34),
+        0 0 26px rgba(255, 130, 200, .16);
+    }
+    #mentor-sticky-copy .mentor-badge {
+      color: #ff9ed6;
+      text-shadow: 0 0 12px rgba(255, 130, 200, .42);
+    }
+    #mentor-sticky-copy .mentor-step {
+      border-color: rgba(255, 145, 206, .88);
+      background: linear-gradient(170deg, rgba(255, 160, 214, .18), rgba(255,255,255,.04));
+      box-shadow:
+        0 0 0 1px rgba(255, 160, 214, .35),
+        0 0 24px rgba(255, 120, 196, .32),
+        0 0 42px rgba(255, 120, 196, .2);
+    }
+    #mentor-sticky-copy .mentor-step .step-label {
+      color: #ff9ed6;
+      text-shadow: 0 0 10px rgba(255, 140, 204, .46);
+    }
+    #mentor-sticky-copy .mentor-step.active {
+      border-color: rgba(255, 145, 206, .88);
+      box-shadow:
+        0 0 0 1px rgba(255, 160, 214, .35),
+        0 0 24px rgba(255, 120, 196, .32),
+        0 0 42px rgba(255, 120, 196, .2);
+      background: linear-gradient(170deg, rgba(255, 160, 214, .18), rgba(255,255,255,.04));
+      animation: pink-neon-pulse 1.8s ease-in-out infinite;
+    }
+    #mentor-sticky-copy .mentor-step.active .step-label {
+      color: #ff9ed6;
+      text-shadow: 0 0 10px rgba(255, 140, 204, .46);
+    }
+    #mentor-sticky-copy .mentor-step:hover {
+      border-color: rgba(255, 145, 206, .88);
+      box-shadow:
+        0 0 0 1px rgba(255, 160, 214, .35),
+        0 0 24px rgba(255, 120, 196, .32),
+        0 0 42px rgba(255, 120, 196, .2);
+      background: linear-gradient(170deg, rgba(255, 160, 214, .18), rgba(255,255,255,.04));
+      filter: brightness(1.08);
+      transform: translateY(-2px) scale(1.01);
+      animation: pink-neon-pulse-strong 1s ease-in-out infinite;
+    }
+    #mentor-sticky-copy .mentor-step:hover .step-label {
+      color: #ff9ed6;
+      text-shadow: 0 0 10px rgba(255, 140, 204, .46);
+    }
+    @keyframes pink-neon-pulse {
+      0%, 100% {
+        box-shadow:
+          0 0 0 1px rgba(255, 160, 214, .3),
+          0 0 18px rgba(255, 120, 196, .24),
+          0 0 34px rgba(255, 120, 196, .14);
+      }
+      50% {
+        box-shadow:
+          0 0 0 1px rgba(255, 160, 214, .42),
+          0 0 28px rgba(255, 120, 196, .42),
+          0 0 52px rgba(255, 120, 196, .26);
+      }
+    }
+    @keyframes pink-neon-pulse-strong {
+      0%, 100% {
+        box-shadow:
+          0 0 0 1px rgba(255, 160, 214, .36),
+          0 0 26px rgba(255, 120, 196, .34),
+          0 0 50px rgba(255, 120, 196, .22);
+      }
+      50% {
+        box-shadow:
+          0 0 0 1px rgba(255, 160, 214, .52),
+          0 0 36px rgba(255, 120, 196, .52),
+          0 0 66px rgba(255, 120, 196, .34);
+      }
     }
     .intensive-schedule {
       min-height: auto;
@@ -1401,6 +1587,7 @@
       line-height: 1.65;
       padding-left: 12px;
       position: relative;
+      overflow-wrap: anywhere;
     }
     .timeline-content li::before,
     .track-card li::before {
@@ -1460,6 +1647,61 @@
       font-size: .98rem;
       padding-top: 6px;
     }
+    .timeline-inline-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 14px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(59,130,246,.78);
+      background: rgba(59,130,246,.16);
+      color: #dbeafe;
+      font-size: .94rem;
+      line-height: 1;
+      box-shadow: 0 0 0 1px rgba(59,130,246,.26), 0 0 14px rgba(59,130,246,.26);
+      cursor: default;
+      transition: transform .2s ease, box-shadow .22s ease, filter .22s ease, border-color .22s ease;
+    }
+    .timeline-inline-btn strong {
+      font-weight: 900;
+      letter-spacing: .01em;
+    }
+    .timeline-inline-note {
+      display: block;
+      margin-top: 9px;
+      color: #dbeafe;
+      font-size: .84rem;
+      line-height: 1.5;
+      max-width: 210px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+      opacity: .95;
+    }
+    .timeline-inline-btn:hover {
+      transform: scale(1.06);
+      border-color: rgba(96,165,250,.92);
+      filter: brightness(1.12);
+      animation: timeline-btn-neon 1s ease-in-out infinite;
+    }
+    #intensive-schedule.tab-anim .timeline-inline-btn {
+      animation: timeline-btn-neon 1.1s ease-in-out 2;
+    }
+    @keyframes timeline-btn-neon {
+      0%, 100% {
+        box-shadow:
+          0 0 0 1px rgba(59,130,246,.3),
+          0 0 12px rgba(59,130,246,.24),
+          0 0 22px rgba(59,130,246,.12);
+      }
+      50% {
+        box-shadow:
+          0 0 0 1px rgba(96,165,250,.55),
+          0 0 18px rgba(96,165,250,.5),
+          0 0 34px rgba(96,165,250,.3);
+      }
+    }
     .timeline-dot {
       width: 10px;
       height: 10px;
@@ -1491,6 +1733,9 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
     }
+    .track-grid > * {
+      min-width: 0;
+    }
     .track-card {
       background: #141414;
       border: 1px solid #2d2d2d;
@@ -1498,6 +1743,7 @@
       border-radius: 12px;
       padding: 14px;
       transition: filter .22s ease, border-top-width .22s ease;
+      min-width: 0;
     }
     .track-card:hover {
       filter: brightness(1.1);
@@ -1510,6 +1756,8 @@
       font-size: 1rem;
       color: #fff;
       margin-bottom: 8px;
+      overflow-wrap: anywhere;
+      word-break: keep-all;
     }
     .track-card .track-time {
       color: var(--lime);
@@ -2388,7 +2636,7 @@
           <img src="image/stn02.jpg" alt="솔루션 섹션 소개 이미지" loading="lazy" decoding="async" />
         </div>
         <div class="solution-cards">
-          <article class="card"><h3>콘텐츠 제공</h3><p>초기 채널의 가장 큰 장벽을 빠르게 넘을 수 있도록 <span class="card-em">실전형 성장 구조</span>를 제공합니다.</p></article>
+          <article class="card"><h>콘텐츠 제공</h3><p>초기 채널의 가장 큰 장벽을 빠르게 넘을 수 있도록 <span class="card-em">실전형 성장 구조</span>를 제공합니다.</p></article>
           <article class="card"><h3>AI 자동화로 95% 시간 단축</h3><p>콘텐츠 제작 프로세스를 자동화해 직장인도 <span class="card-em">지속 가능한 운영 루틴</span>을 구축합니다.</p></article>
           <article class="card"><h3>지속적 상품 소싱</h3><p>개인이 운영하는 채널에서 발생한 수익을 <span class="card-em">본인 명의로 지속 확보</span>할 수 있습니다.</p></article>
         </div>
@@ -2407,11 +2655,22 @@
     </div>
   </section>
 
+  <section id="mentor-emphasis" class="mentor-emphasis reveal">
+    <div class="mentor-emphasis-media" aria-hidden="true">
+      <video autoplay muted loop playsinline preload="metadata">
+        <source src="https://cdn.coverr.co/videos/coverr-fireworks-over-a-city-1579/1080p.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="container">
+      <p class="mentor-emphasis-message">이보다 더 막강할 수는 없다 !<br><span class="mentor-emphasis-accent">각 분야 최고 전문가 6명</span><br>2박 3일 집중 지도합니다</p>
+    </div>
+  </section>
+
   <section id="mentor-sticky" class="mentor-section reveal">
     <div class="container">
       <div class="intensive-head">
-        <h2>강사진 소개</h2>
-        <p>스크롤하며 확인하는 STN 실무형 전문 강사진</p>
+        <h2>마음을 움직이는 해설의 기술! 스포츠 콘텐츠 전략가 </h2>
+        <p>75만 팬을 움직이는 해설위원</p>
       </div>
       <div class="mentor-layout">
         <aside class="mentor-sticky-col">
@@ -2453,17 +2712,102 @@
             <p>2️⃣ 유튜브/SNS용 "숏폼 스토리텔링"<br>- 90초 영상에 감정 담기<br>- 제목/썸네일로 클릭 유도하는 법<br>- 스포츠 팬의 심리 이해</p>
             <p>3️⃣ 해설자의 목소리 = 브랜드<br>- 나만의 해설 톤 만들기<br>- 크리에이터로서의 개인 IP 구축<br>- 팬과 신뢰 관계 만들기</p>
             <p>🎬 실습: 축구 경기 하이라이트로 3가지 각본 작성 (감정/재미/정보 중심 각각)</p>
+            <span class="step-label">STEP 3</span>
+            <h4>특별 특강</h4>
+            <p><strong class="mentor-highlight-title">"박문성의 19년 경험담"</strong><br><br>- 첫 취재부터 지금까지의 시행착오<br>- "이건 꼭 배워야 한다" Top 5<br>- Q&A로 실제 고민 해결</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mentor-sticky-dup" class="mentor-section reveal">
+    <div class="container">
+      <div class="intensive-head">
+        <h2>"스포츠 콘텐츠는 다릅니다 - 팬 심리를 움직이는 법" </h2>
+        <p>선수 팬심을 수익으로 연결하기</p>
+      </div>
+      <div class="mentor-layout">
+        <aside class="mentor-sticky-col">
+          <article class="mentor-sticky-card">
+            <span class="mentor-badge">강사진</span>
+            <div class="mentor-photo-wrap">
+              <img id="mentor-photo-dup" src="jwh.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
+            </div>
+            <h3 id="mentor-name-dup">조원희 전 국가대표</h3>
+            <p id="mentor-role-dup" class="mentor-role">축구선수 → 콘텐츠 크리에이터</p>
+            <p id="mentor-bio-dup" class="mentor-bio">"선수 시절에는 경기 결과가 전부였습니다.<br>그런데 유튜브를 시작하며 알게 됐습니다.<br>팬들이 원하는 건 골이 아니라, 나의 '이야기'였습니다.<br>경기장과 일상을 오가며 얻은 경험을 콘텐츠로 만들고, 그것이 수익이 되는 경험을 했습니다.<br>저처럼 '내 이야기를 어떻게 시작해야 할지' 몰라 망설이시는 분들을 위해,<br>선수의 관점에서 본 현실적인 콘텐츠 전략을 나눕니다."</p>
+          </article>
+        </aside>
+
+        <div class="mentor-steps">
+          <article
+            class="mentor-step active"
+            data-name="조원희 전 국가대표"
+            data-role="축구선수 → 콘텐츠 크리에이터"
+            data-image="jwh.png"
+            data-bio="&quot;선수 시절에는 경기 결과가 전부였습니다.<br>그런데 유튜브를 시작하며 알게 됐습니다.<br>팬들이 원하는 건 골이 아니라, 나의 '이야기'였습니다.<br>경기장과 일상을 오가며 얻은 경험을 콘텐츠로 만들고, 그것이 수익이 되는 경험을 했습니다.<br>저처럼 '내 이야기를 어떻게 시작해야 할지' 몰라 망설이시는 분들을 위해,<br>선수의 관점에서 본 현실적인 콘텐츠 전략을 나눕니다.&quot;">
+            <span class="step-label">STEP 1</span>
+            <h4>경력사항</h4>
+            <p><strong>국내 활동</strong><br><br>울산 현대 호랑이<br>광주 상무 불사조<br>수원 삼성 블루윙즈 (3차 소속)<br>경남 FC<br>서울 이랜드 FC<br>수원 FC (현역 복귀)</p>
+            <p><strong>국제 활동</strong><br><br>위건 애슬레틱 FC (잉글랜드)<br>광저우 헝다 (중국)<br>우한 줘얼 (중국)<br>오미야 아르디자 (일본)</p>
+            <p><strong>경력 특징</strong><br><br>K리그, 중국 수퍼리그, 일본 J리그, 영국 프리미어리그 경험<br>국내 굴지의 팀에서 다양한 경험 축적<br>은퇴 후 현역 복귀 (인생 터닝포인트 경험)</p>
           </article>
 
           <article
             class="mentor-step"
-            data-name="박문성 해설위원"
-            data-role="축구 해설위원 · 스포츠 콘텐츠 전문가"
-            data-image="박문성1.png"
-            data-bio="&quot;당신의 첫 영상이 아니라,<br>19년 경기장 경험이 당신의 채널을 만듭니다&quot;<br><br>- 축구 해설위원이 말하는 &quot;시청자의 마음&quot;<br>- 선수 심리를 아는 자만 할 수 있는 인터뷰<br>- 스포츠 팬 100만 명을 사로잡는 스토리텔링">
+            data-name="조원희 전 국가대표"
+            data-role="축구선수 → 콘텐츠 크리에이터"
+            data-image="jwh.png"
+            data-bio="&quot;선수 시절에는 경기 결과가 전부였습니다.<br>그런데 유튜브를 시작하며 알게 됐습니다.<br>팬들이 원하는 건 골이 아니라, 나의 '이야기'였습니다.<br>경기장과 일상을 오가며 얻은 경험을 콘텐츠로 만들고, 그것이 수익이 되는 경험을 했습니다.<br>저처럼 '내 이야기를 어떻게 시작해야 할지' 몰라 망설이시는 분들을 위해,<br>선수의 관점에서 본 현실적인 콘텐츠 전략을 나눕니다.&quot;">
+            <span class="step-label">STEP 2</span>
+            <h4>조원희의 "인생 전환점"</h4>
+            <p>유튜브 스포츠 채널의 성공 전략</p>
+            <p><strong>은퇴 전의 경험</strong><br><br>국내외 최고의 팀들에서의 경쟁과 성공<br>선수로서의 정체성이 곧 전부였던 시절<br>"경기장 밖의 나"를 생각해본 적 없음</p>
+            <p><strong>은퇴의 위기</strong><br><br>30대 중반의 예상치 못한 은퇴<br>"선수로서의 나"가 끝났을 때의 심리적 공백<br>경력 단절에서 오는 경제적·심리적 위기<br>"이제 뭘 하지?"라는 절망감</p>
+            <p><strong>콘텐츠로의 전환</strong><br><br>선택이 아닌 생존의 문제로 시작<br>"경기장에서의 나"를 콘텐츠로 재구성<br>팬들이 원하는 건 "골"이 아닌 "이야기"임을 깨달음<br>6개월 만에 10만 구독자 달성</p>
             <span class="step-label">STEP 3</span>
-            <h4>특별 특강</h4>
-            <p><strong class="mentor-highlight-title">"박문성의 19년 경험담"</strong><br><br>- 첫 취재부터 지금까지의 시행착오<br>- "이건 꼭 배워야 한다" Top 5<br>- Q&A로 실제 고민 해결</p>
+            <h4>조원희의 스포츠 인생 이야기</h4>
+            <p>"선수 → 은퇴 → 크리에이터 → 현역 복귀. 세 번의 인생 전환을 경험하며 배운 것: 정체성은 고정된 게 아니라 선택할 수 있다는 것입니다."</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mentor-sticky-copy" class="mentor-section reveal">
+    <div class="container">
+      <div class="intensive-head">
+        <h2>작가 출신, 현역 유튜브 콘텐츠 슈퍼바이저</h2>
+        <p>방송작가가 알려주는 유튜브! 남달라~</p>
+      </div>
+      <div class="mentor-layout">
+        <aside class="mentor-sticky-col">
+          <article class="mentor-sticky-card">
+            <span class="mentor-badge">강사진</span>
+            <div class="mentor-photo-wrap">
+              <img id="mentor-photo-copy" src="KMH.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
+            </div>
+            <h3 id="mentor-name-copy">강만훈 작가</h3>
+            <p id="mentor-role-copy" class="mentor-role">방송작가 / 프로듀서<br>한,중 콘텐츠 / 기획,제작<br>SBS 특별상 작가 부문 수상</p>
+          </article>
+        </aside>
+
+        <div class="mentor-steps">
+          <article class="mentor-step active">
+            <span class="step-label">STEP 1</span>
+            <h4>경력사항</h4>
+            <p>한) 일밤-게릴라 콘서트, 러브하우스, 건강보감, 경제야 놀자<br>목표달성 토요일, 전파견문록외 다수(MBC)<br>생방송 TV 가요20, 좋은 친구들,<br>지식나눔 콘서트 아이러브[人]외 다수(SBS)<br>특집 드림콘서트, 방송대상, 골든 디스크외 다수</p>
+            <p>유튜브) 덕스투어 “김희철”편(21,SBS 유튜브), 김갑수의 인싸갑(20,KBS 유튜브),<br>오마이걸의 무엇이든 딜리버리(21,KBSN 유튜브),<br>홍석천의 쉿 말할수 없는 비밀(24,서울컴) 기획/제작</p>
+            <p>중) ‘NBA 치어리더 선발대회’(09,10-CCTV5), ‘무림대회’(08),<br>‘딩거롱둥창’(15-CCTV3), ‘삼국외전’(18-봉황위성)<br>‘평창 동계 올림픽 특집 평창신동(18,CCTV5)’,’응답하라 평창’(봉황위성)<br>‘迷妹的旅行(21,빌리빌리)’<br>‘베이징 동계올림픽 특집’(22,봉황위성)</p>
+            <p>현재) 유튜브 콘텐츠-이유리의 “공구들고 싹수리＂슈퍼바이저(기획,제작)<br>네고왕 중국판, 팬 여행 콘텐츠(한,중 공동제작)외<br>한, 중 콘텐츠 기획 제작</p>
+          </article>
+          <article class="mentor-step active">
+            <span class="step-label">STEP 2</span>
+            <h4>콘텐츠와 커머스의 융합</h4>
+            <p><strong class="mentor-part-title">[1부] 콘텐츠는 왜 커머스와 융합할 수밖에 없는가 (약 25분)</strong><br>· 기존 방송 콘텐츠와 뉴미디어 콘텐츠의 차이<br>· 조회수와 광고 수익만으로는 한계가 생기는 이유<br>· 브랜드가 단순 광고보다 콘텐츠형 노출을 원하는 이유<br>· PPL, 협찬, 브랜디드 콘텐츠가 커머스로 이어지는 흐름<br>· 중국 시장에서 콘텐츠와 커머스가 빠르게 결합되는 이유</p>
+            <p><strong class="mentor-part-title">[2부] 제작자는 커머스를 어떻게 콘텐츠에 연결해야 하는가 (약 30분)</strong><br>· 콘텐츠 기획 단계에서 상품과 브랜드를 바라보는 방법<br>· 제품을 억지로 노출하지 않고 이야기 안에 녹이는 방식<br>· 롱폼, 숏폼, 라이브커머스의 역할 차이<br>· QR, 쿠폰, 구매 링크, 댓글 고정 등을 활용한 판매 연결 방식<br>· 한국과 중국 플랫폼에서 콘텐츠 소비와 구매 방식이 달라지는 지점</p>
+            <p><strong class="mentor-part-title">[3부] 실제 수익화 방식과 콘텐츠 상품화 (약 25분)</strong><br>· 콘텐츠 제작자가 판매할 수 있는 상품의 종류<br>* 출연, 협찬, PPL<br>* 브랜디드 콘텐츠, 라이브커머스, 숏폼 패키지<br>* 채널 운영 대행, 왕홍/인플루언서 연계<br>· 브랜드 제안서와 미디어킷의 기본 개념<br>· 협찬 단가를 정할 때 고려해야 할 요소<br>· 콘텐츠 기획안이 실제 영업 자료로 바뀌는 과정<br>· 중국 커머스와 연결할 때 확인해야 할 기본 조건<br>* 상품 경쟁력, 가격, 사은품<br>* 물류 및 운영 가능성</p>
           </article>
         </div>
       </div>
@@ -2511,31 +2855,30 @@
             </div>
           </article>
           <article class="timeline-row">
-            <div class="timeline-time-col">10:30 - 12:30</div><div class="timeline-dot"></div>
+            <div class="timeline-time-col"><span>10:30 - 12:30</span><br><button type="button" class="timeline-inline-btn"><strong>닥터튜브 강사</strong></button></div><div class="timeline-dot"></div>
             <div class="track-grid">
               <div class="track-card journalist">
-                <h5>저널리즘 이론</h5><span class="track-time">2시간</span>
+                <h5>[1부] 데이터 기반 채널 정밀 진단</h5><span class="track-time">25분</span>
                 <ul>
-                  <li>저널리즘의 역할과 기능</li>
-                  <li>스포츠 저널리즘 특징</li>
-                  <li>기사 유형 이해 (스트레이트 / 기획 / 인터뷰)</li>
-                  <li>뉴스 가치 판단 기준 5W1H / 디지털 콘텐츠 흐름</li>
+                  <li> · 이탈률 · 유령 구독자 · 트래픽 구조</li>
+                  <li> · 타겟 미스매치 사례 분석</li>
+                  <li> · 운영자가 반드시 확인해야 할 진단 지표</li>
                 </ul>
               </div>
               <div class="track-card media">
-                <h5>영상 촬영 기초</h5><span class="track-time">2시간</span>
+                <h5>[2부] 유튜브 필수 구조 이해 </h5><span class="track-time">30분</span>
                 <ul>
-                  <li>스마트폰 촬영 세팅 (구도 / 조명 / 음향)</li>
-                  <li>숏폼 vs 롱폼 플랫폼별 포맷</li>
-                  <li>인스타 / 틱톡 / 유튜브 쇼츠 규격</li>
+                  <li> · 검색 알고리즘 vs 탐색 알고리즘</li>
+                  <li> · 멀티포맷 전략 (롱폼 · 숏폼 · 라이브)</li>
+                  <li> · 초반 노출 전략, 썸네일 · 제목 원리</li>
                 </ul>
               </div>
               <div class="track-card youtube">
-                <h5>수익화 구조 이해 + 채널 세팅</h5><span class="track-time">2시간</span>
+                <h5>[3부] 채널 맞춤 콘텐츠 전략 & 실전 수익화</h5><span class="track-time">25분</span>
                 <ul>
-                  <li>YPP 수익화 조건 / 수익 유형 3가지 (광고 / 팬펀딩 / 쇼핑태그)</li>
-                  <li>CTR / AVD 알고리즘 핵심</li>
-                  <li>유튜브 채널 개설 + 브랜딩 세팅</li>
+                  <li>· 콘텐츠 기획 3요소 · 벤치마크 채널 분석</li>
+                  <li>· 크리에이터 광고 단가 구조</li>
+                  <li>· 미디어킷 · 세일즈 구조 </li>
                 </ul>
               </div>
             </div>
@@ -2557,7 +2900,7 @@
             </div>
           </article>
           <article class="timeline-row">
-            <div class="timeline-time-col">14:30 - 16:30</div><div class="timeline-dot"></div>
+            <div class="timeline-time-col"><span>14:30 - 16:30</span><br><button type="button" class="timeline-inline-btn"><strong>에딧킴 강사</strong></button><span class="timeline-inline-note">강의제목 : AI 숏츠 제작 실전 부트캠프: 기획부터 업로드까지 180분 완성</span></div><div class="timeline-dot"></div>
             <div class="track-grid">
               <div class="track-card journalist">
                 <h5>인터뷰 노하우</h5><span class="track-time">2시간</span>
@@ -2684,7 +3027,7 @@
             <div class="timeline-content common"><h4>점심 식사</h4><ul><li>중식 제공 (연수원 내 식당)</li></ul></div>
           </article>
           <article class="timeline-row">
-            <div class="timeline-time-col">13:00 - 15:30</div><div class="timeline-dot"></div>
+            <div class="timeline-time-col"><span>13:00 - 15:30</span><br><button type="button" class="timeline-inline-btn"><strong>박문성 해설위원</strong></button></div><div class="timeline-dot"></div>
             <div class="track-grid">
               <div class="track-card journalist"><h5>종합 실습</h5><span class="track-time">2시간 30분</span><p>기사 1건 네이버 / 다음 실제 송고
 인터뷰 콘텐츠 1건 완성
@@ -2703,7 +3046,7 @@ STN 수신 AI 편집 업로드 배포 수익 추적</p></div>
             <div class="timeline-content common"><h4>휴식</h4><ul><li>15분 휴식</li></ul></div>
           </article>
           <article class="timeline-row">
-            <div class="timeline-time-col">15:45 - 17:45</div><div class="timeline-dot"></div>
+            <div class="timeline-time-col"><span>15:45 - 17:45</span><br><button type="button" class="timeline-inline-btn"><strong>김창수 강사</strong></button></div><div class="timeline-dot"></div>
             <div class="track-grid">
               <div class="track-card journalist"><h5>과제 최종 완성 + 강사 피드백</h5><span class="track-time">2시간</span><p>강사 1:1 개별 피드백
 기사 / 인터뷰 / AI 콘텐츠 최종 점검</p></div>
@@ -2715,7 +3058,7 @@ STN 수신 AI 편집 업로드 배포 수익 추적</p></div>
             </div>
           </article>
           <article class="timeline-row">
-            <div class="timeline-time-col">17:45 - 19:00</div><div class="timeline-dot"></div>
+            <div class="timeline-time-col"><span>17:45 - 19:00</span><br><button type="button" class="timeline-inline-btn"><strong>전체</strong></button></div><div class="timeline-dot"></div>
             <div class="timeline-content common">
               <h4>전체 Q&amp;A + 트랙 간 네트워킹</h4>
               <ul>
@@ -2860,7 +3203,7 @@ AI 도구 6개월 무료 이용권 포함</p></article>
       <h2>지금 신청하세요</h2>
       <div><button class="cta-btn apply-btn">지금 신청하기</button></div>
       <p class="apply-contact">문의: 1599-1242</p>
-      <p>주최: ㈜에스티엔방송</p>
+      <p>주최: ㈜에스티엔미디어</p>
     </div>
   </section>
 
@@ -2987,6 +3330,53 @@ AI 도구 6개월 무료 이용권 포함</p></article>
       };
 
       // 스크롤 위치를 기준으로 현재 가장 가까운 step을 활성화합니다.
+      const updateByScroll = () => {
+        const anchorY = window.innerHeight * 0.35;
+        let nearestIndex = 0;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        steps.forEach((step, index) => {
+          const rect = step.getBoundingClientRect();
+          const distance = Math.abs(rect.top - anchorY);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+
+        setActiveStep(nearestIndex);
+      };
+
+      updateByScroll();
+      window.addEventListener("scroll", updateByScroll, { passive: true });
+      window.addEventListener("resize", updateByScroll);
+    })();
+
+    (function () {
+      const section = document.getElementById("mentor-sticky-dup");
+      if (!section) return;
+
+      const steps = Array.from(section.querySelectorAll(".mentor-step"));
+      const nameEl = document.getElementById("mentor-name-dup");
+      const roleEl = document.getElementById("mentor-role-dup");
+      const bioEl = document.getElementById("mentor-bio-dup");
+      const photoEl = document.getElementById("mentor-photo-dup");
+      if (!steps.length || !nameEl || !roleEl || !bioEl || !photoEl) return;
+
+      const applyStep = (step) => {
+        nameEl.textContent = step.dataset.name || "";
+        roleEl.textContent = step.dataset.role || "";
+        bioEl.innerHTML = step.dataset.bio || "";
+        if (step.dataset.image) photoEl.src = step.dataset.image;
+      };
+
+      const setActiveStep = (activeIndex) => {
+        steps.forEach((step, index) => {
+          step.classList.toggle("active", index === activeIndex);
+        });
+        applyStep(steps[activeIndex]);
+      };
+
       const updateByScroll = () => {
         const anchorY = window.innerHeight * 0.35;
         let nearestIndex = 0;
