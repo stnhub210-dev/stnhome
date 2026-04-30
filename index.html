@@ -469,6 +469,7 @@
       gap: 8px;
       width: 100%;
       justify-items: center;
+      justify-content: center;
       align-self: center;
       margin-top: auto;
       transform: translateY(-40px);
@@ -508,8 +509,8 @@
       display: none;
     }
     .hero-all-image {
-      width: min(108%, 1060px);
-      max-width: 1060px;
+      width: min(114%, 1140px);
+      max-width: 1140px;
       height: auto;
       display: block;
       object-fit: contain;
@@ -1023,6 +1024,7 @@
       font-size: clamp(1.5rem, 2.45vw, 1.9rem);
       font-weight: 900;
       margin-bottom: 12px;
+      color: var(--lime);
       text-shadow: 0 0 10px rgba(124,252,0,.25);
     }
     #problem .card p,
@@ -1393,7 +1395,8 @@
       filter: brightness(1.05);
     }
     /* 조원희 섹션: 코발트블루 네온 테마 */
-    #mentor-sticky-dup .mentor-sticky-card {
+    #mentor-sticky-dup .mentor-sticky-card,
+    #mentor-sticky-editkim .mentor-sticky-card {
       border-color: rgba(59, 130, 246, .62);
       background: linear-gradient(160deg, rgba(59, 130, 246, .11), rgba(255,255,255,.03));
       box-shadow:
@@ -1401,21 +1404,206 @@
         0 12px 28px rgba(0,0,0,.35),
         0 0 24px rgba(59, 130, 246, .16);
     }
-    #mentor-sticky-dup .mentor-badge {
+    #mentor-sticky-dup .mentor-badge,
+    #mentor-sticky-editkim .mentor-badge {
       color: #60a5fa;
       text-shadow: 0 0 12px rgba(59, 130, 246, .4);
     }
-    #mentor-sticky-dup .mentor-step.active {
+    #mentor-sticky-dup .mentor-step.active,
+    #mentor-sticky-editkim .mentor-step.active {
       border-color: rgba(59, 130, 246, .82);
       box-shadow: 0 0 0 1px rgba(59, 130, 246, .28), 0 0 24px rgba(59, 130, 246, .18);
       background: linear-gradient(170deg, rgba(59, 130, 246, .13), rgba(255,255,255,.03));
     }
-    #mentor-sticky-dup .mentor-step.active .step-label {
+    #mentor-sticky-dup .mentor-step.active .step-label,
+    #mentor-sticky-editkim .mentor-step.active .step-label {
       color: #60a5fa;
     }
-    #mentor-sticky-dup .mentor-step:hover {
+    #mentor-sticky-dup .mentor-step:hover,
+    #mentor-sticky-editkim .mentor-step:hover {
       border-color: rgba(59, 130, 246, .72);
       box-shadow: 0 0 0 1px rgba(59, 130, 246, .26), 0 0 22px rgba(59, 130, 246, .18);
+    }
+    /* 에딧킴 섹션 가독성 다듬기 */
+    #mentor-sticky-editkim .intensive-head h2 {
+      color: #fff;
+      text-shadow: 0 0 14px rgba(59,130,246,.35);
+    }
+    #mentor-sticky-editkim .intensive-head p {
+      color: #dbeafe;
+    }
+    #mentor-sticky-editkim .mentor-step {
+      align-content: start;
+      gap: 10px;
+    }
+    #mentor-sticky-editkim .mentor-step h4 {
+      color: #fff;
+      text-shadow: 0 0 10px rgba(59,130,246,.25);
+      margin-top: 2px;
+    }
+    #mentor-sticky-editkim .lecture-pill {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(147,197,253,.65);
+      background: rgba(37,99,235,.24);
+      color: #dbeafe;
+      font-size: .8rem;
+      font-weight: 900;
+      letter-spacing: .04em;
+      box-shadow: 0 0 0 1px rgba(147,197,253,.2), 0 0 14px rgba(59,130,246,.18);
+    }
+    #mentor-sticky-editkim .lecture-title {
+      display: inline-block;
+      margin-top: 10px;
+      color: #fff;
+      line-height: 1.35;
+    }
+    #mentor-sticky-editkim .mentor-step p {
+      max-width: 74ch;
+      line-height: 1.68;
+    }
+    #mentor-sticky-editkim .duration {
+      font-size: .6em;
+      font-weight: 700;
+      color: #bfdbfe;
+      opacity: .95;
+      vertical-align: baseline;
+      margin-left: 3px;
+      letter-spacing: 0;
+    }
+    /* KCS 섹션: 연한 핑크 네온 테마 (효과 동일) */
+    #mentor-sticky-kcs .mentor-sticky-card,
+    #mentor-sticky-bjh .mentor-sticky-card {
+      border-color: rgba(255, 182, 212, .72);
+      background: linear-gradient(160deg, rgba(255, 182, 212, .16), rgba(255,255,255,.03));
+      box-shadow:
+        0 0 0 1px rgba(255, 182, 212, .28),
+        0 12px 28px rgba(0,0,0,.35),
+        0 0 24px rgba(255, 182, 212, .22);
+    }
+    #mentor-sticky-kcs .mentor-badge,
+    #mentor-sticky-bjh .mentor-badge {
+      color: #ffb6d4;
+      text-shadow: 0 0 12px rgba(255, 182, 212, .46);
+    }
+    #mentor-sticky-kcs .mentor-step.active,
+    #mentor-sticky-bjh .mentor-step.active {
+      border-color: rgba(255, 182, 212, .88);
+      box-shadow: 0 0 0 1px rgba(255, 182, 212, .34), 0 0 24px rgba(255, 182, 212, .24);
+      background: linear-gradient(170deg, rgba(255, 182, 212, .18), rgba(255,255,255,.03));
+    }
+    #mentor-sticky-kcs .mentor-step.active .step-label,
+    #mentor-sticky-bjh .mentor-step.active .step-label {
+      color: #ffb6d4;
+    }
+    #mentor-sticky-kcs .mentor-step:hover,
+    #mentor-sticky-bjh .mentor-step:hover {
+      border-color: rgba(255, 182, 212, .82);
+      box-shadow: 0 0 0 1px rgba(255, 182, 212, .3), 0 0 22px rgba(255, 182, 212, .22);
+    }
+    #mentor-sticky-kcs .intensive-head h2,
+    #mentor-sticky-bjh .intensive-head h2 {
+      color: #fff;
+      text-shadow: 0 0 14px rgba(255,182,212,.34);
+    }
+    #mentor-sticky-kcs .intensive-head p,
+    #mentor-sticky-bjh .intensive-head p {
+      color: #ffe4f0;
+    }
+    #mentor-sticky-kcs .mentor-step,
+    #mentor-sticky-bjh .mentor-step {
+      align-content: start;
+      gap: 10px;
+    }
+    #mentor-sticky-kcs .mentor-step h4,
+    #mentor-sticky-bjh .mentor-step h4 {
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255,182,212,.24);
+      margin-top: 2px;
+    }
+    #mentor-sticky-kcs .lecture-pill,
+    #mentor-sticky-bjh .lecture-pill {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 213, 233, .76);
+      background: rgba(255, 182, 212, .26);
+      color: #fff1f7;
+      font-size: .8rem;
+      font-weight: 900;
+      letter-spacing: .04em;
+      box-shadow: 0 0 0 1px rgba(255, 182, 212, .24), 0 0 14px rgba(255,182,212,.22);
+    }
+    #mentor-sticky-kcs .lecture-title,
+    #mentor-sticky-bjh .lecture-title {
+      display: inline-block;
+      margin-top: 10px;
+      color: #fff;
+      line-height: 1.35;
+    }
+    #mentor-sticky-kcs .mentor-step p,
+    #mentor-sticky-bjh .mentor-step p {
+      max-width: 74ch;
+      line-height: 1.68;
+    }
+    #mentor-sticky-kcs .duration,
+    #mentor-sticky-bjh .duration {
+      font-size: .6em;
+      font-weight: 700;
+      color: #ffd9ea;
+      opacity: .95;
+      vertical-align: baseline;
+      margin-left: 3px;
+      letter-spacing: 0;
+    }
+    /* 박정훈 섹션: 박문성과 동일한 그린 테마 */
+    #mentor-sticky-bjh .mentor-sticky-card {
+      border-color: rgba(124,252,0,.62);
+      background: linear-gradient(160deg, rgba(124,252,0,.11), rgba(255,255,255,.03));
+      box-shadow:
+        0 0 0 1px rgba(124,252,0,.22),
+        0 12px 28px rgba(0,0,0,.35),
+        0 0 24px rgba(124,252,0,.16);
+    }
+    #mentor-sticky-bjh .mentor-badge {
+      color: var(--lime);
+      text-shadow: 0 0 12px rgba(124,252,0,.4);
+    }
+    #mentor-sticky-bjh .mentor-step.active {
+      border-color: rgba(124,252,0,.82);
+      box-shadow: 0 0 0 1px rgba(124,252,0,.28), 0 0 24px rgba(124,252,0,.18);
+      background: linear-gradient(170deg, rgba(124,252,0,.13), rgba(255,255,255,.03));
+    }
+    #mentor-sticky-bjh .mentor-step.active .step-label {
+      color: var(--lime);
+    }
+    #mentor-sticky-bjh .mentor-step:hover {
+      border-color: rgba(124,252,0,.72);
+      box-shadow: 0 0 0 1px rgba(124,252,0,.26), 0 0 22px rgba(124,252,0,.18);
+    }
+    #mentor-sticky-bjh .intensive-head h2 {
+      color: #fff;
+      text-shadow: 0 0 14px rgba(124,252,0,.34);
+    }
+    #mentor-sticky-bjh .intensive-head p {
+      color: #dcffd2;
+    }
+    #mentor-sticky-bjh .mentor-step h4 {
+      color: #fff;
+      text-shadow: 0 0 10px rgba(124,252,0,.24);
+    }
+    #mentor-sticky-bjh .lecture-pill {
+      border: 1px solid rgba(195,255,140,.72);
+      background: rgba(124,252,0,.22);
+      color: #efffe2;
+      box-shadow: 0 0 0 1px rgba(124,252,0,.24), 0 0 14px rgba(124,252,0,.2);
+    }
+    #mentor-sticky-bjh .lecture-title {
+      color: #fff;
+    }
+    #mentor-sticky-bjh .duration {
+      color: #d9ffc0;
     }
     /* 2번째 강사진 섹션: 연핑크 네온 테마 */
     #mentor-sticky-copy .mentor-sticky-card {
@@ -2747,30 +2935,6 @@
     </div>
   </section>
 
-  <section id="june-calendar" class="section-calendar reveal">
-    <div class="container calendar-wrap">
-      <h2 class="calendar-head">
-        <span class="calendar-kicker">교육일정</span>
-        <span class="calendar-title">2026년 7월</span>
-      </h2>
-      <div class="calendar-weekdays">
-        <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
-      </div>
-      <div class="calendar-days">
-        <div class="calendar-day is-pad"></div><div class="calendar-day is-pad"></div><div class="calendar-day is-pad"></div>
-        <div class="calendar-day"><span class="cal-num">1</span></div><div class="calendar-day"><span class="cal-num">2</span></div><div class="calendar-day"><span class="cal-num">3</span></div><div class="calendar-day"><span class="cal-num">4</span></div>
-        <div class="calendar-day"><span class="cal-num">5</span></div><div class="calendar-day"><span class="cal-num">6</span></div><div class="calendar-day"><span class="cal-num">7</span></div><div class="calendar-day"><span class="cal-num">8</span></div><div class="calendar-day"><span class="cal-num">9</span></div>
-        <div class="calendar-day is-highlight" data-day="day1" role="button" tabindex="0" aria-label="7월 10일 교육 일정 보기"><span class="cal-num">10</span><span class="cal-label">STN<br>미디어서포터즈<br>교육</span></div>
-        <div class="calendar-day is-highlight" data-day="day2" role="button" tabindex="0" aria-label="7월 11일 교육 일정 보기"><span class="cal-num">11</span><span class="cal-label">STN<br>미디어서포터즈<br>교육</span></div>
-        <div class="calendar-day is-highlight" data-day="day3" role="button" tabindex="0" aria-label="7월 12일 교육 일정 보기"><span class="cal-num">12</span><span class="cal-label">STN<br>미디어서포터즈<br>교육</span></div>
-        <div class="calendar-day"><span class="cal-num">13</span></div><div class="calendar-day"><span class="cal-num">14</span></div><div class="calendar-day"><span class="cal-num">15</span></div><div class="calendar-day"><span class="cal-num">16</span></div><div class="calendar-day"><span class="cal-num">17</span></div><div class="calendar-day"><span class="cal-num">18</span></div>
-        <div class="calendar-day"><span class="cal-num">19</span></div><div class="calendar-day"><span class="cal-num">20</span></div><div class="calendar-day"><span class="cal-num">21</span></div><div class="calendar-day"><span class="cal-num">22</span></div><div class="calendar-day"><span class="cal-num">23</span></div><div class="calendar-day"><span class="cal-num">24</span></div><div class="calendar-day"><span class="cal-num">25</span></div>
-        <div class="calendar-day"><span class="cal-num">26</span></div><div class="calendar-day"><span class="cal-num">27</span></div><div class="calendar-day"><span class="cal-num">28</span></div><div class="calendar-day"><span class="cal-num">29</span></div><div class="calendar-day"><span class="cal-num">30</span></div><div class="calendar-day"><span class="cal-num">31</span></div>
-        <div class="calendar-day is-pad"></div>
-      </div>
-    </div>
-  </section>
-
   <section id="event" class="event reveal">
     <video class="event-video-bg" autoplay muted loop playsinline preload="auto">
       <source src="image/mony.mp4" type="video/mp4" />
@@ -2814,7 +2978,7 @@
           <img src="image/stn02.jpg" alt="솔루션 섹션 소개 이미지" loading="lazy" decoding="async" />
         </div>
         <div class="solution-cards">
-          <article class="card"><h>콘텐츠 제공</h3><p>초기 채널의 가장 큰 장벽을 빠르게 넘을 수 있도록 <span class="card-em">실전형 성장 구조</span>를 제공합니다.</p></article>
+          <article class="card"><h3>콘텐츠 제공</h3><p>초기 채널의 가장 큰 장벽을 빠르게 넘을 수 있도록 <span class="card-em">실전형 성장 구조</span>를 제공합니다.</p></article>
           <article class="card"><h3>AI 자동화로 95% 시간 단축</h3><p>콘텐츠 제작 프로세스를 자동화해 직장인도 <span class="card-em">지속 가능한 운영 루틴</span>을 구축합니다.</p></article>
           <article class="card"><h3>지속적 상품 소싱</h3><p>개인이 운영하는 채널에서 발생한 수익을 <span class="card-em">본인 명의로 지속 확보</span>할 수 있습니다.</p></article>
         </div>
@@ -2836,8 +3000,8 @@
   <section id="mentor-sticky" class="mentor-section reveal">
     <div class="container">
       <div class="intensive-head">
-        <h2>마음을 움직이는 해설의 기술! 스포츠 콘텐츠 전략가 </h2>
-        <p>75만 팬을 움직이는 해설위원</p>
+        <h2>데이터 기반 유튜브 성장 전략</h2>
+        <p>채널 진단부터 수익화 설계까지, 닥터튜브 실전 코칭</p>
       </div>
       <div class="mentor-layout">
         <aside class="mentor-sticky-col">
@@ -2975,6 +3139,203 @@
             <p><strong class="mentor-part-title">[1부] 콘텐츠는 왜 커머스와 융합할 수밖에 없는가 (약 25분)</strong><br>· 기존 방송 콘텐츠와 뉴미디어 콘텐츠의 차이<br>· 조회수와 광고 수익만으로는 한계가 생기는 이유<br>· 브랜드가 단순 광고보다 콘텐츠형 노출을 원하는 이유<br>· PPL, 협찬, 브랜디드 콘텐츠가 커머스로 이어지는 흐름<br>· 중국 시장에서 콘텐츠와 커머스가 빠르게 결합되는 이유</p>
             <p><strong class="mentor-part-title">[2부] 제작자는 커머스를 어떻게 콘텐츠에 연결해야 하는가 (약 30분)</strong><br>· 콘텐츠 기획 단계에서 상품과 브랜드를 바라보는 방법<br>· 제품을 억지로 노출하지 않고 이야기 안에 녹이는 방식<br>· 롱폼, 숏폼, 라이브커머스의 역할 차이<br>· QR, 쿠폰, 구매 링크, 댓글 고정 등을 활용한 판매 연결 방식<br>· 한국과 중국 플랫폼에서 콘텐츠 소비와 구매 방식이 달라지는 지점</p>
             <p><strong class="mentor-part-title">[3부] 실제 수익화 방식과 콘텐츠 상품화 (약 25분)</strong><br>· 콘텐츠 제작자가 판매할 수 있는 상품의 종류<br>* 출연, 협찬, PPL<br>* 브랜디드 콘텐츠, 라이브커머스, 숏폼 패키지<br>* 채널 운영 대행, 왕홍/인플루언서 연계<br>· 브랜드 제안서와 미디어킷의 기본 개념<br>· 협찬 단가를 정할 때 고려해야 할 요소<br>· 콘텐츠 기획안이 실제 영업 자료로 바뀌는 과정<br>· 중국 커머스와 연결할 때 확인해야 할 기본 조건<br>* 상품 경쟁력, 가격, 사은품<br>* 물류 및 운영 가능성</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mentor-sticky-jhc" class="mentor-section reveal">
+    <div class="container">
+      <div class="intensive-head">
+        <h2>닥터튜브 강사의 데이터 기반 채널 성장 코칭</h2>
+        <p>진단부터 실행까지, 유튜브 수익화 실전 전략</p>
+      </div>
+      <div class="mentor-layout">
+        <aside class="mentor-sticky-col">
+          <article class="mentor-sticky-card">
+            <span class="mentor-badge">강사진</span>
+            <div class="mentor-photo-wrap">
+              <img id="mentor-photo-jhc" src="image/jhc02.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
+            </div>
+            <h3 id="mentor-name-jhc">닥터튜브 강사</h3>
+            <p id="mentor-role-jhc" class="mentor-role">유튜브 성장 컨설턴트 · 데이터 분석 기반 채널 코치</p>
+            <p id="mentor-bio-jhc" class="mentor-bio">"감이 아니라 데이터로 채널을 키웁니다."<br><br>- 채널 구조·트래픽·이탈률 핵심 지표 진단<br>- 검색/탐색 알고리즘에 맞는 콘텐츠 설계<br>- 수익화까지 연결되는 실행 로드맵 제시</p>
+          </article>
+        </aside>
+
+        <div class="mentor-steps">
+          <article
+            class="mentor-step active"
+            data-name="닥터튜브 강사"
+            data-role="유튜브 성장 컨설턴트 · 데이터 분석 기반 채널 코치"
+            data-image="image/jhc02.png"
+            data-bio="&quot;감이 아니라 데이터로 채널을 키웁니다.&quot;<br><br>- 채널 구조·트래픽·이탈률 핵심 지표 진단<br>- 검색/탐색 알고리즘에 맞는 콘텐츠 설계<br>- 수익화까지 연결되는 실행 로드맵 제시">
+            <span class="step-label">STEP 1</span>
+            <h4>경력사항</h4>
+            <p><strong>콘텐츠/채널 전략 컨설팅</strong><br>채널 지표 분석 기반으로 성장 정체 구간을 진단하고, 타겟·포맷·주제 구조를 재설계하는 컨설팅을 진행해 왔습니다.</p>
+            <p><strong>알고리즘 실무 교육</strong><br>검색 알고리즘과 탐색 알고리즘의 차이를 실무에 적용해, 썸네일·제목·업로드 흐름까지 성과 중심으로 최적화하는 교육을 제공합니다.</p>
+            <p><strong>수익화 실행 코칭</strong><br>미디어킷 구성, 광고 단가 구조 이해, 제안 포인트 설계 등 수익화와 연결되는 운영 체계를 코칭합니다.</p>
+          </article>
+
+          <article
+            class="mentor-step"
+            data-name="닥터튜브 강사"
+            data-role="유튜브 성장 컨설턴트 · 데이터 분석 기반 채널 코치"
+            data-image="image/jhc02.png"
+            data-bio="&quot;감이 아니라 데이터로 채널을 키웁니다.&quot;<br><br>- 채널 구조·트래픽·이탈률 핵심 지표 진단<br>- 검색/탐색 알고리즘에 맞는 콘텐츠 설계<br>- 수익화까지 연결되는 실행 로드맵 제시">
+            <span class="step-label">STEP 2</span>
+            <h4>채널 정밀 진단 & 성장 전략</h4>
+            <p>유튜브 채널의 병목을 찾고 개선하는 실전 프로세스</p>
+            <p>1️⃣ 데이터 진단<br>- 이탈률·유입경로·유령구독자 체크<br>- 타겟 미스매치 지점 파악<br>- 우선순위 개선 항목 도출</p>
+            <p>2️⃣ 노출 구조 최적화<br>- 검색형/탐색형 콘텐츠 비율 설계<br>- 썸네일·제목·초반 훅 개선<br>- 멀티포맷(롱폼·숏폼·라이브) 운영 전략</p>
+            <p>3️⃣ 수익화 연결 설계<br>- 채널 단계별 수익모델 선택<br>- 광고·브랜드 협업 기본 구조 이해<br>- 실행 가능한 4주 운영 플랜 수립</p>
+            <p>🎬 실습: 본인 채널 데이터 기반 진단표 작성 + 개선안 도출</p>
+            <span class="step-label">STEP 3</span>
+            <h4>특별 특강</h4>
+            <p><strong class="mentor-highlight-title">"성장 정체를 뚫는 채널 리셋 전략"</strong><br><br>- 조회수 정체 구간에서 반드시 점검할 5가지<br>- 실패하는 운영 루틴과 성공하는 루틴의 차이<br>- Q&A 기반 맞춤 개선 방향 제시</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mentor-sticky-editkim" class="mentor-section reveal">
+    <div class="container">
+      <div class="intensive-head">
+        <h2>구독자 적어도 수익 나는 AI 유튜브 자동화 시스템</h2>
+        <p>김창수 강사 실전 수익화 코칭</p>
+      </div>
+      <div class="mentor-layout">
+        <aside class="mentor-sticky-col">
+          <article class="mentor-sticky-card">
+            <span class="mentor-badge">강사진</span>
+            <div class="mentor-photo-wrap">
+              <img id="mentor-photo-editkim" src="image/editkim1.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
+            </div>
+            <h3 id="mentor-name-editkim">에딧킴 강사</h3>
+            <p id="mentor-role-editkim" class="mentor-role">AI 숏폼 제작 코치 · CapCut 실전 편집 트레이너</p>
+            <p id="mentor-bio-editkim" class="mentor-bio">"기획, 생성, 편집, 업로드까지 3시간 안에 완성합니다."<br><br>- AI로 주제/대본/썸네일 문구 빠르게 설계<br>- 영상 생성 도구로 제작 속도 극대화<br>- 캡컷 편집과 바이럴 세팅까지 실전 적용</p>
+          </article>
+        </aside>
+
+        <div class="mentor-steps">
+          <article
+            class="mentor-step active"
+            data-name="에딧킴 강사"
+            data-role="AI 숏폼 제작 코치 · CapCut 실전 편집 트레이너"
+            data-image="image/editkim1.png"
+            data-bio="&quot;기획, 생성, 편집, 업로드까지 3시간 안에 완성합니다.&quot;<br><br>- AI로 주제/대본/썸네일 문구 빠르게 설계<br>- 영상 생성 도구로 제작 속도 극대화<br>- 캡컷 편집과 바이럴 세팅까지 실전 적용">
+            <span class="step-label">STEP 1</span>
+            <h4><span class="lecture-pill">1교시</span><br><span class="lecture-title">AI로 10분 만에 끝내는 '팔리는' 기획 & 대본 <span class="duration">(60분)</span></span></h4>
+            <p><strong>[이론]</strong> 유튜브 알고리즘이 좋아하는 '초반 3초' 후킹 전략</p>
+            <p><strong>[실습]</strong> ChatGPT/Gemini를 활용해 내 채널 주제에 맞는 숏츠 대본 5개 생성하기</p>
+            <p><strong>[실습]</strong> AI가 제안한 대본 중 가장 조회수 터질만한 '썸네일 문구' 뽑아내기</p>
+            <span class="step-label">STEP 2</span>
+            <h4><span class="lecture-pill">2교시</span><br><span class="lecture-title">AI 영상 생성 도구로 화면 구성 끝내기 <span class="duration">(60분)</span></span></h4>
+            <p><strong>[이론]</strong> 저작권 걱정 없는 AI 이미지/비디오 소스 확보 요령</p>
+            <p><strong>[실습]</strong> Vrew나 가상 인간(Avatar) 툴을 활용해 대본을 영상으로 자동 변환하기</p>
+            <p><strong>[실습]</strong> 목소리 입히기: 내 목소리 대신 AI 성우로 감정 전달력을 높이는 팁</p>
+            <span class="step-label">STEP 3</span>
+            <h4><span class="lecture-pill">3교시</span><br><span class="lecture-title">캡컷(CapCut) 실전 편집 & 바이럴 세팅 <span class="duration">(60분)</span></span></h4>
+            <p><strong>[실습]</strong> 생성된 AI 소스들을 캡컷에서 합치고 자막 넣기 (컷 편집 + 배경음악)</p>
+            <p><strong>[실습]</strong> AI 자막 자동 생성 기능을 활용해 가독성 극대화하기</p>
+            <p><strong>[마무리]</strong> 3시간 동안 만든 내 영상 피드백 및 오늘 바로 업로드하는 실전 가이드</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mentor-sticky-kcs" class="mentor-section reveal">
+    <div class="container">
+      <div class="intensive-head">
+        <h2>김창수 강사 AI 유튜브 자동화 실전 클래스</h2>
+        <p>구독자 규모와 무관하게 수익 구조를 만드는 실전 코칭</p>
+      </div>
+      <div class="mentor-layout">
+        <aside class="mentor-sticky-col">
+          <article class="mentor-sticky-card">
+            <span class="mentor-badge">강사진</span>
+            <div class="mentor-photo-wrap">
+              <img id="mentor-photo-kcs" src="image/KCS1.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
+            </div>
+            <h3 id="mentor-name-kcs">김창수 강사</h3>
+            <p id="mentor-role-kcs" class="mentor-role">한국AI부동산포럼 & 신문 대표 · 부동삶클래스/부동삶TV/쉽톡 대표</p>
+            <p id="mentor-bio-kcs" class="mentor-bio">"구독자가 적어도 수익이 나는 구조를 만듭니다."<br><br>- AI 자동화 도구를 활용한 채널 운영 시스템 설계<br>- 콘텐츠 제작부터 상위노출·전환까지 실전 적용<br>- 바로 실행 가능한 수익화 루틴 제시</p>
+          </article>
+        </aside>
+
+        <div class="mentor-steps">
+          <article
+            class="mentor-step active"
+            data-name="김창수 강사"
+            data-role="한국AI부동산포럼 & 신문 대표 · 부동삶클래스/부동삶TV/쉽톡 대표"
+            data-image="image/KCS1.png"
+            data-bio="&quot;구독자가 적어도 수익이 나는 구조를 만듭니다.&quot;<br><br>- AI 자동화 도구를 활용한 채널 운영 시스템 설계<br>- 콘텐츠 제작부터 상위노출·전환까지 실전 적용<br>- 바로 실행 가능한 수익화 루틴 제시">
+            <span class="step-label">STEP 1</span>
+            <h4><span class="lecture-pill">강의 제목</span><br><span class="lecture-title">구독자 적어도 수익 나는 AI 유튜브 자동화 시스템</span></h4>
+            <p>채널 규모가 작아도 실전 수익이 발생하도록, AI 기반 자동화 파이프라인을 설계하고 운영하는 방법을 다룹니다.</p>
+            <span class="step-label">STEP 2</span>
+            <h4><span class="lecture-pill">제공 혜택</span><br><span class="lecture-title">실전 자동화 도구 패키지 제공</span></h4>
+            <p>- 쉽톡 3개월 무료 이용권 제공</p>
+            <p>- 카드뉴스 자동제작기 6개월 이용권 제공</p>
+            <p>- AI 상위노출 기사제작기 제공(평생)</p>
+            <p>- AI 썸네일, 대본 제작 봇 제공(평생)</p>
+            <span class="step-label">STEP 3</span>
+            <h4><span class="lecture-pill">강사 소개</span><br><span class="lecture-title">김창수(부동삶)</span></h4>
+            <p>- 한국AI부동산포럼 & 신문 대표</p>
+            <p>- 부동삶클래스, 부동삶TV, 쉽톡 대표</p>
+            <p>- 서울사이버대학교 겸임교수</p>
+            <p>- 한국공인중개사협회 전임 교수</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mentor-sticky-bjh" class="mentor-section reveal">
+    <div class="container">
+      <div class="intensive-head">
+        <h2>박정훈 강사 유튜브 실전 분석 코칭</h2>
+        <p>수익화를 방해하는 실수부터 채널 진단 컨설팅까지</p>
+      </div>
+      <div class="mentor-layout">
+        <aside class="mentor-sticky-col">
+          <article class="mentor-sticky-card">
+            <span class="mentor-badge">강사진</span>
+            <div class="mentor-photo-wrap">
+              <img id="mentor-photo-bjh" src="image/bjh.png" alt="박정훈 강사 프로필 이미지" loading="lazy" decoding="async" />
+            </div>
+            <h3 id="mentor-name-bjh">박정훈 강사</h3>
+            <p id="mentor-role-bjh" class="mentor-role">유튜브 분석 코치 · 채널 성장 컨설턴트</p>
+            <p id="mentor-bio-bjh" class="mentor-bio">"수익화는 운이 아니라 분석입니다."<br><br>- 초보 유튜버의 실패 패턴을 정확히 진단<br>- 스튜디오 지표를 기반으로 개선 포인트 도출<br>- 채널별 맞춤 실행 전략으로 성과를 만듭니다</p>
+          </article>
+        </aside>
+
+        <div class="mentor-steps">
+          <article
+            class="mentor-step active"
+            data-name="박정훈 강사"
+            data-role="유튜브 분석 코치 · 채널 성장 컨설턴트"
+            data-image="image/bjh.png"
+            data-bio="&quot;수익화는 운이 아니라 분석입니다.&quot;<br><br>- 초보 유튜버의 실패 패턴을 정확히 진단<br>- 스튜디오 지표를 기반으로 개선 포인트 도출<br>- 채널별 맞춤 실행 전략으로 성과를 만듭니다">
+            <span class="step-label">STEP 1</span>
+            <h4><span class="lecture-pill">1부</span><br><span class="lecture-title">유튜브로 수익화 하고 싶다면, 절대 이건 하지마세요</span></h4>
+            <p>초보 유튜버들이 가장 많이 하는 치명적인 실수 TOP10</p>
+
+            <span class="step-label">STEP 2</span>
+            <h4><span class="lecture-pill">2부</span><br><span class="lecture-title">유튜브는 90% 분석과 눈치싸움이다</span></h4>
+            <p>유튜브 스튜디오 분석창 제대로 분석하는 방법</p>
+
+            <span class="step-label">STEP 3</span>
+            <h4><span class="lecture-pill">3부</span><br><span class="lecture-title">다른 강의에서 알려주지 않는 핵심</span></h4>
+            <p>수박 겉 핡기 느낌에 두리뭉실하게만 설명하는 다른 강의!</p>
+            <p>그럴 수 밖에 없는 이유 설명과 개떡 처럼 말해도 찰떡처럼 이해 하는 방법</p>
+
+            <span class="step-label">STEP 4</span>
+            <h4><span class="lecture-pill">4부 [Q&A]</span><br><span class="lecture-title">본인들 채널을 직접 분석하고 컨설팅 해드립니다</span></h4>
+            <p>- 강의 시작 전, 사전 신청자 받아서 유튜브 스튜디오를 들어가서 같이 분석하고 컨설팅 해드립니다</p>
           </article>
         </div>
       </div>
@@ -3329,6 +3690,30 @@ AI 도구 6개월 무료 이용권 포함</p></article>
     </div>
   </section>
 
+  <section id="june-calendar" class="section-calendar reveal">
+      <div class="container calendar-wrap">
+        <h2 class="calendar-head">
+          <span class="calendar-kicker">교육일정</span>
+          <span class="calendar-title">2026년 7월</span>
+        </h2>
+        <div class="calendar-weekdays">
+          <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+        </div>
+        <div class="calendar-days">
+          <div class="calendar-day is-pad"></div><div class="calendar-day is-pad"></div><div class="calendar-day is-pad"></div>
+          <div class="calendar-day"><span class="cal-num">1</span></div><div class="calendar-day"><span class="cal-num">2</span></div><div class="calendar-day"><span class="cal-num">3</span></div><div class="calendar-day"><span class="cal-num">4</span></div>
+          <div class="calendar-day"><span class="cal-num">5</span></div><div class="calendar-day"><span class="cal-num">6</span></div><div class="calendar-day"><span class="cal-num">7</span></div><div class="calendar-day"><span class="cal-num">8</span></div><div class="calendar-day"><span class="cal-num">9</span></div>
+          <div class="calendar-day is-highlight" data-day="day1" role="button" tabindex="0" aria-label="7월 10일 교육 일정 보기"><span class="cal-num">10</span><span class="cal-label">STN<br>미디어서포터즈<br>교육</span></div>
+          <div class="calendar-day is-highlight" data-day="day2" role="button" tabindex="0" aria-label="7월 11일 교육 일정 보기"><span class="cal-num">11</span><span class="cal-label">STN<br>미디어서포터즈<br>교육</span></div>
+          <div class="calendar-day is-highlight" data-day="day3" role="button" tabindex="0" aria-label="7월 12일 교육 일정 보기"><span class="cal-num">12</span><span class="cal-label">STN<br>미디어서포터즈<br>교육</span></div>
+          <div class="calendar-day"><span class="cal-num">13</span></div><div class="calendar-day"><span class="cal-num">14</span></div><div class="calendar-day"><span class="cal-num">15</span></div><div class="calendar-day"><span class="cal-num">16</span></div><div class="calendar-day"><span class="cal-num">17</span></div><div class="calendar-day"><span class="cal-num">18</span></div>
+          <div class="calendar-day"><span class="cal-num">19</span></div><div class="calendar-day"><span class="cal-num">20</span></div><div class="calendar-day"><span class="cal-num">21</span></div><div class="calendar-day"><span class="cal-num">22</span></div><div class="calendar-day"><span class="cal-num">23</span></div><div class="calendar-day"><span class="cal-num">24</span></div><div class="calendar-day"><span class="cal-num">25</span></div>
+          <div class="calendar-day"><span class="cal-num">26</span></div><div class="calendar-day"><span class="cal-num">27</span></div><div class="calendar-day"><span class="cal-num">28</span></div><div class="calendar-day"><span class="cal-num">29</span></div><div class="calendar-day"><span class="cal-num">30</span></div><div class="calendar-day"><span class="cal-num">31</span></div>
+          <div class="calendar-day is-pad"></div>
+        </div>
+      </div>
+    </section>
+
   <section id="price-cut" class="price-cut reveal" aria-label="수강료">
     <div class="container">
       <div class="price-cut-layout">
@@ -3565,6 +3950,194 @@ AI 도구 6개월 무료 이용권 포함</p></article>
       const roleEl = document.getElementById("mentor-role-dup");
       const bioEl = document.getElementById("mentor-bio-dup");
       const photoEl = document.getElementById("mentor-photo-dup");
+      if (!steps.length || !nameEl || !roleEl || !bioEl || !photoEl) return;
+
+      const applyStep = (step) => {
+        nameEl.textContent = step.dataset.name || "";
+        roleEl.textContent = step.dataset.role || "";
+        bioEl.innerHTML = step.dataset.bio || "";
+        if (step.dataset.image) photoEl.src = step.dataset.image;
+      };
+
+      const setActiveStep = (activeIndex) => {
+        steps.forEach((step, index) => {
+          step.classList.toggle("active", index === activeIndex);
+        });
+        applyStep(steps[activeIndex]);
+      };
+
+      const updateByScroll = () => {
+        const anchorY = window.innerHeight * 0.35;
+        let nearestIndex = 0;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        steps.forEach((step, index) => {
+          const rect = step.getBoundingClientRect();
+          const distance = Math.abs(rect.top - anchorY);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+
+        setActiveStep(nearestIndex);
+      };
+
+      updateByScroll();
+      window.addEventListener("scroll", updateByScroll, { passive: true });
+      window.addEventListener("resize", updateByScroll);
+    })();
+
+    (function () {
+      const section = document.getElementById("mentor-sticky-jhc");
+      if (!section) return;
+
+      const steps = Array.from(section.querySelectorAll(".mentor-step"));
+      const nameEl = document.getElementById("mentor-name-jhc");
+      const roleEl = document.getElementById("mentor-role-jhc");
+      const bioEl = document.getElementById("mentor-bio-jhc");
+      const photoEl = document.getElementById("mentor-photo-jhc");
+      if (!steps.length || !nameEl || !roleEl || !bioEl || !photoEl) return;
+
+      const applyStep = (step) => {
+        nameEl.textContent = step.dataset.name || "";
+        roleEl.textContent = step.dataset.role || "";
+        bioEl.innerHTML = step.dataset.bio || "";
+        if (step.dataset.image) photoEl.src = step.dataset.image;
+      };
+
+      const setActiveStep = (activeIndex) => {
+        steps.forEach((step, index) => {
+          step.classList.toggle("active", index === activeIndex);
+        });
+        applyStep(steps[activeIndex]);
+      };
+
+      const updateByScroll = () => {
+        const anchorY = window.innerHeight * 0.35;
+        let nearestIndex = 0;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        steps.forEach((step, index) => {
+          const rect = step.getBoundingClientRect();
+          const distance = Math.abs(rect.top - anchorY);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+
+        setActiveStep(nearestIndex);
+      };
+
+      updateByScroll();
+      window.addEventListener("scroll", updateByScroll, { passive: true });
+      window.addEventListener("resize", updateByScroll);
+    })();
+
+    (function () {
+      const section = document.getElementById("mentor-sticky-editkim");
+      if (!section) return;
+
+      const steps = Array.from(section.querySelectorAll(".mentor-step"));
+      const nameEl = document.getElementById("mentor-name-editkim");
+      const roleEl = document.getElementById("mentor-role-editkim");
+      const bioEl = document.getElementById("mentor-bio-editkim");
+      const photoEl = document.getElementById("mentor-photo-editkim");
+      if (!steps.length || !nameEl || !roleEl || !bioEl || !photoEl) return;
+
+      const applyStep = (step) => {
+        nameEl.textContent = step.dataset.name || "";
+        roleEl.textContent = step.dataset.role || "";
+        bioEl.innerHTML = step.dataset.bio || "";
+        if (step.dataset.image) photoEl.src = step.dataset.image;
+      };
+
+      const setActiveStep = (activeIndex) => {
+        steps.forEach((step, index) => {
+          step.classList.toggle("active", index === activeIndex);
+        });
+        applyStep(steps[activeIndex]);
+      };
+
+      const updateByScroll = () => {
+        const anchorY = window.innerHeight * 0.35;
+        let nearestIndex = 0;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        steps.forEach((step, index) => {
+          const rect = step.getBoundingClientRect();
+          const distance = Math.abs(rect.top - anchorY);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+
+        setActiveStep(nearestIndex);
+      };
+
+      updateByScroll();
+      window.addEventListener("scroll", updateByScroll, { passive: true });
+      window.addEventListener("resize", updateByScroll);
+    })();
+
+    (function () {
+      const section = document.getElementById("mentor-sticky-kcs");
+      if (!section) return;
+
+      const steps = Array.from(section.querySelectorAll(".mentor-step"));
+      const nameEl = document.getElementById("mentor-name-kcs");
+      const roleEl = document.getElementById("mentor-role-kcs");
+      const bioEl = document.getElementById("mentor-bio-kcs");
+      const photoEl = document.getElementById("mentor-photo-kcs");
+      if (!steps.length || !nameEl || !roleEl || !bioEl || !photoEl) return;
+
+      const applyStep = (step) => {
+        nameEl.textContent = step.dataset.name || "";
+        roleEl.textContent = step.dataset.role || "";
+        bioEl.innerHTML = step.dataset.bio || "";
+        if (step.dataset.image) photoEl.src = step.dataset.image;
+      };
+
+      const setActiveStep = (activeIndex) => {
+        steps.forEach((step, index) => {
+          step.classList.toggle("active", index === activeIndex);
+        });
+        applyStep(steps[activeIndex]);
+      };
+
+      const updateByScroll = () => {
+        const anchorY = window.innerHeight * 0.35;
+        let nearestIndex = 0;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        steps.forEach((step, index) => {
+          const rect = step.getBoundingClientRect();
+          const distance = Math.abs(rect.top - anchorY);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+
+        setActiveStep(nearestIndex);
+      };
+
+      updateByScroll();
+      window.addEventListener("scroll", updateByScroll, { passive: true });
+      window.addEventListener("resize", updateByScroll);
+    })();
+
+    (function () {
+      const section = document.getElementById("mentor-sticky-bjh");
+      if (!section) return;
+
+      const steps = Array.from(section.querySelectorAll(".mentor-step"));
+      const nameEl = document.getElementById("mentor-name-bjh");
+      const roleEl = document.getElementById("mentor-role-bjh");
+      const bioEl = document.getElementById("mentor-bio-bjh");
+      const photoEl = document.getElementById("mentor-photo-bjh");
       if (!steps.length || !nameEl || !roleEl || !bioEl || !photoEl) return;
 
       const applyStep = (step) => {
