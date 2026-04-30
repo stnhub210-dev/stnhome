@@ -9,7 +9,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="STN미디어서포터즈 양성 프로젝트">
   <meta property="og:description" content="STN미디어와 함께 만들어 갑니다. | 기자·미디어·유튜브 AI 자동화 교육 | 2026년 7월 10일~12일">
-  <meta property="og:image" content="https://stnhub210-dev.github.io/stnhome/thumbnail.jpg">
+  <meta property="og:image" content="https://stnhub210-dev.github.io/stnhome/indexmain.png">
   <meta property="og:url" content="https://stnhub210-dev.github.io/stnhome/">
   <meta property="og:site_name" content="STN 미디어서포터즈">
 
@@ -81,6 +81,7 @@
       font-size: clamp(2rem, 3.8vw, 3.05rem);
       line-height: 1.26;
       margin-bottom: 18px;
+      text-align: center;
     }
     .tracks-title-line {
       display: block;
@@ -97,6 +98,37 @@
     .tracks-title-pink {
       color: #ff2a2a;
       text-shadow: 0 0 10px rgba(255, 42, 42, 0.35);
+    }
+    .tracks-focus-note {
+      text-align: center;
+      margin-top: 8px;
+      font-size: clamp(2.25rem, 4.3vw, 3.55rem);
+      font-weight: 900;
+      color: #38bdf8;
+      text-shadow: none;
+    }
+    #tracks {
+      min-height: auto;
+      padding: 96px 0 104px;
+    }
+    #tracks .container {
+      text-align: center;
+    }
+    @keyframes tracks-zoom-return {
+      0% { opacity: 0; transform: translateY(14px) scale(.88); }
+      62% { opacity: 1; transform: translateY(0) scale(1.1); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    #tracks.reveal .tracks-title,
+    #tracks.reveal .tracks-focus-note {
+      opacity: 0;
+      transform: translateY(14px) scale(.88);
+    }
+    #tracks.reveal.active .tracks-title {
+      animation: tracks-zoom-return .8s ease-out forwards;
+    }
+    #tracks.reveal.active .tracks-focus-note {
+      animation: tracks-zoom-return .9s ease-out .12s forwards;
     }
     .curriculum-section {
       min-height: auto;
@@ -345,23 +377,153 @@
     .nav-links a { color: inherit; text-decoration: none; }
     .nav-links a:hover { color: var(--lime); }
 
-    .hero { position: relative; overflow: hidden; isolation: isolate; }
-    .hero-video-bg {
-      position: absolute; inset: -4%; width: 108%; height: 108%;
-      object-fit: cover; opacity: .94; z-index: 0;
-      animation: hero-pan 30s ease-in-out infinite alternate;
-    }
-    @keyframes hero-pan {
-      from { transform: scale(1.04) translate(0, 0); }
-      to { transform: scale(1.1) translate(-1%, -.5%); }
-    }
-    .hero-video-overlay {
-      position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(180deg, rgba(10,10,10,.45), rgba(10,10,10,.22), rgba(10,10,10,.52));
+    .hero { position: relative; overflow: hidden; isolation: isolate; background: #000; }
+    #hero {
+      padding-bottom: 0;
+      min-height: auto;
+      border-bottom: 0;
     }
     .hero .container { position: relative; z-index: 2; }
+    .hero-layout {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(4px, 1.2vw, 12px);
+      align-items: center;
+      width: 100%;
+      min-height: auto;
+      justify-content: flex-start;
+    }
+    .hero-copy {
+      max-width: 760px;
+      width: 100%;
+      text-align: center;
+      margin-top: clamp(40px, 5vw, 68px);
+    }
     .hero-highlight { color: var(--lime); text-shadow: 0 0 16px rgba(124,252,0,.25); }
-    .hero .sub { margin-top: 10px; color: #ececec; font-size: clamp(1rem, 2vw, 1.32rem); }
+    .hero-copy h1 {
+      white-space: nowrap;
+      font-size: clamp(2.2rem, 4.3vw, 3.75rem);
+      margin: 0;
+      line-height: 1.18;
+    }
+    .hero .sub {
+      margin: 18px 0 0;
+      color: #ececec;
+      font-size: clamp(1rem, 2vw, 1.32rem);
+      text-align: center;
+    }
+    .hero-mid-image {
+      width: min(100%, 210px);
+      max-width: 210px;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      margin-top: 24px;
+      opacity: 0;
+      transform: translateY(6px) scale(.96);
+      filter:
+        saturate(0)
+        brightness(2.25)
+        contrast(1.08)
+        drop-shadow(0 0 8px rgba(255,255,255,.85))
+        drop-shadow(0 0 22px rgba(255,255,255,.62));
+    }
+    @keyframes hero-logo-glass-shift {
+      0% {
+        opacity: .12;
+        transform: translateY(6px) scale(.96);
+        filter:
+          saturate(0)
+          brightness(2.4)
+          contrast(1.1)
+          drop-shadow(0 0 10px rgba(255,255,255,.9))
+          drop-shadow(0 0 26px rgba(255,255,255,.66));
+      }
+      55% {
+        opacity: .92;
+        transform: translateY(0) scale(1.02);
+        filter:
+          saturate(.35)
+          brightness(1.5)
+          contrast(1.12)
+          drop-shadow(0 0 10px rgba(210,240,255,.72))
+          drop-shadow(0 0 26px rgba(170,220,255,.55));
+      }
+      100% {
+        opacity: .78;
+        transform: translateY(0) scale(1);
+        filter:
+          saturate(1.05)
+          brightness(1.05)
+          contrast(1.06)
+          drop-shadow(0 0 8px rgba(80,185,255,.58))
+          drop-shadow(0 0 20px rgba(44,146,255,.46));
+      }
+    }
+    .hero.reveal.active .hero-mid-image {
+      animation: hero-logo-glass-shift 1.45s ease-out .08s forwards;
+    }
+    .hero-side {
+      display: grid;
+      gap: 8px;
+      width: 100%;
+      justify-items: center;
+      align-self: center;
+      margin-top: auto;
+      transform: translateY(-40px);
+    }
+    .hero-mentor-grid {
+      display: flex;
+      align-items: flex-end;
+      gap: 0;
+      padding-left: 10px;
+    }
+    .hero-mentor-card {
+      border: 0;
+      background: transparent;
+      border-radius: 0;
+      overflow: visible;
+      box-shadow: none;
+      width: clamp(108px, 9.4vw, 148px);
+      opacity: 0;
+      transform: translateY(18px) scale(.97);
+      margin-left: -22px;
+      position: relative;
+    }
+    .hero-mentor-card:first-child { margin-left: 0; }
+    .hero-mentor-card:nth-child(1) { z-index: 1; }
+    .hero-mentor-card:nth-child(2) { z-index: 2; }
+    .hero-mentor-card:nth-child(3) { z-index: 3; }
+    .hero-mentor-card:nth-child(4) { z-index: 4; }
+    .hero-mentor-card img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      display: block;
+      background: #111;
+      border-radius: 12px;
+    }
+    .hero-mentor-name {
+      display: none;
+    }
+    .hero-all-image {
+      width: min(108%, 1060px);
+      max-width: 1060px;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 26px rgba(0,0,0,.35));
+    }
+    @keyframes hero-mentor-in {
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .hero.reveal.active .hero-mentor-card {
+      animation: hero-mentor-in .7s ease-out forwards;
+    }
+    .hero.reveal.active .hero-mentor-card:nth-child(1) { animation-delay: .12s; }
+    .hero.reveal.active .hero-mentor-card:nth-child(2) { animation-delay: .36s; }
+    .hero.reveal.active .hero-mentor-card:nth-child(3) { animation-delay: .6s; }
+    .hero.reveal.active .hero-mentor-card:nth-child(4) { animation-delay: .84s; }
     .badges { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0 18px; }
     .badge {
       border: 1px solid rgba(124,252,0,.5);
@@ -409,11 +571,12 @@
     .hero.reveal.active .badge:nth-child(2) { animation-delay: .20s, .85s; }
     .hero.reveal.active .badge:nth-child(3) { animation-delay: .35s, 1.00s; }
     .hero-motto {
-      margin: 14px 0 0;
+      margin: 18px 0 0;
       color: #bfe7ff;
       font-size: clamp(1.55rem, 3.2vw, 2.25rem);
       font-weight: 900;
       letter-spacing: -0.02em;
+      text-align: center;
       text-shadow:
         0 2px 0 rgba(0,0,0,.55),
         0 0 18px rgba(120, 200, 255, .12);
@@ -2345,6 +2508,26 @@
     @media (max-width: 1024px) {
       .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .nav-links { display: none; }
+      .hero-layout {
+        gap: 22px;
+        min-height: auto;
+      }
+      .hero-copy {
+        max-width: none;
+        justify-self: center;
+        align-self: center;
+      }
+      .hero-copy h1 {
+        white-space: normal;
+      }
+      .hero-side {
+        justify-self: stretch;
+        align-self: center;
+      }
+      .hero-all-image {
+        width: 100%;
+        max-width: 100%;
+      }
     }
     @media (max-width: 768px) {
       section { min-height: auto; padding: 88px 0 48px; }
@@ -2419,6 +2602,14 @@
       .include-grid {
         grid-template-columns: 1fr;
       }
+      .hero-mentor-grid {
+        justify-content: center;
+        padding-left: 0;
+      }
+      .hero-mentor-card {
+        width: clamp(92px, 22vw, 122px);
+        margin-left: -14px;
+      }
 
       /* 모바일에서 문장 정렬/줄바꿈 가독성 개선 */
       body { word-break: keep-all; line-break: strict; }
@@ -2446,8 +2637,25 @@
       .intensive-cta { width: 100%; margin-left: 0; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .event-tagline, .event-cash, .hero-video-bg { animation: none; }
+      .event-tagline, .event-cash { animation: none; }
       .cash-counter { transition: none; }
+      #tracks .tracks-title,
+      #tracks .tracks-focus-note {
+        opacity: 1;
+        transform: none;
+        animation: none !important;
+      }
+      .hero-mentor-card {
+        opacity: 1;
+        transform: none;
+        animation: none !important;
+      }
+      .hero-mid-image {
+        opacity: 1;
+        transform: none;
+        animation: none !important;
+        filter: none;
+      }
       .stn-asset-title,
       .stn-asset-lead,
       .stn-asset-list li,
@@ -2489,19 +2697,25 @@
   </nav>
 
   <section id="hero" class="hero reveal">
-    <video class="hero-video-bg" autoplay muted loop playsinline preload="auto">
-      <source src="image/stn003.mp4" type="video/mp4" />
-    </video>
-    <div class="hero-video-overlay"></div>
     <div class="container">
-      <h1>미디어서포터즈 <span class="hero-highlight">양성 프로젝트</span></h1>
-      <p class="sub">에스티엔방송·에스티엔뉴스</p>
-      <div class="badges">
-        <span class="badge">기자부문</span>
-        <span class="badge">미디어부문</span>
-        <span class="badge">유튜브활용 부문(AI 완전 자동화)</span>
+      <div class="hero-layout">
+        <div class="hero-copy">
+          <h1>당신의 채널, <span class="hero-highlight">이제 미디어가 됩니다</span></h1>
+          <p class="sub">에스티엔방송이 함께하는 유튜브 크리에이터 양성 과정</p>
+          <p class="hero-motto">STN은 언제나 최선을 다합니다.</p>
+        </div>
+        <img class="hero-mid-image" src="image/자산 11stn.png" alt="STN 로고 이미지" loading="eager" decoding="async" />
+        <div class="hero-side" aria-label="강사진 소개 이미지">
+          <img class="hero-all-image" src="image/all2.png" alt="전체 강사진 이미지" loading="eager" decoding="async" />
+        </div>
       </div>
-      <p class="hero-motto">STN은 언제나 최선을 다합니다.</p>
+    </div>
+  </section>
+
+  <section id="tracks" class="reveal">
+    <div class="container">
+      <h2 class="tracks-title"><span class="tracks-title-line">STN<span class="tracks-title-em tracks-title-lime">미디어서포터즈</span> 교육으로</span><span class="tracks-title-line"><span class="tracks-title-em tracks-title-pink">돈버는 유튜버</span>가 될 수 있습니다.</span></h2>
+      <p class="tracks-focus-note">2박3일 집중 교육!</p>
     </div>
   </section>
 
@@ -2512,43 +2726,6 @@
         <article class="card"><h3>사업명</h3><p><span class="overview-em">STN미디어서포터즈 양성 과정 1기</span></p></article>
         <article class="card"><h3>교육형태 / 기간</h3><p><span class="overview-em">온라인·오프라인 동시 집중교육</span></p><p>2026년 7월 10일~12일 (금·토·일)</p></article>
         <article class="card"><h3>장소</h3><p><span class="overview-em">배재대학교</span></p><p class="overview-sub">(35345) 대전광역시 서구 배재로 155-40(도마동)</p></article>
-      </div>
-    </div>
-  </section>
-
-  <section id="stn-split" class="stn-split reveal" aria-label="에스티엔 소개">
-    <div class="container">
-      <div class="stn-split-wrap">
-        <div class="stn-video-card">
-          <iframe src="https://www.youtube.com/embed/XFgFdenFJGA" title="STN 소개 영상" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-        <article class="stn-copy-card">
-          <span class="stn-copy-kicker">STN INTRO</span>
-          <h2 class="stn-copy-title">에스티엔은 <span class="stn-copy-em">실행 중심</span> 미디어 파트너입니다.</h2>
-          <p>에스티엔방송과 에스티엔뉴스는 콘텐츠 기획부터 제작, 송출, 기사 확산까지 하나의 흐름으로 연결해 빠른 성과를 만듭니다.</p>
-          <p>교육 참가자는 현업형 프로세스를 그대로 경험하며, 실무에 바로 적용 가능한 콘텐츠 운영 역량을 단계적으로 확보할 수 있습니다.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="stn-asset" class="stn-asset reveal" aria-label="STN 미디어 자산">
-    <div class="container">
-      <div class="stn-asset-wrap">
-        <h2 class="stn-asset-title"><span class="em">STN의 20년 미디어 자산</span>, 개인에게 연결할 시점</h2>
-        <p class="stn-asset-lead">㈜에스티엔방송은 2006년부터 20년간 스포츠 방송 중계, 언론 운영, 콘텐츠 제작을 이어온 검증된 미디어 전문 기업입니다.</p>
-
-        <ul class="stn-asset-list">
-          <li><strong>KT GENIE TV ch.131</strong> <strong>24시간 방송 운영</strong></li>
-          <li><strong>KTX·SRT 전 객차</strong> <strong>일 33만명</strong> 도달 미디어 보유</li>
-          <li>유튜브 <strong>STN SPORTS</strong> <strong>구독자 10만</strong> 채널 운영</li>
-          <li><strong>네이버·카카오·구글 CP</strong> 제휴사</li>
-          <li><strong>연간 400경기 이상</strong> 중계 인프라 보유</li>
-          <li><strong>패럴림픽 2008~2022</strong> 공식 중계</li>
-          <li>에스티엔미디어마케터 <strong>민간자격 등록</strong> <strong>(제2025-002178호)</strong></li>
-        </ul>
-
-        <p class="stn-asset-summary">이 자산을 개인 크리에이터와 연결하면, 개인은 콘텐츠와 신뢰를 얻고 STN은 플랫폼과 네트워크를 확장하는 상호 성장 구조가 만들어집니다.</p>
       </div>
     </div>
   </section>
@@ -2640,17 +2817,6 @@
           <article class="card"><h3>AI 자동화로 95% 시간 단축</h3><p>콘텐츠 제작 프로세스를 자동화해 직장인도 <span class="card-em">지속 가능한 운영 루틴</span>을 구축합니다.</p></article>
           <article class="card"><h3>지속적 상품 소싱</h3><p>개인이 운영하는 채널에서 발생한 수익을 <span class="card-em">본인 명의로 지속 확보</span>할 수 있습니다.</p></article>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="tracks" class="reveal">
-    <div class="container">
-      <h2 class="tracks-title"><span class="tracks-title-line">STN<span class="tracks-title-em tracks-title-lime">미디어서포터즈</span> 교육으로</span><span class="tracks-title-line"><span class="tracks-title-em tracks-title-pink">돈버는 유튜버</span>가 될 수 있습니다.</span></h2>
-      <div class="grid-3">
-        <article class="card"><h3>기자 부문(6개월 평가후)</h3><ul><li><strong>핵심목표:</strong> STN뉴스 기자활동 + 네이버 기사 송고</li><li><strong>최종혜택:</strong> 에스티엔뉴스 공식 기자권한 부여</li><li><strong>추천:</strong> 저널리즘 지망생, 스포츠 팬</li></ul></article>
-        <article class="card"><h3>미디어 부문</h3><ul><li><strong>핵심목표:</strong> SNS·카드뉴스·영상 콘텐츠 제작</li><li><strong>최종혜택:</strong> 에스티엔 미디어서포터즈 자격증</li><li><strong>추천:</strong> SNS마케터, 콘텐츠 크리에이터</li></ul></article>
-        <article class="card"><h3>유튜브 부문</h3><ul><li><strong>핵심목표:</strong> 유튜브 채널개설 + 숏츠 완전자동화</li><li><strong>최종혜택:</strong> YPP 수익화(팬펀딩·쇼핑·광고)</li><li><strong>추천:</strong> 유튜브 수익화 희망자</li></ul></article>
       </div>
     </div>
   </section>
@@ -3204,6 +3370,43 @@ AI 도구 6개월 무료 이용권 포함</p></article>
       <div><button class="cta-btn apply-btn">지금 신청하기</button></div>
       <p class="apply-contact">문의: 1599-1242</p>
       <p>주최: ㈜에스티엔미디어</p>
+    </div>
+  </section>
+
+  <section id="stn-split" class="stn-split reveal" aria-label="에스티엔 소개">
+    <div class="container">
+      <div class="stn-split-wrap">
+        <div class="stn-video-card">
+          <iframe src="https://www.youtube.com/embed/XFgFdenFJGA" title="STN 소개 영상" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <article class="stn-copy-card">
+          <span class="stn-copy-kicker">STN INTRO</span>
+          <h2 class="stn-copy-title">에스티엔은 <span class="stn-copy-em">실행 중심</span> 미디어 파트너입니다.</h2>
+          <p>에스티엔방송과 에스티엔뉴스는 콘텐츠 기획부터 제작, 송출, 기사 확산까지 하나의 흐름으로 연결해 빠른 성과를 만듭니다.</p>
+          <p>교육 참가자는 현업형 프로세스를 그대로 경험하며, 실무에 바로 적용 가능한 콘텐츠 운영 역량을 단계적으로 확보할 수 있습니다.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="stn-asset" class="stn-asset reveal" aria-label="STN 미디어 자산">
+    <div class="container">
+      <div class="stn-asset-wrap">
+        <h2 class="stn-asset-title"><span class="em">STN의 20년 미디어 자산</span>, 개인에게 연결할 시점</h2>
+        <p class="stn-asset-lead">㈜에스티엔방송은 2006년부터 20년간 스포츠 방송 중계, 언론 운영, 콘텐츠 제작을 이어온 검증된 미디어 전문 기업입니다.</p>
+
+        <ul class="stn-asset-list">
+          <li><strong>KT GENIE TV ch.131</strong> <strong>24시간 방송 운영</strong></li>
+          <li><strong>KTX·SRT 전 객차</strong> <strong>일 33만명</strong> 도달 미디어 보유</li>
+          <li>유튜브 <strong>STN SPORTS</strong> <strong>구독자 10만</strong> 채널 운영</li>
+          <li><strong>네이버·카카오·구글 CP</strong> 제휴사</li>
+          <li><strong>연간 400경기 이상</strong> 중계 인프라 보유</li>
+          <li><strong>패럴림픽 2008~2022</strong> 공식 중계</li>
+          <li>에스티엔미디어마케터 <strong>민간자격 등록</strong> <strong>(제2025-002178호)</strong></li>
+        </ul>
+
+        <p class="stn-asset-summary">이 자산을 개인 크리에이터와 연결하면, 개인은 콘텐츠와 신뢰를 얻고 STN은 플랫폼과 네트워크를 확장하는 상호 성장 구조가 만들어집니다.</p>
+      </div>
     </div>
   </section>
 
