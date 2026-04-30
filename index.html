@@ -379,6 +379,21 @@
     .nav-links a:hover { color: var(--lime); }
 
     .hero { position: relative; overflow: hidden; isolation: isolate; background: #000; }
+    .hero-video-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .82;
+      z-index: 0;
+    }
+    .hero-video-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(180deg, rgba(0,0,0,.24), rgba(0,0,0,.14), rgba(0,0,0,.34));
+    }
     #hero {
       padding-bottom: 0;
       min-height: auto;
@@ -2695,6 +2710,16 @@
     footer { padding: 18px 0 28px; text-align: center; color: #909090; font-size: .88rem; }
 
     @media (max-width: 1024px) {
+      .container { width: min(94%, var(--max)); }
+      section {
+        min-height: auto;
+        padding: 86px 0 50px;
+      }
+      h2 {
+        font-size: clamp(1.6rem, 3.8vw, 2.35rem);
+        line-height: 1.3;
+        margin-bottom: 16px;
+      }
       .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .nav-links { display: none; }
       .hero-layout {
@@ -2720,6 +2745,33 @@
     }
     @media (max-width: 768px) {
       section { min-height: auto; padding: 88px 0 48px; }
+      .container { width: min(95%, var(--max)); }
+      .navbar {
+        gap: 10px;
+        padding: 9px 14px;
+      }
+      .logo {
+        font-size: .92rem;
+        line-height: 1.3;
+      }
+      .hero-copy h1 {
+        font-size: clamp(2.45rem, 10.5vw, 3.25rem);
+        line-height: 1.14;
+      }
+      .hero .sub {
+        margin-top: 14px;
+        font-size: clamp(.96rem, 3.6vw, 1.18rem);
+        line-height: 1.55;
+      }
+      .hero-mid-image {
+        width: min(100%, 120px);
+        max-width: 120px;
+        margin-top: 14px;
+      }
+      .hero-all-image {
+        width: 118%;
+        max-width: 118%;
+      }
       .grid-3, .grid-4 { grid-template-columns: 1fr; }
       .cur-grid, .cur-grid.youtube { grid-template-columns: 1fr; }
       .problem-layout {
@@ -2783,6 +2835,15 @@
       }
       .mentor-step {
         min-height: 62vh;
+        padding: 18px 14px;
+      }
+      .mentor-step h4 {
+        font-size: clamp(1.02rem, 4.8vw, 1.2rem);
+        line-height: 1.4;
+      }
+      .mentor-step p {
+        font-size: .95rem;
+        line-height: 1.65;
       }
       #problem .card,
       #solution .card {
@@ -2802,6 +2863,14 @@
 
       /* 모바일에서 문장 정렬/줄바꿈 가독성 개선 */
       body { word-break: keep-all; line-break: strict; }
+      .tracks-title {
+        font-size: clamp(1.48rem, 6.3vw, 2.08rem);
+        line-height: 1.38;
+      }
+      #tracks .tracks-focus-note {
+        font-size: clamp(1.75rem, 8.3vw, 2.5rem);
+        line-height: 1.28;
+      }
       .track-card p,
       .include-card p { white-space: normal; }
 
@@ -2821,9 +2890,51 @@
         flex: 1 1 calc(50% - 10px);
         min-width: 0;
         text-align: center;
+        min-height: 52px;
       }
       .intensive-tab .t-date { font-size: 1.02rem; }
       .intensive-cta { width: 100%; margin-left: 0; }
+    }
+    @media (max-width: 480px) {
+      section { padding: 76px 0 42px; }
+      .navbar {
+        padding: 8px 12px;
+        top: 10px;
+      }
+      .logo {
+        font-size: .84rem;
+      }
+      .hero-copy {
+        margin-top: clamp(28px, 8vw, 42px);
+      }
+      .hero-copy h1 {
+        font-size: clamp(2rem, 9.2vw, 2.45rem);
+        line-height: 1.2;
+      }
+      .hero-all-image {
+        width: 124%;
+        max-width: 124%;
+      }
+      .card {
+        padding: 16px;
+      }
+      .mentor-step {
+        min-height: auto;
+      }
+      .mentor-step p,
+      .card p,
+      .timeline-content p {
+        font-size: .92rem;
+        line-height: 1.62;
+      }
+      .apply-contact {
+        font-size: clamp(1.05rem, 4.8vw, 1.28rem);
+      }
+      #apply .cta-btn {
+        width: 100%;
+        padding: 18px 22px;
+        font-size: clamp(1.22rem, 6vw, 1.5rem);
+      }
     }
     @media (prefers-reduced-motion: reduce) {
       .event-tagline, .event-cash { animation: none; }
@@ -2874,7 +2985,7 @@
 <body>
   <nav class="navbar">
     <div class="container nav-inner">
-      <a class="logo" href="#hero">STN 미디어서포터즈</a>
+      <a class="logo" href="#hero">STN MEDIA 서포터즈 아카데미</a>
       <div class="nav-links">
         <a href="#problem">문제점</a>
         <a href="#solution">솔루션</a>
@@ -2886,6 +2997,10 @@
   </nav>
 
   <section id="hero" class="hero reveal">
+    <video class="hero-video-bg" autoplay muted loop playsinline preload="auto">
+      <source src="image/ta02400000144_01.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-video-overlay"></div>
     <div class="container">
       <div class="hero-layout">
         <div class="hero-copy">
@@ -2905,17 +3020,6 @@
     <div class="container">
       <h2 class="tracks-title"><span class="tracks-title-line">STN<span class="tracks-title-em tracks-title-lime">미디어서포터즈</span> 교육으로</span><span class="tracks-title-line"><span class="tracks-title-em tracks-title-pink">돈버는 유튜버</span>가 될 수 있습니다.</span></h2>
       <p class="tracks-focus-note">2박3일 집중 교육!</p>
-    </div>
-  </section>
-
-  <section id="overview" class="reveal">
-    <div class="container">
-      <h2>프로그램 개요</h2>
-      <div class="grid-3">
-        <article class="card"><h3>사업명</h3><p><span class="overview-em">STN미디어서포터즈 양성 과정 1기</span></p></article>
-        <article class="card"><h3>교육형태 / 기간</h3><p><span class="overview-em">온라인·오프라인 동시 집중교육</span></p><p>2026년 7월 10일~12일 (금·토·일)</p></article>
-        <article class="card"><h3>장소</h3><p><span class="overview-em">배재대학교</span></p><p class="overview-sub">(35345) 대전광역시 서구 배재로 155-40(도마동)</p></article>
-      </div>
     </div>
   </section>
 
@@ -2950,41 +3054,6 @@
     </div>
   </section>
 
-  <section id="problem" class="reveal">
-    <div class="container">
-      <div class="problem-heading">
-        <h2 class="problem-title">유튜브 수익화, 왜 <span class="problem-title-mango">실패</span>할까?</h2>
-      </div>
-      <div class="problem-layout">
-        <div class="problem-visual">
-          <img src="image/YOUTUB.jpg" alt="유튜브 관련 콘텐츠 제작 이미지" loading="lazy" decoding="async" />
-        </div>
-        <div class="problem-cards">
-          <article class="card"><h3>① 자격 요건 미달</h3><p>구독자 500명 / 시청 3,000시간 조건을 채우지 못해 <span class="card-em">수익화 진입</span>이 어렵습니다.</p></article>
-          <article class="card"><h3>② 콘텐츠 전략 부재</h3><p>타겟과 포맷이 없는 채널 운영은 <span class="card-em">조회수·구독자 전환</span>을 만들기 어렵습니다.</p></article>
-          <article class="card"><h3>③ 지속성 부족</h3><p>제작부터 편집, 업로드까지 반복 루틴이 무너지며 <span class="card-em">채널 성장</span>이 멈춥니다.</p></article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="solution" class="reveal">
-    <div class="container">
-      <div class="solution-heading">
-        <h2 class="solution-title">STN이 3가지를 <span class="solution-title-em">해결</span>합니다.</h2>
-      </div>
-      <div class="solution-layout">
-        <div class="solution-visual">
-          <img src="image/stn02.jpg" alt="솔루션 섹션 소개 이미지" loading="lazy" decoding="async" />
-        </div>
-        <div class="solution-cards">
-          <article class="card"><h3>콘텐츠 제공</h3><p>초기 채널의 가장 큰 장벽을 빠르게 넘을 수 있도록 <span class="card-em">실전형 성장 구조</span>를 제공합니다.</p></article>
-          <article class="card"><h3>AI 자동화로 95% 시간 단축</h3><p>콘텐츠 제작 프로세스를 자동화해 직장인도 <span class="card-em">지속 가능한 운영 루틴</span>을 구축합니다.</p></article>
-          <article class="card"><h3>지속적 상품 소싱</h3><p>개인이 운영하는 채널에서 발생한 수익을 <span class="card-em">본인 명의로 지속 확보</span>할 수 있습니다.</p></article>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section id="mentor-emphasis" class="mentor-emphasis reveal">
     <div class="mentor-emphasis-media" aria-hidden="true">
@@ -3337,6 +3406,53 @@
             <h4><span class="lecture-pill">4부 [Q&A]</span><br><span class="lecture-title">본인들 채널을 직접 분석하고 컨설팅 해드립니다</span></h4>
             <p>- 강의 시작 전, 사전 신청자 받아서 유튜브 스튜디오를 들어가서 같이 분석하고 컨설팅 해드립니다</p>
           </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="overview" class="reveal">
+    <div class="container">
+      <h2>프로그램 개요</h2>
+      <div class="grid-3">
+        <article class="card"><h3>사업명</h3><p><span class="overview-em">STN미디어서포터즈 양성 과정 1기</span></p></article>
+        <article class="card"><h3>교육형태 / 기간</h3><p><span class="overview-em">온라인·오프라인 동시 집중교육</span></p><p>2026년 7월 10일~12일 (금·토·일)</p></article>
+        <article class="card"><h3>장소</h3><p><span class="overview-em">배재대학교</span></p><p class="overview-sub">(35345) 대전광역시 서구 배재로 155-40(도마동)</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="problem" class="reveal">
+    <div class="container">
+      <div class="problem-heading">
+        <h2 class="problem-title">유튜브 수익화, 왜 <span class="problem-title-mango">실패</span>할까?</h2>
+      </div>
+      <div class="problem-layout">
+        <div class="problem-visual">
+          <img src="image/YOUTUB.jpg" alt="유튜브 관련 콘텐츠 제작 이미지" loading="lazy" decoding="async" />
+        </div>
+        <div class="problem-cards">
+          <article class="card"><h3>① 자격 요건 미달</h3><p>구독자 500명 / 시청 3,000시간 조건을 채우지 못해 <span class="card-em">수익화 진입</span>이 어렵습니다.</p></article>
+          <article class="card"><h3>② 콘텐츠 전략 부재</h3><p>타겟과 포맷이 없는 채널 운영은 <span class="card-em">조회수·구독자 전환</span>을 만들기 어렵습니다.</p></article>
+          <article class="card"><h3>③ 지속성 부족</h3><p>제작부터 편집, 업로드까지 반복 루틴이 무너지며 <span class="card-em">채널 성장</span>이 멈춥니다.</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="solution" class="reveal">
+    <div class="container">
+      <div class="solution-heading">
+        <h2 class="solution-title">STN이 3가지를 <span class="solution-title-em">해결</span>합니다.</h2>
+      </div>
+      <div class="solution-layout">
+        <div class="solution-visual">
+          <img src="image/stn02.jpg" alt="솔루션 섹션 소개 이미지" loading="lazy" decoding="async" />
+        </div>
+        <div class="solution-cards">
+          <article class="card"><h3>콘텐츠 제공</h3><p>초기 채널의 가장 큰 장벽을 빠르게 넘을 수 있도록 <span class="card-em">실전형 성장 구조</span>를 제공합니다.</p></article>
+          <article class="card"><h3>AI 자동화로 95% 시간 단축</h3><p>콘텐츠 제작 프로세스를 자동화해 직장인도 <span class="card-em">지속 가능한 운영 루틴</span>을 구축합니다.</p></article>
+          <article class="card"><h3>지속적 상품 소싱</h3><p>개인이 운영하는 채널에서 발생한 수익을 <span class="card-em">본인 명의로 지속 확보</span>할 수 있습니다.</p></article>
         </div>
       </div>
     </div>
