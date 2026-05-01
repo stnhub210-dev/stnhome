@@ -28,6 +28,7 @@
       --text: #ffffff;
       --muted: #bdbdbd;
       --max: 1160px;
+      --mentor-badge-fs: 1.64rem;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -427,6 +428,9 @@
       background: linear-gradient(180deg, rgba(0,0,0,.24), rgba(0,0,0,.14), rgba(0,0,0,.34));
     }
     #hero {
+      /* 고정 헤더 + 노치 안전영역 아래부터 본문 노출 */
+      --nav-clear: calc(68px + env(safe-area-inset-top, 0px));
+      padding-top: calc(var(--nav-clear) + clamp(14px, 2.8vw, 26px));
       padding-bottom: 0;
       min-height: auto;
       border-bottom: 0;
@@ -780,10 +784,13 @@
         0 10px 24px rgba(0,0,0,.38);
     }
     .welcome-fit-list li::before {
-      content: "?";
-      line-height: 1.2;
-      font-size: 1.12em;
-      filter: drop-shadow(0 0 6px rgba(124,252,0,.36));
+      content: "\2714";
+      flex-shrink: 0;
+      color: var(--lime);
+      line-height: 1.35;
+      font-size: 0.95em;
+      font-weight: 900;
+      filter: drop-shadow(0 0 6px rgba(124,252,0,.4));
       opacity: 1;
       transform: none;
     }
@@ -1361,29 +1368,9 @@
       position: relative;
       overflow: hidden;
     }
-    .mentor-emphasis-media {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .mentor-emphasis-media video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: .38;
-      filter: saturate(1.2) contrast(1.05);
-    }
-    .mentor-emphasis::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: rgba(0,0,0,.54);
-    }
     .mentor-emphasis .container {
       position: relative;
-      z-index: 2;
+      z-index: 1;
       text-align: center;
     }
     .mentor-emphasis-message {
@@ -1456,15 +1443,11 @@
     #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span {
       animation: mentor-emphasis-line-in 0.58s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
-    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > .mentor-emphasis-line:first-of-type {
-      animation-delay: 0.08s;
-    }
-    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > .mentor-emphasis-accent {
-      animation-delay: 0.42s;
-    }
-    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > .mentor-emphasis-line:last-of-type {
-      animation-delay: 0.76s;
-    }
+    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(1) { animation-delay: 0.06s; }
+    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(2) { animation-delay: 0.2s; }
+    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(3) { animation-delay: 0.34s; }
+    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(4) { animation-delay: 0.48s; }
+    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(5) { animation-delay: 0.62s; }
     #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner {
       animation: mentor-emphasis-block-pulse 0.65s ease-in-out 1.48s 1 both;
     }
@@ -1481,6 +1464,33 @@
     @keyframes mentor-emphasis-block-pulse {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.08); }
+    }
+    @media (max-width: 1024px) {
+      #mentor-emphasis .mentor-emphasis-message {
+        font-size: clamp(1.48rem, 3.65vw + 0.72rem, 2.08rem);
+        line-height: 1.38;
+        max-width: min(100%, 19em);
+        margin-inline: auto;
+        padding-inline: clamp(10px, 3.2vw, 20px);
+        word-break: keep-all;
+      }
+      #mentor-emphasis .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner {
+        gap: clamp(4px, 1.65vw, 12px);
+      }
+      #mentor-emphasis .mentor-emphasis-accent {
+        font-size: 1.02em;
+        padding-inline: clamp(3px, 0.85vw, 8px);
+      }
+    }
+    @media (max-width: 480px) {
+      #mentor-emphasis .mentor-emphasis-message {
+        font-size: clamp(1.2rem, 5.05vw + 0.52rem, 1.72rem);
+        line-height: 1.42;
+        max-width: min(94vw, 18em);
+      }
+      #mentor-emphasis .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner {
+        gap: clamp(6px, 2.2vw, 12px);
+      }
     }
     .mentor-layout {
       display: grid;
@@ -1532,7 +1542,7 @@
       letter-spacing: .08em;
       color: #fff;
       margin-bottom: 12px;
-      font-size: 1.64rem;
+      font-size: var(--mentor-badge-fs);
       text-shadow: 0 0 14px rgba(255, 255, 255, .28);
     }
     .mentor-photo-wrap {
@@ -1629,6 +1639,7 @@
     }
     .mentor-step p {
       color: #d8d8d8;
+      font-size: calc(100% - 1pt);
       line-height: 1.74;
       max-width: 100%;
       min-width: 0;
@@ -3032,6 +3043,9 @@
       transform: translateY(18px) scale(.98);
       transform-origin: center;
     }
+    .benefits-pre-phrase {
+      display: inline;
+    }
     .benefits-pre-em {
       display: inline-block;
       color: var(--lime);
@@ -3067,6 +3081,39 @@
     .benefits-pre.reveal.active .benefits-pre-line:nth-child(2) { animation-delay: .26s; }
     .benefits-pre.reveal.active .benefits-pre-line:nth-child(3) { animation-delay: .44s; }
     .benefits-pre.reveal.active .benefits-pre-line:nth-child(4) { animation-delay: .62s; }
+    @media (max-width: 1024px) {
+      .benefits-pre {
+        padding: 44px 0 14px;
+      }
+      .benefits-pre .benefits-pre-text {
+        font-size: clamp(1.34rem, 3.05vw + 0.72rem, 1.92rem);
+        line-height: 1.42;
+        gap: clamp(8px, 1.9vw, 14px);
+        max-width: min(92vw, 22em);
+        margin-inline: auto;
+        padding-inline: clamp(8px, 2.4vw, 16px);
+        word-break: keep-all;
+      }
+      .benefits-pre-line .benefits-pre-phrase {
+        display: block;
+      }
+      .benefits-pre-line .benefits-pre-phrase + .benefits-pre-phrase {
+        margin-top: 0.2em;
+      }
+      #benefits-pre .benefits-pre-em {
+        font-size: 1.1em;
+        line-height: 1.25;
+      }
+    }
+    @media (max-width: 480px) {
+      .benefits-pre .benefits-pre-text {
+        font-size: clamp(1.15rem, 5.35vw + 0.52rem, 1.72rem);
+        line-height: 1.46;
+      }
+      #benefits-pre .benefits-pre-em {
+        font-size: 1.06em;
+      }
+    }
     .benefit-pill {
       display: block;
       width: 100%;
@@ -3243,7 +3290,7 @@
       .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .nav-links { display: none; }
       #hero {
-        padding-top: clamp(62px, 7.5vw, 84px);
+        padding-top: calc(var(--nav-clear) + clamp(12px, 2.6vw, 22px));
         padding-bottom: 0;
         align-items: flex-start;
       }
@@ -3290,6 +3337,23 @@
         width: 100%;
         max-width: 100%;
       }
+      .mentor-section .intensive-head h2 {
+        font-size: var(--mentor-badge-fs);
+        line-height: 1.42;
+        font-weight: 900;
+        letter-spacing: -0.025em;
+        word-break: keep-all;
+        overflow-wrap: break-word;
+        max-width: min(100%, 24em);
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .mentor-section .intensive-head h2 .intensive-head-phrase {
+        display: block;
+      }
+      .mentor-section .intensive-head h2 .intensive-head-phrase + .intensive-head-phrase {
+        margin-top: 0.28em;
+      }
       .mentor-layout {
         grid-template-columns: minmax(240px, 38%) minmax(0, 1fr);
         gap: clamp(16px, 2.8vw, 28px);
@@ -3322,10 +3386,13 @@
         line-height: 1.3;
       }
       #hero {
-        padding-top: clamp(52px, 11vw, 74px);
+        /* navbar 세로 패딩 9px ×2 + 헤더 본체 68px */
+        --nav-clear: calc(68px + 18px + env(safe-area-inset-top, 0px));
+        padding-top: calc(var(--nav-clear) + clamp(10px, 2.8vw, 18px));
         align-items: flex-start;
       }
       .hero-copy {
+        margin-top: clamp(4px, 1.8vw, 14px);
         max-width: min(100%, 26rem);
         padding-inline: 4px;
       }
@@ -3474,12 +3541,12 @@
         line-height: 1.36;
       }
       .mentor-step p {
-        font-size: clamp(0.93rem, 3.4vw, 1.02rem);
+        font-size: calc(clamp(0.93rem, 3.4vw, 1.02rem) - 1px);
         line-height: 1.68;
       }
       .mentor-section .intensive-head h2 {
-        font-size: clamp(1.38rem, 5.2vw, 2.05rem);
-        line-height: 1.25;
+        font-size: var(--mentor-badge-fs);
+        line-height: 1.42;
       }
       .mentor-section .intensive-head p {
         font-size: clamp(0.94rem, 3.3vw, 1.08rem);
@@ -3548,10 +3615,12 @@
         font-size: .84rem;
       }
       #hero {
-        padding-top: clamp(44px, 10vw, 64px);
+        /* navbar top:10px + 세로패딩 8px×2 + nav-inner 68px */
+        --nav-clear: calc(10px + 68px + 16px + env(safe-area-inset-top, 0px));
+        padding-top: calc(var(--nav-clear) + clamp(8px, 2.2vw, 16px));
       }
       .hero-copy {
-        margin-top: clamp(24px, 7vw, 38px);
+        margin-top: clamp(4px, 1.8vw, 12px);
         max-width: min(100%, 20rem);
       }
       .hero-copy h1 {
@@ -3584,7 +3653,10 @@
       .mentor-step {
         min-height: auto;
       }
-      .mentor-step p,
+      .mentor-section .mentor-step p {
+        font-size: calc(0.92rem - 1px);
+        line-height: 1.62;
+      }
       .card p,
       .timeline-content p {
         font-size: .92rem;
@@ -3756,7 +3828,7 @@
   <section id="welcome-fit" class="welcome-fit reveal" aria-label="추천 대상">
     <div class="container">
       <div class="welcome-fit-wrap">
-        <h2 class="welcome-fit-title">이런 분들 환영합니다!</h2>
+        <h2 class="welcome-fit-title">이런 분들 모십니다.</h2>
         <ul class="welcome-fit-list">
           <li>빠르게 성과 내고 싶으신 분</li>
           <li>유튜브로 수익 내보고 싶으신 분</li>
@@ -3793,18 +3865,15 @@
   </section>
 
   <section id="mentor-emphasis" class="mentor-emphasis reveal">
-    <div class="mentor-emphasis-media" aria-hidden="true">
-      <video autoplay muted loop playsinline preload="metadata">
-        <source src="https://cdn.coverr.co/videos/coverr-fireworks-over-a-city-1579/1080p.mp4" type="video/mp4" />
-      </video>
-    </div>
     <div class="container">
       <p class="mentor-emphasis-message mentor-emphasis-message-cycle">
-        <span class="mentor-emphasis-sronly">이보다 더 막강할 수는 없다. 각 분야 최고 전문가 7명. 2박 3일 집중 지도합니다.</span>
+        <span class="mentor-emphasis-sronly">이보다 더 막강할 수는 없다. 각 분야 최고. 전문가 7명. 2박3일 집중 지도 합니다.</span>
         <span class="mentor-emphasis-cycle-inner" aria-hidden="true">
           <span class="mentor-emphasis-line">이보다 더 막강할 수는 없다 !</span>
-          <span class="mentor-emphasis-accent">각 분야 최고 전문가 7명</span>
-          <span class="mentor-emphasis-line">2박 3일 집중 지도합니다</span>
+          <span class="mentor-emphasis-accent">각 분야 최고</span>
+          <span class="mentor-emphasis-accent">전문가 7명</span>
+          <span class="mentor-emphasis-line">2박3일</span>
+          <span class="mentor-emphasis-line">집중 지도 합니다</span>
         </span>
       </p>
     </div>
@@ -3813,7 +3882,7 @@
   <section id="mentor-sticky" class="mentor-section reveal">
     <div class="container">
       <div class="intensive-head">
-        <h2>같은 영상, 해설 하나로 수익이 달라집니다</h2>
+        <h2><span class="intensive-head-phrase">같은 영상, 해설 하나로</span> <span class="intensive-head-phrase">수익이 달라집니다</span></h2>
         <p>콘텐츠 재가공부터 채널 수익화까지 — 박문성과 함께하는 유튜브 실전 과정</p>
       </div>
       <div class="mentor-layout">
@@ -3861,7 +3930,7 @@
   <section id="mentor-sticky-dup" class="mentor-section reveal">
     <div class="container">
       <div class="intensive-head">
-        <h2>"스포츠 콘텐츠는 다릅니다 - 팬 심리를 움직이는 법" </h2>
+        <h2><span class="intensive-head-phrase">"스포츠 콘텐츠는 다릅니다</span> <span class="intensive-head-phrase">— 팬 심리를 움직이는 법"</span></h2>
         <p>선수 팬심을 수익으로 연결하기</p>
       </div>
       <div class="mentor-layout">
@@ -3900,7 +3969,7 @@
   <section id="mentor-sticky-copy" class="mentor-section reveal">
     <div class="container">
       <div class="intensive-head">
-        <h2>작가 출신, 현역 유튜브 콘텐츠 슈퍼바이저</h2>
+        <h2><span class="intensive-head-phrase">작가 출신,</span> <span class="intensive-head-phrase">현역 유튜브 콘텐츠 슈퍼바이저</span></h2>
         <p>방송작가가 알려주는 유튜브! 남달라~</p>
       </div>
       <div class="mentor-layout">
@@ -3939,7 +4008,7 @@
   <section id="mentor-sticky-jhc" class="mentor-section reveal">
     <div class="container">
       <div class="intensive-head">
-        <h2>닥터튜브 강사의 데이터 기반 채널 성장 코칭</h2>
+        <h2><span class="intensive-head-phrase">닥터튜브 강사의</span> <span class="intensive-head-phrase">데이터 기반 채널 성장 코칭</span></h2>
         <p>진단부터 실행까지, 유튜브 수익화 실전 전략</p>
       </div>
       <div class="mentor-layout">
@@ -3987,7 +4056,7 @@
   <section id="mentor-sticky-editkim" class="mentor-section reveal">
     <div class="container">
       <div class="intensive-head">
-        <h2>구독자 적어도 수익 나는 AI 유튜브 자동화 시스템</h2>
+        <h2><span class="intensive-head-phrase">구독자 적어도 수익 나는</span> <span class="intensive-head-phrase">AI 유튜브 자동화 시스템</span></h2>
         <p>에딧킴 강사 실전 수익화 코칭</p>
       </div>
       <div class="mentor-layout">
@@ -4031,7 +4100,7 @@
   <section id="mentor-sticky-kcs" class="mentor-section reveal">
     <div class="container">
       <div class="intensive-head">
-        <h2>김창수 강사 AI 유튜브 자동화 실전 클래스</h2>
+        <h2><span class="intensive-head-phrase">김창수 강사</span> <span class="intensive-head-phrase">AI 유튜브 자동화 실전 클래스</span></h2>
         <p>구독자 규모와 무관하게 수익 구조를 만드는 실전 코칭</p>
       </div>
       <div class="mentor-layout">
@@ -4075,7 +4144,7 @@
   <section id="mentor-sticky-bjh" class="mentor-section reveal">
     <div class="container">
       <div class="intensive-head">
-        <h2>박정훈 강사 유튜브 실전 분석 코칭</h2>
+        <h2><span class="intensive-head-phrase">박정훈 강사</span> <span class="intensive-head-phrase">유튜브 실전 분석 코칭</span></h2>
         <p>수익화를 방해하는 실수부터 채널 진단 컨설팅까지</p>
       </div>
       <div class="mentor-layout">
@@ -4186,10 +4255,20 @@
   <section id="benefits-pre" class="benefits-pre reveal" aria-label="미디어·생존 메시지">
     <div class="container">
       <div class="benefits-pre-text">
-        <div class="benefits-pre-line"><span class="benefits-pre-em">유튜브·SNS·AI</span>, 이건 트렌드가 아니라 <span class="benefits-pre-em">생존</span>이다!</div>
+        <div class="benefits-pre-line">
+          <span class="benefits-pre-phrase"><span class="benefits-pre-em">유튜브·SNS·AI</span>, 이건</span>
+          <span class="benefits-pre-phrase">트렌드가 아니라 <span class="benefits-pre-em">생존</span>이다!</span>
+        </div>
         <div class="benefits-pre-line"><span class="benefits-pre-em">지금</span> 시작하지 않으면,</div>
-        <div class="benefits-pre-line">나의 존재는 <span class="benefits-pre-em">시장</span>에서 <span class="benefits-pre-em">사라진다.</span></div>
-        <div class="benefits-pre-line"><span class="benefits-pre-em">시작하는 순간!</span> <span class="benefits-pre-em">나의 미래</span>는 <span class="benefits-pre-em">내가 만든다!</span></div>
+        <div class="benefits-pre-line">
+          <span class="benefits-pre-phrase">나의 존재는 <span class="benefits-pre-em">시장</span>에서</span>
+          <span class="benefits-pre-phrase"><span class="benefits-pre-em">사라진다.</span></span>
+        </div>
+        <div class="benefits-pre-line">
+          <span class="benefits-pre-phrase"><span class="benefits-pre-em">시작하는 순간!</span></span>
+          <span class="benefits-pre-phrase"><span class="benefits-pre-em">나의 미래</span>는</span>
+          <span class="benefits-pre-phrase"><span class="benefits-pre-em">내가 만든다!</span></span>
+        </div>
       </div>
     </div>
   </section>
