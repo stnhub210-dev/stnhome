@@ -929,13 +929,13 @@ function assertScorePayload(data) {
 }
 
 function parseScoreJsonFromModelText(modelText) {
-  let jsonStr = String(modelText || '').trim();
-  jsonStr = jsonStr.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-  const firstBrace = jsonStr.indexOf('{');
-  const lastBrace = jsonStr.lastIndexOf('}');
-  if (firstBrace === -1) throw new Error('분석 결과 JSON을 찾지 못했습니다.');
-  jsonStr = jsonStr.slice(firstBrace, lastBrace + 1);
-  return JSON.parse(jsonStr);
+  let text = String(modelText || '');
+  text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+  const first = text.indexOf('{');
+  const last = text.lastIndexOf('}');
+  if (first === -1 || last < first) throw new Error('분석 결과 JSON을 찾지 못했습니다.');
+  text = text.slice(first, last + 1);
+  return JSON.parse(text);
 }
 
 function extractScorePayloadFromApiJson(data) {
@@ -943,7 +943,6 @@ function extractScorePayloadFromApiJson(data) {
     return data;
   }
   const t0 =
-    data?.content?.[0]?.text ??
     data?.content?.[0]?.content ??
     data?.candidates?.[0]?.content?.parts?.[0]?.text;
   if (typeof t0 === 'string' && t0.trim()) {
@@ -979,6 +978,17 @@ async function analyzeViaScoreApi(prompt) {
     data = JSON.parse(rawText);
   } catch {
     throw new Error('JSON 파싱 실패: ' + (rawText || '').slice(0, 160));
+  }
+  if (data.content && data.content[0] && typeof data.content[0].text === 'string') {
+    let text = data.content[0].text;
+    text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    const first = text.indexOf('{');
+    const last = text.lastIndexOf('}');
+    if (first === -1 || last < first) throw new Error('분석 결과 JSON을 찾지 못했습니다.');
+    text = text.slice(first, last + 1);
+    const result = JSON.parse(text);
+    assertScorePayload(result);
+    return result;
   }
   const parsed = extractScorePayloadFromApiJson(data);
   assertScorePayload(parsed);
