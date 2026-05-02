@@ -470,6 +470,10 @@
       font-size: clamp(1rem, 2vw, 1.32rem);
       text-align: center;
     }
+    .hero .sub .hero-sub-l1,
+    .hero .sub .hero-sub-l2 {
+      display: inline;
+    }
     .hero-mid-image {
       width: min(100%, 210px);
       max-width: 210px;
@@ -1309,9 +1313,11 @@
       margin-bottom: 18px;
     }
     .stn-asset-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: start;
+      column-gap: 14px;
+      row-gap: 0;
       border: 1px solid rgba(255,255,255,.1);
       background: rgba(255,255,255,.03);
       border-radius: 12px;
@@ -1324,6 +1330,12 @@
       transition: border-color .25s ease, box-shadow .25s ease, background-color .25s ease, transform .25s ease;
       opacity: 0;
       transform: translateY(12px);
+    }
+    .stn-asset-li-text {
+      grid-column: 2;
+      min-width: 0;
+      word-break: keep-all;
+      overflow-wrap: break-word;
     }
     .stn-asset-list li strong,
     .stn-asset-summary strong {
@@ -1344,6 +1356,9 @@
     }
     .stn-asset-list li::before {
       content: "";
+      grid-column: 1;
+      grid-row: 1;
+      align-self: start;
       flex-shrink: 0;
       width: clamp(30px, 5.8vw, 42px);
       height: clamp(30px, 5.8vw, 42px);
@@ -3157,6 +3172,11 @@
       font-weight: 500;
       opacity: 0.9;
       font-size: 0.96em;
+      color: #ffffff;
+    }
+    .benefit-note.benefit-note--stack {
+      display: block;
+      margin-top: 0.35em;
     }
     #benefits.reveal.active .benefit-pill {
       animation: benefits-pill-in .6s ease forwards;
@@ -3389,6 +3409,8 @@
       .stn-asset-wrap {
         padding: clamp(14px, 2.5vw, 22px);
         border-radius: 14px;
+        max-width: min(100%, 30rem);
+        margin-inline: auto;
       }
       .stn-asset-title {
         font-size: clamp(1.38rem, 2.85vw + 0.42rem, 1.92rem);
@@ -3407,7 +3429,7 @@
       }
       .stn-asset-list li {
         padding: 12px 14px;
-        gap: 10px;
+        column-gap: 10px;
         font-size: clamp(0.9rem, 1.5vw + 0.55rem, 1.16rem);
         line-height: 1.52;
         min-height: 0;
@@ -3443,12 +3465,30 @@
         --nav-clear: calc(68px + 18px + env(safe-area-inset-top, 0px));
         padding-top: calc(var(--nav-clear) + clamp(10px, 2.8vw, 18px));
         padding-bottom: 0;
-        align-items: flex-start;
+        align-items: stretch;
+        justify-content: flex-start;
+        min-height: 100vh;
+        min-height: 100svh;
+      }
+      #hero.hero > .container {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        width: 100%;
+      }
+      #hero.hero .hero-layout {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        width: 100%;
       }
       .hero-copy {
         margin-top: clamp(4px, 1.8vw, 14px);
         max-width: min(100%, 26rem);
         padding-inline: 4px;
+        flex-shrink: 0;
       }
       .hero-copy h1 {
         font-size: clamp(2rem, 6.55vw + 0.62rem, 2.92rem);
@@ -3461,6 +3501,10 @@
         max-width: 24rem;
         padding-inline: 2px;
       }
+      .hero .sub .hero-sub-l2 {
+        display: block;
+        margin-top: 0.15em;
+      }
       .hero-motto {
         font-size: clamp(1.12rem, 4.65vw, 1.58rem);
         line-height: 1.52;
@@ -3470,18 +3514,29 @@
         width: min(100%, 144px);
         max-width: 144px;
         margin-top: 12px;
+        flex-shrink: 0;
       }
       .hero-side {
-        transform: translateY(-22px);
-        margin-bottom: -28px;
+        flex: 1 1 auto;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
         width: 100%;
-        overflow: visible;
+        min-height: clamp(200px, 42vh, 460px);
+        margin-top: 0;
+        margin-bottom: 0;
+        transform: none;
+        overflow: hidden;
       }
       .hero-all-image {
-        width: min(112%, 560px);
+        width: min(132%, 720px);
+        height: 100%;
+        min-height: 100%;
         max-width: none;
         margin-inline: auto;
-        transform: scale(1.09);
+        object-fit: cover;
+        object-position: center 22%;
+        transform: scale(1.14);
         transform-origin: center bottom;
       }
       .grid-3, .grid-4 { grid-template-columns: 1fr; }
@@ -3566,14 +3621,21 @@
       }
       .stn-asset-wrap {
         padding: 16px 14px;
+        max-width: min(100%, 22.5rem);
+        margin-inline: auto;
       }
       #stn-asset.stn-asset {
         padding: 40px 0 46px;
       }
       .stn-asset-list li {
         padding: 11px 12px;
-        gap: 9px;
+        column-gap: 9px;
         font-size: clamp(0.86rem, 2.6vw + 0.42rem, 1.08rem);
+      }
+      #stn-asset .stn-asset-li-text {
+        line-break: normal;
+        word-break: keep-all;
+        overflow-wrap: break-word;
       }
       .stn-asset-list li::before {
         width: clamp(20px, 5.2vw, 28px);
@@ -3679,6 +3741,21 @@
       }
       .intensive-tab .t-date { font-size: 1.02rem; }
       .intensive-cta { width: 100%; margin-left: 0; }
+
+      /* 커리큘럼 일정 버튼: 모바일에서 시각적 크기 약 50% */
+      .schedule-curriculum-bridge {
+        padding: clamp(14px, 2.5vw, 26px) 0 clamp(16px, 3vw, 36px);
+      }
+      .schedule-curriculum-bridge-btn {
+        padding: clamp(14px, 2.4vw, 19px) clamp(26px, 4.2vw, 44px);
+        font-size: clamp(0.9rem, 1.75vw + 0.42rem, 1.06rem);
+        line-height: 1.35;
+        max-width: min(100%, 22rem);
+        text-align: center;
+        box-shadow:
+          0 0 0 1px rgba(20, 46, 10, 0.2),
+          0 6px 16px rgba(0, 0, 0, 0.38);
+      }
     }
     @media (max-width: 480px) {
       section { padding: 76px 0 42px; }
@@ -3694,10 +3771,14 @@
         --nav-clear: calc(10px + 68px + 16px + env(safe-area-inset-top, 0px));
         padding-top: calc(var(--nav-clear) + clamp(8px, 2.2vw, 16px));
         padding-bottom: 0;
+        align-items: stretch;
+        min-height: 100vh;
+        min-height: 100svh;
       }
       .hero-copy {
         margin-top: clamp(4px, 1.8vw, 12px);
         max-width: min(100%, 20rem);
+        flex-shrink: 0;
       }
       .hero-copy h1 {
         font-size: clamp(1.78rem, 8.2vw + 0.25rem, 2.55rem);
@@ -3714,17 +3795,15 @@
       .hero-mid-image {
         width: min(100%, 132px);
         max-width: 132px;
+        flex-shrink: 0;
       }
       .hero-side {
-        transform: translateY(-18px);
-        margin-bottom: -32px;
-        overflow: visible;
+        min-height: clamp(220px, 48vh, 520px);
       }
       .hero-all-image {
-        width: min(118%, 100vw);
-        max-width: none;
-        margin-inline: auto;
-        transform: scale(1.12);
+        width: min(142%, 100vw);
+        object-position: center 18%;
+        transform: scale(1.22);
         transform-origin: center bottom;
       }
       #stn-asset.stn-asset {
@@ -3732,6 +3811,8 @@
       }
       .stn-asset-wrap {
         padding: 12px 11px;
+        max-width: min(100%, 20rem);
+        margin-inline: auto;
       }
       .stn-asset-list {
         gap: 8px;
@@ -3739,9 +3820,13 @@
       }
       .stn-asset-list li {
         padding: 10px 11px;
-        gap: 8px;
+        column-gap: 8px;
         font-size: clamp(0.8rem, 3.65vw + 0.28rem, 1rem);
         line-height: 1.5;
+      }
+      #stn-asset .stn-asset-li-text {
+        line-break: normal;
+        overflow-wrap: anywhere;
       }
       .stn-asset-list li::before {
         width: 20px;
@@ -3912,7 +3997,7 @@
       <div class="hero-layout">
         <div class="hero-copy">
           <h1><span class="hero-highlight">미디어서포터즈</span> 양성 과정</h1>
-          <p class="sub">에스티엔방송이 함께하는 유튜브 크리에이터 양성 과정</p>
+          <p class="sub"><span class="hero-sub-l1">에스티엔방송이 함께하는</span> <span class="hero-sub-l2">유튜브 크리에이터 양성과정</span></p>
           <p class="hero-motto">STN은 언제나 최선을 다합니다.</p>
         </div>
         <img class="hero-mid-image" src="image/자산 11stn.png" alt="STN 로고 이미지" loading="eager" decoding="async" />
@@ -4399,7 +4484,7 @@
               <div class="benefit-pill">1. <span class="benefit-em">콘텐츠 제공</span> <span class="benefit-note">(수료후 3개월)</span></div>
               <div class="benefit-pill">2. <span class="benefit-em">수강생에 한해</span> 유튜브 멤버쉽 운영</div>
               <div class="benefit-pill">3. <span class="benefit-em">미디어서포터즈 자격증</span> <span class="benefit-note">민간자격 등록 (제2025-002178호)</span></div>
-              <div class="benefit-pill">4. <span class="benefit-em">AI자동화 마스터</span></div>
+              <div class="benefit-pill">4. <span class="benefit-em">AI자동화 프로그램</span><span class="benefit-note benefit-note--stack">(카드뉴스 자동 생성기, AI 상위노출 기사제작기등)</span></div>
               <div class="benefit-pill">5. <span class="benefit-em">STN 중계 및 촬영</span> 현장 투입가능</div>
               <div class="benefit-pill">6. <span class="benefit-em">지속관리</span></div>
             </div>
@@ -4486,13 +4571,13 @@
         <p class="stn-asset-lead">㈜에스티엔방송은 2006년부터 20년간 스포츠 방송 중계, 언론 운영, 콘텐츠 제작을 이어온 검증된 미디어 전문 기업입니다.</p>
 
         <ul class="stn-asset-list">
-          <li><strong>KT GENIE TV ch.131</strong> <strong>24시간 방송 운영</strong></li>
-          <li><strong>KTX·SRT 전 객차</strong> <strong>일 33만명</strong> 도달 미디어 보유</li>
-          <li>유튜브 <strong>STN SPORTS</strong> <strong>구독자 10만</strong> 채널 운영</li>
-          <li><strong>네이버·카카오·구글 CP</strong> 제휴사</li>
-          <li><strong>연간 400경기 이상</strong> 중계 인프라 보유</li>
-          <li><strong>패럴림픽 2008~2022</strong> 공식 중계</li>
-          <li>에스티엔미디어마케터 <strong>민간자격 등록</strong> <strong>(제2025-002178호)</strong></li>
+          <li><span class="stn-asset-li-text"><strong>KT GENIE TV ch.131</strong> <strong>24시간 방송 운영</strong></span></li>
+          <li><span class="stn-asset-li-text"><strong>KTX·SRT 전 객차</strong> <strong>일 33만명</strong> 도달 미디어 보유</span></li>
+          <li><span class="stn-asset-li-text">유튜브 <strong>STN SPORTS</strong> <strong>구독자 10만</strong> 채널 운영</span></li>
+          <li><span class="stn-asset-li-text"><strong>네이버·카카오·구글 CP</strong> 제휴사</span></li>
+          <li><span class="stn-asset-li-text"><strong>연간 400경기 이상</strong> 중계 인프라 보유</span></li>
+          <li><span class="stn-asset-li-text"><strong>패럴림픽 2008~2022</strong> 공식 중계</span></li>
+          <li><span class="stn-asset-li-text">에스티엔미디어마케터 <strong>민간자격 등록</strong> <strong>(제2025-002178호)</strong></span></li>
         </ul>
 
         <p class="stn-asset-summary">이 자산을 개인 크리에이터와 연결하면, 개인은 콘텐츠와 신뢰를 얻고 STN은 플랫폼과 네트워크를 확장하는 상호 성장 구조가 만들어집니다.</p>
