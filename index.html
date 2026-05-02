@@ -410,6 +410,40 @@
     .nav-links { display: flex; gap: 16px; font-size: .92rem; color: #dcdcdc; }
     .nav-links a { color: inherit; text-decoration: none; }
     .nav-links a:hover { color: var(--lime); }
+    .nav-links a.nav-score-btn {
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--lime);
+      color: #0a0a0a !important;
+      font-weight: 800;
+      font-size: 0.86rem;
+      border: 1px solid rgba(124, 252, 0, 0.55);
+      white-space: nowrap;
+      transition: filter 0.2s ease, transform 0.2s ease;
+    }
+    .nav-links a.nav-score-btn:hover {
+      color: #0a0a0a !important;
+      filter: brightness(1.08);
+    }
+    .nav-score-btn--mobile {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--lime);
+      color: #0a0a0a;
+      font-weight: 800;
+      font-size: 0.8rem;
+      text-decoration: none;
+      border: 1px solid rgba(124, 252, 0, 0.55);
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: filter 0.2s ease;
+    }
+    .nav-score-btn--mobile:hover {
+      filter: brightness(1.08);
+    }
 
     .hero { position: relative; overflow: hidden; isolation: isolate; background: #000; }
     .hero-video-bg {
@@ -3316,6 +3350,9 @@
       }
       .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .nav-links { display: none; }
+      .nav-score-btn--mobile {
+        display: inline-flex;
+      }
       #hero {
         padding-top: calc(var(--nav-clear) + clamp(12px, 2.6vw, 22px));
         padding-bottom: 0;
@@ -3984,6 +4021,7 @@
   <nav class="navbar">
     <div class="container nav-inner">
       <a class="logo" href="#hero">MEDIA 서포터즈 아카데미</a>
+      <a href="score.html" class="nav-score-btn--mobile">유튜브 진단하기</a>
       <div class="nav-links">
         <a href="#solution">솔루션</a>
         <a href="#tracks">트랙</a>
@@ -3991,6 +4029,7 @@
         <a href="#benefits">혜택</a>
         <a href="#directions">오시는길</a>
         <a href="#faq">FAQ</a>
+        <a href="score.html" class="nav-score-btn">유튜브 진단하기</a>
       </div>
     </div>
   </nav>
