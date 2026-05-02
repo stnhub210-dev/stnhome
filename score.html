@@ -1101,113 +1101,74 @@ function animateSteps() {
 }
 
 async function analyzeChannel(channelUrl) {
-  const prompt = `당신은 유튜브 채널 전문 분석가입니다. 아래 유튜브 채널을 웹 검색으로 조사하고 분석해 주세요.
+  const prompt = `아래 유튜브 채널을 분석해서 반드시 JSON만 반환해. 다른 텍스트나 설명은 절대 쓰지 마.
 
-채널 URL: ${channelUrl}
+채널: ${channelUrl}
 
-웹 검색을 통해 이 채널의 공개된 정보(채널명, 구독자 수, 업로드 영상 수, 최근 활동, 채널 소개, 콘텐츠 주제 등)를 수집한 뒤, 아래 30개 진단 항목을 평가해 주세요.
-
-반드시 아래 JSON 형식으로만 응답하세요. 다른 텍스트는 절대 포함하지 마세요.
-
+반환 형식:
 {
-  "channelName": "채널 이름",
-  "channelEmoji": "채널 주제에 맞는 이모지 1개",
-  "channelDesc": "채널 한줄 설명 (20자 이내)",
-  "channelTags": ["태그1","태그2","태그3"],
-  "totalScore": 숫자(0-30),
+  "channelName": "채널명",
+  "channelEmoji": "이모지1개",
+  "channelDesc": "한줄설명",
+  "channelTags": ["태그1","태그2"],
+  "totalScore": 숫자,
+  "grade": "A",
+  "gradeLabel": "등급설명",
+  "gradeDesc": "설명",
+  "needsRebuild": false,
+  "rebuildReason": "",
+  "rebuildPoints": [],
+  "summary": "총평",
   "sections": [
-    {
-      "name": "채널 기본 설정",
-      "score": 숫자(0-6),
-      "max": 6,
-      "items": [
-        {"name":"채널 이름 명확성","ok":true또는false},
-        {"name":"프로필 사진 품질","ok":true또는false},
-        {"name":"채널 배너","ok":true또는false},
-        {"name":"채널 소개 완성도","ok":true또는false},
-        {"name":"채널 카테고리","ok":true또는false},
-        {"name":"커스텀 URL","ok":true또는false}
-      ]
-    },
-    {
-      "name": "콘텐츠 기획",
-      "score": 숫자(0-5),
-      "max": 5,
-      "items": [
-        {"name":"타겟 명확성","ok":true또는false},
-        {"name":"주제 집중도","ok":true또는false},
-        {"name":"업로드 계획성","ok":true또는false},
-        {"name":"경쟁 채널 분석","ok":true또는false},
-        {"name":"시리즈 콘텐츠","ok":true또는false}
-      ]
-    },
-    {
-      "name": "영상 품질",
-      "score": 숫자(0-5),
-      "max": 5,
-      "items": [
-        {"name":"초반 훅(3초)","ok":true또는false},
-        {"name":"음질 수준","ok":true또는false},
-        {"name":"자막 사용","ok":true또는false},
-        {"name":"영상 길이 최적화","ok":true또는false},
-        {"name":"인트로 길이","ok":true또는false}
-      ]
-    },
-    {
-      "name": "알고리즘 최적화",
-      "score": 숫자(0-6),
-      "max": 6,
-      "items": [
-        {"name":"썸네일 퀄리티","ok":true또는false},
-        {"name":"제목 키워드","ok":true또는false},
-        {"name":"영상 설명 최적화","ok":true또는false},
-        {"name":"태그 설정","ok":true또는false},
-        {"name":"업로드 규칙성","ok":true또는false},
-        {"name":"엔드스크린/카드","ok":true또는false}
-      ]
-    },
-    {
-      "name": "수익화 준비",
-      "score": 숫자(0-4),
-      "max": 4,
-      "items": [
-        {"name":"수익화 조건 이해","ok":true또는false},
-        {"name":"광고 친화적 주제","ok":true또는false},
-        {"name":"복수 수익 모델","ok":true또는false},
-        {"name":"협찬 준비도","ok":true또는false}
-      ]
-    },
-    {
-      "name": "채널 운영 습관",
-      "score": 숫자(0-4),
-      "max": 4,
-      "items": [
-        {"name":"데이터 분석 습관","ok":true또는false},
-        {"name":"댓글 관리","ok":true또는false},
-        {"name":"커뮤니티 활동","ok":true또는false},
-        {"name":"업로드 후 모니터링","ok":true또는false}
-      ]
-    }
+    {"name":"채널 기본 설정","score":4,"max":6,"items":[
+      {"name":"채널 이름 명확성","ok":true},
+      {"name":"프로필 사진 품질","ok":true},
+      {"name":"채널 배너","ok":false},
+      {"name":"채널 소개 완성도","ok":true},
+      {"name":"채널 카테고리","ok":false},
+      {"name":"커스텀 URL","ok":true}
+    ]},
+    {"name":"콘텐츠 기획","score":3,"max":5,"items":[
+      {"name":"타겟 명확성","ok":true},
+      {"name":"주제 집중도","ok":true},
+      {"name":"업로드 계획성","ok":false},
+      {"name":"경쟁 채널 분석","ok":false},
+      {"name":"시리즈 콘텐츠","ok":true}
+    ]},
+    {"name":"영상 품질","score":3,"max":5,"items":[
+      {"name":"초반 훅(3초)","ok":true},
+      {"name":"음질 수준","ok":true},
+      {"name":"자막 사용","ok":false},
+      {"name":"영상 길이 최적화","ok":true},
+      {"name":"인트로 길이","ok":false}
+    ]},
+    {"name":"알고리즘 최적화","score":3,"max":6,"items":[
+      {"name":"썸네일 퀄리티","ok":true},
+      {"name":"제목 키워드","ok":true},
+      {"name":"영상 설명 최적화","ok":false},
+      {"name":"태그 설정","ok":false},
+      {"name":"업로드 규칙성","ok":true},
+      {"name":"엔드스크린/카드","ok":false}
+    ]},
+    {"name":"수익화 준비","score":2,"max":4,"items":[
+      {"name":"수익화 조건 이해","ok":true},
+      {"name":"광고 친화적 주제","ok":true},
+      {"name":"복수 수익 모델","ok":false},
+      {"name":"협찬 준비도","ok":false}
+    ]},
+    {"name":"채널 운영 습관","score":2,"max":4,"items":[
+      {"name":"데이터 분석 습관","ok":true},
+      {"name":"댓글 관리","ok":true},
+      {"name":"커뮤니티 활동","ok":false},
+      {"name":"업로드 후 모니터링","ok":false}
+    ]}
   ],
-  "grade": "S또는A또는B또는C또는D",
-  "gradeLabel": "등급 한줄 설명",
-  "gradeDesc": "2~3줄 등급 설명 (개행은 \\n으로)",
-  "needsRebuild": true또는false,
-  "rebuildReason": "채널 재건이 필요한 구체적 이유 (needsRebuild가 true일 때만, 2~3줄, 개행은 \\n으로)",
-  "rebuildPoints": ["재건 권고 사유1","재건 권고 사유2","재건 권고 사유3"],
-  "summary": "이 채널에 대한 AI 총평 (150자 이내, 구체적인 채널 특성 반영)",
   "improvements": [
-    {"priority":"high","title":"개선 항목 제목","why":"왜 중요한지 이유 (1~2줄)"},
-    {"priority":"high","title":"개선 항목 제목","why":"왜 중요한지 이유 (1~2줄)"},
-    {"priority":"mid","title":"개선 항목 제목","why":"왜 중요한지 이유 (1~2줄)"},
-    {"priority":"mid","title":"개선 항목 제목","why":"왜 중요한지 이유 (1~2줄)"},
-    {"priority":"mid","title":"개선 항목 제목","why":"왜 중요한지 이유 (1~2줄)"}
+    {"priority":"high","title":"개선항목1","why":"이유1"},
+    {"priority":"high","title":"개선항목2","why":"이유2"},
+    {"priority":"mid","title":"개선항목3","why":"이유3"}
   ]
-}
-
-점수 기준: 실제 채널 데이터를 기반으로 공정하게 평가하세요. 정보가 불분명한 항목은 false로 처리하세요.
-등급 기준: S(25-30점), A(20-24점), B(15-19점), C(8-14점), D(0-7점)
-needsRebuild 기준: 총점 7점 이하(D등급)이거나, 구독자가 극히 적고 업로드가 1년 이상 중단됐거나, 콘텐츠 방향성이 완전히 없는 경우 true로 설정. 재건 권고 시 "현재 채널을 계속 운영하는 것보다 올바른 전략으로 새로 시작하는 것이 수익화에 유리하다"는 관점에서 설명하세요.`;
+}`;
 
   console.groupCollapsed('[score API] AI 프롬프트(prompt)');
   console.log(prompt);
