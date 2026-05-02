@@ -3454,15 +3454,18 @@
       .container { width: min(95%, var(--max)); }
       .navbar {
         gap: 10px;
-        padding: 9px 14px;
+        padding: 6px 14px;
+      }
+      .nav-inner {
+        height: 60px;
       }
       .logo {
         font-size: .92rem;
-        line-height: 1.3;
+        line-height: 1.22;
       }
       #hero {
-        /* navbar 세로 패딩 9px ×2 + 헤더 본체 68px */
-        --nav-clear: calc(68px + 18px + env(safe-area-inset-top, 0px));
+        /* navbar 세로 패딩 6px×2 + 헤더 본체 60px */
+        --nav-clear: calc(60px + 12px + env(safe-area-inset-top, 0px));
         padding-top: calc(var(--nav-clear) + clamp(10px, 2.8vw, 18px));
         padding-bottom: 0;
         align-items: stretch;
@@ -3760,15 +3763,19 @@
     @media (max-width: 480px) {
       section { padding: 76px 0 42px; }
       .navbar {
-        padding: 8px 12px;
-        top: 10px;
+        padding: 5px 12px;
+        top: 8px;
+      }
+      .nav-inner {
+        height: 54px;
       }
       .logo {
         font-size: .84rem;
+        line-height: 1.2;
       }
       #hero {
-        /* navbar top:10px + 세로패딩 8px×2 + nav-inner 68px */
-        --nav-clear: calc(10px + 68px + 16px + env(safe-area-inset-top, 0px));
+        /* navbar top:8px + 세로패딩 5px×2 + nav-inner 54px */
+        --nav-clear: calc(8px + 54px + 10px + env(safe-area-inset-top, 0px));
         padding-top: calc(var(--nav-clear) + clamp(8px, 2.2vw, 16px));
         padding-bottom: 0;
         align-items: stretch;
