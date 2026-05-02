@@ -849,11 +849,6 @@ const SECTION_MAX = [6,5,5,6,4,4];
 /** STN 점수 API (Cloudflare Worker). POST 본문: channelUrl, prompt, model */
 const SCORE_API_URL = 'https://stn-api.stnhub210.workers.dev';
 
-function isGitHubPagesHost() {
-  const h = location.hostname || '';
-  return h === 'github.io' || /\.github\.io$/i.test(h);
-}
-
 function safeDecodeURIComponent(s) {
   try {
     return decodeURIComponent(s.replace(/\+/g, ' '));
@@ -948,13 +943,15 @@ async function startAnalysis() {
     const result = await analyzeChannel(url);
     showResult(result, url);
   } catch (e) {
-    let msg = e.message || '잠시 후 다시 시도해 주세요.';
-    if (msg === 'Failed to fetch') {
-      msg = isGitHubPagesHost() || location.protocol === 'file:'
-        ? '브라우저에서 점수 API(stn-api Worker)에 연결하지 못했습니다. CORS 설정·Worker 배포·네트워크를 확인해 주세요.'
-        : msg + ' 네트워크 또는 API 오류일 수 있습니다. 잠시 후 다시 시도해 주세요.';
+    const rawMsg = e.message || '';
+    if (rawMsg === 'Failed to fetch' || rawMsg === 'Load failed' || rawMsg.includes('NetworkError')) {
+      await new Promise((r) => setTimeout(r, 400));
+      const fb = buildDemoResult(url);
+      fb._apiCorsHint = true;
+      showResult(fb, url);
+      return;
     }
-    showError('분석 중 오류가 발생했습니다', msg);
+    showError('분석 중 오류가 발생했습니다', rawMsg || '잠시 후 다시 시도해 주세요.');
   }
 }
 
@@ -1100,7 +1097,9 @@ function showResult(data, url) {
   rw.style.display = 'block';
 
   const demoBanner = data._demo
-    ? `<div class="demo-banner"><strong>데모 모드</strong> 샘플 점수입니다. 실제 진단은 <code>${SCORE_API_URL}</code> 연동 결과를 사용합니다.</div>`
+    ? (data._apiCorsHint
+      ? `<div class="demo-banner"><strong>API 연결 실패</strong> <code>${SCORE_API_URL}</code> 에 브라우저가 접속하지 못했습니다(대부분 Worker CORS 미설정). 저장소의 <code>workers/stn-api-cors-snippet.js</code> 를 Worker에 반영한 뒤 배포하세요. 아래는 임시 샘플 점수입니다.</div>`
+      : `<div class="demo-banner"><strong>데모 모드</strong> 샘플 점수입니다. 실제 진단은 <code>${SCORE_API_URL}</code> 연동 결과를 사용합니다.</div>`)
     : '';
 
   const gradeClass = { S:'g-s', A:'g-a', B:'g-b', C:'g-c', D:'g-d' }[data.grade] || 'g-c';
