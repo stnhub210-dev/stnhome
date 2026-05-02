@@ -846,7 +846,7 @@ const SECTION_NAMES = ['채널 기본 설정','콘텐츠 기획','영상 품질'
 const SECTION_COLORS = ['#c6ff00','#86efac','#67e8f9','#a78bfa','#f9a8d4','#fdba74'];
 const SECTION_MAX = [6,5,5,6,4,4];
 
-/** STN 점수 API (Cloudflare Worker). POST 본문: channelUrl, prompt, model */
+/** STN 점수 API (Cloudflare Worker). POST: { messages: [{ role, content }] }, 응답: { content: [{ text }] } */
 const SCORE_API_URL = 'https://stn-api.stnhub210.workers.dev';
 
 function safeDecodeURIComponent(s) {
@@ -913,18 +913,57 @@ function buildDemoResult(channelUrl) {
   };
 }
 
-async function analyzeViaScoreApi(channelUrl, prompt) {
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function assertScorePayload(data) {
+  if (!data || typeof data !== 'object') throw new Error('API 응답이 비어 있거나 객체가 아닙니다.');
+  if (!Array.isArray(data.sections) || data.sections.length === 0) {
+    throw new Error('API 응답에 sections 배열이 없습니다. Worker가 진단 JSON 전체를 반환하는지 확인하세요.');
+  }
+}
+
+function parseScoreJsonFromModelText(modelText) {
+  let jsonStr = String(modelText || '').trim();
+  jsonStr = jsonStr.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+  const firstBrace = jsonStr.indexOf('{');
+  const lastBrace = jsonStr.lastIndexOf('}');
+  if (firstBrace === -1) throw new Error('분석 결과 JSON을 찾지 못했습니다.');
+  jsonStr = jsonStr.slice(firstBrace, lastBrace + 1);
+  return JSON.parse(jsonStr);
+}
+
+async function analyzeViaScoreApi(prompt) {
   const res = await fetch(SCORE_API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      channelUrl,
-      prompt,
-      model: 'gemini-2.0-flash'
+      messages: [{ role: 'user', content: prompt }]
     })
   });
-  if (!res.ok) throw new Error('API 응답 오류: ' + res.status);
-  return await res.json();
+  const rawText = await res.text();
+  if (!res.ok) {
+    const snippet = (rawText || '').replace(/\s+/g, ' ').trim().slice(0, 280);
+    throw new Error(`API 오류 ${res.status}${snippet ? ': ' + snippet : ''}`);
+  }
+  let data;
+  try {
+    data = JSON.parse(rawText);
+  } catch {
+    throw new Error('JSON 파싱 실패: ' + (rawText || '').slice(0, 160));
+  }
+  const block = data.content && data.content[0];
+  if (!block || typeof block.text !== 'string') {
+    throw new Error('응답에 content[0].text 가 없습니다. Worker 응답 형식을 확인하세요.');
+  }
+  const parsed = parseScoreJsonFromModelText(block.text);
+  assertScorePayload(parsed);
+  return parsed;
 }
 
 async function startAnalysis() {
@@ -944,10 +983,27 @@ async function startAnalysis() {
     showResult(result, url);
   } catch (e) {
     const rawMsg = e.message || '';
-    if (rawMsg === 'Failed to fetch' || rawMsg === 'Load failed' || rawMsg.includes('NetworkError')) {
+    const isNetwork =
+      rawMsg === 'Failed to fetch' ||
+      rawMsg === 'Load failed' ||
+      rawMsg.includes('NetworkError');
+    const isWorkerHttp =
+      /^API 오류 5\d\d/.test(rawMsg) ||
+      rawMsg.startsWith('API 응답 오류:') ||
+      (rawMsg.includes('API 오류') && /\b5\d\d\b/.test(rawMsg));
+
+    if (isNetwork) {
       await new Promise((r) => setTimeout(r, 400));
       const fb = buildDemoResult(url);
       fb._apiCorsHint = true;
+      showResult(fb, url);
+      return;
+    }
+    if (isWorkerHttp) {
+      await new Promise((r) => setTimeout(r, 400));
+      const fb = buildDemoResult(url);
+      fb._apiWorkerError = true;
+      fb._apiWorkerDetail = rawMsg;
       showResult(fb, url);
       return;
     }
@@ -1076,7 +1132,7 @@ async function analyzeChannel(channelUrl) {
 등급 기준: S(25-30점), A(20-24점), B(15-19점), C(8-14점), D(0-7점)
 needsRebuild 기준: 총점 7점 이하(D등급)이거나, 구독자가 극히 적고 업로드가 1년 이상 중단됐거나, 콘텐츠 방향성이 완전히 없는 경우 true로 설정. 재건 권고 시 "현재 채널을 계속 운영하는 것보다 올바른 전략으로 새로 시작하는 것이 수익화에 유리하다"는 관점에서 설명하세요.`;
 
-  return await analyzeViaScoreApi(channelUrl, prompt);
+  return await analyzeViaScoreApi(prompt);
 }
 
 /** API는 여전히 totalScore 0~30 기준. 화면에는 100점 만점으로 표시. */
@@ -1098,8 +1154,10 @@ function showResult(data, url) {
 
   const demoBanner = data._demo
     ? (data._apiCorsHint
-      ? `<div class="demo-banner"><strong>API 연결 실패</strong> <code>${SCORE_API_URL}</code> 에 브라우저가 접속하지 못했습니다(대부분 Worker CORS 미설정). 저장소의 <code>workers/stn-api-cors-snippet.js</code> 를 Worker에 반영한 뒤 배포하세요. 아래는 임시 샘플 점수입니다.</div>`
-      : `<div class="demo-banner"><strong>데모 모드</strong> 샘플 점수입니다. 실제 진단은 <code>${SCORE_API_URL}</code> 연동 결과를 사용합니다.</div>`)
+      ? `<div class="demo-banner"><strong>API 연결 실패</strong> <code>${SCORE_API_URL}</code> 에 브라우저가 접속하지 못했습니다(네트워크·CORS·차단). 저장소의 <code>workers/stn-api-cors-snippet.js</code> 를 Worker에 반영했는지 확인하세요. 아래는 임시 샘플 점수입니다.</div>`
+      : data._apiWorkerError
+        ? `<div class="demo-banner"><strong>Worker 오류</strong> 점수 API가 5xx를 반환했습니다. Cloudflare 대시보드에서 Worker 로그·환경 변수(Gemini 키 등)를 확인하세요.<br><span style="opacity:.9;font-size:12px;font-weight:500;">${escapeHtml(data._apiWorkerDetail || '')}</span><br>아래는 임시 샘플 점수입니다.</div>`
+        : `<div class="demo-banner"><strong>데모 모드</strong> 샘플 점수입니다. 실제 진단은 <code>${SCORE_API_URL}</code> 연동 결과를 사용합니다.</div>`)
     : '';
 
   const gradeClass = { S:'g-s', A:'g-a', B:'g-b', C:'g-c', D:'g-d' }[data.grade] || 'g-c';
