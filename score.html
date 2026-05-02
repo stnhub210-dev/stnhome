@@ -938,6 +938,23 @@ function parseScoreJsonFromModelText(modelText) {
   return JSON.parse(jsonStr);
 }
 
+function extractScorePayloadFromApiJson(data) {
+  if (data && Array.isArray(data.sections) && data.sections.length) {
+    return data;
+  }
+  const t0 =
+    data?.content?.[0]?.text ??
+    data?.content?.[0]?.content ??
+    data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (typeof t0 === 'string' && t0.trim()) {
+    return parseScoreJsonFromModelText(t0);
+  }
+  const keys = data && typeof data === 'object' ? Object.keys(data).slice(0, 12).join(', ') : '';
+  throw new Error(
+    'Worker 응답 형식을 알 수 없습니다. content[0].text 또는 최상위 sections 가 필요합니다. 키: ' + keys
+  );
+}
+
 async function analyzeViaScoreApi(prompt) {
   const res = await fetch(SCORE_API_URL, {
     method: 'POST',
@@ -948,8 +965,14 @@ async function analyzeViaScoreApi(prompt) {
   });
   const rawText = await res.text();
   if (!res.ok) {
-    const snippet = (rawText || '').replace(/\s+/g, ' ').trim().slice(0, 280);
-    throw new Error(`API 오류 ${res.status}${snippet ? ': ' + snippet : ''}`);
+    let extra = (rawText || '').replace(/\s+/g, ' ').trim().slice(0, 320);
+    try {
+      const ej = JSON.parse(rawText);
+      if (ej && (ej.error || ej.message)) extra = String(ej.error || ej.message).slice(0, 320);
+    } catch {
+      /* keep text snippet */
+    }
+    throw new Error(`API 응답 오류: ${res.status}${extra ? ' — ' + extra : ''}`);
   }
   let data;
   try {
@@ -957,11 +980,7 @@ async function analyzeViaScoreApi(prompt) {
   } catch {
     throw new Error('JSON 파싱 실패: ' + (rawText || '').slice(0, 160));
   }
-  const block = data.content && data.content[0];
-  if (!block || typeof block.text !== 'string') {
-    throw new Error('응답에 content[0].text 가 없습니다. Worker 응답 형식을 확인하세요.');
-  }
-  const parsed = parseScoreJsonFromModelText(block.text);
+  const parsed = extractScorePayloadFromApiJson(data);
   assertScorePayload(parsed);
   return parsed;
 }
@@ -988,9 +1007,12 @@ async function startAnalysis() {
       rawMsg === 'Load failed' ||
       rawMsg.includes('NetworkError');
     const isWorkerHttp =
+      /^API 응답 오류:\s*5\d\d/.test(rawMsg) ||
       /^API 오류 5\d\d/.test(rawMsg) ||
       rawMsg.startsWith('API 응답 오류:') ||
-      (rawMsg.includes('API 오류') && /\b5\d\d\b/.test(rawMsg));
+      (rawMsg.includes('API 오류') && /\b5\d\d\b/.test(rawMsg)) ||
+      (rawMsg.includes('API 응답 오류') && /\b5\d\d\b/.test(rawMsg)) ||
+      /error code:\s*1101/i.test(rawMsg);
 
     if (isNetwork) {
       await new Promise((r) => setTimeout(r, 400));
