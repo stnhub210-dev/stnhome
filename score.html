@@ -921,40 +921,56 @@ function escapeHtml(s) {
     .replace(/"/g, '&quot;');
 }
 
-function assertScorePayload(data) {
-  if (!data || typeof data !== 'object') throw new Error('API 응답이 비어 있거나 객체가 아닙니다.');
-  if (!Array.isArray(data.sections) || data.sections.length === 0) {
-    throw new Error('API 응답에 sections 배열이 없습니다. Worker가 진단 JSON 전체를 반환하는지 확인하세요.');
-  }
+function isValidScorePayload(data) {
+  return !!(data && typeof data === 'object' && Array.isArray(data.sections) && data.sections.length > 0);
 }
 
 function parseScoreJsonFromModelText(modelText) {
-  let text = String(modelText || '');
-  text = text.replace(/```json/g, '').replace(/```/g, '').trim();
-  const first = text.indexOf('{');
-  const last = text.lastIndexOf('}');
-  if (first === -1 || last < first) throw new Error('분석 결과 JSON을 찾지 못했습니다.');
-  text = text.slice(first, last + 1);
-  return JSON.parse(text);
+  try {
+    let text = String(modelText || '');
+    text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    const first = text.indexOf('{');
+    const last = text.lastIndexOf('}');
+    if (first === -1 || last < first) {
+      console.log('[score API] parseScoreJsonFromModelText: { } 구간 없음', text);
+      return null;
+    }
+    text = text.slice(first, last + 1);
+    return JSON.parse(text);
+  } catch (e) {
+    console.log('[score API] parseScoreJsonFromModelText 실패:', e, '\n원문:', modelText);
+    return null;
+  }
 }
 
 function extractScorePayloadFromApiJson(data) {
   if (data && Array.isArray(data.sections) && data.sections.length) {
     return data;
   }
-  const t0 =
-    data?.content?.[0]?.content ??
-    data?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (typeof t0 === 'string' && t0.trim()) {
-    return parseScoreJsonFromModelText(t0);
+  const textSources = [
+    data?.content?.[0]?.text,
+    data?.content?.[0]?.content,
+    data?.candidates?.[0]?.content?.parts?.[0]?.text
+  ];
+  for (const t0 of textSources) {
+    if (typeof t0 !== 'string' || !t0.trim()) continue;
+    const inner = parseScoreJsonFromModelText(t0);
+    if (isValidScorePayload(inner)) return inner;
+    if (inner) console.log('[score API] extract: JSON은 파싱됐으나 sections 없음:', inner);
   }
-  const keys = data && typeof data === 'object' ? Object.keys(data).slice(0, 12).join(', ') : '';
-  throw new Error(
-    'Worker 응답 형식을 알 수 없습니다. content[0].text 또는 최상위 sections 가 필요합니다. 키: ' + keys
-  );
+  const keys = data && typeof data === 'object' ? Object.keys(data).slice(0, 20).join(', ') : '';
+  console.log('[score API] extractScorePayloadFromApiJson: 알 수 없는 형식. keys=', keys, '\n전체 data=', data);
+  return null;
 }
 
-async function analyzeViaScoreApi(prompt) {
+function scoreApiDemoFallback(channelUrl, reason) {
+  const fb = buildDemoResult(channelUrl);
+  fb._apiParseDebug = true;
+  fb._apiParseReason = reason || '';
+  return fb;
+}
+
+async function analyzeViaScoreApi(prompt, channelUrl) {
   const res = await fetch(SCORE_API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -963,7 +979,10 @@ async function analyzeViaScoreApi(prompt) {
     })
   });
   const rawText = await res.text();
+  console.log('[score API] 전체 응답 텍스트(raw):', rawText);
+
   if (!res.ok) {
+    console.log('[score API] HTTP 오류 본문:', res.status, rawText);
     let extra = (rawText || '').replace(/\s+/g, ' ').trim().slice(0, 320);
     try {
       const ej = JSON.parse(rawText);
@@ -973,26 +992,49 @@ async function analyzeViaScoreApi(prompt) {
     }
     throw new Error(`API 응답 오류: ${res.status}${extra ? ' — ' + extra : ''}`);
   }
+
   let data;
   try {
     data = JSON.parse(rawText);
-  } catch {
-    throw new Error('JSON 파싱 실패: ' + (rawText || '').slice(0, 160));
+  } catch (e) {
+    console.log('[score API] 바깥 JSON.parse 실패:', e, '\nraw:', rawText);
+    return scoreApiDemoFallback(channelUrl, 'outer-json');
   }
+  console.log('[score API] 파싱된 바깥 객체:', data);
+
+  let result = null;
   if (data.content && data.content[0] && typeof data.content[0].text === 'string') {
-    let text = data.content[0].text;
-    text = text.replace(/```json/g, '').replace(/```/g, '').trim();
-    const first = text.indexOf('{');
-    const last = text.lastIndexOf('}');
-    if (first === -1 || last < first) throw new Error('분석 결과 JSON을 찾지 못했습니다.');
-    text = text.slice(first, last + 1);
-    const result = JSON.parse(text);
-    assertScorePayload(result);
-    return result;
+    try {
+      let text = data.content[0].text;
+      text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+      const first = text.indexOf('{');
+      const last = text.lastIndexOf('}');
+      if (first === -1 || last < first) {
+        console.log('[score API] content[0].text 에서 { } 없음:', text);
+      } else {
+        text = text.slice(first, last + 1);
+        result = JSON.parse(text);
+      }
+    } catch (e) {
+      console.log('[score API] content[0].text 내부 JSON.parse 실패:', e, '\n원문:', data.content[0].text);
+    }
   }
-  const parsed = extractScorePayloadFromApiJson(data);
-  assertScorePayload(parsed);
-  return parsed;
+
+  if (!isValidScorePayload(result)) {
+    result = extractScorePayloadFromApiJson(data);
+  }
+
+  if (!isValidScorePayload(result)) {
+    console.log(
+      '[score API] 유효한 sections 없음. Worker 응답 전체:',
+      data,
+      '\n추출 시도 결과:',
+      result
+    );
+    return scoreApiDemoFallback(channelUrl, 'no-sections');
+  }
+
+  return result;
 }
 
 async function startAnalysis() {
@@ -1164,7 +1206,7 @@ async function analyzeChannel(channelUrl) {
 등급 기준: S(25-30점), A(20-24점), B(15-19점), C(8-14점), D(0-7점)
 needsRebuild 기준: 총점 7점 이하(D등급)이거나, 구독자가 극히 적고 업로드가 1년 이상 중단됐거나, 콘텐츠 방향성이 완전히 없는 경우 true로 설정. 재건 권고 시 "현재 채널을 계속 운영하는 것보다 올바른 전략으로 새로 시작하는 것이 수익화에 유리하다"는 관점에서 설명하세요.`;
 
-  return await analyzeViaScoreApi(prompt);
+  return await analyzeViaScoreApi(prompt, channelUrl);
 }
 
 /** API는 여전히 totalScore 0~30 기준. 화면에는 100점 만점으로 표시. */
@@ -1189,7 +1231,9 @@ function showResult(data, url) {
       ? `<div class="demo-banner"><strong>API 연결 실패</strong> <code>${SCORE_API_URL}</code> 에 브라우저가 접속하지 못했습니다(네트워크·CORS·차단). 저장소의 <code>workers/stn-api-cors-snippet.js</code> 를 Worker에 반영했는지 확인하세요. 아래는 임시 샘플 점수입니다.</div>`
       : data._apiWorkerError
         ? `<div class="demo-banner"><strong>Worker 오류</strong> 점수 API가 5xx를 반환했습니다. Cloudflare 대시보드에서 Worker 로그·환경 변수(Gemini 키 등)를 확인하세요.<br><span style="opacity:.9;font-size:12px;font-weight:500;">${escapeHtml(data._apiWorkerDetail || '')}</span><br>아래는 임시 샘플 점수입니다.</div>`
-        : `<div class="demo-banner"><strong>데모 모드</strong> 샘플 점수입니다. 실제 진단은 <code>${SCORE_API_URL}</code> 연동 결과를 사용합니다.</div>`)
+        : data._apiParseDebug
+          ? `<div class="demo-banner"><strong>응답 형식 디버그</strong> 200 응답이었지만 <code>sections</code> 를 만들 수 없어 샘플 점수를 표시합니다. 원인은 개발자 도구(F12) → Console의 <code>[score API]</code> 로그를 확인하세요.${data._apiParseReason ? ' <span style="opacity:.85">(' + escapeHtml(data._apiParseReason) + ')</span>' : ''}</div>`
+          : `<div class="demo-banner"><strong>데모 모드</strong> 샘플 점수입니다. 실제 진단은 <code>${SCORE_API_URL}</code> 연동 결과를 사용합니다.</div>`)
     : '';
 
   const gradeClass = { S:'g-s', A:'g-a', B:'g-b', C:'g-c', D:'g-d' }[data.grade] || 'g-c';
