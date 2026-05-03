@@ -1084,10 +1084,26 @@ async function analyzeChannel(channelUrl) {
   await analyzeViaScoreApi(prompt, channelUrl);
 }
 
-/** API는 여전히 totalScore 0~30 기준. 화면에는 100점 만점으로 표시. */
+/** 0~30 만점 → 100점 환산: Math.round(total30 / 30 * 100) */
 function scoreTotalTo100(total30) {
   const t = Math.min(30, Math.max(0, Number(total30) || 0));
   return Math.round((t / 30) * 100);
+}
+
+/** sections 합이 있으면 그걸 30점 만점으로 쓰고, 없을 때만 totalScore 필드 사용 */
+function getDisplayTotal30(data) {
+  const secs = data.sections;
+  if (Array.isArray(secs) && secs.length) {
+    const sum = secs.reduce((a, sec) => {
+      const mx = Number(sec.max) || 0;
+      const sc = Math.min(mx, Math.max(0, Number(sec.score) || 0));
+      return a + sc;
+    }, 0);
+    return Math.min(30, Math.max(0, sum));
+  }
+  let t = Number(data.totalScore);
+  if (!Number.isFinite(t) || t < 0) t = 0;
+  return Math.min(30, t);
 }
 
 function scoreSectionTo100(score, max) {
@@ -1114,8 +1130,8 @@ function showResult(data, url) {
   const gradeClass = { S:'g-s', A:'g-a', B:'g-b', C:'g-c', D:'g-d' }[data.grade] || 'g-c';
   const tagsHtml = (data.channelTags || []).map(t => `<span class="ch-tag">${t}</span>`).join('');
 
-  const raw30 = Math.min(30, Math.max(0, Number(data.totalScore) || 0));
-  const total100 = scoreTotalTo100(data.totalScore);
+  const raw30 = getDisplayTotal30(data);
+  const total100 = scoreTotalTo100(raw30);
 
   const secCardsHtml = (data.sections || []).map((sec, i) => {
     const pct = sec.max > 0 ? Math.round((sec.score / sec.max) * 100) : 0;
@@ -1184,7 +1200,7 @@ function showResult(data, url) {
     <div class="score-dash">
       <div class="score-num">${total100}</div>
       <div class="score-max">/ 100점</div>
-      <div class="score-raw30">30점 만점 기준 ${raw30}점을 100점으로 환산한 점수입니다.</div>
+      <div class="score-raw30">${raw30} / 30점 만점 · 위 숫자는 100점 만점으로 환산한 점수입니다.</div>
       <div class="grade-pill ${gradeClass}">${data.grade}등급</div>
       <div class="grade-label">${data.gradeLabel || ''}</div>
       <div class="grade-desc">${(data.gradeDesc || '').replace(/\\n/g,'\n')}</div>
