@@ -3335,6 +3335,173 @@
       font-weight: 900;
       margin-top: 14px;
     }
+
+    /* YouTube 채널 분석 (Data API v3) */
+    #yt-channel-analyze {
+      min-height: auto;
+      padding: 72px 0 56px;
+    }
+    #yt-channel-analyze h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .yt-analyze-lime {
+      color: var(--lime);
+      text-shadow: 0 0 14px rgba(124, 252, 0, 0.35);
+    }
+    .yt-analyze-lead {
+      text-align: center;
+      color: var(--muted);
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      margin-bottom: 22px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .yt-analyze-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      align-items: stretch;
+      margin-bottom: 14px;
+    }
+    .yt-analyze-input {
+      flex: 1 1 280px;
+      max-width: 520px;
+      min-height: 48px;
+      padding: 0 16px;
+      border-radius: 12px;
+      border: 1px solid #333;
+      background: #111;
+      color: #fff;
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .yt-analyze-input:focus {
+      border-color: rgba(124, 252, 0, 0.65);
+      box-shadow: 0 0 0 1px rgba(124, 252, 0, 0.25);
+    }
+    .yt-analyze-btn {
+      flex: 0 0 auto;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 12px;
+      border: none;
+      background: var(--lime);
+      color: #0b0f06;
+      font-weight: 900;
+      font-size: 1rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 0 14px rgba(124, 252, 0, 0.28);
+    }
+    .yt-analyze-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      filter: brightness(1.06);
+    }
+    .yt-analyze-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+    .yt-analyze-error {
+      text-align: center;
+      color: #f87171;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      min-height: 1.4em;
+    }
+    .yt-analyze-error[hidden] {
+      display: none !important;
+    }
+    .yt-analyze-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: var(--muted);
+      font-weight: 600;
+      margin: 18px 0 8px;
+    }
+    .yt-analyze-loading[hidden] {
+      display: none !important;
+    }
+    .yt-analyze-spinner {
+      width: 22px;
+      height: 22px;
+      border: 3px solid #333;
+      border-top-color: var(--lime);
+      border-radius: 50%;
+      animation: yt-spin 0.75s linear infinite;
+    }
+    @keyframes yt-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    .yt-analyze-cards--hidden {
+      display: none !important;
+    }
+    .yt-analyze-channel-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding: 16px 18px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .yt-analyze-thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(124, 252, 0, 0.45);
+      flex-shrink: 0;
+    }
+    .yt-analyze-chtitle {
+      font-size: clamp(1.1rem, 2.4vw, 1.35rem);
+      font-weight: 800;
+      line-height: 1.35;
+      word-break: keep-all;
+    }
+    .yt-analyze-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .yt-analyze-stat {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+    .yt-analyze-stat-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #9a9a9a;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .yt-analyze-stat-value {
+      font-size: clamp(1.15rem, 2.6vw, 1.45rem);
+      font-weight: 900;
+      color: var(--lime);
+      line-height: 1.25;
+      word-break: keep-all;
+    }
+
     footer { padding: 18px 0 28px; text-align: center; color: #909090; font-size: .88rem; }
 
     @media (max-width: 1024px) {
@@ -4025,6 +4192,7 @@
       <div class="nav-links">
         <a href="#solution">솔루션</a>
         <a href="#tracks">트랙</a>
+        <a href="#yt-channel-analyze">채널 데이터</a>
         <a href="curriculum.html#intensive-schedule">커리큐럼</a>
         <a href="#benefits">혜택</a>
         <a href="#directions">오시는길</a>
@@ -4066,6 +4234,23 @@
           <span class="tracks-hit tracks-hit-lime tracks-stagger-4">실전 집중교육!</span>
         </span>
       </h2>
+    </div>
+  </section>
+
+  <section id="yt-channel-analyze" class="yt-analyze reveal" aria-label="유튜브 채널 분석">
+    <div class="container">
+      <h2>YouTube 채널 <span class="yt-analyze-lime">실제 데이터</span></h2>
+      <p class="yt-analyze-lead">채널 ID(UC로 시작) 또는 채널 URL(<code style="color:#cfcfcf;">@핸들</code>, <code style="color:#cfcfcf;">youtube.com/@…</code>)을 입력하면 YouTube Data API v3로 통계를 불러옵니다.</p>
+      <div class="yt-analyze-form">
+        <input type="text" id="ytChannelInput" class="yt-analyze-input" placeholder="@핸들, UC… 채널 ID, 또는 전체 URL" autocomplete="off" spellcheck="false" />
+        <button type="button" id="ytChannelBtn" class="yt-analyze-btn">분석 시작</button>
+      </div>
+      <p id="ytChannelError" class="yt-analyze-error" role="alert" hidden></p>
+      <div id="ytChannelLoading" class="yt-analyze-loading" hidden>
+        <span class="yt-analyze-spinner" aria-hidden="true"></span>
+        <span>데이터 수집 중…</span>
+      </div>
+      <div id="ytChannelCards" class="yt-analyze-cards yt-analyze-cards--hidden"></div>
     </div>
   </section>
 
@@ -4640,6 +4825,220 @@
       });
     }, { threshold: 0.18 });
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+    (function () {
+      const YT_API_KEY = "AIzaSyAejRlWATGSGnIF6hTYpcauYgV6GFjW9Uk";
+      const BASE = "https://www.googleapis.com/youtube/v3";
+
+      const input = document.getElementById("ytChannelInput");
+      const btn = document.getElementById("ytChannelBtn");
+      const errEl = document.getElementById("ytChannelError");
+      const loadEl = document.getElementById("ytChannelLoading");
+      const cardsEl = document.getElementById("ytChannelCards");
+      if (!input || !btn || !errEl || !loadEl || !cardsEl) return;
+
+      function esc(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function parseChannelInput(raw) {
+        const s0 = String(raw || "").trim();
+        if (!s0) return { type: "empty" };
+        let s = s0;
+        const atUrl = s.match(/youtube\.com\/@([^/?#]+)/i);
+        if (atUrl) return { type: "forHandle", value: decodeURIComponent(atUrl[1]) };
+        const chUrl = s.match(/youtube\.com\/channel\/([^/?#]+)/i);
+        if (chUrl) return { type: "id", value: chUrl[1] };
+        const cUrl = s.match(/youtube\.com\/(?:c|user)\/([^/?#]+)/i);
+        if (cUrl) return { type: "search", value: decodeURIComponent(cUrl[1]) };
+        if (s.startsWith("@")) s = s.slice(1);
+        if (/^UC[\w-]{20,}$/i.test(s)) return { type: "id", value: s };
+        return { type: "forHandle", value: s };
+      }
+
+      async function fetchYoutube(url) {
+        const res = await fetch(url);
+        let data;
+        try {
+          data = await res.json();
+        } catch {
+          throw new Error("응답을 해석할 수 없습니다.");
+        }
+        if (data.error) {
+          throw new Error(data.error.message || "YouTube API 오류");
+        }
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        return data;
+      }
+
+      async function resolveChannelId(parsed) {
+        if (parsed.type === "empty") {
+          throw new Error("채널 ID 또는 URL을 입력해 주세요.");
+        }
+        if (parsed.type === "id") {
+          const url = `${BASE}/channels?part=id&id=${encodeURIComponent(parsed.value)}&key=${YT_API_KEY}`;
+          const data = await fetchYoutube(url);
+          if (!data.items || !data.items.length) {
+            throw new Error("채널을 찾을 수 없습니다. 채널 ID를 확인해 주세요.");
+          }
+          return data.items[0].id;
+        }
+        if (parsed.type === "forHandle") {
+          const u = `${BASE}/channels?part=id&forHandle=${encodeURIComponent(parsed.value)}&key=${YT_API_KEY}`;
+          const data = await fetchYoutube(u);
+          if (data.items && data.items.length) return data.items[0].id;
+          const su = `${BASE}/search?part=snippet&type=channel&maxResults=5&q=${encodeURIComponent(parsed.value)}&key=${YT_API_KEY}`;
+          const sdata = await fetchYoutube(su);
+          const cid = sdata.items && sdata.items[0] && sdata.items[0].id && sdata.items[0].id.channelId;
+          if (!cid) {
+            throw new Error("채널을 찾을 수 없습니다. 핸들 또는 URL을 확인해 주세요.");
+          }
+          return cid;
+        }
+        if (parsed.type === "search") {
+          const su = `${BASE}/search?part=snippet&type=channel&maxResults=5&q=${encodeURIComponent(parsed.value)}&key=${YT_API_KEY}`;
+          const sdata = await fetchYoutube(su);
+          const cid = sdata.items && sdata.items[0] && sdata.items[0].id && sdata.items[0].id.channelId;
+          if (!cid) {
+            throw new Error("채널을 찾을 수 없습니다. URL 또는 이름을 확인해 주세요.");
+          }
+          return cid;
+        }
+        throw new Error("입력 형식을 확인해 주세요.");
+      }
+
+      async function loadChannelStats(channelId) {
+        const url = `${BASE}/channels?part=snippet,statistics,contentDetails&id=${encodeURIComponent(channelId)}&key=${YT_API_KEY}`;
+        const data = await fetchYoutube(url);
+        if (!data.items || !data.items.length) {
+          throw new Error("채널 정보를 불러올 수 없습니다.");
+        }
+        const ch = data.items[0];
+        const stats = ch.statistics || {};
+        const snippet = ch.snippet || {};
+        const uploadsId = ch.contentDetails && ch.contentDetails.relatedPlaylists && ch.contentDetails.relatedPlaylists.uploads;
+
+        let lastUpload = "—";
+        if (uploadsId) {
+          const purl = `${BASE}/playlistItems?part=snippet,contentDetails&playlistId=${encodeURIComponent(uploadsId)}&maxResults=1&key=${YT_API_KEY}`;
+          const plist = await fetchYoutube(purl);
+          const it = plist.items && plist.items[0];
+          let published = "";
+          if (it) {
+            published =
+              (it.contentDetails && it.contentDetails.videoPublishedAt) ||
+              (it.snippet && it.snippet.publishedAt) ||
+              "";
+          }
+          if (published) {
+            lastUpload = new Date(published).toLocaleString("ko-KR", { dateStyle: "medium", timeStyle: "short" });
+          }
+        }
+
+        const thumb =
+          (snippet.thumbnails && snippet.thumbnails.medium && snippet.thumbnails.medium.url) ||
+          (snippet.thumbnails && snippet.thumbnails.default && snippet.thumbnails.default.url) ||
+          "";
+
+        let subscribers = "—";
+        if (stats.hiddenSubscriberCount) {
+          subscribers = "비공개";
+        } else if (stats.subscriberCount != null) {
+          subscribers = Number(stats.subscriberCount).toLocaleString("ko-KR");
+        }
+
+        const videoCount = stats.videoCount != null ? Number(stats.videoCount).toLocaleString("ko-KR") : "—";
+        const viewCount = stats.viewCount != null ? Number(stats.viewCount).toLocaleString("ko-KR") : "—";
+        const publishedAt = snippet.publishedAt
+          ? new Date(snippet.publishedAt).toLocaleDateString("ko-KR", { dateStyle: "long" })
+          : "—";
+
+        return {
+          title: snippet.title || "—",
+          thumb,
+          subscribers,
+          videoCount,
+          viewCount,
+          publishedAt,
+          lastUpload
+        };
+      }
+
+      function statCard(label, value) {
+        return (
+          '<div class="yt-analyze-stat">' +
+          '<div class="yt-analyze-stat-label">' +
+          esc(label) +
+          "</div>" +
+          '<div class="yt-analyze-stat-value">' +
+          esc(value) +
+          "</div></div>"
+        );
+      }
+
+      function render(d) {
+        cardsEl.classList.remove("yt-analyze-cards--hidden");
+        const imgHtml = d.thumb
+          ? '<img class="yt-analyze-thumb" src="' + esc(d.thumb) + '" alt="" width="72" height="72" loading="lazy" decoding="async" />'
+          : "";
+        cardsEl.innerHTML =
+          '<div class="yt-analyze-channel-head">' +
+          imgHtml +
+          '<div class="yt-analyze-chtitle">' +
+          esc(d.title) +
+          "</div></div>" +
+          '<div class="yt-analyze-grid">' +
+          statCard("구독자 수", d.subscribers) +
+          statCard("총 영상 수", d.videoCount) +
+          statCard("총 조회수", d.viewCount) +
+          statCard("채널 개설일", d.publishedAt) +
+          statCard("최근 업로드", d.lastUpload) +
+          "</div>";
+      }
+
+      async function run() {
+        errEl.textContent = "";
+        errEl.hidden = true;
+        cardsEl.innerHTML = "";
+        cardsEl.classList.add("yt-analyze-cards--hidden");
+
+        const parsed = parseChannelInput(input.value);
+        if (parsed.type === "empty") {
+          errEl.textContent = "채널 ID 또는 URL을 입력해 주세요.";
+          errEl.hidden = false;
+          return;
+        }
+
+        btn.disabled = true;
+        loadEl.hidden = false;
+        try {
+          const channelId = await resolveChannelId(parsed);
+          const stats = await loadChannelStats(channelId);
+          render(stats);
+        } catch (e) {
+          const msg = (e && e.message) || "알 수 없는 오류가 발생했습니다.";
+          errEl.textContent = msg.includes("404") ? "채널을 찾을 수 없습니다. ID 또는 URL을 확인해 주세요." : msg;
+          errEl.hidden = false;
+        } finally {
+          loadEl.hidden = true;
+          btn.disabled = false;
+        }
+      }
+
+      btn.addEventListener("click", run);
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          run();
+        }
+      });
+    })();
 
     document.querySelectorAll(".apply-btn").forEach((btn) => {
       btn.addEventListener("click", () => { window.location.href = "https://stnedu.co.kr/product/media/"; });
