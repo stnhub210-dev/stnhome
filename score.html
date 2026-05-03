@@ -3,7 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>유튜브 채널 AI 자동 진단 | STN 미디어서포터즈</title>
+<title>당신의 유튜브는 몇 점? | STN 미디어서포터즈</title>
+<meta property="og:title" content="당신의 유튜브는 몇 점?">
+<meta property="og:description" content="채널 아이디만 넣으면 100점 만점 점수 바로 확인 | STN 미디어서포터즈">
+<meta property="og:image" content="https://stnhub210-dev.github.io/stnhome/og-image.png">
+<meta property="og:url" content="https://stnhub210-dev.github.io/stnhome/score.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
   :root {
@@ -710,6 +716,40 @@
     border-color: #888;
     color: #fff;
   }
+  .edu-cta-wrap {
+    max-width: 720px;
+    margin: 0 auto 1.35rem;
+    text-align: center;
+    padding: 0 1rem;
+  }
+  .btn-edu-learn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0.95rem 1.75rem;
+    background: var(--green);
+    color: var(--dark);
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    border-radius: 999px;
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+    transition:
+      transform 0.22s ease,
+      box-shadow 0.22s ease,
+      filter 0.22s ease;
+    box-shadow:
+      0 0 0 1px rgba(198, 255, 0, 0.45),
+      0 0 24px rgba(198, 255, 0, 0.25);
+  }
+  .btn-edu-learn:hover {
+    transform: scale(1.04);
+    filter: brightness(1.06);
+  }
   .retry-row {
     text-align: center;
     margin-top: 1.5rem;
@@ -1111,7 +1151,7 @@ const SECTION_NAMES = ['구독자', '업로드 빈도', '영상 수', '총 조�
 const SECTION_COLORS = ['#c6ff00', '#86efac', '#67e8f9', '#a78bfa'];
 const SCORE_TOTAL_CAP = 100;
 
-const YT_API_KEY_DEFAULT = 'AIzaSyAejRlWATGSGnIF6hTYpcauYgV6GFjW9Uk';
+const YT_API_KEY_DEFAULT = 'AIzaSyCn-GaQaWmfRl741fMVnkfcYgTgwDktLcc';
 const YT_API_KEY_STORAGE = 'stn_youtube_data_api_key';
 const YT_BASE = 'https://www.googleapis.com/youtube/v3';
 
@@ -1852,6 +1892,9 @@ function showResult(data, url) {
         <button type="button" class="btn-cta-primary" onclick="location.href='index.html'">미디어서포터즈 과정 보러가기</button>
         <button type="button" class="btn-cta-outline" onclick="resetAll()">다른 채널 진단하기</button>
       </div>
+    </div>
+    <div class="edu-cta-wrap">
+      <a href="index.html" class="btn-edu-learn">STN 미디어서포터즈 교육 알아보기 →</a>
     </div>
     <div class="retry-row">
       <button class="retry-link" onclick="resetAll()">← 처음으로 돌아가기</button>
