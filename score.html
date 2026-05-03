@@ -1038,22 +1038,29 @@ async function analyzeChannel(channelUrl) {
 [알고리즘 최적화 - 6점]
 1. 썸네일 퀄리티: 밝고 텍스트가 있고 클릭하고 싶은 디자인이면 true. 단순 캡처면 false
 2. 제목 키워드: 제목에 검색할 만한 키워드가 포함되면 true. 너무 추상적이면 false
-3. 영상 설명 최적화: 설명란에 200자 이상 + 키워드 + 링크가 있으면 true
+3. 영상 설명 최적화: 설명란에 내용이 있으면 true (비어 있거나 기본 한 줄만이면 false)
 4. 태그 설정: 영상에 관련 태그가 5개 이상 설정되어 있으면 true
-5. 업로드 규칙성: 최근 1개월 업로드가 있고 불규칙하지 않으면 true
+5. 업로드 규칙성: 최근 1개월 내 업로드가 있으면 true
 6. 엔드스크린/카드: 대부분의 영상에 엔드스크린이 있으면 true
 
 [수익화 준비 - 4점]
-1. 수익화 조건 이해: 구독자 1,000명 이상이면 true. 미만이면 false
-2. 광고 친화적 주제: 게임/스포츠/교육/음식/여행/뷰티/금융이면 true. 정치/성인/폭력이면 false
-3. 복수 수익 모델: 멤버십, 굿즈, 협찬, 강의 등 광고 외 수익이 확인되면 true
-4. 협찬 준비도: 구독자 1만명 이상이면 true. 미만이면 false
+1. 수익화 조건 이해: 구독자 500명 이상이면 true. 미만이면 false
+2. 광고 친화적 주제: 게임/스포츠/교육/음식/여행/뷰티/금융이면 true
+3. 복수 수익 모델: 멤버십, 굿즈, 협찬, 강의 등이 확인되면 true
+4. 협찬 준비도: 구독자 3,000명 이상이면 true. 미만이면 false
 
 [채널 운영 습관 - 4점]
 1. 데이터 분석 습관: 채널 성장 추이가 보이거나 A/B 테스트 흔적이 있으면 true
 2. 댓글 관리: 최근 영상 댓글에 답글이 달려있으면 true
 3. 커뮤니티 활동: 커뮤니티 탭에 최근 1개월 내 게시물이 있으면 true
 4. 업로드 후 모니터링: 업로드 후 48시간 내 답글이 달려있으면 true
+
+구독자 수 보너스 점수 (아래 보너스를 기본점에 더해 totalScore를 산출):
+- 구독자 10만 명 이상: +5점
+- 구독자 1만~10만 미만: +3점
+- 구독자 3천~1만 미만: +1점
+- 구독자 3천 미만: +0점
+구독자 수를 알 수 없으면 보너스는 +0점. 기본점은 6개 섹션 score의 합(0~30). totalScore = min(30, 기본점 + 보너스). grade는 최종 totalScore로 위 등급 기준에 맞춰야 함.
 
 위 기준으로 엄격하게 평가하고 아래 JSON만 반환해.
 모르는 정보는 반드시 false로 처리해.
@@ -1066,7 +1073,7 @@ C등급: 11~16점 (개선 필요)
 D등급: 10점 이하 (전면 재설계 필요)
 
 grade 값은 S, A, B, C, D 중 한 글자만 사용. needsRebuild는 true 또는 false(boolean).
-각 섹션의 score는 해당 섹션에서 ok가 true인 개수, max는 위 괄호 점수와 동일(6,5,5,6,4,4). totalScore는 6개 섹션 score의 합(0~30). grade는 위 등급 기준과 일치해야 함.
+각 섹션의 score는 해당 섹션에서 ok가 true인 개수, max는 위 괄호 점수와 동일(6,5,5,6,4,4). totalScore는 위「구독자 수 보너스」규칙을 반영한 최종 점수(최대 30).
 
 [JSON 형식]
 {
@@ -1150,6 +1157,10 @@ function scoreTotalTo100(total30) {
 
 /** sections 합이 있으면 그걸 30점 만점으로 쓰고, 없을 때만 totalScore 필드 사용 */
 function getDisplayTotal30(data) {
+  const stated = Number(data.totalScore);
+  if (Number.isFinite(stated) && stated >= 0) {
+    return Math.min(30, stated);
+  }
   const secs = data.sections;
   if (Array.isArray(secs) && secs.length) {
     const sum = secs.reduce((a, sec) => {
@@ -1159,9 +1170,7 @@ function getDisplayTotal30(data) {
     }, 0);
     return Math.min(30, Math.max(0, sum));
   }
-  let t = Number(data.totalScore);
-  if (!Number.isFinite(t) || t < 0) t = 0;
-  return Math.min(30, t);
+  return 0;
 }
 
 function scoreSectionTo100(score, max) {
