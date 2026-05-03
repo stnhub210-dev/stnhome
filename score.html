@@ -1055,7 +1055,17 @@ async function analyzeViaScoreApi(prompt, channelUrl) {
   const last = text.lastIndexOf('}');
   text = text.slice(first, last + 1);
 
-  const result = JSON.parse(text);
+  console.log('파싱 전 text:', text);
+
+  let result;
+  try {
+    result = JSON.parse(text);
+  } catch (parseErr) {
+    console.log('JSON.parse 실패:', parseErr?.message ?? parseErr);
+    showError('분석 중 오류가 발생했습니다. 다시 시도해 주세요.', '');
+    return;
+  }
+
   if (result && result.channelNotFound === true) {
     showChannelNotFound(result, channelUrl);
     return;
