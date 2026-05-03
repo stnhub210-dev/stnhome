@@ -794,6 +794,60 @@
     word-break: keep-all;
   }
 
+  /* 채널 미발견 (channelNotFound) */
+  .not-found-card {
+    max-width: 520px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 2.5rem 1.5rem 2rem;
+    background: #141414;
+    border: 1px solid #333;
+    border-radius: 16px;
+  }
+  .not-found-emoji {
+    font-size: 48px;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .not-found-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    word-break: keep-all;
+  }
+  .not-found-desc {
+    font-size: 14px;
+    color: #a8a8a8;
+    line-height: 1.8;
+    margin-bottom: 1.75rem;
+    word-break: keep-all;
+  }
+  .not-found-retry {
+    padding: 0.9rem 2rem;
+    background: var(--green);
+    color: var(--dark);
+    border: none;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+    transition:
+      transform 0.22s ease,
+      box-shadow 0.22s ease,
+      filter 0.22s ease;
+  }
+  .not-found-retry:hover {
+    transform: scale(1.04);
+    filter: brightness(1.08);
+    box-shadow:
+      0 0 0 1px rgba(198, 255, 0, 0.55),
+      0 0 28px rgba(198, 255, 0, 0.35),
+      0 10px 28px rgba(0, 0, 0, 0.4);
+  }
+
   /* ERROR */
   .error-box {
     display: none;
@@ -1002,6 +1056,10 @@ async function analyzeViaScoreApi(prompt, channelUrl) {
   text = text.slice(first, last + 1);
 
   const result = JSON.parse(text);
+  if (result && result.channelNotFound === true) {
+    showChannelNotFound(result, channelUrl);
+    return;
+  }
   showResult(result, channelUrl);
 }
 
@@ -1103,7 +1161,10 @@ async function analyzeChannel(channelUrl) {
 6. 엔드스크린/카드: 대부분의 영상에 엔드스크린이 있으면 true
 
 [수익화 준비 - 4점]
-1. 수익화 조건 이해: 구독자 500명 이상이면 true. 미만이면 false
+1. 수익화 조건 이해:
+   - 구독자 10만 명 이상이면 무조건 true (기본 점수 부여)
+   - 구독자 1,000명 이상 10만 명 미만이면 true
+   - 구독자 1,000명 미만이면 false
 2. 광고 친화적 주제: 게임/스포츠/교육/음식/여행/뷰티/금융이면 true
 3. 복수 수익 모델: 아래 중 하나라도 확인되면 true (모르면 false)
    - 멤버십(유튜브 멤버십 버튼이 있음)
@@ -1135,6 +1196,13 @@ async function analyzeChannel(channelUrl) {
 위 기준으로 엄격하게 평가하고 아래 JSON만 반환해.
 모르는 정보는 반드시 false로 처리해.
 
+채널 정보를 찾을 수 없거나 분석이 불가능한 경우(존재하지 않는 채널, 비공개, URL만으로 확인 불가 등)에는 아래 JSON만 반환해. 다른 필드는 포함하지 않아도 된다.
+{
+  "channelNotFound": true,
+  "channelName": "입력한 채널명(또는 채널 URL에서 알 수 있는 표기)",
+  "channelEmoji": "❓"
+}
+
 등급 기준:
 S등급: 27점 이상 (최상위 채널)
 A등급: 22~26점 (우수한 채널)
@@ -1154,6 +1222,18 @@ needsRebuild 판단 (반드시 준수):
 grade 값은 S, A, B, C, D 중 한 글자만 사용. needsRebuild는 true 또는 false(boolean).
 각 섹션의 score는 해당 섹션에서 ok가 true인 개수, max는 위 괄호 점수와 동일(6,5,5,6,4,4). totalScore는 위「보너스 점수」(구독자·멤버십·판매링크)를 반영한 최종 점수(최대 30).
 
+summary(AI 종합 분석) 작성 규칙:
+「summary」를 작성할 때 아래 조건에 해당하면 **반드시** 해당 문구를 **원문 그대로** 포함해(여러 조건이면 문구를 모두 포함 가능).
+
+조건 1: 구독자 10만 명 이상인데 유튜브 멤버십이 없는 경우
+→ 반드시 포함: "구독자 수 대비 멤버십이 없습니다. 유튜브 멤버십을 활성화하면 안정적인 수익원이 될 수 있습니다."
+
+조건 2: 구독자 10만 명 이상인데 외부 판매 링크(영상 설명·채널 소개 등)가 없는 경우
+→ 반드시 포함: "외부 판매링크(쇼핑몰, 강의, 굿즈 등)가 확인되지 않습니다. 판매링크를 채널에 추가하면 광고 외 수익 다각화에 도움이 됩니다."
+
+조건 3: 구독자 3만 명 이상인데 협찬 이력이 없는 경우
+→ 반드시 포함: "채널 규모 대비 협찬 활동이 보이지 않습니다. 브랜드 협찬을 시작할 수 있는 규모입니다."
+
 [JSON 형식]
 {
   "channelName": "채널명",
@@ -1170,7 +1250,7 @@ grade 값은 S, A, B, C, D 중 한 글자만 사용. needsRebuild는 true 또는
   "needsRebuild": false,
   "rebuildReason": "재건이유",
   "rebuildPoints": ["사유1","사유2","사유3"],
-  "summary": "채널 총평 150자이내",
+  "summary": "채널 총평(150자 이내 권장, 위 summary 작성 규칙의 필수 문구를 조건에 맞게 포함)",
   "sections": [
     {"name":"채널 기본 설정","score":4,"max":6,"items":[
       {"name":"채널 이름 명확성","ok":true},
@@ -1279,6 +1359,20 @@ function effectiveNeedsRebuild(data) {
   }
 
   return data.needsRebuild === true;
+}
+
+function showChannelNotFound(data, url) {
+  document.getElementById('loadingWrap').style.display = 'none';
+  const rw = document.getElementById('resultWrap');
+  rw.style.display = 'block';
+  const emoji = data.channelEmoji != null && data.channelEmoji !== '' ? String(data.channelEmoji) : '❓';
+  rw.innerHTML = `
+    <div class="not-found-card">
+      <div class="not-found-emoji">${escapeHtml(emoji)}</div>
+      <h2 class="not-found-title">채널 정보를 찾을 수 없습니다.</h2>
+      <p class="not-found-desc">채널 아이디를 다시 확인하고 시도해 주세요.<br>비공개 채널이거나 존재하지 않는 채널일 수 있습니다.</p>
+      <button type="button" class="not-found-retry" onclick="resetAll()">다시 시도하기</button>
+    </div>`;
 }
 
 function showResult(data, url) {
