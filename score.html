@@ -923,10 +923,6 @@ function escapeHtml(s) {
 }
 
 async function analyzeViaScoreApi(prompt, channelUrl) {
-  console.groupCollapsed('[score API] Worker 전송 직전 prompt');
-  console.log(prompt);
-  console.groupEnd();
-
   const res = await fetch('https://stn-api.stnhub210.workers.dev', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -1074,9 +1070,12 @@ async function analyzeChannel(channelUrl) {
   ]
 }`;
 
-  console.groupCollapsed('[score API] AI 프롬프트(prompt)');
-  console.log(prompt);
-  console.groupEnd();
+  console.log(
+    '%c[score API] AI 프롬프트(prompt)%c — 아래 줄의 ▶ Object 를 펼치면 전체 문자열이 보입니다.',
+    'font-weight:bold;color:#bef264;',
+    'color:#9a9a9a;font-weight:normal;'
+  );
+  console.log({ '[score API] AI 프롬프트(prompt)': prompt });
   await analyzeViaScoreApi(prompt, channelUrl);
 }
 
