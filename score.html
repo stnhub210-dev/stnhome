@@ -847,7 +847,8 @@ const SECTION_COLORS = ['#c6ff00','#86efac','#67e8f9','#a78bfa','#f9a8d4','#fdba
 const SECTION_MAX = [6,5,5,6,4,4];
 
 /** STN 점수 API (Cloudflare Worker). POST: { messages: [{ role, content }] }, 응답: { content: [{ text }] } */
-const SCORE_API_URL = 'https://stn-api.stnhub210.workers.dev';
+const SCORE_API_EXPECT = 'https://stn-api.stnhub210.workers.dev';
+const SCORE_API_URL = SCORE_API_EXPECT;
 
 function safeDecodeURIComponent(s) {
   try {
@@ -921,123 +922,27 @@ function escapeHtml(s) {
     .replace(/"/g, '&quot;');
 }
 
-function isValidScorePayload(data) {
-  return !!(data && typeof data === 'object' && Array.isArray(data.sections) && data.sections.length > 0);
-}
-
-function parseScoreJsonFromModelText(modelText) {
-  try {
-    let text = String(modelText || '');
-    text = text.replace(/```json/g, '').replace(/```/g, '').trim();
-    const first = text.indexOf('{');
-    const last = text.lastIndexOf('}');
-    if (first === -1 || last < first) {
-      console.log('[score API] parseScoreJsonFromModelText: { } 구간 없음', text);
-      return null;
-    }
-    text = text.slice(first, last + 1);
-    return JSON.parse(text);
-  } catch (e) {
-    console.log('[score API] parseScoreJsonFromModelText 실패:', e, '\n원문:', modelText);
-    return null;
-  }
-}
-
-function extractScorePayloadFromApiJson(data) {
-  if (data && Array.isArray(data.sections) && data.sections.length) {
-    return data;
-  }
-  const textSources = [
-    data?.content?.[0]?.text,
-    data?.content?.[0]?.content,
-    data?.candidates?.[0]?.content?.parts?.[0]?.text
-  ];
-  for (const t0 of textSources) {
-    if (typeof t0 !== 'string' || !t0.trim()) continue;
-    const inner = parseScoreJsonFromModelText(t0);
-    if (isValidScorePayload(inner)) return inner;
-    if (inner) console.log('[score API] extract: JSON은 파싱됐으나 sections 없음:', inner);
-  }
-  const keys = data && typeof data === 'object' ? Object.keys(data).slice(0, 20).join(', ') : '';
-  console.log('[score API] extractScorePayloadFromApiJson: 알 수 없는 형식. keys=', keys, '\n전체 data=', data);
-  return null;
-}
-
-function scoreApiDemoFallback(channelUrl, reason) {
-  const fb = buildDemoResult(channelUrl);
-  fb._apiParseDebug = true;
-  fb._apiParseReason = reason || '';
-  return fb;
-}
-
 async function analyzeViaScoreApi(prompt, channelUrl) {
   console.groupCollapsed('[score API] Worker 전송 직전 prompt');
   console.log(prompt);
   console.groupEnd();
-  const res = await fetch(SCORE_API_URL, {
+
+  const res = await fetch('https://stn-api.stnhub210.workers.dev', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      messages: [{ role: 'user', content: prompt }]
-    })
+    body: JSON.stringify({ messages: [{ role: 'user', content: prompt }] })
   });
-  const rawText = await res.text();
-  console.log('[score API] 전체 응답 텍스트(raw):', rawText);
 
-  if (!res.ok) {
-    console.log('[score API] HTTP 오류 본문:', res.status, rawText);
-    let extra = (rawText || '').replace(/\s+/g, ' ').trim().slice(0, 320);
-    try {
-      const ej = JSON.parse(rawText);
-      if (ej && (ej.error || ej.message)) extra = String(ej.error || ej.message).slice(0, 320);
-    } catch {
-      /* keep text snippet */
-    }
-    throw new Error(`API 응답 오류: ${res.status}${extra ? ' — ' + extra : ''}`);
-  }
+  const json = await res.json();
+  console.log('전체 응답:', JSON.stringify(json));
 
-  let data;
-  try {
-    data = JSON.parse(rawText);
-  } catch (e) {
-    console.log('[score API] 바깥 JSON.parse 실패:', e, '\nraw:', rawText);
-    return scoreApiDemoFallback(channelUrl, 'outer-json');
-  }
-  console.log('[score API] 파싱된 바깥 객체:', data);
+  const text = json?.content?.[0]?.text ?? '';
+  console.log('text 값:', text);
 
-  let result = null;
-  if (data.content && data.content[0] && typeof data.content[0].text === 'string') {
-    try {
-      let text = data.content[0].text;
-      text = text.replace(/```json/g, '').replace(/```/g, '').trim();
-      const first = text.indexOf('{');
-      const last = text.lastIndexOf('}');
-      if (first === -1 || last < first) {
-        console.log('[score API] content[0].text 에서 { } 없음:', text);
-      } else {
-        text = text.slice(first, last + 1);
-        result = JSON.parse(text);
-      }
-    } catch (e) {
-      console.log('[score API] content[0].text 내부 JSON.parse 실패:', e, '\n원문:', data.content[0].text);
-    }
-  }
+  if (!text) throw new Error('응답 없음');
 
-  if (!isValidScorePayload(result)) {
-    result = extractScorePayloadFromApiJson(data);
-  }
-
-  if (!isValidScorePayload(result)) {
-    console.log(
-      '[score API] 유효한 sections 없음. Worker 응답 전체:',
-      data,
-      '\n추출 시도 결과:',
-      result
-    );
-    return scoreApiDemoFallback(channelUrl, 'no-sections');
-  }
-
-  return result;
+  const result = JSON.parse(text);
+  showResult(result, channelUrl);
 }
 
 async function startAnalysis() {
@@ -1053,8 +958,7 @@ async function startAnalysis() {
   animateSteps();
 
   try {
-    const result = await analyzeChannel(url);
-    showResult(result, url);
+    await analyzeChannel(url);
   } catch (e) {
     const rawMsg = e.message || '';
     const isNetwork =
@@ -1173,7 +1077,7 @@ async function analyzeChannel(channelUrl) {
   console.groupCollapsed('[score API] AI 프롬프트(prompt)');
   console.log(prompt);
   console.groupEnd();
-  return await analyzeViaScoreApi(prompt, channelUrl);
+  await analyzeViaScoreApi(prompt, channelUrl);
 }
 
 /** API는 여전히 totalScore 0~30 기준. 화면에는 100점 만점으로 표시. */
