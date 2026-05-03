@@ -1506,20 +1506,22 @@ async function analyzeChannel(channelUrl) {
 
 /** 종합 점수(0~100). totalScore 필드 우선, 없으면 섹션 합산. */
 function getDisplayTotal100(data) {
+  let t = 0;
   const stated = Number(data.totalScore);
   if (Number.isFinite(stated) && stated >= 0) {
-    return Math.min(SCORE_TOTAL_CAP, Math.round(stated));
+    t = Math.min(SCORE_TOTAL_CAP, Math.round(stated));
+  } else {
+    const secs = data.sections;
+    if (Array.isArray(secs) && secs.length) {
+      const sum = secs.reduce((a, sec) => {
+        const mx = Number(sec.max) || 0;
+        const sc = Math.min(mx, Math.max(0, Number(sec.score) || 0));
+        return a + sc;
+      }, 0);
+      t = Math.min(SCORE_TOTAL_CAP, Math.max(0, Math.round(sum)));
+    }
   }
-  const secs = data.sections;
-  if (Array.isArray(secs) && secs.length) {
-    const sum = secs.reduce((a, sec) => {
-      const mx = Number(sec.max) || 0;
-      const sc = Math.min(mx, Math.max(0, Number(sec.score) || 0));
-      return a + sc;
-    }, 0);
-    return Math.min(SCORE_TOTAL_CAP, Math.max(0, Math.round(sum)));
-  }
-  return 0;
+  return t === 100 ? 99 : t;
 }
 
 /** 재건 권고: 구독 1만 이상이면 false. 수치가 있으면 AND로 재계산. */
