@@ -193,90 +193,6 @@
     line-height: 1.55;
     font-weight: 500;
   }
-  .yt-key-wrap {
-    margin-top: 1rem;
-    max-width: 520px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-  }
-  .yt-key-toggle {
-    background: transparent;
-    border: none;
-    color: #9a9a9a;
-    font-size: 12px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    padding: 4px 8px;
-  }
-  .yt-key-toggle:hover { color: var(--green); }
-  .yt-key-panel {
-    margin-top: 12px;
-    padding: 14px 16px;
-    border-radius: 12px;
-    border: 1px solid #2a2a2a;
-    background: #111;
-    text-align: left;
-  }
-  .yt-key-panel[hidden] { display: none !important; }
-  .yt-key-help {
-    font-size: 12px;
-    color: #8a8a8a;
-    line-height: 1.65;
-    margin: 0 0 10px;
-    font-weight: 500;
-  }
-  .yt-key-input {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid #333;
-    background: #0a0a0a;
-    color: #e8e8e8;
-    font-size: 13px;
-    font-family: ui-monospace, monospace;
-    margin-bottom: 10px;
-  }
-  .yt-key-input:focus {
-    outline: none;
-    border-color: rgba(198, 255, 0, 0.45);
-  }
-  .yt-key-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 8px;
-  }
-  .yt-key-save,
-  .yt-key-clear {
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 700;
-    font-family: inherit;
-    cursor: pointer;
-    border: none;
-  }
-  .yt-key-save {
-    background: var(--green);
-    color: var(--dark);
-  }
-  .yt-key-clear {
-    background: transparent;
-    color: #888;
-    border: 1px solid #444;
-  }
-  .yt-key-status {
-    font-size: 11px;
-    color: #6a6a6a;
-    margin: 0;
-    min-height: 1.4em;
-    line-height: 1.5;
-  }
   .no-channel-wrap {
     text-align: center;
     margin-top: 1.5rem;
@@ -597,21 +513,6 @@
     background: radial-gradient(ellipse, rgba(198,255,0,.06) 0%, transparent 70%);
     pointer-events: none;
   }
-  .cta-badge-row {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 1.25rem;
-  }
-  .cta-badge {
-    font-size: 10px;
-    padding: 3px 10px;
-    border-radius: 20px;
-    background: #252525;
-    color: #888;
-    border: 1px solid #333;
-  }
   .cta-title { font-size: 20px; font-weight: 900; margin-bottom: .5rem; }
   .cta-title em { color: var(--green); font-style: normal; }
   .cta-desc { font-size: 12.5px; color: #9a9a9a; margin-bottom: 1.5rem; line-height: 1.7; font-weight: 500; }
@@ -671,29 +572,6 @@
     box-shadow:
       0 0 0 1px rgba(198, 255, 0, 0.35),
       0 0 24px rgba(198, 255, 0, 0.25),
-      0 10px 28px rgba(0, 0, 0, 0.4);
-  }
-  .btn-cta-primary {
-    padding: 0.95rem 2rem;
-    background: #c6ff00;
-    color: #0e0e0e;
-    border: none;
-    border-radius: 999px;
-    font-size: 15px;
-    font-weight: 800;
-    cursor: pointer;
-    font-family: inherit;
-    transition:
-      transform 0.22s ease,
-      box-shadow 0.22s ease,
-      filter 0.22s ease;
-  }
-  .btn-cta-primary:hover {
-    transform: scale(1.04);
-    filter: brightness(1.06);
-    box-shadow:
-      0 0 0 1px rgba(198, 255, 0, 0.55),
-      0 0 28px rgba(198, 255, 0, 0.38),
       0 10px 28px rgba(0, 0, 0, 0.4);
   }
   .btn-cta-outline {
@@ -1100,18 +978,6 @@
     </div>
     <button type="button" class="analyze-btn" id="analyzeBtn" onclick="startAnalysis()">점수 계산하기</button>
     <div class="input-hint">예시: STNsports &nbsp;·&nbsp; 박문성TV &nbsp;·&nbsp; 영문/한글 채널 아이디 모두 가능</div>
-    <div class="yt-key-wrap">
-      <button type="button" class="yt-key-toggle" id="ytKeyToggle" aria-expanded="false" onclick="toggleYtKeyPanel()">YouTube API가 막혔나요? · 내 키로 연결</button>
-      <div class="yt-key-panel" id="ytKeyPanel" hidden>
-        <p class="yt-key-help">Google Cloud에서 YouTube Data API v3를 사용 설정한 뒤 만든 브라우저용 API 키를 넣으면, 이 브라우저(localStorage)에만 저장되어 호출에 사용됩니다.</p>
-        <input type="password" id="ytApiKeyInput" class="yt-key-input" placeholder="AIza… (API 키)" autocomplete="off" spellcheck="false" />
-        <div class="yt-key-actions">
-          <button type="button" class="yt-key-save" onclick="saveYtApiKey()">저장</button>
-          <button type="button" class="yt-key-clear" onclick="clearYtApiKey()">저장 키 삭제</button>
-        </div>
-        <p class="yt-key-status" id="ytApiKeyStatus"></p>
-      </div>
-    </div>
     <div class="no-channel-wrap">
       <div class="no-channel-label">아직 유튜브 채널이 없으신가요?</div>
       <a href="https://stnhub210-dev.github.io/stnhome/" target="_blank" class="no-channel-btn">
@@ -1151,68 +1017,8 @@ const SECTION_NAMES = ['구독자', '업로드 빈도', '영상 수', '총 조�
 const SECTION_COLORS = ['#c6ff00', '#86efac', '#67e8f9', '#a78bfa'];
 const SCORE_TOTAL_CAP = 100;
 
-const YT_API_KEY_DEFAULT = 'AIzaSyCn-GaQaWmfRl741fMVnkfcYgTgwDktLcc';
-const YT_API_KEY_STORAGE = 'stn_youtube_data_api_key';
+const YT_API_KEY = 'AIzaSyCn-GaQaWmfRl741fMVnkfcYgTgwDktLcc';
 const YT_BASE = 'https://www.googleapis.com/youtube/v3';
-
-function getYoutubeApiKey() {
-  try {
-    const v = (localStorage.getItem(YT_API_KEY_STORAGE) || '').trim();
-    if (/^AIza[\w-]{30,}$/.test(v)) return v;
-  } catch (_) {}
-  return YT_API_KEY_DEFAULT;
-}
-
-function toggleYtKeyPanel() {
-  const panel = document.getElementById('ytKeyPanel');
-  const btn = document.getElementById('ytKeyToggle');
-  if (!panel || !btn) return;
-  const isHidden = panel.hasAttribute('hidden');
-  if (isHidden) {
-    panel.removeAttribute('hidden');
-    btn.setAttribute('aria-expanded', 'true');
-  } else {
-    panel.setAttribute('hidden', '');
-    btn.setAttribute('aria-expanded', 'false');
-  }
-}
-
-function saveYtApiKey() {
-  const input = document.getElementById('ytApiKeyInput');
-  const status = document.getElementById('ytApiKeyStatus');
-  const v = (input && input.value ? String(input.value) : '').trim();
-  if (!/^AIza[\w-]{30,}$/.test(v)) {
-    if (status) status.textContent = 'AIza로 시작하는 YouTube 브라우저용 API 키 형식인지 확인해 주세요.';
-    return;
-  }
-  try {
-    localStorage.setItem(YT_API_KEY_STORAGE, v);
-    if (input) input.value = '';
-    if (status) status.textContent = '저장되었습니다.「점수 계산하기」를 다시 눌러 주세요.';
-  } catch (_) {
-    if (status) status.textContent = '저장에 실패했습니다. 일반 창에서 시도하거나 저장소 제한을 확인해 주세요.';
-  }
-}
-
-function clearYtApiKey() {
-  try {
-    localStorage.removeItem(YT_API_KEY_STORAGE);
-  } catch (_) {}
-  const status = document.getElementById('ytApiKeyStatus');
-  if (status) status.textContent = '저장된 키를 지웠습니다. 기본 키로 요청합니다.';
-  const input = document.getElementById('ytApiKeyInput');
-  if (input) input.value = '';
-}
-
-function refreshYtApiKeyStatusLabel() {
-  const status = document.getElementById('ytApiKeyStatus');
-  if (!status) return;
-  let v = '';
-  try {
-    v = (localStorage.getItem(YT_API_KEY_STORAGE) || '').trim();
-  } catch (_) {}
-  status.textContent = /^AIza[\w-]{30,}$/.test(v) ? '이 브라우저: 저장된 사용자 API 키 사용 중' : '';
-}
 
 function safeDecodeURIComponent(s) {
   try {
@@ -1511,7 +1317,7 @@ async function resolveYoutubeChannelId(parsed) {
     throw new Error('채널 URL이 비어 있습니다.');
   }
   if (parsed.type === 'id') {
-    const url = `${YT_BASE}/channels?part=id&id=${encodeURIComponent(parsed.value)}&key=${getYoutubeApiKey()}`;
+    const url = `${YT_BASE}/channels?part=id&id=${encodeURIComponent(parsed.value)}&key=${YT_API_KEY}`;
     const data = await fetchYoutubeJson(url);
     if (!data.items || !data.items.length) {
       throw new Error('NOT_FOUND');
@@ -1519,17 +1325,17 @@ async function resolveYoutubeChannelId(parsed) {
     return data.items[0].id;
   }
   if (parsed.type === 'forHandle') {
-    const u = `${YT_BASE}/channels?part=id&forHandle=${encodeURIComponent(parsed.value)}&key=${getYoutubeApiKey()}`;
+    const u = `${YT_BASE}/channels?part=id&forHandle=${encodeURIComponent(parsed.value)}&key=${YT_API_KEY}`;
     const data = await fetchYoutubeJson(u);
     if (data.items && data.items.length) return data.items[0].id;
-    const su = `${YT_BASE}/search?part=snippet&type=channel&maxResults=5&q=${encodeURIComponent(parsed.value)}&key=${getYoutubeApiKey()}`;
+    const su = `${YT_BASE}/search?part=snippet&type=channel&maxResults=5&q=${encodeURIComponent(parsed.value)}&key=${YT_API_KEY}`;
     const sdata = await fetchYoutubeJson(su);
     const cid = sdata.items && sdata.items[0] && sdata.items[0].id && sdata.items[0].id.channelId;
     if (!cid) throw new Error('NOT_FOUND');
     return cid;
   }
   if (parsed.type === 'search') {
-    const su = `${YT_BASE}/search?part=snippet&type=channel&maxResults=5&q=${encodeURIComponent(parsed.value)}&key=${getYoutubeApiKey()}`;
+    const su = `${YT_BASE}/search?part=snippet&type=channel&maxResults=5&q=${encodeURIComponent(parsed.value)}&key=${YT_API_KEY}`;
     const sdata = await fetchYoutubeJson(su);
     const cid = sdata.items && sdata.items[0] && sdata.items[0].id && sdata.items[0].id.channelId;
     if (!cid) throw new Error('NOT_FOUND');
@@ -1539,7 +1345,7 @@ async function resolveYoutubeChannelId(parsed) {
 }
 
 async function loadYoutubeChannelBundle(channelId) {
-  const url = `${YT_BASE}/channels?part=snippet,statistics,contentDetails&id=${encodeURIComponent(channelId)}&key=${getYoutubeApiKey()}`;
+  const url = `${YT_BASE}/channels?part=snippet,statistics,contentDetails&id=${encodeURIComponent(channelId)}&key=${YT_API_KEY}`;
   const data = await fetchYoutubeJson(url);
   if (!data.items || !data.items.length) {
     throw new Error('NOT_FOUND');
@@ -1554,7 +1360,7 @@ async function loadYoutubeChannelBundle(channelId) {
 
   let lastUploadMs = null;
   if (uploadsId) {
-    const purl = `${YT_BASE}/playlistItems?part=snippet,contentDetails&playlistId=${encodeURIComponent(uploadsId)}&maxResults=1&key=${getYoutubeApiKey()}`;
+    const purl = `${YT_BASE}/playlistItems?part=snippet,contentDetails&playlistId=${encodeURIComponent(uploadsId)}&maxResults=1&key=${YT_API_KEY}`;
     const plist = await fetchYoutubeJson(purl);
     const it = plist.items && plist.items[0];
     let published = '';
@@ -1595,7 +1401,6 @@ function isYoutubeApiBlockedError(message, err) {
 
 function youtubeApiBlockedHelpDesc(rawMsg) {
   return (
-    '먼저 위 입력란 아래「YouTube API가 막혔나요?」를 열어, 본인 Google Cloud API 키를 저장한 뒤 다시 시도해 보세요.\n\n' +
     'Google Cloud 콘솔에서 아래를 확인해 주세요.\n\n' +
     '1) APIs & Services → Library → 「YouTube Data API v3」→ Enable\n' +
     '2) APIs & Services → Credentials → 해당 API 키 → API restrictions에서\n' +
@@ -1638,11 +1443,6 @@ async function startAnalysis() {
       document.getElementById('errorTitle').textContent = 'YouTube API가 차단된 상태입니다';
       document.getElementById('errorDesc').textContent = youtubeApiBlockedHelpDesc(rawMsg);
       document.getElementById('analyzeBtn').disabled = false;
-      const panel = document.getElementById('ytKeyPanel');
-      const tbtn = document.getElementById('ytKeyToggle');
-      if (panel) panel.removeAttribute('hidden');
-      if (tbtn) tbtn.setAttribute('aria-expanded', 'true');
-      refreshYtApiKeyStatusLabel();
       return;
     }
 
@@ -1880,16 +1680,9 @@ function showResult(data, url) {
       ${improvHtml}
     </div>
     <div class="cta-card">
-      <div class="cta-badge-row">
-        <span class="cta-badge">2026년 7월 10~12일</span>
-        <span class="cta-badge">배재대학교 · 대전</span>
-        <span class="cta-badge">전문 강사 7인</span>
-        <span class="cta-badge">1,980,000원</span>
-      </div>
       <div class="cta-title">${ctaTitle}</div>
       <div class="cta-desc">${ctaDesc}</div>
       <div class="cta-btns">
-        <button type="button" class="btn-cta-primary" onclick="location.href='index.html'">미디어서포터즈 과정 보러가기</button>
         <button type="button" class="btn-cta-outline" onclick="resetAll()">다른 채널 진단하기</button>
       </div>
     </div>
@@ -1923,11 +1716,6 @@ function resetAll() {
   document.getElementById('errorBox').style.display = 'none';
   document.getElementById('urlInput').value = '';
   document.getElementById('analyzeBtn').disabled = false;
-  const panel = document.getElementById('ytKeyPanel');
-  const tbtn = document.getElementById('ytKeyToggle');
-  if (panel) panel.setAttribute('hidden', '');
-  if (tbtn) tbtn.setAttribute('aria-expanded', 'false');
-  refreshYtApiKeyStatusLabel();
   ['step1','step2','step3','step4'].forEach(id => {
     document.getElementById(id).classList.remove('active','done');
   });
@@ -1943,7 +1731,6 @@ document.getElementById('urlInput').addEventListener('paste', e => {
   const handle = text.replace(/https?:\/\/(www\.)?youtube\.com\/@?/,'').replace(/^@/,'').split('/')[0].split('?')[0];
   document.getElementById('urlInput').value = handle;
 });
-refreshYtApiKeyStatusLabel();
 </script>
 </body>
 </html>
