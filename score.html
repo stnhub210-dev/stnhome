@@ -582,6 +582,49 @@
       0 0 24px rgba(198, 255, 0, 0.25),
       0 10px 28px rgba(0, 0, 0, 0.4);
   }
+  .btn-cta-primary {
+    padding: 0.95rem 2rem;
+    background: #c6ff00;
+    color: #0e0e0e;
+    border: none;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+    transition:
+      transform 0.22s ease,
+      box-shadow 0.22s ease,
+      filter 0.22s ease;
+  }
+  .btn-cta-primary:hover {
+    transform: scale(1.04);
+    filter: brightness(1.06);
+    box-shadow:
+      0 0 0 1px rgba(198, 255, 0, 0.55),
+      0 0 28px rgba(198, 255, 0, 0.38),
+      0 10px 28px rgba(0, 0, 0, 0.4);
+  }
+  .btn-cta-outline {
+    padding: 0.95rem 1.65rem;
+    background: transparent;
+    color: #c8c8c8;
+    border: 2px solid #555;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition:
+      transform 0.22s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+  .btn-cta-outline:hover {
+    transform: scale(1.04);
+    border-color: #888;
+    color: #fff;
+  }
   .retry-row {
     text-align: center;
     margin-top: 1.5rem;
@@ -744,34 +787,34 @@
       0 10px 28px rgba(0, 0, 0, 0.4);
   }
 
-  /* 채널 개선 안내 카드 (needsRebuild === false) */
-  .improve-card {
-    background: #0f1410;
-    border: 1px solid rgba(198, 255, 0, 0.22);
+  /* AI 분석 결과 카드 (점수·등급 4단계) */
+  .insight-card {
     border-radius: 16px;
     padding: 1.75rem;
     margin-bottom: 1.25rem;
     position: relative;
     overflow: hidden;
   }
-  .improve-card::before {
-    content: '';
-    position: absolute;
-    top: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 260px;
-    height: 120px;
-    background: radial-gradient(ellipse, rgba(198, 255, 0, 0.1) 0%, transparent 70%);
-    pointer-events: none;
+  .insight-tier-1 {
+    background: #0a2a1a;
+    border: 1px solid #22c55e;
   }
-  .improve-badge {
+  .insight-tier-2 {
+    background: #1a1a0a;
+    border: 1px solid #facc15;
+  }
+  .insight-tier-3 {
+    background: #1a1008;
+    border: 1px solid #ea580c;
+  }
+  .insight-tier-4 {
+    background: #1a0a0a;
+    border: 1px solid #ef4444;
+  }
+  .insight-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(198, 255, 0, 0.12);
-    border: 1px solid rgba(198, 255, 0, 0.28);
-    color: var(--green);
     font-size: 10px;
     font-weight: 700;
     padding: 4px 12px;
@@ -779,19 +822,40 @@
     letter-spacing: 0.06em;
     margin-bottom: 1rem;
   }
-  .improve-title {
+  .insight-tier-1 .insight-badge {
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    color: #4ade80;
+  }
+  .insight-tier-2 .insight-badge {
+    background: rgba(250, 204, 21, 0.12);
+    border: 1px solid rgba(250, 204, 21, 0.35);
+    color: #fde047;
+  }
+  .insight-tier-3 .insight-badge {
+    background: rgba(234, 88, 12, 0.12);
+    border: 1px solid rgba(234, 88, 12, 0.35);
+    color: #fdba74;
+  }
+  .insight-tier-4 .insight-badge {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    color: #f87171;
+  }
+  .insight-title {
     font-size: 19px;
     font-weight: 900;
     color: var(--white);
-    margin-bottom: 0.55rem;
+    margin-bottom: 0.65rem;
     line-height: 1.35;
     word-break: keep-all;
   }
-  .improve-desc {
+  .insight-desc {
     font-size: 13.5px;
-    color: #aaa;
-    line-height: 1.75;
+    color: #b8b8b8;
+    line-height: 1.8;
     word-break: keep-all;
+    white-space: pre-line;
   }
 
   /* 채널 미발견 (channelNotFound) */
@@ -1354,6 +1418,47 @@ function effectiveNeedsRebuild(data) {
   return data.needsRebuild === true;
 }
 
+/** 점수·등급 기반 AI 결과 카드 단계(1=최우수 … 4=재시작 권장). 재건 권고 시 4로 고정. */
+function getInsightTier(raw28, grade, forceRebuild) {
+  const g = String(grade || '').trim().toUpperCase();
+  const sc = Math.min(SCORE_TOTAL_CAP, Math.max(0, Number(raw28) || 0));
+  if (forceRebuild) return 4;
+  if (sc >= 28 || g === 'S') return 1;
+  if ((sc >= 23 && sc <= 27) || g === 'A' || g === 'B') return 2;
+  if ((sc >= 11 && sc <= 22) || g === 'C') return 3;
+  if (sc <= 10 || g === 'D') return 4;
+  return 3;
+}
+
+function buildInsightSpotlightHtml(tier) {
+  const badge = 'AI 분석 결과';
+  const packs = {
+    1: {
+      title: '채널 운영을 잘 하고 계십니다 👍',
+      desc: '현재 채널은 모든 항목에서 높은 점수를 받았습니다.\n지금처럼 꾸준히 운영하시면 지속적인 성장이 가능합니다.'
+    },
+    2: {
+      title: '운영은 잘하고 계시지만 조금 아쉬운 부분이 있습니다 🔍',
+      desc: '전반적으로 채널을 잘 운영하고 계십니다.\n아래 개선 과제를 참고해 부족한 부분을 보완하시면\n더 빠른 성장과 수익화가 가능합니다.'
+    },
+    3: {
+      title: '채널 개선이 필요합니다',
+      desc: '진단 항목에서 보완할 부분이 있습니다.\n아래 우선 개선 과제를 참고해 단계적으로 다듬으면\n성장에 도움이 됩니다.'
+    },
+    4: {
+      title: '채널을 새로 만드는 것을 권장합니다 ⚠',
+      desc: '현재 채널 상태로는 수익화까지 많은 시간과 노력이 필요합니다.\n지금 채널을 개선하는 것보다 올바른 전략으로\n처음부터 새로 시작하는 것이 수익화에 유리할 수 있습니다.\n미디어서포터즈 과정에서 올바른 채널 전략을 배워보세요.'
+    }
+  };
+  const t = packs[tier] || packs[3];
+  return `
+    <div class="insight-card insight-tier-${tier}">
+      <div class="insight-badge">${badge}</div>
+      <div class="insight-title">${t.title}</div>
+      <div class="insight-desc">${t.desc}</div>
+    </div>`;
+}
+
 function showChannelNotFound(data, url) {
   document.getElementById('loadingWrap').style.display = 'none';
   const rw = document.getElementById('resultWrap');
@@ -1417,38 +1522,12 @@ function showResult(data, url) {
       </div>
     </div>`).join('');
 
-  const spotlightHtml = showRebuild
-    ? `
-    <div class="rebuild-card">
-      <div class="rebuild-badge">⚠ AI 분석 결과 · 채널 재건 권고</div>
-      <div class="rebuild-title">현재 채널을 계속 운영하는 것보다<br><em>새로 시작하는 것이 수익화에 유리합니다</em></div>
-      <div class="rebuild-desc">${(data.rebuildReason || '').replace(/\\n/g, '\n')}</div>
-      <div class="rebuild-reasons">
-        <div class="rebuild-reasons-label">재건 권고 주요 사유</div>
-        ${(data.rebuildPoints || []).map(p => `
-          <div class="rebuild-reason-item">
-            <span class="rebuild-dot">✗</span>
-            <span>${escapeHtml(p)}</span>
-          </div>`).join('')}
-      </div>
-      <div class="rebuild-cta">
-        <button class="rebuild-btn-main" onclick="window.open('https://stnhub210-dev.github.io/stnhome/','_blank')">올바른 채널 전략 배우기</button>
-        <button class="rebuild-btn-sub">문의: 1599-1242</button>
-      </div>
-    </div>`
-    : `
-    <div class="improve-card">
-      <div class="improve-badge">AI 분석 결과</div>
-      <div class="improve-title">채널 개선이 필요합니다</div>
-      <div class="improve-desc">진단 항목에서 보완할 부분이 있습니다. 아래 우선 개선 과제를 참고해 단계적으로 다듬으면 성장에 도움이 됩니다.</div>
-    </div>`;
+  const insightTier = getInsightTier(raw28, data.grade, showRebuild);
+  const spotlightHtml = buildInsightSpotlightHtml(insightTier);
 
-  const ctaTitle = showRebuild
-    ? '처음부터 제대로, <em>STN과 함께 시작하세요</em>'
-    : '부족한 점수, <em>STN이 채워드립니다</em>';
-  const ctaDesc = showRebuild
-    ? '올바른 채널 전략 수립부터 수익화까지<br>전문 강사 7인이 2박 3일 동안 밀착 지도합니다.'
-    : '진단 결과에서 부족한 영역을 2박 3일 안에 실전으로 해결합니다.<br>기초부터 AI 자동화·수익화까지 전문 강사 7인이 직접 지도합니다.';
+  const ctaTitle = '부족한 점수, 함께 채워드립니다';
+  const ctaDesc =
+    '진단 결과에서 부족한 영역을 2박 3일 안에 실전으로 해결합니다.<br>기초부터 AI 자동화·수익화까지 전문 강사 7인이 직접 지도합니다.';
 
   rw.innerHTML = `
     ${demoBanner}
@@ -1487,11 +1566,9 @@ function showResult(data, url) {
       </div>
       <div class="cta-title">${ctaTitle}</div>
       <div class="cta-desc">${ctaDesc}</div>
-      <div class="cta-phone">1599-1242</div>
-      <div class="cta-phone-sub">평일 09:00 ~ 18:00</div>
       <div class="cta-btns">
-        <button class="btn-main" onclick="window.open('https://stnhub210-dev.github.io/stnhome/','_blank')">홈페이지 바로가기</button>
-        <button class="btn-sub" onclick="resetAll()">다른 채널 진단하기</button>
+        <button type="button" class="btn-cta-primary" onclick="location.href='index.html'">미디어서포터즈 과정 보러가기</button>
+        <button type="button" class="btn-cta-outline" onclick="resetAll()">다른 채널 진단하기</button>
       </div>
     </div>
     <div class="retry-row">
