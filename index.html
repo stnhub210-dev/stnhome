@@ -1474,7 +1474,7 @@
       min-width: 0;
     }
     .mentor-preview-track {
-      transition: transform 0.62s cubic-bezier(0.33, 1, 0.68, 1);
+      transition: transform 0.42s cubic-bezier(0.33, 1, 0.68, 1);
       will-change: transform;
     }
     .mentor-preview-slide {
@@ -3763,6 +3763,35 @@
       margin-top: 6px;
       line-height: 1.45;
     }
+    #apply .apply-recommender-none {
+      margin-top: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #c4bfb4;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      font-family: "Noto Sans KR", sans-serif;
+      background: #fff;
+      color: #333;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+    #apply .apply-recommender-none:hover {
+      border-color: #0f2744;
+      background: rgba(15, 39, 68, 0.06);
+      color: #0f2744;
+    }
+    #apply .apply-recommender-none[aria-pressed="true"] {
+      border-color: rgba(124, 252, 0, 0.45);
+      background: rgba(124, 252, 0, 0.12);
+      color: #0b1c2f;
+    }
+    #apply .apply-recommender-none:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(15, 39, 68, 0.18);
+    }
     #apply .apply-input-icon-row {
       display: flex;
       align-items: center;
@@ -5357,9 +5386,10 @@
                   <span class="apply-input-icon" aria-hidden="true">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z" fill="currentColor"/></svg>
                   </span>
-                  <input class="apply-input" type="text" id="apply-recommender" name="apply-recommender" placeholder="추천인 성함을 입력하세요" />
+                  <input class="apply-input" type="text" id="apply-recommender" name="apply-recommender" placeholder="추천인 성함을 입력하세요" autocomplete="off" />
                 </div>
-                <p class="apply-field-hint">추천인이 있으실 경우에만 기입해 주세요.</p>
+                <button type="button" class="apply-recommender-none" id="apply-recommender-none" aria-pressed="false">추천인 없음</button>
+                <p class="apply-field-hint">추천인이 있으실 경우에만 기입해 주세요. 없으시면 <strong>추천인 없음</strong>을 누르시거나 빈 칸 그대로 제출하셔도 됩니다.</p>
               </div>
               <div class="apply-field">
                 <label class="apply-field-label" for="apply-message">문의사항 (선택)</label>
@@ -5460,10 +5490,11 @@
       root.style.setProperty("--mentor-preview-slide-count", String(n));
 
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const intervalMs = reduceMotion ? 9000 : 4800;
+      const intervalMs = reduceMotion ? 6500 : 3600;
 
       let index = 0;
       let timer = null;
+      let sectionVisible = false;
 
       slides.forEach((_, i) => {
         const b = document.createElement("button");
@@ -5505,6 +5536,7 @@
       };
 
       const start = () => {
+        if (!sectionVisible) return;
         if (timer) clearInterval(timer);
         timer = window.setInterval(tick, intervalMs);
       };
@@ -5521,13 +5553,14 @@
 
       layout();
       goTo(0);
-      start();
 
       root.addEventListener("mouseenter", stop);
-      root.addEventListener("mouseleave", start);
+      root.addEventListener("mouseleave", () => {
+        if (sectionVisible) start();
+      });
       root.addEventListener("focusin", stop);
       root.addEventListener("focusout", (e) => {
-        if (!root.contains(e.relatedTarget)) start();
+        if (!root.contains(e.relatedTarget) && sectionVisible) start();
       });
 
       let ro;
@@ -5555,12 +5588,30 @@
         if (root.classList.contains("active")) relayoutSoon();
       }).observe(root, { attributes: true, attributeFilter: ["class"] });
 
+      const onSectionVisibility = (isVisible) => {
+        if (isVisible && !sectionVisible) {
+          layout();
+          goTo(0);
+          sectionVisible = true;
+          start();
+        } else if (!isVisible && sectionVisible) {
+          sectionVisible = false;
+          stop();
+        } else if (isVisible && sectionVisible) {
+          relayoutSoon();
+        }
+      };
+
       if (typeof IntersectionObserver !== "undefined") {
-        new IntersectionObserver((entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) relayoutSoon();
-          });
-        }, { threshold: 0.05 }).observe(viewport);
+        new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => onSectionVisibility(e.isIntersecting));
+          },
+          { threshold: 0.05 }
+        ).observe(viewport);
+      } else {
+        sectionVisible = true;
+        start();
       }
     })();
 
@@ -5579,8 +5630,24 @@
     (function () {
       const form = document.getElementById("apply-mail-form");
       if (!form) return;
+      const recInput = form.querySelector("#apply-recommender");
+      const recNoneBtn = form.querySelector("#apply-recommender-none");
+      if (recNoneBtn && recInput) {
+        recNoneBtn.addEventListener("click", () => {
+          recInput.value = "";
+          recInput.setCustomValidity("");
+          recNoneBtn.setAttribute("aria-pressed", "true");
+        });
+        recInput.addEventListener("input", () => {
+          recNoneBtn.setAttribute("aria-pressed", "false");
+          recInput.setCustomValidity("");
+        });
+      }
       form.addEventListener("submit", (e) => {
         e.preventDefault();
+        form.querySelectorAll("input, select, textarea").forEach((el) => {
+          el.setCustomValidity("");
+        });
         const name = (form.querySelector("#apply-name") && form.querySelector("#apply-name").value) || "";
         const phone = (form.querySelector("#apply-phone") && form.querySelector("#apply-phone").value) || "";
         const email = (form.querySelector("#apply-email") && form.querySelector("#apply-email").value) || "";
