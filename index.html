@@ -1463,8 +1463,17 @@
       overflow: hidden;
       width: 100%;
     }
-    .mentor-preview-track {
+    /* JS 실행 전에도 한 장(박문성)만 노출되도록 — 잘못된 너비로 옆 슬라이드가 비치지 않게 */
+    #mentor-preview .mentor-preview-track {
       display: flex;
+      transform: translateX(0);
+      width: calc(var(--mentor-preview-slide-count, 8) * 100%);
+    }
+    #mentor-preview .mentor-preview-slide {
+      flex: 0 0 calc(100% / var(--mentor-preview-slide-count, 8));
+      min-width: 0;
+    }
+    .mentor-preview-track {
       transition: transform 0.62s cubic-bezier(0.33, 1, 0.68, 1);
       will-change: transform;
     }
@@ -1498,6 +1507,11 @@
       height: 100%;
       object-fit: contain;
       object-position: center top;
+    }
+    /* 강만훈: PNG 여백 때문에 상대적으로 작게 보여 닥터튜브 체감에 맞춤 확대 */
+    #mentor-preview .mentor-preview-slide:has(.mentor-preview-photo img[src$="KMH.png"]) .mentor-preview-photo img {
+      transform: scale(1.26);
+      transform-origin: center top;
     }
     .mentor-preview-text {
       flex: 1;
@@ -4747,7 +4761,7 @@
       <div class="mentor-preview-viewport" id="mentor-preview-viewport">
         <div class="mentor-preview-track" id="mentor-preview-track">
           <div class="mentor-preview-slide">
-            <div class="mentor-preview-photo"><img src="박문성1.png" alt="박문성 해설위원" width="480" height="540" loading="lazy" decoding="async" /></div>
+            <div class="mentor-preview-photo"><img src="박문성1.png" alt="박문성 해설위원" width="480" height="540" loading="eager" fetchpriority="high" decoding="async" /></div>
             <div class="mentor-preview-text">
               <p class="mentor-preview-name">박문성 해설위원</p>
               <p class="mentor-preview-sum">19년 현장 경험으로 스포츠 스토리텔링·콘텐츠 수익화를 이끕니다.</p>
@@ -5443,6 +5457,8 @@
       const n = slides.length;
       if (!n) return;
 
+      root.style.setProperty("--mentor-preview-slide-count", String(n));
+
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const intervalMs = reduceMotion ? 9000 : 4800;
 
@@ -5522,6 +5538,29 @@
         ro.observe(viewport);
       } else {
         window.addEventListener("resize", layout, { passive: true });
+      }
+
+      requestAnimationFrame(() => {
+        layout();
+        goTo(0);
+      });
+
+      const relayoutSoon = () => {
+        requestAnimationFrame(() => {
+          layout();
+          goTo(index);
+        });
+      };
+      new MutationObserver(() => {
+        if (root.classList.contains("active")) relayoutSoon();
+      }).observe(root, { attributes: true, attributeFilter: ["class"] });
+
+      if (typeof IntersectionObserver !== "undefined") {
+        new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) relayoutSoon();
+          });
+        }, { threshold: 0.05 }).observe(viewport);
       }
     })();
 
