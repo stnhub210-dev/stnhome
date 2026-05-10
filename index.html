@@ -14,7 +14,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #0a0a0a;
@@ -1412,6 +1412,258 @@
       padding: 90px 0 84px;
       background: #090909;
     }
+    .mentor-preview {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      min-height: auto;
+      padding: clamp(48px, 7vw, 72px) 0 clamp(44px, 6.5vw, 68px);
+      background: #060606;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .mentor-preview-video-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 0.5;
+    }
+    .mentor-preview-video-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(6, 6, 6, 0.82) 0%,
+        rgba(6, 6, 6, 0.68) 45%,
+        rgba(6, 6, 6, 0.88) 100%
+      );
+    }
+    .mentor-preview-inner {
+      position: relative;
+      z-index: 2;
+      max-width: min(94%, 1180px);
+      margin: 0 auto;
+    }
+    .mentor-preview-kicker {
+      text-align: center;
+      font-size: clamp(1.65rem, 5.4vw, 2.34rem);
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      color: rgba(124, 252, 0, 0.92);
+      margin: 0 0 clamp(24px, 3.8vw, 36px);
+      line-height: 1.2;
+    }
+    .mentor-preview-viewport {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+    .mentor-preview-track {
+      display: flex;
+      transition: transform 0.62s cubic-bezier(0.33, 1, 0.68, 1);
+      will-change: transform;
+    }
+    .mentor-preview-slide {
+      flex-shrink: 0;
+      box-sizing: border-box;
+      padding: clamp(12px, 2vw, 18px) 0;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(22px, 4.5vw, 48px);
+      text-align: left;
+    }
+    .mentor-preview-photo {
+      width: clamp(260px, 48vw, 480px);
+      height: clamp(300px, 58vw, 540px);
+      border-radius: 0;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: transparent;
+    }
+    .mentor-preview-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .mentor-preview-text {
+      flex: 1;
+      min-width: 0;
+      max-width: min(100%, 28rem);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(10px, 2vw, 14px);
+      justify-content: center;
+    }
+    .mentor-preview-name {
+      margin: 0;
+      font-size: clamp(1.35rem, 3.6vw, 1.85rem);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.03em;
+      line-height: 1.28;
+    }
+    .mentor-preview-sum {
+      margin: 0;
+      font-size: clamp(1rem, 2.5vw, 1.14rem);
+      font-weight: 600;
+      line-height: 1.65;
+      color: #bdbdbd;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+    }
+    .mentor-preview-dots {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: clamp(18px, 3vw, 24px);
+    }
+    .mentor-preview-dot {
+      width: 9px;
+      height: 9px;
+      padding: 0;
+      border: none;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.22);
+      cursor: pointer;
+      transition: background 0.22s ease, transform 0.22s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mentor-preview-dot[aria-current="true"] {
+      background: var(--lime);
+      transform: scale(1.15);
+    }
+    .mentor-preview-dot:focus-visible {
+      outline: 2px solid var(--lime);
+      outline-offset: 2px;
+    }
+    /* 태블릿·좁은 화면: 세로 배치 + 본문 가독성 */
+    @media (max-width: 900px) {
+      .mentor-preview {
+        padding: clamp(40px, 6vw, 56px)
+          max(16px, env(safe-area-inset-right))
+          clamp(36px, 5.5vw, 52px)
+          max(16px, env(safe-area-inset-left));
+      }
+      .mentor-preview-inner {
+        width: 100%;
+        max-width: min(100%, 560px);
+        padding-inline: clamp(14px, 4vw, 22px);
+        box-sizing: border-box;
+      }
+      .mentor-preview-kicker {
+        font-size: clamp(1.28rem, 4.2vw + 0.35rem, 1.92rem);
+        line-height: 1.28;
+        text-wrap: balance;
+        hyphens: auto;
+        letter-spacing: 0.04em;
+      }
+      .mentor-preview-slide {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: clamp(18px, 3.5vw, 26px);
+        padding: clamp(10px, 2.2vw, 16px) 0;
+      }
+      .mentor-preview-photo {
+        width: min(100%, 440px);
+        height: clamp(268px, 56vw, 400px);
+        margin-inline: auto;
+        border-radius: 0;
+      }
+      .mentor-preview-text {
+        align-items: stretch;
+        text-align: center;
+        width: 100%;
+        max-width: 34rem;
+        margin-inline: auto;
+        gap: clamp(10px, 2.2vw, 16px);
+        padding-inline: clamp(4px, 1.5vw, 12px);
+      }
+      .mentor-preview-name {
+        font-size: clamp(1.38rem, 3.85vw + 0.25rem, 1.72rem);
+        line-height: 1.34;
+      }
+      .mentor-preview-sum {
+        font-size: clamp(1.05rem, 2.75vw + 0.35rem, 1.22rem);
+        color: #c9c9c9;
+        text-wrap: balance;
+      }
+      .mentor-preview-dots {
+        gap: clamp(11px, 2.8vw, 16px);
+        margin-top: clamp(22px, 4vw, 30px);
+        padding-block: 6px;
+      }
+      .mentor-preview-dot {
+        width: 11px;
+        height: 11px;
+      }
+      .mentor-preview-dot[aria-current="true"] {
+        transform: scale(1.22);
+      }
+    }
+    @media (max-width: 480px) {
+      .mentor-preview-inner {
+        max-width: 100%;
+        padding-inline: max(14px, env(safe-area-inset-left))
+          max(14px, env(safe-area-inset-right));
+      }
+      .mentor-preview-kicker {
+        font-size: clamp(1.12rem, 5.8vw + 0.25rem, 1.55rem);
+        letter-spacing: 0.025em;
+        margin-bottom: clamp(18px, 5vw, 26px);
+      }
+      .mentor-preview-photo {
+        width: 100%;
+        max-width: 100%;
+        height: clamp(240px, 62vw, 340px);
+        border-radius: 0;
+      }
+      .mentor-preview-name {
+        font-size: clamp(1.28rem, 5.6vw + 0.15rem, 1.52rem);
+      }
+      .mentor-preview-sum {
+        font-size: clamp(1.02rem, 3.9vw + 0.28rem, 1.14rem);
+        line-height: 1.62;
+      }
+      .mentor-preview-dot {
+        width: 12px;
+        height: 12px;
+      }
+    }
+    /* 터치 기기에서 도트·간격 확대 */
+    @media (max-width: 900px) and (hover: none) and (pointer: coarse) {
+      .mentor-preview-dots {
+        gap: clamp(14px, 3.6vw, 20px);
+        padding-inline: max(12px, env(safe-area-inset-left))
+          max(12px, env(safe-area-inset-right));
+      }
+      .mentor-preview-dot {
+        width: 13px;
+        height: 13px;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .mentor-preview-track {
+        transition: none;
+      }
+      .mentor-preview-video-bg {
+        display: none;
+      }
+    }
     .mentor-emphasis {
       min-height: auto;
       padding: clamp(56px, 9vw, 104px) 0 clamp(48px, 7.5vw, 88px);
@@ -1564,28 +1816,19 @@
       min-height: 100%;
       height: 100%;
       box-sizing: border-box;
-      border-radius: 16px;
-      border: 1px solid rgba(124,252,0,.7);
-      background: linear-gradient(160deg, rgba(124,252,0,.1), rgba(255,255,255,.03));
-      padding: 20px;
-      box-shadow:
-        0 0 0 1px rgba(124,252,0,.25),
-        0 0 24px rgba(124,252,0,.14),
-        0 12px 28px rgba(0,0,0,.35);
+      border-radius: 0;
+      border: none;
+      background: transparent;
+      padding: 0;
+      box-shadow: none;
       transform-origin: center top;
-      transition: transform .28s ease, border-color .25s ease, box-shadow .28s ease, filter .25s ease;
     }
     .mentor-sticky-card:hover {
-      z-index: 3;
-      transform: scale(1.008);
-      border-color: rgba(124,252,0,.82);
-      box-shadow:
-        0 0 0 1px rgba(124,252,0,.45),
-        0 0 20px rgba(124,252,0,.42),
-        0 0 40px rgba(124,252,0,.28),
-        0 12px 28px rgba(0,0,0,.35),
-        0 0 64px rgba(124,252,0,.14);
-      filter: brightness(1.06);
+      z-index: 1;
+      transform: none;
+      border-color: transparent;
+      box-shadow: none;
+      filter: none;
     }
     .mentor-badge {
       display: inline-block;
@@ -1597,8 +1840,8 @@
       text-shadow: 0 0 14px rgba(255, 255, 255, .28);
     }
     .mentor-photo-wrap {
-      border-radius: 12px;
-      overflow: hidden;
+      border-radius: 0;
+      overflow: visible;
       border: none;
       margin-bottom: 14px;
       background: transparent;
@@ -1740,28 +1983,6 @@
         0 0 48px rgba(124,252,0,.32),
         0 0 80px rgba(124,252,0,.18);
     }
-    /* 조원희·에딧킴: 강사 소개 카드 ? 박문성과 동일 그린 (호버 모션·레이어는 기존 유지) */
-    #mentor-sticky-dup .mentor-sticky-card,
-    #mentor-sticky-editkim .mentor-sticky-card {
-      border: 1px solid rgba(124,252,0,.7);
-      background: linear-gradient(160deg, rgba(124,252,0,.1), rgba(255,255,255,.03));
-      box-shadow:
-        0 0 0 1px rgba(124,252,0,.25),
-        0 0 24px rgba(124,252,0,.14),
-        0 12px 28px rgba(0,0,0,.35);
-    }
-    #mentor-sticky-dup .mentor-sticky-card:hover,
-    #mentor-sticky-editkim .mentor-sticky-card:hover {
-      transform: scale(1.008);
-      border-color: rgba(124,252,0,.82);
-      box-shadow:
-        0 0 0 1px rgba(124,252,0,.45),
-        0 0 20px rgba(124,252,0,.42),
-        0 0 40px rgba(124,252,0,.28),
-        0 12px 28px rgba(0,0,0,.35),
-        0 0 64px rgba(124,252,0,.14);
-      filter: brightness(1.06);
-    }
     #mentor-sticky-dup .mentor-badge,
     #mentor-sticky-editkim .mentor-badge {
       color: #fff;
@@ -1818,24 +2039,28 @@
       margin-left: 3px;
       letter-spacing: 0;
     }
-    /* 김창수: 강사 소개 카드는 기본 .mentor-sticky-card(박문성 그린). 이하 kcs+bjh는 스텝·헤드 등 */
+    /* 김창수: 강사 소개 카드는 기본 .mentor-sticky-card(박문성 그린). 이하 kcs+bjh+jsh는 스텝·헤드 등 */
     #mentor-sticky-kcs .mentor-badge,
-    #mentor-sticky-bjh .mentor-badge {
+    #mentor-sticky-bjh .mentor-badge,
+    #mentor-sticky-jsh .mentor-badge {
       color: #fff;
       text-shadow: 0 0 14px rgba(255, 255, 255, .3);
     }
     #mentor-sticky-kcs .mentor-step.active,
-    #mentor-sticky-bjh .mentor-step.active {
+    #mentor-sticky-bjh .mentor-step.active,
+    #mentor-sticky-jsh .mentor-step.active {
       border-color: rgba(124,252,0,.7);
       box-shadow: 0 0 0 1px rgba(124,252,0,.25), 0 0 24px rgba(124,252,0,.14);
       background: linear-gradient(170deg, rgba(124,252,0,.1), rgba(255,255,255,.03));
     }
     #mentor-sticky-kcs .mentor-step.active .step-label,
-    #mentor-sticky-bjh .mentor-step.active .step-label {
+    #mentor-sticky-bjh .mentor-step.active .step-label,
+    #mentor-sticky-jsh .mentor-step.active .step-label {
       color: var(--lime);
     }
     #mentor-sticky-kcs .mentor-step:hover,
-    #mentor-sticky-bjh .mentor-step:hover {
+    #mentor-sticky-bjh .mentor-step:hover,
+    #mentor-sticky-jsh .mentor-step:hover {
       z-index: 2;
       border-color: rgba(124,252,0,.82);
       box-shadow:
@@ -1847,7 +2072,8 @@
       transform: scale(1.008);
     }
     #mentor-sticky-kcs .mentor-step.active:hover,
-    #mentor-sticky-bjh .mentor-step.active:hover {
+    #mentor-sticky-bjh .mentor-step.active:hover,
+    #mentor-sticky-jsh .mentor-step.active:hover {
       transform: scale(1.014);
       box-shadow:
         0 0 0 1px rgba(124,252,0,.52),
@@ -1856,24 +2082,46 @@
         0 0 80px rgba(124,252,0,.18);
     }
     #mentor-sticky-kcs .intensive-head h2,
-    #mentor-sticky-bjh .intensive-head h2 {
+    #mentor-sticky-bjh .intensive-head h2,
+    #mentor-sticky-jsh .intensive-head h2 {
       color: #fff;
       text-shadow: 0 0 14px rgba(124,252,0,.34);
     }
     #mentor-sticky-kcs .intensive-head p,
-    #mentor-sticky-bjh .intensive-head p {
+    #mentor-sticky-bjh .intensive-head p,
+    #mentor-sticky-jsh .intensive-head p {
       color: #dcffd2;
     }
+    #mentor-sticky-jsh .mentor-jsh-headline {
+      font-weight: 900;
+    }
+    #mentor-sticky-jsh .mentor-jsh-headline-lead {
+      display: inline;
+      font-size: 0.68em;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      vertical-align: baseline;
+    }
+    #mentor-sticky-jsh .mentor-jsh-headline-accent {
+      display: inline;
+      font-size: 1em;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      vertical-align: baseline;
+    }
     #mentor-sticky-kcs .mentor-step,
-    #mentor-sticky-bjh .mentor-step {
+    #mentor-sticky-bjh .mentor-step,
+    #mentor-sticky-jsh .mentor-step {
       align-content: start;
     }
     #mentor-sticky-kcs .mentor-step p,
-    #mentor-sticky-bjh .mentor-step p {
+    #mentor-sticky-bjh .mentor-step p,
+    #mentor-sticky-jsh .mentor-step p {
       line-height: 1.72;
     }
     #mentor-sticky-kcs .duration,
-    #mentor-sticky-bjh .duration {
+    #mentor-sticky-bjh .duration,
+    #mentor-sticky-jsh .duration {
       font-size: .6em;
       font-weight: 700;
       color: #d9ffc0;
@@ -1882,59 +2130,76 @@
       margin-left: 3px;
       letter-spacing: 0;
     }
-    /* 박정훈: 강사 카드·스텝 그린 (좌측 카드는 공통 .mentor-sticky-card와 동일 링) */
-    #mentor-sticky-bjh .mentor-sticky-card {
-      border: 1px solid rgba(124,252,0,.7);
-      background: linear-gradient(160deg, rgba(124,252,0,.1), rgba(255,255,255,.03));
-      box-shadow:
-        0 0 0 1px rgba(124,252,0,.25),
-        0 0 24px rgba(124,252,0,.14),
-        0 12px 28px rgba(0,0,0,.35);
-    }
-    #mentor-sticky-bjh .mentor-sticky-card:hover {
-      transform: scale(1.008);
-      border-color: rgba(124,252,0,.88);
-      box-shadow:
-        0 0 0 1px rgba(124,252,0,.45),
-        0 0 20px rgba(124,252,0,.42),
-        0 0 40px rgba(124,252,0,.28),
-        0 12px 28px rgba(0,0,0,.35),
-        0 0 64px rgba(124,252,0,.14);
-      filter: brightness(1.06);
-    }
-    #mentor-sticky-bjh .mentor-badge {
+    #mentor-sticky-bjh .mentor-badge,
+    #mentor-sticky-jsh .mentor-badge {
       color: #fff;
       text-shadow: 0 0 14px rgba(255, 255, 255, .3);
     }
-    #mentor-sticky-bjh .lecture-title {
+    #mentor-sticky-bjh .lecture-title,
+    #mentor-sticky-jsh .lecture-title {
       color: inherit;
     }
-    #mentor-sticky-bjh .duration {
+    #mentor-sticky-bjh .duration,
+    #mentor-sticky-jsh .duration {
       color: #d9ffc0;
     }
-    #mentor-sticky-bjh .mentor-step {
+    #mentor-sticky-bjh .mentor-step,
+    #mentor-sticky-jsh .mentor-step {
       min-height: auto;
       padding-bottom: clamp(22px, 3vw, 36px);
     }
-    /* 강만훈: 강사 소개 카드 ? 박문성과 동일 그린 (기존 translateY·scale·brightness 호버 유지) */
-    #mentor-sticky-copy .mentor-sticky-card {
-      border: 1px solid rgba(124,252,0,.7);
-      background: linear-gradient(160deg, rgba(124,252,0,.1), rgba(255,255,255,.03));
-      box-shadow:
-        0 0 0 1px rgba(124,252,0,.25),
-        0 0 24px rgba(124,252,0,.14),
-        0 12px 28px rgba(0,0,0,.35);
+    #mentor-sticky-jsh .mentor-step--jsh-lead {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: clamp(200px, 28vw, 320px);
+      padding-top: clamp(20px, 3vw, 36px);
+      padding-bottom: clamp(20px, 3vw, 36px);
     }
-    #mentor-sticky-copy .mentor-sticky-card:hover {
-      transform: translateY(0) scale(1.008);
-      border-color: rgba(124,252,0,.82);
-      box-shadow:
-        0 0 0 1px rgba(124,252,0,.45),
-        0 0 20px rgba(124,252,0,.42),
-        0 0 40px rgba(124,252,0,.28),
-        0 12px 28px rgba(0,0,0,.35),
-        0 0 64px rgba(124,252,0,.14);
-      filter: brightness(1.08);
+    #mentor-sticky-jsh .mentor-jsh-right-title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      row-gap: clamp(18px, 2.8vw, 32px);
+      margin: 0;
+      max-width: 19em;
+      text-align: center;
+      font-size: clamp(1.38rem, 2.45vw, 2.15rem);
+      font-weight: 800;
+      line-height: 1.48;
+      letter-spacing: -0.03em;
+      color: #fff;
+      text-shadow: 0 0 22px rgba(124, 252, 0, 0.22);
+      word-break: keep-all;
+    }
+    #mentor-sticky-jsh .mentor-jsh-quote {
+      display: block;
+      font-family: Georgia, "Times New Roman", "Noto Serif KR", serif;
+      font-size: clamp(4.2rem, 10vw, 6.5rem);
+      font-weight: 700;
+      line-height: 1;
+      color: rgba(180, 255, 80, 0.92);
+      text-shadow: 0 0 28px rgba(124, 252, 0, 0.45);
+      user-select: none;
+      margin: 0;
+      padding: 0;
+    }
+    #mentor-sticky-jsh .mentor-jsh-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.42em;
+    }
+    #mentor-sticky-jsh .mentor-jsh-line {
+      display: block;
+      margin: 0;
+    }
+    #mentor-sticky-jsh .mentor-jsh-em {
+      font-size: 1.18em;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: #f8fff0;
+      text-shadow: 0 0 26px rgba(124, 252, 0, 0.35);
     }
     #mentor-sticky-copy .mentor-badge {
       color: #fff;
@@ -1979,6 +2244,7 @@
     #mentor-sticky-editkim .mentor-step .lecture-pill,
     #mentor-sticky-kcs .mentor-step .lecture-pill,
     #mentor-sticky-bjh .mentor-step .lecture-pill,
+    #mentor-sticky-jsh .mentor-step .lecture-pill,
     #mentor-sticky-copy .mentor-step .timeline-inline-btn.mentor-period-btn {
       display: inline-flex;
       align-items: center;
@@ -2010,6 +2276,7 @@
     #mentor-sticky-editkim .mentor-step .lecture-pill:hover,
     #mentor-sticky-kcs .mentor-step .lecture-pill:hover,
     #mentor-sticky-bjh .mentor-step .lecture-pill:hover,
+    #mentor-sticky-jsh .mentor-step .lecture-pill:hover,
     #mentor-sticky-copy .mentor-step .timeline-inline-btn.mentor-period-btn:hover {
       animation: none;
       transform: scale(1.03);
@@ -3302,6 +3569,250 @@
     #apply.final-cta {
       min-height: auto;
       padding: 56px 0 60px;
+      text-align: left;
+    }
+    #apply.final-cta .container {
+      width: min(94%, 1180px);
+    }
+    #apply .apply-two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
+      gap: clamp(28px, 4vw, 52px);
+      align-items: start;
+    }
+    #apply .apply-col-left {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding-top: 4px;
+    }
+    #apply .apply-col-left > h2 {
+      text-align: left;
+      margin-bottom: 14px;
+    }
+    #apply .apply-col-left .apply-kicker {
+      text-align: left;
+    }
+    #apply .apply-col-left .apply-lead {
+      margin: 0 0 22px;
+      max-width: none;
+    }
+    #apply .apply-col-left .apply-program-summary {
+      margin: 0 0 28px;
+      max-width: none;
+    }
+    #apply .apply-col-left .apply-cta-wrap {
+      margin-bottom: 6px;
+    }
+    #apply .apply-col-left .cta-btn {
+      width: 100%;
+      max-width: 100%;
+      box-shadow:
+        0 0 0 1px rgba(124, 252, 0, 0.35),
+        0 0 28px rgba(124, 252, 0, 0.32),
+        0 12px 28px rgba(0, 0, 0, 0.42);
+    }
+    #apply .apply-col-left .apply-mail-hint {
+      margin: 14px 0 0;
+      max-width: none;
+      text-align: left;
+    }
+    #apply .apply-col-left .apply-contact {
+      margin-top: 22px;
+      text-align: left;
+    }
+    #apply .apply-col-right {
+      border-radius: 20px;
+      padding: clamp(20px, 3.2vw, 32px);
+      border: 2px solid var(--lime);
+      background:
+        linear-gradient(
+          165deg,
+          rgba(124, 252, 0, 0.18) 0%,
+          rgba(124, 252, 0, 0.08) 42%,
+          rgba(10, 28, 18, 0.88) 100%
+        );
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+      transition:
+        transform 0.32s cubic-bezier(0.34, 1.45, 0.64, 1),
+        box-shadow 0.32s ease,
+        border-color 0.32s ease,
+        background 0.32s ease;
+      will-change: transform;
+    }
+    #apply .apply-col-right:hover {
+      transform: scale(1.02);
+      border-color: #c8ff5a;
+      background:
+        linear-gradient(
+          165deg,
+          rgba(124, 252, 0, 0.28) 0%,
+          rgba(124, 252, 0, 0.12) 45%,
+          rgba(8, 26, 16, 0.9) 100%
+        );
+      box-shadow:
+        0 0 0 1px rgba(124, 252, 0, 0.5),
+        0 0 32px rgba(124, 252, 0, 0.38),
+        0 0 56px rgba(124, 252, 0, 0.22),
+        0 0 88px rgba(124, 252, 0, 0.1),
+        0 24px 48px rgba(0, 0, 0, 0.42);
+    }
+    @keyframes apply-form-submit-glow {
+      0%, 100% {
+        box-shadow:
+          0 0 0 1px rgba(124, 252, 0, 0.45),
+          0 0 14px rgba(124, 252, 0, 0.35),
+          0 0 28px rgba(124, 252, 0, 0.2);
+        filter: brightness(1.06);
+      }
+      50% {
+        box-shadow:
+          0 0 0 2px rgba(198, 255, 0, 0.85),
+          0 0 26px rgba(124, 252, 0, 0.75),
+          0 0 48px rgba(124, 252, 0, 0.45),
+          0 0 72px rgba(124, 252, 0, 0.2);
+        filter: brightness(1.2);
+      }
+    }
+    #apply .apply-form-card {
+      background: #fff;
+      color: #111;
+      border-radius: 16px;
+      padding: clamp(22px, 3.2vw, 34px);
+      border: 1px solid rgba(15, 39, 68, 0.1);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
+    }
+    #apply .apply-form-title {
+      font-family: "Noto Serif KR", "Times New Roman", serif;
+      font-size: clamp(1.38rem, 2.4vw, 1.85rem);
+      font-weight: 900;
+      color: #0f2744;
+      margin: 0 0 10px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+    #apply .apply-form-desc {
+      font-size: 0.94rem;
+      font-weight: 600;
+      color: #5a5a5a;
+      margin: 0 0 22px;
+      line-height: 1.55;
+    }
+    #apply .apply-field {
+      margin-bottom: 18px;
+    }
+    #apply .apply-field-label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #222;
+      margin-bottom: 8px;
+    }
+    #apply .apply-req {
+      color: #d92d20;
+      font-weight: 900;
+      margin-left: 2px;
+    }
+    #apply .apply-input,
+    #apply .apply-select,
+    #apply .apply-textarea {
+      width: 100%;
+      border: 1px solid #d5d0c6;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      font-family: "Noto Sans KR", sans-serif;
+      background: #f7f4ee;
+      color: #111;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    #apply .apply-input::placeholder,
+    #apply .apply-textarea::placeholder {
+      color: #9a958c;
+    }
+    #apply .apply-input:focus,
+    #apply .apply-select:focus,
+    #apply .apply-textarea:focus {
+      outline: none;
+      border-color: #0f2744;
+      box-shadow: 0 0 0 3px rgba(15, 39, 68, 0.12);
+    }
+    #apply .apply-textarea {
+      min-height: 112px;
+      resize: vertical;
+    }
+    #apply .apply-field-hint {
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: 6px;
+      line-height: 1.45;
+    }
+    #apply .apply-input-icon-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #d5d0c6;
+      border-radius: 10px;
+      background: #f7f4ee;
+      padding: 0 4px 0 12px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    #apply .apply-input-icon-row:focus-within {
+      border-color: #0f2744;
+      box-shadow: 0 0 0 3px rgba(15, 39, 68, 0.12);
+    }
+    #apply .apply-input-icon-row .apply-input {
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      padding-left: 0;
+    }
+    #apply .apply-input-icon-row .apply-input:focus {
+      box-shadow: none;
+    }
+    #apply .apply-input-icon {
+      flex-shrink: 0;
+      color: #6a6a6a;
+      display: flex;
+    }
+    #apply .apply-form-submit {
+      width: 100%;
+      border: 1px solid rgba(124, 252, 0, 0.35);
+      border-radius: 12px;
+      padding: 17px 22px;
+      font-size: clamp(1.08rem, 2.45vw, 1.24rem);
+      font-weight: 900;
+      font-family: "Noto Sans KR", sans-serif;
+      background: #0f2744;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    #apply .apply-form-submit:hover {
+      animation: apply-form-submit-glow 0.85s ease-in-out infinite;
+    }
+    #apply .apply-form-submit:active {
+      transform: scale(0.99);
+      animation: none;
+      filter: brightness(0.95);
+    }
+    #apply .apply-form-footnote {
+      margin: 14px 0 0;
+      font-size: 0.92rem;
+      line-height: 1.58;
+      color: #6f6f6f;
+      font-weight: 500;
+    }
+    @media (max-width: 960px) {
+      #apply .apply-two-col {
+        grid-template-columns: 1fr;
+      }
+      #apply .apply-col-right {
+        order: 2;
+      }
+      #apply .apply-col-left {
+        order: 1;
+      }
     }
     #apply-after-event.final-cta {
       min-height: auto;
@@ -3325,10 +3836,106 @@
       border-radius: 16px;
       font-weight: 900;
     }
+    #apply .cta-btn.apply-btn--stacked {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.22em;
+      line-height: 1.22;
+      font-size: 1rem;
+    }
+    #apply .apply-btn--stacked .apply-btn-line {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+    #apply .apply-btn--stacked .apply-btn-line--sm {
+      font-size: clamp(1.05rem, 2.8vw, 1.38rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    #apply .apply-btn--stacked .apply-btn-line--lg {
+      font-size: clamp(1.42rem, 4.1vw, 2rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
     .apply-contact {
       font-size: clamp(1.35rem, 3.2vw, 2rem);
       font-weight: 900;
       margin-top: 14px;
+    }
+
+    #apply .apply-kicker {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(124, 252, 0, 0.92);
+      margin-bottom: 10px;
+    }
+    #apply .apply-lead {
+      max-width: 36rem;
+      margin: 0 auto 22px;
+      font-size: clamp(0.98rem, 2.2vw, 1.12rem);
+      font-weight: 600;
+      line-height: 1.65;
+      color: #bdbdbd;
+    }
+    #apply .apply-program-summary {
+      max-width: min(100%, 520px);
+      margin: 0 auto 28px;
+      text-align: left;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 16px;
+      padding: clamp(18px, 3.2vw, 24px) clamp(20px, 3.5vw, 28px);
+      background: rgba(18, 18, 18, 0.72);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    }
+    #apply .apply-program-summary dl {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px 18px;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      line-height: 1.55;
+    }
+    #apply .apply-program-summary dt {
+      margin: 0;
+      font-weight: 800;
+      color: #9a9a9a;
+      white-space: nowrap;
+    }
+    #apply .apply-program-summary dd {
+      margin: 0;
+      font-weight: 700;
+      color: #f2f2f2;
+      word-break: keep-all;
+    }
+    #apply .apply-program-meta {
+      font-weight: 600;
+      color: #a5a5a5;
+    }
+    @media (max-width: 420px) {
+      #apply .apply-program-summary dl {
+        grid-template-columns: 1fr;
+        gap: 4px 0;
+      }
+      #apply .apply-program-summary dt {
+        margin-top: 10px;
+        white-space: normal;
+      }
+      #apply .apply-program-summary dt:first-of-type {
+        margin-top: 0;
+      }
+    }
+    #apply .apply-mail-hint {
+      max-width: 32rem;
+      margin: 14px auto 0;
+      font-size: 0.86rem;
+      line-height: 1.55;
+      color: #7a7a7a;
+      font-weight: 500;
     }
 
     footer { padding: 18px 0 28px; text-align: center; color: #909090; font-size: .88rem; }
@@ -3701,7 +4308,8 @@
         min-height: auto;
         padding: clamp(17px, 4vw, 22px) clamp(14px, 4vw, 18px);
       }
-      #mentor-sticky-bjh .mentor-step {
+      #mentor-sticky-bjh .mentor-step,
+      #mentor-sticky-jsh .mentor-step {
         min-height: auto;
         padding-bottom: 22px;
       }
@@ -4010,6 +4618,15 @@
         transform: none !important;
         max-width: none;
       }
+      #apply .apply-col-right:hover {
+        transform: none;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+        border-color: var(--lime);
+      }
+      #apply .apply-form-submit:hover {
+        animation: none;
+        filter: brightness(1.06);
+      }
     }
   </style>
 </head>
@@ -4120,6 +4737,77 @@
     </div>
   </section>
 
+  <section id="mentor-preview" class="mentor-preview reveal" aria-label="강사진 미리보기">
+    <video class="mentor-preview-video-bg" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+      <source src="image/tim006t002000h.mp4" type="video/mp4" />
+    </video>
+    <div class="mentor-preview-video-overlay" aria-hidden="true"></div>
+    <div class="container mentor-preview-inner">
+      <p class="mentor-preview-kicker">강사진 미리보기</p>
+      <div class="mentor-preview-viewport" id="mentor-preview-viewport">
+        <div class="mentor-preview-track" id="mentor-preview-track">
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="박문성1.png" alt="박문성 해설위원" width="480" height="540" loading="lazy" decoding="async" /></div>
+            <div class="mentor-preview-text">
+              <p class="mentor-preview-name">박문성 해설위원</p>
+              <p class="mentor-preview-sum">19년 현장 경험으로 스포츠 스토리텔링·콘텐츠 수익화를 이끕니다.</p>
+            </div>
+          </div>
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="image/jwh1.png" alt="조원희 전 국가대표" width="480" height="540" loading="lazy" decoding="async" /></div>
+            <div class="mentor-preview-text">
+              <p class="mentor-preview-name">조원희 전 국가대표</p>
+              <p class="mentor-preview-sum">선수의 시선으로 나만의 이야기 콘텐츠를 기획·실행하는 법을 나눕니다.</p>
+            </div>
+          </div>
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="KMH.png" alt="강만훈 작가" width="480" height="540" loading="lazy" decoding="async" /></div>
+            <div class="mentor-preview-text">
+              <p class="mentor-preview-name">강만훈 작가</p>
+              <p class="mentor-preview-sum">방송 기획·제작 노하우로 기획부터 제작·특집까지 한 번에 연결합니다.</p>
+            </div>
+          </div>
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="image/dtb.png" alt="닥터튜브 강사" width="480" height="540" loading="lazy" decoding="async" /></div>
+            <div class="mentor-preview-text">
+              <p class="mentor-preview-name">닥터튜브 강사</p>
+              <p class="mentor-preview-sum">데이터와 지표로 채널 구조·성장·수익 로드맵을 함께 짚습니다.</p>
+            </div>
+          </div>
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="image/editkim1.png" alt="에딧킴 강사" width="480" height="540" loading="lazy" decoding="async" /></div>
+            <div class="mentor-preview-text">
+              <p class="mentor-preview-name">에딧킴 강사</p>
+              <p class="mentor-preview-sum">AI·캡컷으로 숏폼 기획·편집·업로드까지 원스톱 실전을 안내합니다.</p>
+            </div>
+          </div>
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="image/KCS1.png" alt="김창수 강사" width="480" height="540" loading="lazy" decoding="async" /></div>
+            <div class="mentor-preview-text">
+              <p class="mentor-preview-name">김창수 강사</p>
+              <p class="mentor-preview-sum">AI 자동화와 실전 루틴으로 콘텐츠·전환·수익 구조를 설계합니다.</p>
+            </div>
+          </div>
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="image/bjh.png" alt="박정훈 강사" width="480" height="540" loading="lazy" decoding="async" /></div>
+            <div class="mentor-preview-text">
+              <p class="mentor-preview-name">박정훈 강사</p>
+              <p class="mentor-preview-sum">스튜디오 분석으로 실패 패턴을 짚고 채널별 실행 전략을 제시합니다.</p>
+            </div>
+          </div>
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="image/jsh.png" alt="개그우먼 조승희" width="480" height="540" loading="lazy" decoding="async" /></div>
+            <div class="mentor-preview-text">
+              <p class="mentor-preview-name">개그우먼 조승희</p>
+              <p class="mentor-preview-sum">소통과 무대 경험으로 교육 현장에 감동과 웃음을 더합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mentor-preview-dots" id="mentor-preview-dots" role="tablist" aria-label="강사진 슬라이드"></div>
+    </div>
+  </section>
+
   <section id="mentor-sticky" class="mentor-section reveal">
     <div class="container">
       <div class="intensive-head">
@@ -4179,7 +4867,7 @@
           <article class="mentor-sticky-card">
             <span class="mentor-badge">강사진</span>
             <div class="mentor-photo-wrap">
-              <img id="mentor-photo-dup" src="jwh.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
+              <img id="mentor-photo-dup" src="image/jwh1.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
             </div>
             <h3 id="mentor-name-dup">조원희 전 국가대표</h3>
             <p id="mentor-role-dup" class="mentor-role">축구선수 → 콘텐츠 크리에이터</p>
@@ -4192,7 +4880,7 @@
             class="mentor-step active"
             data-name="조원희 전 국가대표"
             data-role="축구선수 → 콘텐츠 크리에이터"
-            data-image="jwh.png"
+            data-image="image/jwh1.png"
             data-bio="&quot;선수 시절에는 경기 결과가 전부였습니다.<br>그런데 유튜브를 시작하며 알게 됐습니다.<br>팬들이 원하는 건 골이 아니라, 나의 '이야기'였습니다.<br>경기장과 일상을 오가며 얻은 경험을 콘텐츠로 만들고, 그것이 수익이 되는 경험을 했습니다.<br>저처럼 '내 이야기를 어떻게 시작해야 할지' 몰라 망설이시는 분들을 위해,<br>선수의 관점에서 본 현실적인 콘텐츠 전략을 나눕니다.&quot;">
             <h4>조원희의 "인생 전환점"</h4>
             <p>유튜브 스포츠 채널의 성공 전략</p>
@@ -4426,6 +5114,47 @@
     </div>
   </section>
 
+  <section id="mentor-sticky-jsh" class="mentor-section reveal">
+    <div class="container">
+      <div class="intensive-head">
+        <h2 class="mentor-jsh-headline"><span class="mentor-jsh-headline-lead">개그우먼 조승희와 함께하는 </span><span class="mentor-jsh-headline-accent">소통의 밤</span></h2>
+        <p>평생기억에 남을 교육과 추억을 만들어 드립니다.</p>
+      </div>
+      <div class="mentor-layout">
+        <aside class="mentor-sticky-col">
+          <article class="mentor-sticky-card">
+            <span class="mentor-badge">소통의 시간</span>
+            <div class="mentor-photo-wrap">
+              <img id="mentor-photo-jsh" src="image/jsh.png" alt="개그우먼 조승희 프로필 이미지" loading="lazy" decoding="async" />
+            </div>
+            <h3 id="mentor-name-jsh">개그우먼 조승희</h3>
+            <p id="mentor-role-jsh" class="mentor-role">개그우먼 · MC · 소통 진행</p>
+            <p id="mentor-bio-jsh" class="mentor-bio">소통의 밤, 함께 웃고 배우는 시간을 선사합니다.<br><br>- KBS 「개그콘서트」 등 장기 방송·공연 활동<br>- 토크·행사·라이브커머스까지 무대 경험<br>- 교육장을 하나의 무대처럼 이끕니다</p>
+          </article>
+        </aside>
+
+        <div class="mentor-steps">
+          <article
+            class="mentor-step active mentor-step--jsh-lead"
+            data-name="개그우먼 조승희"
+            data-role="개그우먼 · MC · 소통 진행"
+            data-image="image/jsh.png"
+            data-bio="소통의 밤, 함께 웃고 배우는 시간을 선사합니다.&lt;br&gt;&lt;br&gt;- KBS 「개그콘서트」 등 장기 방송·공연 활동&lt;br&gt;- 토크·행사·라이브커머스까지 무대 경험&lt;br&gt;- 교육장을 하나의 무대처럼 이끕니다">
+            <div class="mentor-jsh-right-title" role="paragraph">
+              <span class="mentor-jsh-quote mentor-jsh-quote--top" aria-hidden="true">“</span>
+              <div class="mentor-jsh-body">
+                <div class="mentor-jsh-line"><span class="mentor-jsh-em">미디어서포터즈 양성과정</span>에</div>
+                <div class="mentor-jsh-line">참여하신 분들과</div>
+                <div class="mentor-jsh-line"><span class="mentor-jsh-em">감동과 소통의 시간</span>을 선사합니다.</div>
+              </div>
+              <span class="mentor-jsh-quote mentor-jsh-quote--bottom" aria-hidden="true">”</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="solution" class="reveal">
     <div class="container">
       <div class="solution-heading">
@@ -4558,11 +5287,76 @@
     </div>
   </section>
 
-  <section id="apply" class="final-cta reveal">
+  <section id="apply" class="final-cta reveal" aria-label="수강 신청">
     <div class="container">
-      <h2>지금 미래의 주인공이 되세요!</h2>
-      <div><button class="cta-btn apply-btn">결제하러 가기</button></div>
-      <p class="apply-contact">문의: 1599-1242</p>
+      <div class="apply-two-col">
+        <div class="apply-col apply-col-left">
+          <p class="apply-kicker">수강 신청</p>
+          <h2>지금 바로 신청하세요</h2>
+          <p class="apply-lead">정원이 제한되어 있습니다. 마감 전 신청을 권장드립니다.</p>
+          <div class="apply-program-summary">
+            <dl>
+              <dt>프로그램명</dt>
+              <dd>미디어 서포터즈 양성과정</dd>
+              <dt>교육 기간</dt>
+              <dd>2026. 7. 10 ~ 7. 12 (2박 3일)</dd>
+              <dt>수업 방식</dt>
+              <dd>오프라인 + 온라인 동시 진행</dd>
+              <dt>수강료</dt>
+              <dd>1,980,000원 <span class="apply-program-meta">(부가세 포함)</span></dd>
+            </dl>
+          </div>
+          <div class="apply-cta-wrap"><button type="button" class="cta-btn apply-btn apply-btn--stacked" aria-label="수강신청서 작성하고 결재하기"><span class="apply-btn-line apply-btn-line--sm">수강신청서 작성하고</span><span class="apply-btn-line apply-btn-line--lg">결재하기</span></button></div>
+          <p class="apply-mail-hint">수강 신청서 작성후 결재하기를 누르시면 결재창이 열립니다.<br />결재후, 영업일 기준 1~2일 내 연락드립니다.</p>
+          <p class="apply-contact">문의: 1599-1242</p>
+        </div>
+        <div class="apply-col apply-col-right">
+          <article class="apply-form-card">
+            <h2 class="apply-form-title">수강 신청서</h2>
+            <p class="apply-form-desc">작성하신 정보로 담당자가 연락드립니다.</p>
+            <form id="apply-mail-form" class="apply-mail-form" novalidate>
+              <div class="apply-field">
+                <label class="apply-field-label" for="apply-name">이름<span class="apply-req" aria-hidden="true">*</span></label>
+                <input class="apply-input" type="text" id="apply-name" name="apply-name" autocomplete="name" placeholder="홍길동" required />
+              </div>
+              <div class="apply-field">
+                <label class="apply-field-label" for="apply-phone">연락처<span class="apply-req" aria-hidden="true">*</span></label>
+                <input class="apply-input" type="tel" id="apply-phone" name="apply-phone" autocomplete="tel" inputmode="tel" placeholder="010-0000-0000" required />
+              </div>
+              <div class="apply-field">
+                <label class="apply-field-label" for="apply-email">이메일</label>
+                <input class="apply-input" type="email" id="apply-email" name="apply-email" autocomplete="email" placeholder="example@email.com" />
+              </div>
+              <div class="apply-field">
+                <label class="apply-field-label" for="apply-youtube">유튜브 경험</label>
+                <select class="apply-select" id="apply-youtube" name="apply-youtube">
+                  <option value="">선택해주세요</option>
+                  <option value="없음">운영 경험 없음</option>
+                  <option value="초보 (구독자 1천 미만)">초보 (구독자 1천 미만)</option>
+                  <option value="중급 (구독자 1천~1만)">중급 (구독자 1천~1만)</option>
+                  <option value="상위 (구독자 1만 이상)">상위 (구독자 1만 이상)</option>
+                </select>
+              </div>
+              <div class="apply-field">
+                <label class="apply-field-label" for="apply-recommender">추천인 (선택)</label>
+                <div class="apply-input-icon-row">
+                  <span class="apply-input-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z" fill="currentColor"/></svg>
+                  </span>
+                  <input class="apply-input" type="text" id="apply-recommender" name="apply-recommender" placeholder="추천인 성함을 입력하세요" />
+                </div>
+                <p class="apply-field-hint">추천인이 있으실 경우에만 기입해 주세요.</p>
+              </div>
+              <div class="apply-field">
+                <label class="apply-field-label" for="apply-message">문의사항 (선택)</label>
+                <textarea class="apply-textarea" id="apply-message" name="apply-message" placeholder="궁금한 점이 있으시면 남겨주세요."></textarea>
+              </div>
+              <button type="submit" class="apply-form-submit">신청서 제출하기</button>
+            </form>
+            <p class="apply-form-footnote">보내주신 내용은 상담 목적으로만 활용되며, 영업일 기준 1~2일 내 연락드립니다.</p>
+          </article>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -4638,9 +5432,145 @@
     }, { threshold: 0.18 });
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
+    (function () {
+      const root = document.getElementById("mentor-preview");
+      const track = document.getElementById("mentor-preview-track");
+      const viewport = document.getElementById("mentor-preview-viewport");
+      const dotsWrap = document.getElementById("mentor-preview-dots");
+      if (!root || !track || !viewport || !dotsWrap) return;
+
+      const slides = Array.from(track.querySelectorAll(".mentor-preview-slide"));
+      const n = slides.length;
+      if (!n) return;
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const intervalMs = reduceMotion ? 9000 : 4800;
+
+      let index = 0;
+      let timer = null;
+
+      slides.forEach((_, i) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "mentor-preview-dot";
+        b.setAttribute("aria-label", "강사 " + (i + 1) + " / " + n);
+        b.addEventListener("click", () => {
+          goTo(i);
+          restart();
+        });
+        dotsWrap.appendChild(b);
+      });
+      const getDots = () => Array.from(dotsWrap.querySelectorAll(".mentor-preview-dot"));
+
+      const applyDots = () => {
+        getDots().forEach((d, i) => d.setAttribute("aria-current", i === index ? "true" : "false"));
+      };
+
+      const layout = () => {
+        const w = viewport.offsetWidth;
+        if (!w) return;
+        track.style.width = n * w + "px";
+        slides.forEach((s) => {
+          s.style.flex = "0 0 " + w + "px";
+          s.style.width = w + "px";
+        });
+        track.style.transform = "translateX(" + -index * w + "px)";
+      };
+
+      const goTo = (i) => {
+        index = ((i % n) + n) % n;
+        const w = viewport.offsetWidth;
+        if (w) track.style.transform = "translateX(" + -index * w + "px)";
+        applyDots();
+      };
+
+      const tick = () => {
+        goTo(index + 1);
+      };
+
+      const start = () => {
+        if (timer) clearInterval(timer);
+        timer = window.setInterval(tick, intervalMs);
+      };
+      const stop = () => {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+      };
+      const restart = () => {
+        stop();
+        start();
+      };
+
+      layout();
+      goTo(0);
+      start();
+
+      root.addEventListener("mouseenter", stop);
+      root.addEventListener("mouseleave", start);
+      root.addEventListener("focusin", stop);
+      root.addEventListener("focusout", (e) => {
+        if (!root.contains(e.relatedTarget)) start();
+      });
+
+      let ro;
+      if (typeof ResizeObserver !== "undefined") {
+        ro = new ResizeObserver(() => {
+          layout();
+        });
+        ro.observe(viewport);
+      } else {
+        window.addEventListener("resize", layout, { passive: true });
+      }
+    })();
+
+    const applyMailtoHref = (bodyLines) => {
+      const subject = encodeURIComponent("[STN] 미디어 서포터즈 수강 신청");
+      const body = encodeURIComponent(bodyLines.join("\n"));
+      window.location.href = "mailto:stnmedia@stnsports.co.kr?subject=" + subject + "&body=" + body;
+    };
+
     document.querySelectorAll(".apply-btn").forEach((btn) => {
-      btn.addEventListener("click", () => { window.location.href = "https://stnedu.co.kr/product/media/"; });
+      btn.addEventListener("click", () => {
+        window.location.href = "https://stnedu.co.kr/product/media/";
+      });
     });
+
+    (function () {
+      const form = document.getElementById("apply-mail-form");
+      if (!form) return;
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = (form.querySelector("#apply-name") && form.querySelector("#apply-name").value) || "";
+        const phone = (form.querySelector("#apply-phone") && form.querySelector("#apply-phone").value) || "";
+        const email = (form.querySelector("#apply-email") && form.querySelector("#apply-email").value) || "";
+        const yt = (form.querySelector("#apply-youtube") && form.querySelector("#apply-youtube").value) || "";
+        const rec = (form.querySelector("#apply-recommender") && form.querySelector("#apply-recommender").value) || "";
+        const msg = (form.querySelector("#apply-message") && form.querySelector("#apply-message").value) || "";
+        if (!String(name).trim() || !String(phone).trim()) {
+          window.alert("이름과 연락처는 필수입니다.");
+          return;
+        }
+        const lines = [
+          "안녕하세요.",
+          "",
+          "[미디어 서포터즈 양성과정 수강 신청]",
+          "",
+          "이름: " + String(name).trim(),
+          "연락처: " + String(phone).trim(),
+          "이메일: " + String(email).trim(),
+          "유튜브 경험: " + (String(yt).trim() || "(미선택)"),
+          "추천인: " + (String(rec).trim() || "(없음)"),
+          "",
+          "문의사항:",
+          String(msg).trim() || "(없음)",
+          "",
+          "감사합니다.",
+        ];
+        applyMailtoHref(lines);
+      });
+    })();
 
     // Badges: keep hover neon only (no auto scroll on hover)
 
@@ -4648,6 +5578,8 @@
     if (heroVideo) heroVideo.play().catch(() => {});
     const eventVideo = document.querySelector(".event-video-bg");
     if (eventVideo) eventVideo.play().catch(() => {});
+    const mentorPreviewVideo = document.querySelector(".mentor-preview-video-bg");
+    if (mentorPreviewVideo) mentorPreviewVideo.play().catch(() => {});
 
     (function () {
       const section = document.getElementById("event");
@@ -4970,6 +5902,53 @@
       const roleEl = document.getElementById("mentor-role-bjh");
       const bioEl = document.getElementById("mentor-bio-bjh");
       const photoEl = document.getElementById("mentor-photo-bjh");
+      if (!steps.length || !nameEl || !roleEl || !bioEl || !photoEl) return;
+
+      const applyStep = (step) => {
+        nameEl.textContent = step.dataset.name || "";
+        roleEl.textContent = step.dataset.role || "";
+        bioEl.innerHTML = step.dataset.bio || "";
+        if (step.dataset.image) photoEl.src = step.dataset.image;
+      };
+
+      const setActiveStep = (activeIndex) => {
+        steps.forEach((step, index) => {
+          step.classList.toggle("active", index === activeIndex);
+        });
+        applyStep(steps[activeIndex]);
+      };
+
+      const updateByScroll = () => {
+        const anchorY = window.innerHeight * 0.35;
+        let nearestIndex = 0;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        steps.forEach((step, index) => {
+          const rect = step.getBoundingClientRect();
+          const distance = Math.abs(rect.top - anchorY);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+
+        setActiveStep(nearestIndex);
+      };
+
+      updateByScroll();
+      window.addEventListener("scroll", updateByScroll, { passive: true });
+      window.addEventListener("resize", updateByScroll);
+    })();
+
+    (function () {
+      const section = document.getElementById("mentor-sticky-jsh");
+      if (!section) return;
+
+      const steps = Array.from(section.querySelectorAll(".mentor-step"));
+      const nameEl = document.getElementById("mentor-name-jsh");
+      const roleEl = document.getElementById("mentor-role-jsh");
+      const bioEl = document.getElementById("mentor-bio-jsh");
+      const photoEl = document.getElementById("mentor-photo-jsh");
       if (!steps.length || !nameEl || !roleEl || !bioEl || !photoEl) return;
 
       const applyStep = (step) => {
