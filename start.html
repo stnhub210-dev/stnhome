@@ -1999,22 +1999,18 @@
         0 0 48px rgba(124,252,0,.32),
         0 0 80px rgba(124,252,0,.18);
     }
-    #mentor-sticky-dup .mentor-badge,
     #mentor-sticky-editkim .mentor-badge {
       color: #fff;
       text-shadow: 0 0 14px rgba(255, 255, 255, .3);
     }
-    #mentor-sticky-dup .mentor-step.active,
     #mentor-sticky-editkim .mentor-step.active {
       border-color: rgba(124,252,0,.7);
       box-shadow: 0 0 0 1px rgba(124,252,0,.25), 0 0 24px rgba(124,252,0,.14);
       background: linear-gradient(170deg, rgba(124,252,0,.1), rgba(255,255,255,.03));
     }
-    #mentor-sticky-dup .mentor-step.active .step-label,
     #mentor-sticky-editkim .mentor-step.active .step-label {
       color: var(--lime);
     }
-    #mentor-sticky-dup .mentor-step:hover,
     #mentor-sticky-editkim .mentor-step:hover {
       z-index: 2;
       border-color: rgba(124,252,0,.82);
@@ -2026,7 +2022,6 @@
       filter: brightness(1.06);
       transform: scale(1.008);
     }
-    #mentor-sticky-dup .mentor-step.active:hover,
     #mentor-sticky-editkim .mentor-step.active:hover {
       transform: scale(1.014);
       box-shadow:
@@ -3859,23 +3854,7 @@
         order: 1;
       }
     }
-    #apply-after-event.final-cta {
-      min-height: auto;
-      padding: 56px 0 60px;
-      background: #000;
-      color: #fff;
-    }
-    #apply-after-event.final-cta h2,
-    #apply-after-event.final-cta .apply-contact {
-      color: #fff;
-    }
-    #apply-after-event .cta-btn {
-      background: var(--lime);
-      color: #101010;
-      box-shadow: 0 8px 24px rgba(124, 252, 0, .28);
-    }
-    #apply .cta-btn,
-    #apply-after-event .cta-btn {
+    #apply .cta-btn {
       padding: 28px 48px;
       font-size: 2rem;
       border-radius: 16px;
@@ -4556,8 +4535,7 @@
       .apply-contact {
         font-size: clamp(1.05rem, 4.8vw, 1.28rem);
       }
-      #apply .cta-btn,
-      #apply-after-event .cta-btn {
+      #apply .cta-btn {
         width: 100%;
         padding: 18px 22px;
         font-size: clamp(1.22rem, 6vw, 1.5rem);
@@ -4707,7 +4685,7 @@
         </div>
         <img class="hero-mid-image" src="image/자산 11stn.png" alt="STN 로고 이미지" loading="eager" decoding="async" />
         <div class="hero-side" aria-label="강사진 소개 이미지">
-          <img class="hero-all-image" src="image/all2.png" alt="전체 강사진 이미지" loading="eager" decoding="async" />
+          <img class="hero-all-image" src="image/heromain.png" alt="전체 강사진 이미지" loading="eager" decoding="async" />
         </div>
       </div>
     </div>
@@ -4759,14 +4737,6 @@
     </div>
   </section>
 
-  <section id="apply-after-event" class="final-cta reveal" aria-label="도전 메시지 및 신청">
-    <div class="container">
-      <h2>도전하세요! 미래가 달라집니다</h2>
-      <div><button type="button" class="cta-btn apply-btn">클릭</button></div>
-      <p class="apply-contact">문의: 1599-1242</p>
-    </div>
-  </section>
-
   <section id="mentor-emphasis" class="mentor-emphasis reveal">
     <div class="container">
       <p class="mentor-emphasis-message mentor-emphasis-message-cycle">
@@ -4794,13 +4764,6 @@
             <div class="mentor-preview-text">
               <p class="mentor-preview-name">박문성 해설위원</p>
               <p class="mentor-preview-sum">19년 현장 경험으로 스포츠 스토리텔링·콘텐츠 수익화를 이끕니다.</p>
-            </div>
-          </div>
-          <div class="mentor-preview-slide">
-            <div class="mentor-preview-photo"><img src="image/jwh1.png" alt="조원희 전 국가대표" width="480" height="540" loading="lazy" decoding="async" /></div>
-            <div class="mentor-preview-text">
-              <p class="mentor-preview-name">조원희 전 국가대표</p>
-              <p class="mentor-preview-sum">선수의 시선으로 나만의 이야기 콘텐츠를 기획·실행하는 법을 나눕니다.</p>
             </div>
           </div>
           <div class="mentor-preview-slide">
@@ -4893,45 +4856,6 @@
             <p>실습: 축구 경기 하이라이트로 3가지 각본 작성 (감정/재미/정보 중심 각각)</p>
             <h4>특별 특강</h4>
             <p><strong class="mentor-highlight-title">"박문성의 19년 경험담"</strong><br><br>- 첫 취재부터 지금까지의 시행착오<br>- "이건 꼭 배워야 한다" Top 5<br>- Q&A로 실제 고민 해결</p>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="mentor-sticky-dup" class="mentor-section reveal">
-    <div class="container">
-      <div class="intensive-head">
-        <h2><span class="intensive-head-phrase">"스포츠 콘텐츠는 다릅니다</span> <span class="intensive-head-phrase">— 팬 심리를 움직이는 법"</span></h2>
-        <p>선수 팬심을 수익으로 연결하기</p>
-      </div>
-      <div class="mentor-layout">
-        <aside class="mentor-sticky-col">
-          <article class="mentor-sticky-card">
-            <span class="mentor-badge">강사진</span>
-            <div class="mentor-photo-wrap">
-              <img id="mentor-photo-dup" src="image/jwh1.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
-            </div>
-            <h3 id="mentor-name-dup">조원희 전 국가대표</h3>
-            <p id="mentor-role-dup" class="mentor-role">축구선수 → 콘텐츠 크리에이터</p>
-            <p id="mentor-bio-dup" class="mentor-bio">"선수 시절에는 경기 결과가 전부였습니다.<br>그런데 유튜브를 시작하며 알게 됐습니다.<br>팬들이 원하는 건 골이 아니라, 나의 '이야기'였습니다.<br>경기장과 일상을 오가며 얻은 경험을 콘텐츠로 만들고, 그것이 수익이 되는 경험을 했습니다.<br>저처럼 '내 이야기를 어떻게 시작해야 할지' 몰라 망설이시는 분들을 위해,<br>선수의 관점에서 본 현실적인 콘텐츠 전략을 나눕니다."</p>
-          </article>
-        </aside>
-
-        <div class="mentor-steps">
-          <article
-            class="mentor-step active"
-            data-name="조원희 전 국가대표"
-            data-role="축구선수 → 콘텐츠 크리에이터"
-            data-image="image/jwh1.png"
-            data-bio="&quot;선수 시절에는 경기 결과가 전부였습니다.<br>그런데 유튜브를 시작하며 알게 됐습니다.<br>팬들이 원하는 건 골이 아니라, 나의 '이야기'였습니다.<br>경기장과 일상을 오가며 얻은 경험을 콘텐츠로 만들고, 그것이 수익이 되는 경험을 했습니다.<br>저처럼 '내 이야기를 어떻게 시작해야 할지' 몰라 망설이시는 분들을 위해,<br>선수의 관점에서 본 현실적인 콘텐츠 전략을 나눕니다.&quot;">
-            <h4>조원희의 "인생 전환점"</h4>
-            <p>유튜브 스포츠 채널의 성공 전략</p>
-            <p><strong>은퇴 전의 경험</strong><br><br>국내외 최고의 팀들에서의 경쟁과 성공<br>선수로서의 정체성이 곧 전부였던 시절<br>"경기장 밖의 나"를 생각해본 적 없음</p>
-            <p><strong>은퇴의 위기</strong><br><br>30대 중반의 예상치 못한 은퇴<br>"선수로서의 나"가 끝났을 때의 심리적 공백<br>경력 단절에서 오는 경제적·심리적 위기<br>"이제 뭘 하지?"라는 절망감</p>
-            <p><strong>콘텐츠로의 전환</strong><br><br>선택이 아닌 생존의 문제로 시작<br>"경기장에서의 나"를 콘텐츠로 재구성<br>팬들이 원하는 건 "골"이 아닌 "이야기"임을 깨달음<br>6개월 만에 10만 구독자 달성</p>
-            <h4>조원희의 스포츠 인생 이야기</h4>
-            <p>"선수 → 은퇴 → 크리에이터 → 현역 복귀. 세 번의 인생 전환을 경험하며 배운 것: 정체성은 고정된 게 아니라 선택할 수 있다는 것입니다."</p>
           </article>
         </div>
       </div>
@@ -5786,53 +5710,6 @@
       };
 
       // 스크롤 위치를 기준으로 현재 가장 가까운 step을 활성화합니다.
-      const updateByScroll = () => {
-        const anchorY = window.innerHeight * 0.35;
-        let nearestIndex = 0;
-        let nearestDistance = Number.POSITIVE_INFINITY;
-
-        steps.forEach((step, index) => {
-          const rect = step.getBoundingClientRect();
-          const distance = Math.abs(rect.top - anchorY);
-          if (distance < nearestDistance) {
-            nearestDistance = distance;
-            nearestIndex = index;
-          }
-        });
-
-        setActiveStep(nearestIndex);
-      };
-
-      updateByScroll();
-      window.addEventListener("scroll", updateByScroll, { passive: true });
-      window.addEventListener("resize", updateByScroll);
-    })();
-
-    (function () {
-      const section = document.getElementById("mentor-sticky-dup");
-      if (!section) return;
-
-      const steps = Array.from(section.querySelectorAll(".mentor-step"));
-      const nameEl = document.getElementById("mentor-name-dup");
-      const roleEl = document.getElementById("mentor-role-dup");
-      const bioEl = document.getElementById("mentor-bio-dup");
-      const photoEl = document.getElementById("mentor-photo-dup");
-      if (!steps.length || !nameEl || !roleEl || !bioEl || !photoEl) return;
-
-      const applyStep = (step) => {
-        nameEl.textContent = step.dataset.name || "";
-        roleEl.textContent = step.dataset.role || "";
-        bioEl.innerHTML = step.dataset.bio || "";
-        if (step.dataset.image) photoEl.src = step.dataset.image;
-      };
-
-      const setActiveStep = (activeIndex) => {
-        steps.forEach((step, index) => {
-          step.classList.toggle("active", index === activeIndex);
-        });
-        applyStep(steps[activeIndex]);
-      };
-
       const updateByScroll = () => {
         const anchorY = window.innerHeight * 0.35;
         let nearestIndex = 0;
