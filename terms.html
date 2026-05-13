@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이용약관 | MEDIA 서포터즈 아카데미</title>
+  <meta name="description" content="미디어 서포터즈 양성과정 이용약관입니다. 주식회사 플래닛네이처미디어." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: #111111;
+      --line: #2a2a2a;
+      --lime: #7CFC00;
+      --text: #ffffff;
+      --muted: #bdbdbd;
+      --dim: #8a8a8a;
+      --nav-max: 1160px;
+      --content-max: 820px;
+      --nav-clear: calc(68px + env(safe-area-inset-top, 0px));
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Noto Sans KR", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a:focus-visible {
+      outline: 2px solid var(--lime);
+      outline-offset: 3px;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(10, 10, 10, 0.78);
+      border-bottom: 1px solid rgba(124, 252, 0, 0.25);
+      backdrop-filter: blur(8px);
+    }
+    .nav-inner {
+      width: min(92%, var(--nav-max));
+      margin: 0 auto;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .logo {
+      color: var(--lime);
+      font-weight: 800;
+      text-decoration: none;
+      font-size: clamp(0.82rem, 2.5vw, 0.98rem);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 12px 16px;
+      font-size: 0.88rem;
+      color: #dcdcdc;
+    }
+    .nav-links a {
+      color: inherit;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      color: var(--lime);
+    }
+    .nav-links a.nav-pill {
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--lime);
+      color: #0a0a0a !important;
+      font-weight: 800;
+      font-size: 0.82rem;
+      border: 1px solid rgba(124, 252, 0, 0.55);
+      transition: filter 0.2s ease;
+    }
+    .nav-links a.nav-pill:hover {
+      filter: brightness(1.08);
+    }
+    .nav-score-btn--mobile {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--lime);
+      color: #0a0a0a;
+      font-weight: 800;
+      font-size: 0.78rem;
+      text-decoration: none;
+      border: 1px solid rgba(124, 252, 0, 0.55);
+      flex-shrink: 0;
+      transition: filter 0.2s ease;
+    }
+    .nav-score-btn--mobile:hover {
+      filter: brightness(1.08);
+    }
+
+    main {
+      padding: calc(var(--nav-clear) + 28px) 0 56px;
+    }
+    .wrap {
+      width: min(92%, var(--content-max));
+      margin: 0 auto;
+    }
+
+    .page-head {
+      margin-bottom: 22px;
+    }
+    .page-kicker {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(124, 252, 0, 0.92);
+      margin-bottom: 10px;
+    }
+    .page-title {
+      font-size: clamp(1.55rem, 4.2vw, 2rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+    .page-lead {
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 500;
+      max-width: 62ch;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: clamp(18px, 3.5vw, 26px);
+      margin-bottom: 16px;
+    }
+    .card--toc {
+      margin-bottom: 20px;
+    }
+    .card--meta {
+      margin-bottom: 20px;
+    }
+    .card h2 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--lime);
+      margin-bottom: 14px;
+    }
+
+    .meta-grid {
+      display: grid;
+      gap: 10px 18px;
+      font-size: 0.9rem;
+      color: #d6d6d6;
+    }
+    .meta-row {
+      display: grid;
+      grid-template-columns: minmax(5.5rem, 7rem) 1fr;
+      gap: 10px 14px;
+      align-items: baseline;
+    }
+    .meta-row dt {
+      margin: 0;
+      font-weight: 800;
+      color: #9a9a9a;
+      font-size: 0.82rem;
+    }
+    .meta-row dd {
+      margin: 0;
+      font-weight: 600;
+      color: #ececec;
+      word-break: keep-all;
+    }
+    .meta-note {
+      color: #aaa;
+      font-weight: 600;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+    .toc-list a {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      color: #e8e8e8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .toc-list a:hover {
+      border-color: rgba(124, 252, 0, 0.35);
+      background: rgba(124, 252, 0, 0.06);
+      color: var(--text);
+    }
+    .toc-num {
+      flex-shrink: 0;
+      font-weight: 900;
+      color: var(--lime);
+      font-size: 0.82rem;
+      min-width: 1.85em;
+    }
+
+    .policy-card {
+      scroll-margin-top: calc(var(--nav-clear) + 12px);
+    }
+    .policy-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(42, 42, 42, 0.95);
+    }
+    .policy-num {
+      flex-shrink: 0;
+      min-width: 36px;
+      height: 36px;
+      padding: 0 6px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 0.88rem;
+      color: #0a0a0a;
+      background: var(--lime);
+      box-shadow: 0 0 18px rgba(124, 252, 0, 0.22);
+    }
+    .policy-head h2 {
+      margin: 0;
+      font-size: clamp(1.02rem, 2.8vw, 1.18rem);
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+    }
+
+    .policy-body {
+      color: #d6d6d6;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+    .policy-body p + p {
+      margin-top: 12px;
+    }
+    .policy-body ul {
+      margin-top: 10px;
+      padding-left: 1.15rem;
+      display: grid;
+      gap: 8px;
+    }
+    .policy-body li::marker {
+      color: rgba(124, 252, 0, 0.65);
+    }
+    .policy-body strong {
+      color: #efefef;
+      font-weight: 700;
+    }
+    .policy-note {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(42, 42, 42, 0.9);
+      font-size: 0.88rem;
+      color: #c8c8c8;
+    }
+    .policy-body a {
+      color: var(--lime);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .policy-body a:hover {
+      filter: brightness(1.12);
+    }
+
+    footer {
+      padding: 32px 0 40px;
+      text-align: center;
+      color: #909090;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      border-top: 1px solid var(--line);
+    }
+    footer .footer-inner {
+      width: min(92%, var(--nav-max));
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    footer .footer-brand {
+      color: #d4d4d4;
+      font-weight: 800;
+      font-size: 0.96rem;
+      letter-spacing: -0.01em;
+    }
+    footer .footer-contact a {
+      color: inherit;
+      text-decoration: none;
+    }
+    footer .footer-contact a:hover {
+      color: var(--lime);
+    }
+    footer .footer-copy {
+      margin-top: 10px;
+      color: #6f6f6f;
+      font-size: 0.82rem;
+    }
+    footer .footer-sep {
+      margin: 0 6px;
+      color: #555;
+    }
+
+    @media (max-width: 1024px) {
+      .nav-links {
+        display: none;
+      }
+      .nav-score-btn--mobile {
+        display: inline-flex;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --nav-clear: calc(60px + 12px + env(safe-area-inset-top, 0px));
+      }
+      .navbar {
+        padding: 6px 0;
+      }
+      .nav-inner {
+        height: 60px;
+        width: min(95%, var(--nav-max));
+      }
+      .logo {
+        font-size: 0.82rem;
+      }
+      main {
+        padding-bottom: 44px;
+      }
+      .toc-list a {
+        font-size: 0.86rem;
+        padding: 9px 10px;
+      }
+      .meta-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .policy-num {
+        min-width: 32px;
+        height: 32px;
+        font-size: 0.82rem;
+      }
+      .policy-head {
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" aria-label="주요 메뉴">
+    <div class="nav-inner">
+      <a class="logo" href="start.html">MEDIA 서포터즈 아카데미</a>
+      <a href="score.html" class="nav-score-btn--mobile">유튜브 진단하기</a>
+      <div class="nav-links">
+        <a href="start.html">프로그램 안내</a>
+        <a href="curriculum.html">커리큐럼</a>
+        <a href="score.html">채널 데이터</a>
+        <a href="start.html#apply">수강 신청</a>
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="score.html" class="nav-pill">유튜브 진단하기</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <header class="page-head">
+        <p class="page-kicker">terms of service</p>
+        <h1 class="page-title">이용약관</h1>
+        <p class="page-lead">
+          본 약관은 주식회사 플래닛네이처미디어가 제공하는 「미디어 서포터즈 양성과정」 서비스 이용과 관련하여 회사와 이용자 간 권리·의무 및 책임 사항을 규정합니다.
+        </p>
+      </header>
+
+      <section class="card card--meta" aria-label="서비스 정보">
+        <h2>서비스 정보</h2>
+        <dl class="meta-grid">
+          <div class="meta-row">
+            <dt>서비스명</dt>
+            <dd>미디어 서포터즈 양성과정</dd>
+          </div>
+          <div class="meta-row">
+            <dt>운영사</dt>
+            <dd>주식회사 플래닛네이처미디어</dd>
+          </div>
+          <div class="meta-row">
+            <dt>교육 형태</dt>
+            <dd>온라인 및 오프라인 병행 <span class="meta-note">(회차별 상이)</span></dd>
+          </div>
+          <div class="meta-row">
+            <dt>수강료</dt>
+            <dd>1,980,000원 <span class="meta-note">(부가세 포함)</span></dd>
+          </div>
+        </dl>
+      </section>
+
+      <nav class="card card--toc" aria-label="목차">
+        <h2>목차</h2>
+        <ol class="toc-list" role="list">
+          <li><a href="#s1"><span class="toc-num">1.</span> 목적</a></li>
+          <li><a href="#s2"><span class="toc-num">2.</span> 용어 정의</a></li>
+          <li><a href="#s3"><span class="toc-num">3.</span> 약관의 효력 및 변경</a></li>
+          <li><a href="#s4"><span class="toc-num">4.</span> 수강 신청 및 계약 성립</a></li>
+          <li><a href="#s5"><span class="toc-num">5.</span> 수강료 및 결제</a></li>
+          <li><a href="#s6"><span class="toc-num">6.</span> 환불 규정</a></li>
+          <li><a href="#s7"><span class="toc-num">7.</span> 교육 운영</a></li>
+          <li><a href="#s8"><span class="toc-num">8.</span> 이용자의 의무</a></li>
+          <li><a href="#s9"><span class="toc-num">9.</span> 회사의 의무</a></li>
+          <li><a href="#s10"><span class="toc-num">10.</span> 지식재산권</a></li>
+          <li><a href="#s11"><span class="toc-num">11.</span> 면책 조항</a></li>
+          <li><a href="#s12"><span class="toc-num">12.</span> 분쟁 해결</a></li>
+        </ol>
+      </nav>
+
+      <article class="card policy-card" id="s1">
+        <div class="policy-head">
+          <span class="policy-num" aria-hidden="true">1</span>
+          <h2>목적</h2>
+        </div>
+        <div class="policy-body">
+          <p>본 약관은 주식회사 플래닛네이처미디어가 운영하는 미디어 서포터즈 양성과정 수강 신청 및 이용에 관한 권리·의무·책임 사항을 규정함을 목적으로 합니다.</p>
+        </div>
+      </article>
+
+      <article class="card policy-card" id="s2">
+        <div class="policy-head">
+          <span class="policy-num" aria-hidden="true">2</span>
+          <h2>용어 정의</h2>
+        </div>
+        <div class="policy-body">
+          <ul>
+            <li><strong>회사:</strong> 주식회사 플래닛네이처미디어</li>
+            <li><strong>이용자:</strong> 수강 신청을 완료한 자</li>
+            <li><strong>서비스:</strong> 미디어 서포터즈 양성과정 교육 프로그램</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card policy-card" id="s3">
+        <div class="policy-head">
+          <span class="policy-num" aria-hidden="true">3</span>
+          <h2>약관의 효력 및 변경</h2>
+        </div>
+        <div class="policy-body">
+          <p>본 약관은 회사가 운영하는 홈페이지에 게시함으로써 효력이 발생합니다.</p>
+          <p>회사는 관련 법령을 위반하지 않는 범위에서 본 약관을 변경할 수 있으며, 변경되는 경우 변경 내용과 시행일을 명시하여 <strong>시행일 7일 전</strong>부터 홈페이지를 통해 공지합니다. 다만, 이용자에게 불리한 변경인 경우에는 법령이 정한 바에 따라 통지 또는 공지합니다.</p>
+          <p><strong>시행일:</strong> 2026년 05월 13일</p>
+        </div>
+      </article>
+
+      <article class="card policy-card" id="s4">
+        <div class="policy-head">
+          <span class="policy-num" aria-hidden="true">4</span>
+          <h2>수강 신청 및 계약 성립</h2>
+        </div>
+        <div class="policy-body">
+          <ul>
+            <li><strong>신청 절차:</strong> 온라인 신청서 작성 → 결제 완료 → 접수 확인</li>
+            <li><strong>계약 성립 시점:</strong> 회사의 수강 확정 안내 시점</li>
+            <li><strong>미성년자 신청:</strong> 법정대리인의 동의가 필요합니다.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card policy-card" id="s5">
+        <div class="policy-head">
+          <span class="policy-num" aria-hidden="true">5</span>
+          <h2>수강료 및 결제</h2>
+        </div>
+        <div class="policy-body">
+          <ul>
+            <li><strong>수강료:</strong> 1,980,000원 (부가세 포함)</li>
+            <li><strong>결제 수단:</strong> 신용카드, 계좌이체, 무통장입금</li>
+            <li><strong>할부:</strong> 카드사 정책에 따릅니다.</li>
+            <li><strong>세금계산서:</strong> 신청 시 발행이 가능합니다.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card policy-card" id="s6">
+        <div class="policy-head">
+          <span class="policy-num" aria-hidden="true">6</span>
+          <h2>환불 규정</h2>
+        </div>
+        <div class="policy-body">
+          <ul>
+            <li><strong>결제 완료 후 8일 이상 전 취소:</strong> 수강료의 90% 환불 (행정처리 수수료 10% 공제)</li>
+            <li><strong>수강 시작 4일 ~ 7일 전 취소:</strong> 수강료의 50% 환불</li>
+            <li><strong>수강 시작 3일 이내 또는 당일 취소:</strong> 환불 불가</li>
+            <li><strong>온라인 콘텐츠 최초 접근(수강 개시) 이후:</strong> 환불 불가</li>
+            <li><strong>회사 귀책 사유로 교육이 취소되는 경우:</strong> 수강료 전액 환불</li>
+            <li><strong>천재지변, 감염병 등 불가항력 사유:</strong> 회사와 협의 후 처리합니다.</li>
+            <li><strong>환불 처리 기간:</strong> 신청일로부터 영업일 기준 5~7일</li>
+            <li><strong>환불 신청 방법:</strong> 이메일(<a href="mailto:lmj@stnsports.co.kr">lmj@stnsports.co.kr</a>) 또는 고객센터(<a href="tel:1599-1242">1599-1242</a>). 서면 접수 후 처리합니다.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card policy-card" id="s7">
+        <div class="policy-head">
+          <span class="policy-num" aria-hidden="true">7</span>
+          <h2>교육 운영</h2>
+        </div>
+        <div class="policy-body">
+          <ul>
+            <li><strong>교육 형태:</strong> 온라인 및 오프라인 병행 (회차별 상이)</li>
+            <li><strong>오프라인 교육 장소:</strong> 배재대학교, 대전 (변경 시 사전 공지)</li>
+            <li><strong>최소 개설 인원 미달:</strong> 교육이 취소될 수 있으며, 이 경우 수강료 전액 환불합니다.</li>
+            <li><strong>불가항력:</strong> 천재지변, 감염병 등의 사유 발생 시 일정 변경 또는 취소될 수 있습니다.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card policy-card" id="s8">
+        <div class="policy-head">
+          <span class="policy-num" aria-hidden="true">8</span>
+          <h2>이용자의 의무</h2>
+        </div>
+        <div class="policy-body">
+          <ul>
+            <li>허위 정보 제공을 해서는 안 됩니다.</li>
+            <li>교육 자료를 무단으로 배포·복제해서는 안 됩니다.</li>
+            <li>타 수강생의 교육권을 침해하는 행위를 해서는 안 됩니다.</li>
+            <li>위 사항을 위반하는 경우 회사는 수강 자격을 취소할 수 있으며, 이 경우 환불하지 않을 수 있습니다.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card policy-card" id="s9">
+        <div class="policy-head">
+          <span class="policy-num" aria-hidden="true">9</span>
+          <h2>회사의 의무</h2>
+        </div>
+        <div class="policy-body">
+          <ul>
+            <li>안정적인 교육 서비스를 제공하기 위해 노력합니다.</li>
+            <li>개인정보 보호를 위해 「개인정보 보호법」 등 관련 법령 및 별도 게시하는 <a href="privacy.html">개인정보처리방침</a>에 따라 이용자의 개인정보를 보호합니다.</li>
+            <li>수강 확정 및 변경 사항을 사전에 안내하기 위해 노력합니다.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card policy-card" id="s10">
+        <div class="policy-head">
+          <span class="policy-num" aria-hidden="true">10</span>
+          <h2>지식재산권</h2>
+        </div>
+        <div class="policy-body">
+          <p>교육 자료, 영상, 콘텐츠에 대한 저작권 등 지식재산권은 회사에 귀속됩니다.</p>
+          <p>이용자는 수강생 개인 학습 목적 범위를 넘어 이를 사용할 수 없습니다.</p>
+        </div>
+      </article>
+
+      <article class="card policy-card" id="s11">
+        <div class="policy-head">
+          <span class="policy-num" aria-hidden="true">11</span>
+          <h2>면책 조항</h2>
+        </div>
+        <div class="policy-body">
+          <ul>
+            <li>본 교육 프로그램은 실무 역량 향상을 목적으로 하며, 특정 수익 발생이나 취업을 약정하지 않습니다.</li>
+            <li>이용자 본인의 귀책 사유로 발생한 손해에 대하여 회사는 책임을 지지 않습니다.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card policy-card" id="s12">
+        <div class="policy-head">
+          <span class="policy-num" aria-hidden="true">12</span>
+          <h2>분쟁 해결</h2>
+        </div>
+        <div class="policy-body">
+          <p>본 약관 및 서비스 이용과 관련하여 회사와 이용자 간 분쟁이 발생한 경우, 상호 협의하여 원만하게 해결하기로 합니다.</p>
+          <p>협의가 이루어지지 않는 경우 이용자는 「소비자기본법」 등 관련 법령에 따른 소비자분쟁조정 등 분쟁조정 절차를 이용할 수 있습니다.</p>
+          <p>본 약관의 해석 및 분쟁에 관하여는 대한민국 법령을 준거법으로 하며, 소송이 제기되는 경우 「민사소송법」 등 관련 법령에서 정하는 바에 따릅니다.</p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer aria-label="회사 정보">
+    <div class="footer-inner">
+      <p class="footer-brand">주식회사 플래닛네이처미디어<span class="footer-sep">·</span>대표자: 이미정<span class="footer-sep">·</span>사업자등록번호: 874-88-03314</p>
+      <p>소재지: 인천광역시 부평구 부평대로 283, 부평우림라이온스밸리 A동 B115-16호 (청천동)</p>
+      <p>통신판매업 신고번호: 제2025-인천부평-1827호</p>
+      <p class="footer-contact">고객센터: <a href="tel:1599-1242">1599-1242</a><span class="footer-sep">·</span>이메일: <a href="mailto:lmj@stnsports.co.kr">lmj@stnsports.co.kr</a><span class="footer-sep">·</span><a href="privacy.html">개인정보처리방침</a><span class="footer-sep">·</span><a href="terms.html">이용약관</a></p>
+      <p class="footer-copy">© 2026 플래닛네이처미디어 All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
