@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>유튜브 제대로 배우기 | STN 미디어서포터즈</title>
+  <title>최고의 강사진이 다 보였다 | STN 미디어서포터즈</title>
 
   <!-- 카카오톡 / SNS 공유 (Open Graph) — og:image는 공개 접근 가능한 절대 URL 권장 -->
   <meta property="og:title" content="최고의 강사진이 다 보였다">
-  <meta property="og:description" content="7월10일~7월12일 장소:배재재대학교 2박3일 집중교육!">
+  <meta property="og:description" content="7월10일~7월12일 장소:배재대학교 2박3일 집중교육!">
   <meta property="og:image" content="https://stnmedia.kr/image/heromain.png">
   <meta property="og:url" content="https://stnmedia.kr/start.html">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="최고의 강사진이 다 보였다">
-  <meta name="twitter:description" content="7월10일~7월12일 장소:배재재대학교 2박3일 집중교육!">
+  <meta name="twitter:description" content="7월10일~7월12일 장소:배재대학교 2박3일 집중교육!">
   <meta name="twitter:image" content="https://stnmedia.kr/image/heromain.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -566,9 +566,9 @@
       justify-items: center;
       justify-content: center;
       align-self: center;
-      margin-top: auto;
-      margin-bottom: -40px;
-      transform: translateY(-40px);
+      margin-top: clamp(-18px, -2.5vw, -8px);
+      margin-bottom: -32px;
+      transform: translateY(-32px);
     }
     .hero-mentor-grid {
       display: flex;
@@ -669,7 +669,7 @@
     .hero.reveal.active .badge:nth-child(2) { animation-delay: .20s, .85s; }
     .hero.reveal.active .badge:nth-child(3) { animation-delay: .35s, 1.00s; }
     .hero-motto {
-      margin: 18px 0 0;
+      margin: clamp(12px, 2vw, 16px) 0 0;
       color: #bfe7ff;
       font-size: clamp(1.55rem, 3.2vw, 2.25rem);
       font-weight: 900;
@@ -4502,7 +4502,7 @@
         padding-right: max(14px, env(safe-area-inset-right, 0px));
       }
       .hero-layout {
-        gap: clamp(14px, 3.2vw, 22px);
+        gap: clamp(8px, 2vw, 16px);
         min-height: auto;
       }
       .hero-copy {
@@ -4533,8 +4533,9 @@
       .hero-side {
         justify-self: stretch;
         align-self: center;
-        transform: translateY(-22px);
-        margin-bottom: -22px;
+        transform: translateY(-16px);
+        margin-bottom: -16px;
+        margin-top: clamp(-16px, -2.2vw, -8px);
         overflow: visible;
       }
       .hero-all-image {
@@ -4662,6 +4663,7 @@
         flex-direction: column;
         min-height: 0;
         width: 100%;
+        gap: clamp(6px, 2vw, 14px);
       }
       .hero-copy {
         margin-top: clamp(4px, 1.8vw, 14px);
@@ -4696,26 +4698,26 @@
         flex-shrink: 0;
       }
       .hero-side {
-        flex: 1 1 auto;
+        flex: 0 0 auto;
         display: flex;
         align-items: flex-end;
         justify-content: center;
         width: 100%;
-        min-height: clamp(200px, 42vh, 460px);
-        margin-top: 0;
+        min-height: 0;
+        margin-top: clamp(-12px, -2vw, -6px);
         margin-bottom: 0;
         transform: none;
-        overflow: hidden;
+        overflow: visible;
       }
       .hero-all-image {
         width: min(132%, 720px);
-        height: 100%;
-        min-height: 100%;
+        height: auto;
+        min-height: 0;
         max-width: none;
         margin-inline: auto;
-        object-fit: cover;
-        object-position: center 22%;
-        transform: scale(1.14);
+        object-fit: contain;
+        object-position: center bottom;
+        transform: scale(1.08);
         transform-origin: center bottom;
       }
       .grid-3, .grid-4 { grid-template-columns: 1fr; }
@@ -5009,7 +5011,8 @@
         flex-shrink: 0;
       }
       .hero-side {
-        min-height: clamp(220px, 48vh, 520px);
+        min-height: 0;
+        margin-top: clamp(-14px, -2.2vw, -6px);
       }
       .hero-all-image {
         width: min(142%, 100vw);
