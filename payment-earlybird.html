@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>일반 결제 신청 | STN 미디어 서포터즈</title>
+  <title>얼리버드 결제 신청 | STN 미디어 서포터즈</title>
   <meta name="description" content="미디어 서포터즈 양성과정 수강료 결제 신청 페이지입니다." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -523,6 +523,49 @@
       color: var(--err);
       min-height: 1.2em;
     }
+
+    @property --eb-deadline-beam {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+    @keyframes eb-deadline-beam-spin {
+      from { --eb-deadline-beam: 0deg; }
+      to { --eb-deadline-beam: 360deg; }
+    }
+    .page-tier-earlybird .earlybird-deadline-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 104px;
+      padding: 18px 14px 16px;
+      border-radius: 16px;
+      border: 2px solid transparent;
+      background: linear-gradient(165deg, #1a1a1a 0%, #121212 100%) padding-box,
+        conic-gradient(
+          from var(--eb-deadline-beam),
+          rgba(198, 255, 0, 0.12) 0deg,
+          rgba(223, 255, 102, 1) 72deg,
+          rgba(198, 255, 0, 0.6) 84deg,
+          rgba(198, 255, 0, 0.1) 180deg,
+          rgba(198, 255, 0, 0.12) 360deg
+        ) border-box;
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      animation: eb-deadline-beam-spin 2.8s linear infinite;
+      box-shadow: 0 0 22px rgba(198, 255, 0, 0.28), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+      color: var(--tier-accent);
+      font: inherit;
+      font-size: clamp(1.25rem, 4.2vw, 1.55rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      text-align: center;
+      text-shadow: 0 0 24px rgba(198, 255, 0, 0.35);
+      box-sizing: border-box;
+      word-break: keep-all;
+    }
     @media (max-width: 768px) {
       .step-split {
         grid-template-columns: 1fr;
@@ -535,7 +578,8 @@
       }
     }
     @media (max-width: 520px) {
-      .apply-type-option label {
+      .apply-type-option label,
+      .page-tier-earlybird .earlybird-deadline-btn {
         min-height: 96px;
       }
       .referrer-row {
@@ -553,6 +597,12 @@
       .apply-type-option label:hover::after {
         animation: none;
         opacity: 0.85;
+      }
+      .page-tier-earlybird .earlybird-deadline-btn {
+        animation: none;
+        border-color: rgba(198, 255, 0, 0.55);
+        background: linear-gradient(165deg, #1a1a1a 0%, #121212 100%);
+        box-shadow: 0 0 12px rgba(198, 255, 0, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
       }
       .step-split-col--info > .field .field-input:hover,
       .referrer-row .field-input:hover {
@@ -1458,7 +1508,7 @@
     }
   </style>
 </head>
-<body class="page-payment page-tier-regular">
+<body class="page-payment page-tier-earlybird">
   <nav class="navbar" aria-label="결제 헤더">
     <div class="nav-inner">
       <div class="nav-brand">
@@ -1479,19 +1529,19 @@
     <div class="wrap">
       <header class="page-head">
         <p class="page-kicker">payment request</p>
-        <h1 class="page-title">일반 결제 신청</h1>
-        <p class="page-lead">정가 요금으로 신청합니다. 오프라인·온라인 수강 형태를 선택하고 정보를 입력해 주세요.</p>
+        <h1 class="page-title">얼리버드 결제 신청</h1>
+        <p class="page-lead">얼리버드 할인이 적용된 요금으로 신청합니다. 오프라인·온라인 수강 형태를 선택하고 정보를 입력해 주세요.</p>
       </header>
       <div class="tier-plan-card" aria-label="적용 요금">
-        <span class="tier-plan-badge">정가</span>
-        <p class="tier-plan-kicker">표준 수강료</p>
-        <p class="tier-plan-cond">얼리버드 마감 이후 또는 일반 신청</p>
+        <span class="tier-plan-badge">얼리버드 20% 할인</span>
+        <p class="tier-plan-kicker">기간 한정 특가</p>
+        <p class="tier-plan-cond">2026년 6월 15일까지 결제 시 적용</p>
         <div class="tier-plan-prices">
-          
-          <p class="tier-plan-price">1,980,000원</p>
+          <p class="tier-plan-old">1,980,000원</p>
+          <p class="tier-plan-price">1,584,000원</p>
         </div>
-        <span class="tier-plan-save">부가세 포함</span>
-        <p class="tier-plan-note">할인 혜택이 적용되지 않은 정가입니다.</p>
+        <span class="tier-plan-save">396,000원 절약 (20%)</span>
+        <p class="tier-plan-note">대학생 할인과 중복 적용되지 않습니다. 마감일 이후 정가가 적용됩니다.</p>
       </div>
 
 
@@ -1521,6 +1571,7 @@
                       <span class="apply-type-label-sub">(줌으로 진행예정)</span>
                     </label>
                   </div>
+                  <div class="earlybird-deadline-btn" role="note" aria-label="얼리버드 할인은 2026년 6월 15일까지 적용됩니다">2026.6.15까지</div>
                 </div>
                 <p class="apply-type-msg" id="err-apply-type" role="alert"></p>
               </div>
@@ -1662,8 +1713,8 @@
             <h2 class="step-title" id="step4-amount-title">최종 결제 금액</h2>
           </div>
           <div class="sum-rows">
-            <div class="sum-row sum-row--list" id="sum-row-list" hidden><span>정가</span><strong id="sum-list">-</strong></div>
-            <div class="sum-row sum-row--discount" id="sum-row-discount" hidden><span>얼리버드 할인 (20%)</span><strong id="sum-discount">-</strong></div>
+            <div class="sum-row sum-row--list" id="sum-row-list"><span>정가</span><strong id="sum-list">-</strong></div>
+            <div class="sum-row sum-row--discount" id="sum-row-discount"><span>얼리버드 할인 (20%)</span><strong id="sum-discount">-</strong></div>
             <div class="sum-row"><span>수강료 (공급가)</span><strong id="sum-supply">-</strong></div>
             <div class="sum-row"><span>부가세 (10%)</span><strong id="sum-vat">-</strong></div>
           </div>
@@ -1736,7 +1787,7 @@
       var loading = document.getElementById("loading-overlay");
       var toastEl = document.getElementById("toast");
       var toastTimer;
-      var FIXED_TIER = "regular";
+      var FIXED_TIER = "earlybird";
       var sumListRow = document.getElementById("sum-row-list");
       var sumDiscountRow = document.getElementById("sum-row-discount");
       var sumListEl = document.getElementById("sum-list");
@@ -1775,7 +1826,7 @@
       }
 
       function tierLabel() {
-        return "정가 (6/15 이후)";
+        return "얼리버드 20% 할인 (~6/15)";
       }
 
       function applyPriceUi() {
