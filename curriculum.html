@@ -5,11 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>커리큐럼 | MEDIA 서포터즈 아카데미</title>
 
-  <!-- ================== Icons ================== -->
-  <link rel="icon" type="image/x-icon" href="/image/favicon-512x512-256.ico" />
-  <link rel="icon" type="image/png" sizes="512x512" href="/image/favicon-512x512.png" />
-  <link rel="apple-touch-icon" href="/image/favicon-512x512.png" />
-
   <!-- 카카오톡 / SNS 공유 썸네일 설정 -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="강사 이정도면 끝!">
@@ -749,13 +744,12 @@
         0 0 0 3px rgba(20, 50, 8, 0.55),
         0 0 32px rgba(124, 252, 0, 0.5);
     }
-    section.curriculum-note-bridge {
-      /* 페이지 공통 section의 min-height:100vh·세로 중앙 정렬을 끄고 푸터와 겹침 방지 */
+    .curriculum-note-bridge {
       min-height: auto;
+      padding: clamp(44px, 8vw, 96px) 0 clamp(36px, 6.8vw, 80px);
+      display: flex;
       align-items: center;
       justify-content: center;
-      padding: clamp(52px, 9vw, 92px) 0 clamp(72px, 14vw, 156px);
-      margin-bottom: clamp(8px, 2vw, 20px);
     }
     .curriculum-note-bridge-inner {
       display: flex;
@@ -882,8 +876,7 @@
     .curriculum-pay-close-banner {
       position: fixed;
       left: 50%;
-      /* 푸터·저작권 문구와 겹치지 않도록 충분히 위로 */
-      bottom: max(5.75rem, calc(env(safe-area-inset-bottom, 12px) + 4.5rem));
+      bottom: max(20px, env(safe-area-inset-bottom, 12px));
       transform: translateX(-50%);
       z-index: 10050;
       display: inline-flex;
@@ -1799,7 +1792,8 @@
         0 0 48px rgba(124,252,0,.32),
         0 0 80px rgba(124,252,0,.18);
     }
-    /* 에딧킴: 강사 소개 카드 — 박문성과 동일 그린 (호버 모션·레이어는 기존 유지) */
+    /* 조원희·에딧킴: 강사 소개 카드 ? 박문성과 동일 그린 (호버 모션·레이어는 기존 유지) */
+    #mentor-sticky-dup .mentor-sticky-card,
     #mentor-sticky-editkim .mentor-sticky-card {
       border: 1px solid rgba(124,252,0,.7);
       background: linear-gradient(160deg, rgba(124,252,0,.1), rgba(255,255,255,.03));
@@ -1808,6 +1802,7 @@
         0 0 24px rgba(124,252,0,.14),
         0 12px 28px rgba(0,0,0,.35);
     }
+    #mentor-sticky-dup .mentor-sticky-card:hover,
     #mentor-sticky-editkim .mentor-sticky-card:hover {
       transform: scale(1.008);
       border-color: rgba(124,252,0,.82);
@@ -1819,18 +1814,22 @@
         0 0 64px rgba(124,252,0,.14);
       filter: brightness(1.06);
     }
+    #mentor-sticky-dup .mentor-badge,
     #mentor-sticky-editkim .mentor-badge {
       color: #fff;
       text-shadow: 0 0 14px rgba(255, 255, 255, .3);
     }
+    #mentor-sticky-dup .mentor-step.active,
     #mentor-sticky-editkim .mentor-step.active {
       border-color: rgba(124,252,0,.7);
       box-shadow: 0 0 0 1px rgba(124,252,0,.25), 0 0 24px rgba(124,252,0,.14);
       background: linear-gradient(170deg, rgba(124,252,0,.1), rgba(255,255,255,.03));
     }
+    #mentor-sticky-dup .mentor-step.active .step-label,
     #mentor-sticky-editkim .mentor-step.active .step-label {
       color: var(--lime);
     }
+    #mentor-sticky-dup .mentor-step:hover,
     #mentor-sticky-editkim .mentor-step:hover {
       z-index: 2;
       border-color: rgba(124,252,0,.82);
@@ -1842,6 +1841,7 @@
       filter: brightness(1.06);
       transform: scale(1.008);
     }
+    #mentor-sticky-dup .mentor-step.active:hover,
     #mentor-sticky-editkim .mentor-step.active:hover {
       transform: scale(1.014);
       box-shadow:
@@ -2038,13 +2038,15 @@
       text-shadow: 0 0 14px rgba(255, 255, 255, .3);
     }
     #mentor-sticky .mentor-career-summary,
-    #mentor-sticky-copy .mentor-career-summary {
+    #mentor-sticky-copy .mentor-career-summary,
+    #mentor-sticky-jhc .mentor-career-summary {
       margin-top: 12px;
       padding-top: 14px;
       border-top: 1px solid rgba(124,252,0,.22);
     }
     #mentor-sticky .mentor-career-summary-title,
-    #mentor-sticky-copy .mentor-career-summary-title {
+    #mentor-sticky-copy .mentor-career-summary-title,
+    #mentor-sticky-jhc .mentor-career-summary-title {
       font-size: .82rem;
       font-weight: 900;
       letter-spacing: .06em;
@@ -2052,7 +2054,8 @@
       margin: 0 0 10px;
     }
     #mentor-sticky .mentor-career-summary-list,
-    #mentor-sticky-copy .mentor-career-summary-list {
+    #mentor-sticky-copy .mentor-career-summary-list,
+    #mentor-sticky-jhc .mentor-career-summary-list {
       margin: 0;
       padding-left: 1.15em;
       color: #c8c8c8;
@@ -2060,11 +2063,13 @@
       line-height: 1.55;
     }
     #mentor-sticky .mentor-career-summary-list li,
-    #mentor-sticky-copy .mentor-career-summary-list li {
+    #mentor-sticky-copy .mentor-career-summary-list li,
+    #mentor-sticky-jhc .mentor-career-summary-list li {
       margin-bottom: 7px;
     }
     #mentor-sticky .mentor-career-summary-list li:last-child,
-    #mentor-sticky-copy .mentor-career-summary-list li:last-child {
+    #mentor-sticky-copy .mentor-career-summary-list li:last-child,
+    #mentor-sticky-jhc .mentor-career-summary-list li:last-child {
       margin-bottom: 0;
     }
     #mentor-sticky-copy .mentor-step h4 {
@@ -3237,17 +3242,7 @@
       font-weight: 900;
       margin-top: 14px;
     }
-    footer {
-      padding: clamp(28px, 5vw, 40px) 16px max(36px, calc(env(safe-area-inset-bottom, 0px) + 28px));
-      text-align: center;
-      color: #a8a8a8;
-      font-size: .88rem;
-      line-height: 1.55;
-      background: var(--bg);
-      border-top: 1px solid rgba(42, 42, 42, 0.9);
-      position: relative;
-      z-index: 0;
-    }
+    footer { padding: 18px 0 28px; text-align: center; color: #909090; font-size: .88rem; }
 
     @media (max-width: 1024px) {
       .container { width: min(94%, var(--max)); }
@@ -3797,34 +3792,33 @@
             </div>
           </article>
           <article class="timeline-row">
-            <div class="timeline-time-col"><span>10:30 - 12:00</span><br><button type="button" class="timeline-inline-btn"><strong>강만훈 작가</strong></button><span class="timeline-inline-note">7월 10일(금) · 강의 주제: 콘텐츠와 커머스의 융합 · 방송작가 출신 유튜브 콘텐츠 슈퍼바이저</span></div><div class="timeline-dot"></div>
+            <div class="timeline-time-col"><span>10:30 - 12:30</span><br><button type="button" class="timeline-inline-btn"><strong>닥터튜브 강사</strong></button></div><div class="timeline-dot"></div>
             <div class="track-grid">
               <div class="track-card journalist">
                 <button type="button" class="timeline-inline-btn track-period-btn"><strong>1교시</strong></button>
-                <h5>콘텐츠는 왜 커머스와 융합할 수밖에 없는가</h5><span class="track-time">30분</span>
+                <h5>데이터 기반 채널 정밀 진단</h5><span class="track-time">25분</span>
                 <ul>
-                  <li>기존 방송과 뉴미디어 콘텐츠의 차이, 조회수·광고 수익만의 한계</li>
-                  <li>브랜디드·PPL·협찬이 커머스로 이어지는 흐름</li>
-                  <li>중국 시장에서 콘텐츠와 커머스가 빠르게 결합하는 배경</li>
+                  <li> · 이탈률 · 유령 구독자 · 트래픽 구조</li>
+                  <li> · 타겟 미스매치 사례 분석</li>
+                  <li> · 운영자가 반드시 확인해야 할 진단 지표</li>
                 </ul>
               </div>
               <div class="track-card media">
                 <button type="button" class="timeline-inline-btn track-period-btn"><strong>2교시</strong></button>
-                <h5>제작자는 커머스를 어떻게 콘텐츠에 연결해야 하는가</h5><span class="track-time">30분</span>
+                <h5>유튜브 필수 구조 이해</h5><span class="track-time">30분</span>
                 <ul>
-                  <li>기획 단계에서 상품·브랜드를 보는 시각</li>
-                  <li>억지 노출 없이 스토리에 녹이는 방법</li>
-                  <li>롱폼·숏폼·라이브커머스 역할, 링크·QR·댓글 고정 등 연결 포인트</li>
-                  <li>한국·중국 플랫폼별 소비·구매 패턴 차이</li>
+                  <li> · 검색 알고리즘 vs 탐색 알고리즘</li>
+                  <li> · 멀티포맷 전략 (롱폼 · 숏폼 · 라이브)</li>
+                  <li> · 초반 노출 전략, 썸네일 · 제목 원리</li>
                 </ul>
               </div>
               <div class="track-card youtube">
                 <button type="button" class="timeline-inline-btn track-period-btn"><strong>3교시</strong></button>
-                <h5>실제 수익화 방식과 콘텐츠 상품화</h5><span class="track-time">30분</span>
+                <h5>채널 맞춤 콘텐츠 전략 &amp; 실전 수익화</h5><span class="track-time">25분</span>
                 <ul>
-                  <li>판매 가능한 상품 유형: 출연·협찬·브랜디드·라이브·패키지·운영 대행 등</li>
-                  <li>브랜드 제안서·미디어킷 개념, 협찬 단가 설정 시 고려 요소</li>
-                  <li>기획안이 영업 자료로 바뀌는 과정, 중국 커머스 연계 시 체크리스트</li>
+                  <li>· 콘텐츠 기획 3요소 · 벤치마크 채널 분석</li>
+                  <li>· 크리에이터 광고 단가 구조</li>
+                  <li>· 미디어킷 · 세일즈 구조 </li>
                 </ul>
               </div>
             </div>
