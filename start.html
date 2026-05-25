@@ -702,6 +702,9 @@
       position: relative;
       z-index: 2;
       padding-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .hero-layout {
       display: flex;
@@ -790,12 +793,15 @@
       animation: hero-logo-glass-shift 1.45s ease-out .08s forwards;
     }
     .hero-side {
-      display: grid;
-      gap: 4px;
-      width: 100%;
-      justify-items: center;
+      display: flex;
       justify-content: center;
-      align-self: center;
+      align-items: flex-end;
+      width: 100%;
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      padding-inline: 0;
+      align-self: stretch;
       margin-top: clamp(-4px, -0.5vw, 0px);
       margin-bottom: 0;
       transform: none;
@@ -835,10 +841,12 @@
       display: none;
     }
     .hero-all-image {
-      width: 100%;
-      max-width: min(100%, 1140px);
+      width: min(100%, 1320px);
+      max-width: 100%;
       height: auto;
+      aspect-ratio: 1920 / 779;
       display: block;
+      margin-inline: auto;
       object-fit: contain;
       object-position: center bottom;
       filter: drop-shadow(0 10px 26px rgba(0,0,0,.35));
@@ -1778,13 +1786,19 @@
     }
     .mentor-preview--grid .mentor-preview-track {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(12, minmax(0, 1fr));
       grid-template-rows: repeat(2, auto);
       gap: clamp(14px, 2vw, 24px);
       width: 100%;
       transform: none;
       transition: none;
       will-change: auto;
+    }
+    .mentor-preview--grid .mentor-preview-slide:nth-child(-n+4) {
+      grid-column: span 3;
+    }
+    .mentor-preview--grid .mentor-preview-slide:nth-child(n+5) {
+      grid-column: span 3;
     }
     @keyframes mentor-preview-neon {
       0%, 100% {
@@ -1878,6 +1892,22 @@
       justify-content: center;
       align-items: center;
     }
+    .mentor-preview-date {
+      margin: 0;
+      font-size: clamp(0.72rem, 1.35vw, 0.84rem);
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      color: rgba(255, 255, 255, 0.9);
+      word-break: keep-all;
+    }
+    .mentor-preview-date span {
+      display: block;
+      margin-top: 0.12em;
+      font-size: 0.94em;
+      font-weight: 600;
+      color: rgba(198, 255, 0, 0.88);
+    }
     .mentor-preview-name {
       margin: 0;
       font-size: clamp(1.05rem, 2.2vw, 1.35rem);
@@ -1920,8 +1950,12 @@
       }
       .mentor-preview--grid .mentor-preview-track {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-template-rows: repeat(3, auto);
+        grid-template-rows: none;
         gap: clamp(12px, 2.5vw, 18px);
+      }
+      .mentor-preview--grid .mentor-preview-slide:nth-child(-n+4),
+      .mentor-preview--grid .mentor-preview-slide:nth-child(n+5) {
+        grid-column: span 1;
       }
       .mentor-preview--grid .mentor-preview-photo {
         height: clamp(160px, 38vw, 220px);
@@ -1951,137 +1985,6 @@
       }
       .mentor-preview--grid .mentor-preview-photo {
         height: clamp(140px, 42vw, 190px);
-      }
-    }
-    .mentor-emphasis {
-      min-height: auto;
-      padding: clamp(56px, 9vw, 104px) 0 clamp(48px, 7.5vw, 88px);
-      background: #000;
-      position: relative;
-      overflow: hidden;
-    }
-    .mentor-emphasis .container {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-    }
-    .mentor-emphasis-message {
-      margin: 0;
-      font-weight: 900;
-      line-height: 1.38;
-      font-size: clamp(2.4rem, 5.95vw, 4.72rem);
-      color: inherit;
-      font-style: italic;
-      letter-spacing: -0.03em;
-      text-shadow: none;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: geometricPrecision;
-      transition:
-        transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .mentor-emphasis-message .mentor-emphasis-line {
-      display: inline-block;
-      color: #eaff80;
-      text-shadow:
-        0 1px 0 rgba(0, 0, 0, 0.92),
-        0 2px 3px rgba(0, 0, 0, 0.75);
-    }
-    .mentor-emphasis-message .mentor-emphasis-accent {
-      display: inline-block;
-      margin-top: 0;
-      margin-bottom: 0;
-      padding: 2px clamp(4px, 1vw, 8px);
-      color: #fff;
-      font-size: 1.08em;
-      line-height: 1.28;
-      text-shadow:
-        0 1px 0 rgba(0, 0, 0, 0.88),
-        0 2px 3px rgba(0, 0, 0, 0.72);
-    }
-    /* 호버 시 네온(글로우 변화·점멸) 없음 — 살짝 떠오르는 변형만 */
-    .mentor-emphasis:hover .mentor-emphasis-message {
-      transform: translateY(-8px);
-    }
-    .mentor-emphasis-sronly {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-    .mentor-emphasis-message-cycle {
-      position: relative;
-    }
-    .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: clamp(2px, 0.75vw, 8px);
-      min-height: 0;
-      transform-origin: center center;
-    }
-    .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span {
-      margin: 0;
-      max-width: min(100%, 22em);
-      text-align: center;
-      opacity: 0;
-      transform: translateY(18px);
-    }
-    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span {
-      animation: mentor-emphasis-line-in 0.58s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(1) { animation-delay: 0.06s; }
-    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(2) { animation-delay: 0.2s; }
-    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(3) { animation-delay: 0.34s; }
-    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(4) { animation-delay: 0.48s; }
-    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(5) { animation-delay: 0.62s; }
-    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner {
-      animation: mentor-emphasis-block-pulse 0.65s ease-in-out 1.48s 1 both;
-    }
-    @keyframes mentor-emphasis-line-in {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @keyframes mentor-emphasis-block-pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-    }
-    @media (max-width: 1024px) {
-      #mentor-emphasis .mentor-emphasis-message {
-        font-size: clamp(1.48rem, 3.65vw + 0.72rem, 2.08rem);
-        line-height: 1.38;
-        max-width: min(100%, 19em);
-        margin-inline: auto;
-        padding-inline: clamp(10px, 3.2vw, 20px);
-        word-break: keep-all;
-      }
-      #mentor-emphasis .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner {
-        gap: clamp(4px, 1.65vw, 12px);
-      }
-      #mentor-emphasis .mentor-emphasis-accent {
-        font-size: 1.02em;
-        padding-inline: clamp(3px, 0.85vw, 8px);
-      }
-    }
-    @media (max-width: 480px) {
-      #mentor-emphasis .mentor-emphasis-message {
-        font-size: clamp(1.2rem, 5.05vw + 0.52rem, 1.72rem);
-        line-height: 1.42;
-        max-width: min(94vw, 18em);
-      }
-      #mentor-emphasis .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner {
-        gap: clamp(6px, 2.2vw, 12px);
       }
     }
     .mentor-layout {
@@ -2151,15 +2054,41 @@
       color: #d8d8d8;
       font-weight: 700;
       margin-bottom: 10px;
+      line-height: 1.55;
+      word-break: keep-all;
+      overflow-wrap: break-word;
     }
     .mentor-bio {
       color: #d0d0d0;
-      line-height: 1.7;
+      line-height: 1.65;
       font-size: .98rem;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
     }
     /* 강사진 카드: 이름(사진 바로 아래) 가운데, 그 아래 본문은 들여쓰기 + 왼쪽 정렬 */
     .mentor-section .mentor-sticky-card h3 {
       text-align: center;
+    }
+    .mentor-section .mentor-role {
+      text-align: center;
+    }
+    .mentor-section .mentor-bio {
+      text-align: left;
+    }
+    .mentor-section .mentor-bio-quote {
+      display: block;
+      text-align: center;
+      margin: 0 0 12px;
+      line-height: 1.65;
+    }
+    .mentor-section .mentor-bio-list {
+      margin: 0;
+      padding-left: 1.15em;
+      list-style: disc;
+    }
+    .mentor-section .mentor-bio-list li + li {
+      margin-top: 8px;
     }
     .mentor-steps {
       display: grid;
@@ -2272,19 +2201,23 @@
         0 0 48px rgba(124,252,0,.32),
         0 0 80px rgba(124,252,0,.18);
     }
-    #mentor-sticky-editkim .mentor-badge {
+    #mentor-sticky-editkim .mentor-badge,
+    #mentor-sticky-pjb .mentor-badge {
       color: #fff;
       text-shadow: 0 0 14px rgba(255, 255, 255, .3);
     }
-    #mentor-sticky-editkim .mentor-step.active {
+    #mentor-sticky-editkim .mentor-step.active,
+    #mentor-sticky-pjb .mentor-step.active {
       border-color: rgba(124,252,0,.7);
       box-shadow: 0 0 0 1px rgba(124,252,0,.25), 0 0 24px rgba(124,252,0,.14);
       background: linear-gradient(170deg, rgba(124,252,0,.1), rgba(255,255,255,.03));
     }
-    #mentor-sticky-editkim .mentor-step.active .step-label {
+    #mentor-sticky-editkim .mentor-step.active .step-label,
+    #mentor-sticky-pjb .mentor-step.active .step-label {
       color: var(--lime);
     }
-    #mentor-sticky-editkim .mentor-step:hover {
+    #mentor-sticky-editkim .mentor-step:hover,
+    #mentor-sticky-pjb .mentor-step:hover {
       z-index: 2;
       border-color: rgba(124,252,0,.82);
       box-shadow:
@@ -2295,7 +2228,8 @@
       filter: brightness(1.06);
       transform: scale(1.008);
     }
-    #mentor-sticky-editkim .mentor-step.active:hover {
+    #mentor-sticky-editkim .mentor-step.active:hover,
+    #mentor-sticky-pjb .mentor-step.active:hover {
       transform: scale(1.014);
       box-shadow:
         0 0 0 1px rgba(124,252,0,.52),
@@ -2304,17 +2238,21 @@
         0 0 80px rgba(124,252,0,.18);
     }
     /* 에딧킴 섹션 가독성 다듬기 (그린 통일) */
-    #mentor-sticky-editkim .intensive-head h2 {
+    #mentor-sticky-editkim .intensive-head h2,
+    #mentor-sticky-pjb .intensive-head h2 {
       color: #fff;
       text-shadow: 0 0 14px rgba(124,252,0,.34);
     }
-    #mentor-sticky-editkim .intensive-head p {
+    #mentor-sticky-editkim .intensive-head p,
+    #mentor-sticky-pjb .intensive-head p {
       color: #dcffd2;
     }
-    #mentor-sticky-editkim .mentor-step {
+    #mentor-sticky-editkim .mentor-step,
+    #mentor-sticky-pjb .mentor-step {
       align-content: start;
     }
-    #mentor-sticky-editkim .duration {
+    #mentor-sticky-editkim .duration,
+    #mentor-sticky-pjb .duration {
       font-size: .6em;
       font-weight: 700;
       color: #d9ffc0;
@@ -2485,7 +2423,8 @@
       color: #f8fff0;
       text-shadow: 0 0 26px rgba(124, 252, 0, 0.35);
     }
-    #mentor-sticky-copy .mentor-badge {
+    #mentor-sticky-copy .mentor-badge,
+    #mentor-sticky-dan .mentor-badge {
       color: #fff;
       text-shadow: 0 0 14px rgba(255, 255, 255, .3);
     }
@@ -2521,10 +2460,12 @@
     }
     /* 강사 스텝 교시 라벨·버튼: 강만훈 교시 버튼과 동일 크기·테두리·호버 */
     #mentor-sticky-editkim .mentor-step .lecture-pill,
+    #mentor-sticky-pjb .mentor-step .lecture-pill,
     #mentor-sticky-kcs .mentor-step .lecture-pill,
     #mentor-sticky-bjh .mentor-step .lecture-pill,
     #mentor-sticky-jsh .mentor-step .lecture-pill,
-    #mentor-sticky-copy .mentor-step .timeline-inline-btn.mentor-period-btn {
+    #mentor-sticky-copy .mentor-step .timeline-inline-btn.mentor-period-btn,
+    #mentor-sticky-dan .mentor-step .timeline-inline-btn.mentor-period-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -2548,15 +2489,18 @@
       cursor: default;
       transition: transform .2s ease, border-color .2s ease, filter .2s ease;
     }
-    #mentor-sticky-copy .mentor-step .timeline-inline-btn.mentor-period-btn {
+    #mentor-sticky-copy .mentor-step .timeline-inline-btn.mentor-period-btn,
+    #mentor-sticky-dan .mentor-step .timeline-inline-btn.mentor-period-btn {
       appearance: none;
       -webkit-appearance: none;
     }
     #mentor-sticky-editkim .mentor-step .lecture-pill:hover,
+    #mentor-sticky-pjb .mentor-step .lecture-pill:hover,
     #mentor-sticky-kcs .mentor-step .lecture-pill:hover,
     #mentor-sticky-bjh .mentor-step .lecture-pill:hover,
     #mentor-sticky-jsh .mentor-step .lecture-pill:hover,
-    #mentor-sticky-copy .mentor-step .timeline-inline-btn.mentor-period-btn:hover {
+    #mentor-sticky-copy .mentor-step .timeline-inline-btn.mentor-period-btn:hover,
+    #mentor-sticky-dan .mentor-step .timeline-inline-btn.mentor-period-btn:hover {
       animation: none;
       transform: scale(1.03);
       border-color: rgba(180, 255, 96, 0.95);
@@ -2564,23 +2508,28 @@
       background: transparent;
       box-shadow: none;
     }
-    #mentor-sticky-copy .mentor-step .timeline-inline-btn.mentor-period-btn strong {
+    #mentor-sticky-copy .mentor-step .timeline-inline-btn.mentor-period-btn strong,
+    #mentor-sticky-dan .mentor-step .timeline-inline-btn.mentor-period-btn strong {
       color: #fff;
     }
-    #mentor-sticky-copy .mentor-step .timeline-inline-btn.mentor-period-btn + .mentor-part-title {
+    #mentor-sticky-copy .mentor-step .timeline-inline-btn.mentor-period-btn + .mentor-part-title,
+    #mentor-sticky-dan .mentor-step .timeline-inline-btn.mentor-period-btn + .mentor-part-title {
       display: block;
       margin-top: 2px;
       margin-bottom: 6px;
     }
-    #mentor-sticky-copy .mentor-step > p + p {
+    #mentor-sticky-copy .mentor-step > p + p,
+    #mentor-sticky-dan .mentor-step > p + p {
       margin-top: 20px;
     }
-    #mentor-sticky-copy .mentor-step.active {
+    #mentor-sticky-copy .mentor-step.active,
+    #mentor-sticky-dan .mentor-step.active {
       border-color: rgba(124,252,0,.7);
       box-shadow: 0 0 0 1px rgba(124,252,0,.25), 0 0 24px rgba(124,252,0,.14);
       background: linear-gradient(170deg, rgba(124,252,0,.1), rgba(255,255,255,.03));
     }
-    #mentor-sticky-copy .mentor-step:hover {
+    #mentor-sticky-copy .mentor-step:hover,
+    #mentor-sticky-dan .mentor-step:hover {
       z-index: 2;
       border-color: rgba(124,252,0,.82);
       box-shadow:
@@ -2591,7 +2540,8 @@
       filter: brightness(1.08);
       transform: translateY(0) scale(1.008);
     }
-    #mentor-sticky-copy .mentor-step.active:hover {
+    #mentor-sticky-copy .mentor-step.active:hover,
+    #mentor-sticky-dan .mentor-step.active:hover {
       transform: translateY(0) scale(1.014);
       box-shadow:
         0 0 0 1px rgba(124,252,0,.52),
@@ -3241,6 +3191,68 @@
     .event-note {
       font-size: clamp(.95rem, 2.35vw, 1.12rem);
       color: rgba(220,220,220,.9);
+      margin: 0;
+      line-height: 1.55;
+    }
+    .event-announce {
+      margin: clamp(10px, 2vw, 14px) 0 0;
+      font-size: clamp(1.05rem, 2.6vw, 1.28rem);
+      font-weight: 800;
+      color: var(--lime);
+      letter-spacing: -0.02em;
+      line-height: 1.45;
+      text-shadow: 0 0 14px rgba(124, 252, 0, 0.28);
+    }
+    .event-legal {
+      max-width: min(100%, 36rem);
+      margin: clamp(18px, 3.2vw, 28px) auto 0;
+      padding: clamp(14px, 2.5vw, 20px) clamp(16px, 3vw, 24px);
+      border: 2px solid rgba(198, 255, 0, 0.28);
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.35);
+      text-align: left;
+      transition:
+        border-color 0.28s ease,
+        box-shadow 0.28s ease;
+    }
+    .event-legal:hover {
+      border-color: rgba(198, 255, 0, 0.78);
+      animation: event-legal-border-glow 1.35s ease-in-out infinite;
+    }
+    @keyframes event-legal-border-glow {
+      0%, 100% {
+        box-shadow:
+          0 0 14px rgba(198, 255, 0, 0.32),
+          0 0 28px rgba(198, 255, 0, 0.14),
+          inset 0 0 20px rgba(198, 255, 0, 0.06);
+      }
+      50% {
+        box-shadow:
+          0 0 26px rgba(198, 255, 0, 0.58),
+          0 0 52px rgba(198, 255, 0, 0.28),
+          inset 0 0 28px rgba(198, 255, 0, 0.1);
+      }
+    }
+    .event-legal-title {
+      margin: 0 0 clamp(8px, 1.5vw, 12px);
+      font-size: clamp(0.82rem, 1.9vw, 0.92rem);
+      font-weight: 800;
+      color: var(--lime);
+      letter-spacing: 0.02em;
+      text-shadow: 0 0 12px rgba(124, 252, 0, 0.28);
+    }
+    .event-legal ul {
+      margin: 0;
+      padding-left: 1.15em;
+      display: grid;
+      gap: clamp(6px, 1.2vw, 9px);
+    }
+    .event-legal li {
+      font-size: clamp(0.78rem, 1.85vw, 0.88rem);
+      font-weight: 500;
+      line-height: 1.62;
+      color: rgba(200, 200, 200, 0.82);
+      word-break: keep-all;
     }
 
     .timeline { display: grid; gap: 14px; margin-bottom: 24px; }
@@ -4457,14 +4469,18 @@
       }
       .hero-side {
         justify-self: stretch;
-        align-self: center;
+        align-self: stretch;
         transform: none;
         margin-bottom: 0;
         overflow: visible;
+        width: 100%;
+        margin-left: 0;
+        padding-inline: 0;
       }
       .hero-all-image {
-        width: 100%;
+        width: min(100%, 920px);
         max-width: 100%;
+        margin-inline: auto;
         transform: none;
       }
       .mentor-section .intensive-head h2 {
@@ -4626,18 +4642,20 @@
         align-items: flex-end;
         justify-content: center;
         width: 100%;
-        min-height: 0;
+        max-width: 100%;
+        margin-left: 0;
+        min-height: clamp(200px, 34svh, 320px);
         margin-top: clamp(-6px, -1vw, 0px);
         margin-bottom: 0;
         transform: none;
         overflow: visible;
-        padding-inline: max(0px, env(safe-area-inset-left, 0px)) max(0px, env(safe-area-inset-right, 0px));
+        padding-inline: 0;
       }
       .hero-all-image {
-        width: 100%;
+        width: min(100%, 720px);
         max-width: 100%;
         height: auto;
-        max-height: 100%;
+        max-height: clamp(200px, 34svh, 320px);
         margin-inline: auto;
         object-fit: contain;
         object-position: center bottom;
@@ -4909,14 +4927,18 @@
         flex-shrink: 0;
       }
       .hero-side {
-        min-height: 0;
+        min-height: clamp(210px, 38svh, 280px);
         margin-top: clamp(-8px, -1.5vw, 0px);
+        padding-inline: 0;
+        justify-content: center;
       }
       .hero-all-image {
         width: 100%;
         max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
+        height: clamp(210px, 52vw, 280px);
+        max-height: none;
+        margin-inline: auto;
+        object-fit: cover;
         object-position: center bottom;
         transform: none;
       }
@@ -4985,6 +5007,10 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .event-tagline, .event-cash { animation: none; }
+      .event-legal:hover { animation: none; }
+      .event-legal:hover {
+        box-shadow: 0 0 18px rgba(198, 255, 0, 0.38);
+      }
       .cash-counter { transition: none; }
       #tracks .tracks-title .tracks-hit {
         opacity: 1;
@@ -5063,23 +5089,6 @@
         animation: none !important;
         will-change: auto;
         transform: none;
-      }
-      .mentor-emphasis:hover .mentor-emphasis-message {
-        transform: none;
-      }
-      .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 0;
-        animation: none !important;
-      }
-      .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span {
-        display: block;
-        animation: none !important;
-        opacity: 1 !important;
-        transform: none !important;
-        max-width: none;
       }
       #apply .apply-col-right:hover {
         transform: none;
@@ -5292,21 +5301,18 @@
         <span class="cash-counter" data-target="10000000">0</span><span class="event-won">원</span>
       </p>
       <p class="event-note">수료 후 전체 수강생 중 1명 추첨</p>
-    </div>
-  </section>
-
-  <section id="mentor-emphasis" class="mentor-emphasis reveal">
-    <div class="container">
-      <p class="mentor-emphasis-message mentor-emphasis-message-cycle">
-        <span class="mentor-emphasis-sronly">이보다 더 막강할 수는 없다. 각 분야 최고. 전문가 6명. 2박3일 집중 지도 합니다.</span>
-        <span class="mentor-emphasis-cycle-inner" aria-hidden="true">
-          <span class="mentor-emphasis-line">이보다 더 막강할 수는 없다 !</span>
-          <span class="mentor-emphasis-accent">각 분야 최고</span>
-          <span class="mentor-emphasis-accent">전문가 6명</span>
-          <span class="mentor-emphasis-line">2박3일</span>
-          <span class="mentor-emphasis-line">집중 지도 합니다</span>
-        </span>
-      </p>
+      <p class="event-announce">7월 11일 20시 당첨 발표</p>
+      <div class="event-legal">
+        <p class="event-legal-title">이벤트 유의사항</p>
+        <ul>
+          <li>당첨금 1,000만원은 <strong>기타소득 원천징수세 22%</strong> 공제 후 실수령액이 지급됩니다.</li>
+          <li>당첨자는 신분증 확인 및 세무 처리에 필요한 개인정보(성명·연락처·주민등록번호 등) 제공에 동의해야 합니다.</li>
+          <li>교육 <strong>수료 요건을 충족한 수강생</strong>만 추첨 대상에 포함되며, 7월 11일 20시 현장·온라인을 통해 당첨자를 발표합니다.</li>
+          <li>당첨금은 타인에게 양도·현금화 대행이 불가하며, 허위·부정 참여 시 당첨이 취소될 수 있습니다.</li>
+          <li>당첨자는 발표 후 안내되는 기한 내 필요 서류를 제출해야 하며, 미제출 시 당첨이 무효 처리될 수 있습니다.</li>
+          <li>추첨 방법·지급 일정·제출 서류 등 세부 사항은 교육 현장 및 공식 채널을 통해 별도 안내됩니다.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -5318,46 +5324,68 @@
       <p class="mentor-preview-hint">강사진을 누르면 세부내용 보입니다.</p>
       <div class="mentor-preview-viewport" id="mentor-preview-viewport">
         <div class="mentor-preview-track" id="mentor-preview-track">
-          <a href="#mentor-sticky" class="mentor-preview-slide" aria-label="박문성 해설위원 상세 보기">
-            <div class="mentor-preview-photo"><img src="박문성1.png" alt="" width="480" height="540" loading="eager" fetchpriority="high" decoding="async" /></div>
+          <a href="#mentor-sticky" class="mentor-preview-slide" aria-label="박문성 해설위원 7월 11일 강의 상세 보기">
+            <div class="mentor-preview-photo"><img src="image/박문성1.png" alt="박문성 해설위원" width="480" height="540" loading="eager" fetchpriority="high" decoding="async" /></div>
             <div class="mentor-preview-text">
+              <p class="mentor-preview-date">7월 11일 (토)<span>11:00–12:30</span></p>
               <p class="mentor-preview-name">박문성 해설위원</p>
               <p class="mentor-preview-sum">19년 현장 경험으로 스포츠 스토리텔링·콘텐츠 수익화를 이끕니다.</p>
             </div>
           </a>
-          <a href="#mentor-sticky-copy" class="mentor-preview-slide" aria-label="강만훈 작가 상세 보기">
+          <a href="#mentor-sticky-copy" class="mentor-preview-slide" aria-label="강만훈 작가 7월 11일 강의 상세 보기">
             <div class="mentor-preview-photo"><img src="image/KMH.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
             <div class="mentor-preview-text">
+              <p class="mentor-preview-date">7월 11일 (토)<span>09:30–11:00</span></p>
               <p class="mentor-preview-name">강만훈 작가</p>
               <p class="mentor-preview-sum">방송 기획·제작 노하우로 기획부터 제작·특집까지 한 번에 연결합니다.</p>
             </div>
           </a>
-          <a href="#mentor-sticky-editkim" class="mentor-preview-slide" aria-label="에딧킴 강사 상세 보기">
+          <a href="#mentor-sticky-pjb" class="mentor-preview-slide" aria-label="편준범 교수 7월 11일 강의 상세 보기">
+            <div class="mentor-preview-photo"><img src="image/PJB.png" alt="편준범 교수" width="480" height="540" loading="lazy" decoding="async" /></div>
+            <div class="mentor-preview-text">
+              <p class="mentor-preview-date">7월 11일 (토)<span>13:30–15:30</span></p>
+              <p class="mentor-preview-name">편준범 교수</p>
+              <p class="mentor-preview-sum">말로하는 AI로 스마트폰 하나로 콘텐츠 기획부터 업로드까지 안내합니다.</p>
+            </div>
+          </a>
+          <a href="#mentor-sticky-editkim" class="mentor-preview-slide" aria-label="에딧킴 강사 7월 10일 강의 상세 보기">
             <div class="mentor-preview-photo"><img src="image/editkim1.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
             <div class="mentor-preview-text">
+              <p class="mentor-preview-date">7월 10일 (금)<span>15:00–18:00</span></p>
               <p class="mentor-preview-name">에딧킴 강사</p>
               <p class="mentor-preview-sum">AI·캡컷으로 숏폼 기획·편집·업로드까지 원스톱 실전을 안내합니다.</p>
             </div>
           </a>
-          <a href="#mentor-sticky-kcs" class="mentor-preview-slide" aria-label="김창수 강사 상세 보기">
+          <a href="#mentor-sticky-kcs" class="mentor-preview-slide" aria-label="김창수 강사 7월 11일 강의 상세 보기">
             <div class="mentor-preview-photo"><img src="image/KCS1.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
             <div class="mentor-preview-text">
+              <p class="mentor-preview-date">7월 11일 (토)<span>15:30–17:30</span></p>
               <p class="mentor-preview-name">김창수 강사</p>
               <p class="mentor-preview-sum">AI 자동화와 실전 루틴으로 콘텐츠·전환·수익 구조를 설계합니다.</p>
             </div>
           </a>
-          <a href="#mentor-sticky-bjh" class="mentor-preview-slide" aria-label="박정훈 강사 상세 보기">
+          <a href="#mentor-sticky-bjh" class="mentor-preview-slide" aria-label="박정훈 강사 7월 10일 강의 상세 보기">
             <div class="mentor-preview-photo"><img src="image/bjh.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
             <div class="mentor-preview-text">
+              <p class="mentor-preview-date">7월 10일 (금)<span>10:30–12:00</span></p>
               <p class="mentor-preview-name">박정훈 강사</p>
               <p class="mentor-preview-sum">스튜디오 분석으로 실패 패턴을 짚고 채널별 실행 전략을 제시합니다.</p>
             </div>
           </a>
-          <a href="#mentor-sticky-jsh" class="mentor-preview-slide" aria-label="개그우먼 조승희 상세 보기">
+          <a href="#mentor-sticky-jsh" class="mentor-preview-slide" aria-label="개그우먼 조승희 7월 11일 강의 상세 보기">
             <div class="mentor-preview-photo"><img src="image/jsh.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
             <div class="mentor-preview-text">
+              <p class="mentor-preview-date">7월 11일 (토)<span>18:30–20:30</span></p>
               <p class="mentor-preview-name">개그우먼 조승희</p>
               <p class="mentor-preview-sum">소통과 무대 경험으로 교육 현장에 감동과 웃음을 더합니다.</p>
+            </div>
+          </a>
+          <a href="#mentor-sticky-dan" class="mentor-preview-slide" aria-label="김경은(단아쌤) 교수 7월 10일 강의 상세 보기">
+            <div class="mentor-preview-photo"><img src="image/DAN.png" alt="김경은(단아쌤) 교수" width="480" height="540" loading="lazy" decoding="async" /></div>
+            <div class="mentor-preview-text">
+              <p class="mentor-preview-date">7월 10일 (금)<span>13:00–15:00</span></p>
+              <p class="mentor-preview-name">김경은(단아쌤)교수</p>
+              <p class="mentor-preview-sum">유튜브 크리에이터로 지식을 수익화하는 비밀</p>
             </div>
           </a>
         </div>
@@ -5385,7 +5413,7 @@
           <article class="mentor-sticky-card">
             <span class="mentor-badge">강사진</span>
             <div class="mentor-photo-wrap">
-              <img id="mentor-photo" src="박문성1.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
+              <img id="mentor-photo" src="image/박문성1.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
             </div>
             <h3 id="mentor-name">박문성 해설위원</h3>
             <p id="mentor-role" class="mentor-role">축구 해설위원 · 스포츠 콘텐츠 전문가</p>
@@ -5406,7 +5434,7 @@
             class="mentor-step active"
             data-name="박문성 해설위원"
             data-role="축구 해설위원 · 스포츠 콘텐츠 전문가"
-            data-image="박문성1.png"
+            data-image="image/박문성1.png"
             data-bio="&quot;당신의 첫 영상이 아니라,<br>19년 경기장 경험이 당신의 채널을 만듭니다&quot;<br><br>- 축구 해설위원이 말하는 &quot;시청자의 마음&quot;<br>- 선수 심리를 아는 자만 할 수 있는 인터뷰<br>- 스포츠 팬 100만 명을 사로잡는 스토리텔링">
             <h4>스포츠 콘텐츠 스토리텔링</h4>
             <p>유튜브 스포츠 채널의 성공 전략</p>
@@ -5455,6 +5483,55 @@
             <p><button type="button" class="timeline-inline-btn mentor-period-btn"><strong>1교시</strong></button><strong class="mentor-part-title">콘텐츠는 왜 커머스와 융합할 수밖에 없는가</strong><br>· 기존 방송 콘텐츠와 뉴미디어 콘텐츠의 차이<br>· 조회수와 광고 수익만으로는 한계가 생기는 이유<br>· 브랜드가 단순 광고보다 콘텐츠형 노출을 원하는 이유<br>· PPL, 협찬, 브랜디드 콘텐츠가 커머스로 이어지는 흐름<br>· 중국 시장에서 콘텐츠와 커머스가 빠르게 결합되는 이유</p>
             <p><button type="button" class="timeline-inline-btn mentor-period-btn"><strong>2교시</strong></button><strong class="mentor-part-title">제작자는 커머스를 어떻게 콘텐츠에 연결해야 하는가</strong><br>· 콘텐츠 기획 단계에서 상품과 브랜드를 바라보는 방법<br>· 제품을 억지로 노출하지 않고 이야기 안에 녹이는 방식<br>· 롱폼, 숏폼, 라이브커머스의 역할 차이<br>· QR, 쿠폰, 구매 링크, 댓글 고정 등을 활용한 판매 연결 방식<br>· 한국과 중국 플랫폼에서 콘텐츠 소비와 구매 방식이 달라지는 지점</p>
             <p><button type="button" class="timeline-inline-btn mentor-period-btn"><strong>3교시</strong></button><strong class="mentor-part-title">실제 수익화 방식과 콘텐츠 상품화</strong><br>· 콘텐츠 제작자가 판매할 수 있는 상품의 종류<br>* 출연, 협찬, PPL<br>* 브랜디드 콘텐츠, 라이브커머스, 숏폼 패키지<br>* 채널 운영 대행, 왕홍/인플루언서 연계<br>· 브랜드 제안서와 미디어킷의 기본 개념<br>· 협찬 단가를 정할 때 고려해야 할 요소<br>· 콘텐츠 기획안이 실제 영업 자료로 바뀌는 과정<br>· 중국 커머스와 연결할 때 확인해야 할 기본 조건<br>* 상품 경쟁력, 가격, 사은품<br>* 물류 및 운영 가능성</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mentor-sticky-pjb" class="mentor-section reveal">
+    <div class="container">
+      <div class="intensive-head">
+        <h2><span class="intensive-head-phrase">스마트폰과 입만 가져오세요</span> <span class="intensive-head-phrase">— 말로하는 AI</span></h2>
+        <p>편준범 교수 3교시 강의 커리큘럼 · 총 2시간 (교시당 약 40분)</p>
+      </div>
+      <div class="mentor-layout">
+        <aside class="mentor-sticky-col">
+          <article class="mentor-sticky-card">
+            <span class="mentor-badge">강사진</span>
+            <div class="mentor-photo-wrap">
+              <img id="mentor-photo-pjb" src="image/PJB.png" alt="편준범 교수 프로필 이미지" loading="lazy" decoding="async" />
+            </div>
+            <h3 id="mentor-name-pjb">편준범 교수</h3>
+            <p id="mentor-role-pjb" class="mentor-role">고려전문학교 AI 연구소장<br>말로하는 인공지능 창시자</p>
+            <div id="mentor-bio-pjb" class="mentor-bio">
+              <span class="mentor-bio-quote">"AI는 어렵지 않습니다 —<br>말만 하면 AI가 다 합니다."</span>
+              <ul class="mentor-bio-list">
+                <li>말로하는 AI 개념과 음성 기반 AI 작동 원리</li>
+                <li>스마트폰 세팅부터 첫 음성 명령까지 실전 안내</li>
+                <li>6,500명 시니어 교육 현장 검증<br>AI ON Movement 실전 노하우</li>
+              </ul>
+            </div>
+          </article>
+        </aside>
+
+        <div class="mentor-steps">
+          <article
+            class="mentor-step active"
+            data-name="편준범 교수"
+            data-role="고려전문학교 AI 연구소장&lt;br&gt;말로하는 인공지능 창시자"
+            data-image="image/PJB.png"
+            data-bio="&lt;span class=&quot;mentor-bio-quote&quot;&gt;&quot;AI는 어렵지 않습니다 —&lt;br&gt;말만 하면 AI가 다 합니다.&quot;&lt;/span&gt;&lt;ul class=&quot;mentor-bio-list&quot;&gt;&lt;li&gt;말로하는 AI 개념과 음성 기반 AI 작동 원리&lt;/li&gt;&lt;li&gt;스마트폰 세팅부터 첫 음성 명령까지 실전 안내&lt;/li&gt;&lt;li&gt;6,500명 시니어 교육 현장 검증&lt;br&gt;AI ON Movement 실전 노하우&lt;/li&gt;&lt;/ul&gt;">
+            <h4><span class="lecture-pill">1교시</span><br><span class="lecture-title">스마트폰과 입만 있으면 됩니다 <span class="duration">(40분)</span></span></h4>
+            <p><strong>부제:</strong> "AI는 어렵지 않습니다 — 말만 하면 AI가 다 합니다"</p>
+            <p>말로하는 AI 개념과 음성 기반 AI 작동 원리, 스마트폰 10분 세팅법, 6,500명 시니어 교육 현장에서 검증된 AI ON Movement 노하우, 유튜브 기획안·제목·스크립트 추출 시연을 다룹니다.</p>
+            <h4><span class="lecture-pill">2교시</span><br><span class="lecture-title">말 한마디가 콘텐츠가 됩니다 <span class="duration">(40분)</span></span></h4>
+            <p><strong>부제:</strong> "촬영도 편집도 필요 없습니다 — 입만 열면 영상이 만들어집니다"</p>
+            <p>음성→자막→영상 자동 변환 흐름(Vrew·클로바노트·캡컷), AI 나레이션 변환, 유튜브·블로그·SNS 동시 문구 변환, 가장쉬운AI 유튜브 채널 운영 사례, 30년 디자인 경험과 AI를 결합한 1인 크리에이터 전략을 소개합니다.</p>
+            <h4><span class="lecture-pill">3교시</span><br><span class="lecture-title">말로하는 AI로 내 채널을 운영한다 <span class="duration">(40분)</span></span></h4>
+            <p><strong>부제:</strong> "기획부터 업로드까지 — 아침 10분이면 콘텐츠 하나가 완성됩니다"</p>
+            <p>채널 운영 자동화 실전 루틴, 유튜브·인스타·블로그 3개 플랫폼 동시 배포, AI 피드백으로 제목·썸네일·스크립트 개선, AI 콘텐츠의 미래 전망, 아침 10분 콘텐츠 사이클 완성법을 안내합니다.</p>
+            <p><strong>Q&amp;A (10분):</strong> 본인 채널·직업에 말로하는 AI 적용법 현장 질의응답</p>
           </article>
         </div>
       </div>
@@ -5628,6 +5705,37 @@
               </div>
               <span class="mentor-jsh-quote mentor-jsh-quote--bottom" aria-hidden="true">”</span>
             </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mentor-sticky-dan" class="mentor-section reveal">
+    <div class="container">
+      <div class="intensive-head">
+        <h2><span class="intensive-head-phrase">지식을 수익으로,</span> <span class="intensive-head-phrase">유튜브 크리에이터의 비밀</span></h2>
+        <p>김경은(단아쌤)교수와 함께하는 지식 수익화 실전</p>
+      </div>
+      <div class="mentor-layout">
+        <aside class="mentor-sticky-col">
+          <article class="mentor-sticky-card">
+            <span class="mentor-badge">강사진</span>
+            <div class="mentor-photo-wrap">
+              <img id="mentor-photo-dan" src="image/DAN.png" alt="김경은(단아쌤) 교수 프로필 이미지" loading="lazy" decoding="async" />
+            </div>
+            <h3 id="mentor-name-dan">김경은(단아쌤)교수</h3>
+            <p id="mentor-role-dan" class="mentor-role">경희대학교 경영대학원 브랜드매니지먼트 겸임교수</p>
+            <p id="mentor-bio-dan" class="mentor-bio">유튜브 크리에이터로 지식을 수익화하는 비밀<br><br>- 퍼널 마케팅으로 채널을 수익 구조의 입구로 설계<br>- 구독·전자책·VOD 연계로 안정적 수익 기반 구축<br>- 업셀링과 AI 자동화로 LTV 극대화</p>
+          </article>
+        </aside>
+
+        <div class="mentor-steps">
+          <article class="mentor-step active">
+            <h4>유튜브 크리에이터로 지식을 수익화하는 비밀</h4>
+            <p><button type="button" class="timeline-inline-btn mentor-period-btn"><strong>1교시</strong></button><strong class="mentor-part-title">퍼널 마케팅의 개념</strong><br>· 고객의 구매 여정을 단계별로 설계하는 방법<br>· 인지 → 관심 → 구매 → 재구매로 이어지는 수익 구조 이해<br>· 유튜브 채널을 퍼널의 입구로 활용하는 전략</p>
+            <p><button type="button" class="timeline-inline-btn mentor-period-btn"><strong>2교시</strong></button><strong class="mentor-part-title">구독 모델 하나로 고객 유치하기</strong><br>· 단 하나의 구독 상품으로 안정적인 수익 기반 만들기<br>· 전자책 + VOD 강의 효과적으로 판매하기<br>· 지식 상품 패키징 전략 (전자책 &amp; 동영상 강의 연계)<br>· 유튜브 쇼핑과 전자책 쇼핑몰 연결하기<br>· 유튜브 쇼핑 기능을 활용한 직접 판매 루트 구축</p>
+            <p><button type="button" class="timeline-inline-btn mentor-period-btn"><strong>3교시</strong></button><strong class="mentor-part-title">업셀링(Up-selling) 3가지 방법</strong><br>· 고객 만족도를 유지하면서 LTV(고객 생애 가치)를 키우는 전략<br>· AI를 통한 자동화 설계</p>
           </article>
         </div>
       </div>
@@ -5996,7 +6104,7 @@
     }, { threshold: 0.18 });
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
-    // 강사진: 2행 그리드 — 미리보기 클릭 시 하단 패널에 상세 표시
+    // 강사진: 2행 그리드(4+4) — 미리보기 클릭 시 하단 패널에 상세 표시
     (function () {
       const panel = document.getElementById("mentor-detail-panel");
       const preview = document.getElementById("mentor-preview");
@@ -6157,6 +6265,53 @@
       };
 
       // 스크롤 위치를 기준으로 현재 가장 가까운 step을 활성화합니다.
+      const updateByScroll = () => {
+        const anchorY = window.innerHeight * 0.35;
+        let nearestIndex = 0;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        steps.forEach((step, index) => {
+          const rect = step.getBoundingClientRect();
+          const distance = Math.abs(rect.top - anchorY);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+
+        setActiveStep(nearestIndex);
+      };
+
+      updateByScroll();
+      window.addEventListener("scroll", updateByScroll, { passive: true });
+      window.addEventListener("resize", updateByScroll);
+    })();
+
+    (function () {
+      const section = document.getElementById("mentor-sticky-pjb");
+      if (!section) return;
+
+      const steps = Array.from(section.querySelectorAll(".mentor-step"));
+      const nameEl = document.getElementById("mentor-name-pjb");
+      const roleEl = document.getElementById("mentor-role-pjb");
+      const bioEl = document.getElementById("mentor-bio-pjb");
+      const photoEl = document.getElementById("mentor-photo-pjb");
+      if (!steps.length || !nameEl || !roleEl || !bioEl || !photoEl) return;
+
+      const applyStep = (step) => {
+        nameEl.textContent = step.dataset.name || "";
+        roleEl.innerHTML = step.dataset.role || "";
+        bioEl.innerHTML = step.dataset.bio || "";
+        if (step.dataset.image) photoEl.src = step.dataset.image;
+      };
+
+      const setActiveStep = (activeIndex) => {
+        steps.forEach((step, index) => {
+          step.classList.toggle("active", index === activeIndex);
+        });
+        applyStep(steps[activeIndex]);
+      };
+
       const updateByScroll = () => {
         const anchorY = window.innerHeight * 0.35;
         let nearestIndex = 0;

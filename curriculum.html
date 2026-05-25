@@ -435,9 +435,29 @@
       backdrop-filter: blur(8px);
     }
     .nav-inner { height: 68px; display: flex; align-items: center; justify-content: space-between; }
-    .logo { color: var(--lime); font-weight: 800; text-decoration: none; }
-    .nav-links { display: flex; gap: 16px; font-size: .92rem; color: #dcdcdc; }
-    .nav-links a { color: inherit; text-decoration: none; }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--lime);
+      font-weight: 800;
+      text-decoration: none;
+      flex-shrink: 0;
+      min-width: 0;
+    }
+    .logo-mark {
+      width: auto;
+      height: 46px;
+      flex-shrink: 0;
+      display: block;
+      object-fit: contain;
+    }
+    .logo-text {
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 16px; font-size: .92rem; color: #dcdcdc; font-family: "Noto Sans KR", sans-serif; font-weight: 700; align-items: center; }
+    .nav-links a { color: inherit; text-decoration: none; font-weight: 700; }
     .nav-links a:hover { color: var(--lime); }
     .nav-links a.nav-score-btn {
       padding: 6px 14px;
@@ -454,6 +474,97 @@
       color: #0a0a0a !important;
       filter: brightness(1.08);
     }
+    .nav-dropdown { position: relative; display: flex; align-items: center; }
+    .nav-dropdown-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      font: inherit;
+      color: inherit;
+      cursor: default;
+      padding: 0;
+      white-space: nowrap;
+      font-weight: 700;
+    }
+    .nav-pay-mobile .nav-dropdown-toggle { cursor: pointer; }
+    .nav-dropdown-toggle svg { flex-shrink: 0; opacity: 0.75; transition: transform 0.18s ease; }
+    .nav-dropdown:hover .nav-dropdown-toggle svg,
+    .nav-dropdown.is-open .nav-dropdown-toggle svg { transform: rotate(180deg); }
+    .nav-dropdown:hover .nav-dropdown-toggle,
+    .nav-dropdown.is-open .nav-dropdown-toggle,
+    .nav-dropdown:focus-within .nav-dropdown-toggle { color: var(--lime); }
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% - 1px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 196px;
+      padding: 6px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #141414;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.48);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.16s ease, visibility 0.16s ease;
+      z-index: 1100;
+    }
+    .nav-dropdown-menu::before { content: ""; position: absolute; left: 0; right: 0; top: -6px; height: 6px; }
+    #nav-pay-desktop { position: relative; }
+    #nav-pay-desktop::after { content: ""; position: absolute; left: -10px; right: -10px; top: 100%; height: 8px; z-index: 1099; }
+    #nav-pay-desktop:hover .nav-dropdown-menu,
+    #nav-pay-desktop:focus-within .nav-dropdown-menu,
+    .nav-pay-mobile.is-open .nav-dropdown-menu,
+    .nav-pay-mobile:focus-within .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    .nav-dropdown-menu a { display: block; padding: 10px 12px; border-radius: 8px; font-weight: 700; line-height: 1.35; }
+    .nav-dropdown-menu a:hover { background: rgba(124, 252, 0, 0.08); color: var(--lime); }
+    .nav-dropdown-price { display: block; margin-top: 3px; font-size: 0.72rem; font-weight: 700; color: #888; }
+    .nav-dropdown-menu a:hover .nav-dropdown-price { color: rgba(124, 252, 0, 0.75); }
+    .nav-pay-mobile { display: none; position: relative; flex-shrink: 0; }
+    .nav-discount-mobile {
+      display: none;
+      flex-shrink: 0;
+      font-family: "Noto Sans KR", sans-serif;
+      font-size: calc(0.8rem + 1pt);
+      font-weight: 800;
+      color: #ccc;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-discount-mobile:hover { color: var(--lime); }
+    .nav-pay-mobile .nav-dropdown-toggle {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(124, 252, 0, 0.35);
+      background: rgba(124, 252, 0, 0.08);
+      font-size: calc(0.8rem + 1pt);
+      font-weight: 800;
+      font-family: "Noto Sans KR", sans-serif;
+      color: #e8ffe8;
+    }
+    .nav-pay-mobile .nav-dropdown-menu { left: auto; right: 0; transform: none; top: calc(100% + 2px); }
+    .nav-kakao-btn {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 5px;
+      background: #FEE500;
+      color: #191919 !important;
+      font-weight: 800 !important;
+      font-size: calc(0.8rem + 1pt) !important;
+      padding: 6px 13px !important;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: filter 0.2s ease, transform 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-kakao-btn:hover { filter: brightness(1.08); transform: scale(1.04); }
     .nav-score-btn--mobile {
       display: none;
       align-items: center;
@@ -2660,6 +2771,10 @@
       font-size: .78rem;
       margin-right: 6px;
     }
+    .timeline-event-prize {
+      color: var(--lime);
+      font-weight: 900;
+    }
     .include-grid {
       margin-top: 24px;
       display: grid;
@@ -3295,6 +3410,8 @@
       }
       .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .nav-links { display: none; }
+      .nav-pay-mobile { display: block; }
+      .nav-discount-mobile { display: inline-flex; }
       .nav-score-btn--mobile {
         display: inline-flex;
       }
@@ -3377,6 +3494,12 @@
       .logo {
         font-size: .92rem;
         line-height: 1.22;
+        min-width: 0;
+        flex: 1 1 auto;
+        padding-right: 10px;
+      }
+      .logo-mark {
+        height: 40px;
       }
       .hero-copy h1 {
         font-size: clamp(2.45rem, 10.5vw, 3.25rem);
@@ -3589,6 +3712,9 @@
         font-size: .84rem;
         line-height: 1.2;
       }
+      .logo-mark {
+        height: 36px;
+      }
       .hero-copy {
         margin-top: clamp(28px, 8vw, 42px);
       }
@@ -3775,16 +3901,44 @@
 <body>
   <nav class="navbar">
     <div class="container nav-inner">
-      <a class="logo" href="index.html#hero">MEDIA 서포터즈 아카데미</a>
+      <a class="logo" href="start.html#hero">
+        <img class="logo-mark" src="image/MSA(GREEN).png" alt="STN 미디어 서포터즈 아카데미" width="46" height="46" decoding="async" />
+        <span class="logo-text">MEDIA 서포터즈 아카데미</span>
+      </a>
+      <a href="start.html#earlybird" class="nav-discount-mobile">할인혜택</a>
+      <div class="nav-pay-mobile nav-dropdown" id="nav-pay-mobile">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true" aria-controls="nav-pay-mobile-menu">결제하기</button>
+        <div class="nav-dropdown-menu" id="nav-pay-mobile-menu" role="menu">
+          <a href="payment-earlybird.html" role="menuitem">얼리버드 할인<span class="nav-dropdown-price">1,548,000원</span></a>
+          <a href="payment-student.html?approved=1" role="menuitem">대학생 할인<span class="nav-dropdown-price">990,000원</span></a>
+          <a href="payment-regular.html" role="menuitem">일반결제<span class="nav-dropdown-price">1,980,000원</span></a>
+        </div>
+      </div>
       <a href="score.html" class="nav-score-btn--mobile">유튜브 진단하기</a>
       <div class="nav-links">
-        <a href="index.html#solution">솔루션</a>
-        <a href="index.html#tracks">트랙</a>
+        <a href="start.html">홈</a>
         <a href="curriculum.html#intensive-schedule">커리큐럼</a>
-        <a href="index.html#benefits">혜택</a>
-        <a href="index.html#directions">오시는길</a>
-        <a href="index.html#faq">FAQ</a>
+        <a href="start.html#earlybird">할인혜택</a>
+        <div class="nav-dropdown" id="nav-pay-desktop">
+          <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true" aria-controls="nav-pay-desktop-menu">
+            결제하기
+            <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="nav-dropdown-menu" id="nav-pay-desktop-menu" role="menu">
+            <a href="payment-earlybird.html" role="menuitem">얼리버드 할인<span class="nav-dropdown-price">1,548,000원</span></a>
+            <a href="payment-student.html?approved=1" role="menuitem">대학생 할인<span class="nav-dropdown-price">990,000원</span></a>
+            <a href="payment-regular.html" role="menuitem">일반결제<span class="nav-dropdown-price">1,980,000원</span></a>
+          </div>
+        </div>
+        <a href="start.html#directions">오시는길</a>
         <a href="score.html" class="nav-score-btn">유튜브 진단하기</a>
+        <a href="http://pf.kakao.com/_TCjbX" target="_blank" rel="noopener noreferrer" class="nav-kakao-btn" aria-label="카카오 채널 추가">
+          <svg width="16" height="16" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="20" cy="19" rx="18" ry="16" fill="#191919"/>
+            <path d="M20 8C12.268 8 6 13.149 6 19.5c0 4.01 2.584 7.527 6.5 9.647L11 33l5.08-3.265C17.319 30.226 18.638 30.5 20 30.5c7.732 0 14-5.149 14-11.5S27.732 8 20 8Z" fill="#FEE500"/>
+          </svg>
+          카카오 채널
+        </a>
       </div>
     </div>
   </nav>
@@ -3830,60 +3984,76 @@
             </div>
           </article>
           <article class="timeline-row">
-            <div class="timeline-time-col"><span>10:30 - 12:00</span><br><button type="button" class="timeline-inline-btn"><strong>강만훈 작가</strong></button><span class="timeline-inline-note">7월 10일(금) · 강의 주제: 콘텐츠와 커머스의 융합 · 방송작가 출신 유튜브 콘텐츠 슈퍼바이저</span></div><div class="timeline-dot"></div>
+            <div class="timeline-time-col"><span>10:30 - 12:00</span><br><button type="button" class="timeline-inline-btn"><strong>박정훈 강사</strong></button><span class="timeline-inline-note">유튜브 분석·수익 실전 3교시</span></div><div class="timeline-dot"></div>
             <div class="track-grid">
               <div class="track-card journalist">
                 <button type="button" class="timeline-inline-btn track-period-btn"><strong>1교시</strong></button>
-                <h5>콘텐츠는 왜 커머스와 융합할 수밖에 없는가</h5><span class="track-time">30분</span>
+                <h5>[유튜브로 수익화 하고 싶다면, 절대 이건 하지마세요]</h5>
                 <ul>
-                  <li>기존 방송과 뉴미디어 콘텐츠의 차이, 조회수·광고 수익만의 한계</li>
-                  <li>브랜디드·PPL·협찬이 커머스로 이어지는 흐름</li>
-                  <li>중국 시장에서 콘텐츠와 커머스가 빠르게 결합하는 배경</li>
+                  <li>초보 유튜버들이 가장 많이 하는 치명적인 실수 TOP10</li>
                 </ul>
               </div>
               <div class="track-card media">
                 <button type="button" class="timeline-inline-btn track-period-btn"><strong>2교시</strong></button>
-                <h5>제작자는 커머스를 어떻게 콘텐츠에 연결해야 하는가</h5><span class="track-time">30분</span>
+                <h5>[유튜브는 90% 분석과 눈치싸움이다]</h5>
                 <ul>
-                  <li>기획 단계에서 상품·브랜드를 보는 시각</li>
-                  <li>억지 노출 없이 스토리에 녹이는 방법</li>
-                  <li>롱폼·숏폼·라이브커머스 역할, 링크·QR·댓글 고정 등 연결 포인트</li>
-                  <li>한국·중국 플랫폼별 소비·구매 패턴 차이</li>
+                  <li>유튜브 스튜디오 분석창 제대로 분석하는 방법</li>
                 </ul>
               </div>
               <div class="track-card youtube">
                 <button type="button" class="timeline-inline-btn track-period-btn"><strong>3교시</strong></button>
-                <h5>실제 수익화 방식과 콘텐츠 상품화</h5><span class="track-time">30분</span>
+                <h5>[다른 강의에서 알려주지 않는 핵심]</h5>
                 <ul>
-                  <li>판매 가능한 상품 유형: 출연·협찬·브랜디드·라이브·패키지·운영 대행 등</li>
-                  <li>브랜드 제안서·미디어킷 개념, 협찬 단가 설정 시 고려 요소</li>
-                  <li>기획안이 영업 자료로 바뀌는 과정, 중국 커머스 연계 시 체크리스트</li>
+                  <li>수박 겉 핥기 느낌에 두리뭉실하게만 설명하는 다른 강의!</li>
+                  <li>그럴 수 밖에 없는 이유 설명과</li>
+                  <li>개떡 처럼 말해도 찰떡처럼 이해 하는 방법</li>
                 </ul>
               </div>
             </div>
           </article>
           <article class="timeline-row">
-            <div class="timeline-time-col">12:30 - 13:30</div><div class="timeline-dot"></div>
+            <div class="timeline-time-col">12:00 - 13:00</div><div class="timeline-dot"></div>
             <div class="timeline-content common"><h4>점심 식사</h4><ul><li>중식 제공 (연수원 내 식당)</li></ul></div>
           </article>
           <article class="timeline-row">
-            <div class="timeline-time-col">13:30 - 14:30</div><div class="timeline-dot"></div>
-            <div class="timeline-content common">
-              <h4>미디어 윤리 특강</h4>
-              <ul>
-                <li>공정성 / 객관성 / 정확성 원칙</li>
-                <li>선수 인권 / 편파 보도 / 가짜뉴스 대응</li>
-                <li>저작권 / 초상권 / AI 활용 윤리</li>
-                <li>논란 사례 분석</li>
-              </ul>
-            </div>
-          </article>
-          <article class="timeline-row">
-            <div class="timeline-time-col"><span>14:30 - 16:30</span><br><button type="button" class="timeline-inline-btn"><strong>에딧킴 강사</strong></button><span class="timeline-inline-note">강의제목 : AI 숏츠 제작 실전 부트캠프: 기획부터 업로드까지 180분 완성</span></div><div class="timeline-dot"></div>
+            <div class="timeline-time-col"><span>13:00 - 15:00</span><br><button type="button" class="timeline-inline-btn"><strong>김경은(단아쌤)교수</strong></button><span class="timeline-inline-note">강의 주제: 유튜브 크리에이터로 지식을 수익화하는 비밀 · 경희대학교 경영대학원 브랜드매니지먼트 겸임교수</span></div><div class="timeline-dot"></div>
             <div class="track-grid">
               <div class="track-card journalist">
                 <button type="button" class="timeline-inline-btn track-period-btn"><strong>1교시</strong></button>
-                <h5>AI로 10분 만에 끝내는 '팔리는' 기획 &amp; 대본 (60분)</h5><span class="track-time">60분</span>
+                <h5>퍼널 마케팅의 개념</h5>
+                <ul>
+                  <li>고객의 구매 여정을 단계별로 설계하는 방법</li>
+                  <li>인지 → 관심 → 구매 → 재구매로 이어지는 수익 구조 이해</li>
+                  <li>유튜브 채널을 퍼널의 입구로 활용하는 전략</li>
+                </ul>
+              </div>
+              <div class="track-card media">
+                <button type="button" class="timeline-inline-btn track-period-btn"><strong>2교시</strong></button>
+                <h5>구독 모델 하나로 고객 유치하기</h5>
+                <ul>
+                  <li>단 하나의 구독 상품으로 안정적인 수익 기반 만들기</li>
+                  <li>전자책 + VOD 강의 효과적으로 판매하기</li>
+                  <li>지식 상품 패키징 전략 (전자책 &amp; 동영상 강의 연계)</li>
+                  <li>유튜브 쇼핑과 전자책 쇼핑몰 연결하기</li>
+                  <li>유튜브 쇼핑 기능을 활용한 직접 판매 루트 구축</li>
+                </ul>
+              </div>
+              <div class="track-card youtube">
+                <button type="button" class="timeline-inline-btn track-period-btn"><strong>3교시</strong></button>
+                <h5>업셀링(Up-selling) 3가지 방법</h5>
+                <ul>
+                  <li>고객 만족도를 유지하면서 LTV(고객 생애 가치)를 키우는 전략</li>
+                  <li>AI를 통한 자동화 설계</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col"><span>15:00 - 18:00</span><br><button type="button" class="timeline-inline-btn"><strong>에딧킴 강사</strong></button><span class="timeline-inline-note">강의제목 : AI 숏츠 제작 실전 부트캠프: 기획부터 업로드까지 180분 완성</span></div><div class="timeline-dot"></div>
+            <div class="track-grid">
+              <div class="track-card journalist">
+                <button type="button" class="timeline-inline-btn track-period-btn"><strong>1교시</strong></button>
+                <h5>AI로 10분 만에 끝내는 '팔리는' 기획 &amp; 대본 (60분)</h5>
                 <ul>
                   <li>[이론] 유튜브 알고리즘이 좋아하는 '초반 3초' 후킹 전략</li>
                   <li><span class="practice-badge">실습</span> ChatGPT/Gemini를 활용해 내 채널 주제에 맞는 숏츠 대본 5개 생성하기</li>
@@ -3892,7 +4062,7 @@
               </div>
               <div class="track-card media">
                 <button type="button" class="timeline-inline-btn track-period-btn"><strong>2교시</strong></button>
-                <h5>AI 영상 생성 도구로 화면 구성 끝내기 (60분)</h5><span class="track-time">60분</span>
+                <h5>AI 영상 생성 도구로 화면 구성 끝내기 (60분)</h5>
                 <ul>
                   <li>[이론] 저작권 걱정 없는 AI 이미지/비디오 소스 확보 요령</li>
                   <li><span class="practice-badge">실습</span> Vrew나 가상 인간(Avatar) 툴을 활용해 대본을 영상으로 자동 변환하기</li>
@@ -3901,7 +4071,7 @@
               </div>
               <div class="track-card youtube">
                 <button type="button" class="timeline-inline-btn track-period-btn"><strong>3교시</strong></button>
-                <h5>캡컷(CapCut) 실전 편집 &amp; 바이럴 세팅 (60분)</h5><span class="track-time">60분</span>
+                <h5>캡컷(CapCut) 실전 편집 &amp; 바이럴 세팅 (60분)</h5>
                 <ul>
                   <li><span class="practice-badge">실습</span> 생성된 AI 소스들을 캡컷에서 합치고 자막 넣기 (컷 편집 + 배경음악)</li>
                   <li><span class="practice-badge">실습</span> AI 자막 자동 생성 기능을 활용해 가독성 극대화하기</li>
@@ -3911,36 +4081,8 @@
             </div>
           </article>
           <article class="timeline-row">
-            <div class="timeline-time-col">16:30 - 16:45</div><div class="timeline-dot"></div>
-            <div class="timeline-content common"><h4>휴식</h4><ul><li>15분 휴식</li></ul></div>
-          </article>
-          <article class="timeline-row">
-            <div class="timeline-time-col"><span>16:45 - 19:00</span><br><button type="button" class="timeline-inline-btn"><strong>박정훈 강사</strong></button><span class="timeline-inline-note">유튜브 분석·수익 실전 3교시</span></div><div class="timeline-dot"></div>
-            <div class="track-grid">
-              <div class="track-card journalist">
-                <button type="button" class="timeline-inline-btn track-period-btn"><strong>1교시</strong></button>
-                <h5>[유튜브로 수익화 하고 싶다면, 절대 이건 하지마세요]</h5><span class="track-time">2시간 15분</span>
-                <ul>
-                  <li>초보 유튜버들이 가장 많이 하는 치명적인 실수 TOP10</li>
-                </ul>
-              </div>
-              <div class="track-card media">
-                <button type="button" class="timeline-inline-btn track-period-btn"><strong>2교시</strong></button>
-                <h5>[유튜브는 90% 분석과 눈치싸움이다]</h5><span class="track-time">2시간 15분</span>
-                <ul>
-                  <li>유튜브 스튜디오 분석창 제대로 분석하는 방법</li>
-                </ul>
-              </div>
-              <div class="track-card youtube">
-                <button type="button" class="timeline-inline-btn track-period-btn"><strong>3교시</strong></button>
-                <h5>[다른 강의에서 알려주지 않는 핵심]</h5><span class="track-time">2시간 15분</span>
-                <ul>
-                  <li>수박 겉 핥기 느낌에 두리뭉실하게만 설명하는 다른 강의!</li>
-                  <li>그럴 수 밖에 없는 이유 설명과</li>
-                  <li>개떡 처럼 말해도 찰떡처럼 이해 하는 방법</li>
-                </ul>
-              </div>
-            </div>
+            <div class="timeline-time-col">18:00 - 19:00</div><div class="timeline-dot"></div>
+            <div class="timeline-content common"><h4>질문 및 실습</h4><ul><li>질문 및 실습</li></ul></div>
           </article>
         </div>
       </div>
@@ -3948,90 +4090,174 @@
       <div class="intensive-day-panel" data-day-panel="day2">
         <div class="day-timeline">
           <article class="timeline-row current">
-            <div class="timeline-time-col">10:00 - 12:00</div><div class="timeline-dot"></div>
+            <div class="timeline-time-col"><span>09:30 - 11:00</span><br><button type="button" class="timeline-inline-btn"><strong>강만훈 작가</strong></button><span class="timeline-inline-note">강의 주제: 콘텐츠와 커머스의 융합 · 방송작가 출신 유튜브 콘텐츠 슈퍼바이저</span></div><div class="timeline-dot"></div>
             <div class="track-grid">
               <div class="track-card journalist">
                 <button type="button" class="timeline-inline-btn track-period-btn"><strong>1교시</strong></button>
-                <h5>AI 홍보물 제작 2부</h5><span class="track-time">2시간</span>
+                <h5>콘텐츠는 왜 커머스와 융합할 수밖에 없는가</h5>
                 <ul>
-                  <li>SNS 카드뉴스 / 썸네일 / 스크립트 AI 제작</li>
-                  <li>이미지 생성 AI / 영상 편집 AI 활용</li>
-                </ul>
-                <ul class="practice-block">
-                  <li><span class="practice-badge">실습</span>인터뷰 내용 SNS 카드뉴스 제작</li>
-                  <li><span class="practice-badge">실습</span>스포츠 이벤트 홍보 콘텐츠 패키지 완성</li>
+                  <li>기존 방송과 뉴미디어 콘텐츠의 차이, 조회수·광고 수익만의 한계</li>
+                  <li>브랜디드·PPL·협찬이 커머스로 이어지는 흐름</li>
+                  <li>중국 시장에서 콘텐츠와 커머스가 빠르게 결합하는 배경</li>
                 </ul>
               </div>
               <div class="track-card media">
                 <button type="button" class="timeline-inline-btn track-period-btn"><strong>2교시</strong></button>
-                <h5>MCN 파트너 실무</h5><span class="track-time">2시간</span>
+                <h5>제작자는 커머스를 어떻게 콘텐츠에 연결해야 하는가</h5>
                 <ul>
-                  <li>STN MCN 파트너 활동 방법</li>
-                  <li>콘텐츠 저작권 관리 / 수익 배분 구조</li>
-                  <li>협찬 / 광고 계약 기초</li>
-                </ul>
-                <ul class="practice-block">
-                  <li><span class="practice-badge">실습</span>STN 제공 콘텐츠 숏폼 패키지 완성</li>
-                  <li><span class="practice-badge">실습</span>5개 플랫폼 동시 배포</li>
+                  <li>기획 단계에서 상품·브랜드를 보는 시각</li>
+                  <li>억지 노출 없이 스토리에 녹이는 방법</li>
+                  <li>롱폼·숏폼·라이브커머스 역할, 링크·QR·댓글 고정 등 연결 포인트</li>
+                  <li>한국·중국 플랫폼별 소비·구매 패턴 차이</li>
                 </ul>
               </div>
               <div class="track-card youtube">
                 <button type="button" class="timeline-inline-btn track-period-btn"><strong>3교시</strong></button>
-                <h5>유튜브 자동 업로드 + 6플랫폼 배포</h5><span class="track-time">2시간</span>
+                <h5>실제 수익화 방식과 콘텐츠 상품화</h5>
                 <ul>
-                  <li>YouTube Data API 연동</li>
-                  <li>ChatGPT 제목 / 설명 / 태그 자동 생성</li>
-                  <li>TubeBuddy 최적 시간대 스케줄링</li>
-                  <li>Buffer / Later / Meta / TikTok API 연동</li>
-                </ul>
-                <ul class="practice-block">
-                  <li><span class="practice-badge">실습</span>영상 1개 업로드 6개 플랫폼 동시 배포</li>
+                  <li>판매 가능한 상품 유형: 출연·협찬·브랜디드·라이브·패키지·운영 대행 등</li>
+                  <li>브랜드 제안서·미디어킷 개념, 협찬 단가 설정 시 고려 요소</li>
+                  <li>기획안이 영업 자료로 바뀌는 과정, 중국 커머스 연계 시 체크리스트</li>
                 </ul>
               </div>
             </div>
           </article>
           <article class="timeline-row">
-            <div class="timeline-time-col">12:00 - 13:00</div><div class="timeline-dot"></div>
+            <div class="timeline-time-col"><span>11:00 - 12:30</span><br><button type="button" class="timeline-inline-btn"><strong>박문성 해설위원</strong></button><span class="timeline-inline-note">강의 제목: 19년 경기장이 가르쳐 준 것 — 시청자의 마음을 움직이는 콘텐츠</span></div><div class="timeline-dot"></div>
+            <div class="track-grid">
+              <div class="track-card journalist">
+                <button type="button" class="timeline-inline-btn track-period-btn"><strong>1교시</strong></button>
+                <h5>스토리텔링이 곧 콘텐츠다 — 해설위원은 왜 같은 경기를 봐도 다른 이야기를 합니까</h5>
+                <ul>
+                  <li>19년 현장 중계의 반전 포인트 포착법, 정보형·감정형·스토리형 해설 비교</li>
+                  <li>선수 백스토리 발굴과 유튜브 썸네일·제목 스토리텔링 적용</li>
+                </ul>
+              </div>
+              <div class="track-card media">
+                <button type="button" class="timeline-inline-btn track-period-btn"><strong>2교시</strong></button>
+                <h5>나만의 목소리가 브랜드다 — 해설위원이 1,000번 마이크를 잡으면서 깨달은 것</h5>
+                <ul>
+                  <li>해설 스타일·자기만의 언어 만들기, 팬과 신뢰 관계 구축</li>
+                  <li>숏폼(쇼츠·릴스)에서도 목소리를 유지하는 90초 각인법</li>
+                </ul>
+              </div>
+              <div class="track-card youtube">
+                <button type="button" class="timeline-inline-btn track-period-btn"><strong>3교시</strong></button>
+                <h5>박문성의 19년, 솔직한 이야기 — 이건 교과서에 없습니다</h5>
+                <ul>
+                  <li>첫 취재부터 중계석까지의 경험담, 반드시 피해야 할 실수 5가지</li>
+                  <li>달수네라이브 채널 운영 사례, 스포츠 팬덤 콘텐츠 전략</li>
+                </ul>
+                <ul class="practice-block">
+                  <li><span class="practice-badge">Q&amp;A</span>수강생 채널·콘텐츠 방향에 대한 현장 질의응답</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col">12:30 - 13:30</div><div class="timeline-dot"></div>
             <div class="timeline-content common"><h4>점심 식사</h4><ul><li>중식 제공 (연수원 내 식당)</li></ul></div>
           </article>
           <article class="timeline-row">
-            <div class="timeline-time-col"><span>13:00 - 15:30</span><br><button type="button" class="timeline-inline-btn"><strong>박문성 해설위원</strong></button></div><div class="timeline-dot"></div>
+            <div class="timeline-time-col"><span>13:30 - 15:30</span><br><button type="button" class="timeline-inline-btn"><strong>편준범 교수</strong></button><span class="timeline-inline-note">강의 제목: 스마트폰과 입만 가져오세요 — 말로하는 AI · 고려전문학교 AI 연구소장 / 말로하는 AI 창시자</span></div><div class="timeline-dot"></div>
             <div class="track-grid">
-              <div class="track-card journalist"><button type="button" class="timeline-inline-btn track-period-btn"><strong>1교시</strong></button><h5>종합 실습</h5><span class="track-time">2시간 30분</span><p>기사 1건 네이버 / 다음 실제 송고
-인터뷰 콘텐츠 1건 완성
-AI 홍보 콘텐츠 세트 (SNS 문구 + 이미지) 완성</p></div>
-              <div class="track-card media"><button type="button" class="timeline-inline-btn track-period-btn"><strong>2교시</strong></button><h5>종합 실습</h5><span class="track-time">2시간 30분</span><p>숏폼 영상 3편 완성 (인스타 / 틱톡 / 쇼츠 포맷)
-채널 브랜딩 세팅 완성
-카드뉴스 1세트 SNS 게시</p></div>
-              <div class="track-card youtube"><button type="button" class="timeline-inline-btn track-period-btn"><strong>3교시</strong></button><h5>쇼핑태그 + 파이프라인 통합</h5><span class="track-time">2시간 30분</span><p>쿠팡 파트너스 API 상품 자동 태그
-쇼츠 Product Sticker 삽입 자동화
-GA4 / Google Sheets 수익 대시보드 구축</p><p><span class="practice-badge">실습</span>Make(n8n) 전체 워크플로우 1개 연결
-STN 수신 AI 편집 업로드 배포 수익 추적</p></div>
+              <div class="track-card journalist">
+                <button type="button" class="timeline-inline-btn track-period-btn"><strong>1교시</strong></button>
+                <h5>스마트폰과 입만 있으면 됩니다 (40분)</h5>
+                <ul>
+                  <li>부제: "AI는 어렵지 않습니다 — 말만 하면 AI가 다 합니다"</li>
+                  <li>말로하는 AI 개념과 음성 기반 AI 작동 원리</li>
+                  <li>스마트폰 10분 세팅법 — 앱 설치부터 첫 음성 명령까지</li>
+                  <li>6,500명 시니어 교육 현장 검증 AI ON Movement 노하우</li>
+                  <li>유튜브 기획안·제목·스크립트 추출 시연</li>
+                </ul>
+              </div>
+              <div class="track-card media">
+                <button type="button" class="timeline-inline-btn track-period-btn"><strong>2교시</strong></button>
+                <h5>말 한마디가 콘텐츠가 됩니다 (40분)</h5>
+                <ul>
+                  <li>부제: "촬영도 편집도 필요 없습니다 — 입만 열면 영상이 만들어집니다"</li>
+                  <li>음성→자막→영상 자동 변환 (Vrew·클로바노트·캡컷)</li>
+                  <li>AI 나레이션 변환, 유튜브·블로그·SNS 동시 문구 변환</li>
+                  <li>가장쉬운AI 유튜브 채널 운영 사례</li>
+                  <li>30년 디자인 경험과 AI 결합 1인 크리에이터 전략</li>
+                </ul>
+              </div>
+              <div class="track-card youtube">
+                <button type="button" class="timeline-inline-btn track-period-btn"><strong>3교시</strong></button>
+                <h5>말로하는 AI로 내 채널을 운영한다 (40분)</h5>
+                <ul>
+                  <li>부제: "기획부터 업로드까지 — 아침 10분이면 콘텐츠 하나가 완성됩니다"</li>
+                  <li>채널 운영 자동화 실전 루틴</li>
+                  <li>유튜브·인스타·블로그 3개 플랫폼 동시 배포</li>
+                  <li>AI 피드백으로 제목·썸네일·스크립트 개선</li>
+                  <li>AI 콘텐츠의 미래 전망, 아침 10분 콘텐츠 사이클 완성법</li>
+                </ul>
+                <ul class="practice-block">
+                  <li><span class="practice-badge">Q&amp;A</span>본인 채널·직업에 말로하는 AI 적용법 현장 질의응답 (10분)</li>
+                </ul>
+              </div>
             </div>
           </article>
           <article class="timeline-row">
-            <div class="timeline-time-col">15:30 - 15:45</div><div class="timeline-dot"></div>
-            <div class="timeline-content common"><h4>휴식</h4><ul><li>15분 휴식</li></ul></div>
-          </article>
-          <article class="timeline-row">
-            <div class="timeline-time-col"><span>15:45 - 17:45</span><br><button type="button" class="timeline-inline-btn"><strong>김창수 강사</strong></button></div><div class="timeline-dot"></div>
+            <div class="timeline-time-col"><span>15:30 - 17:30</span><br><button type="button" class="timeline-inline-btn"><strong>김창수 강사</strong></button><span class="timeline-inline-note">강의 제목: 구독자 적어도 수익 나는 AI 유튜브 자동화 시스템 · 총 2시간 (교시당 약 40분)</span></div><div class="timeline-dot"></div>
             <div class="track-grid">
-              <div class="track-card journalist"><button type="button" class="timeline-inline-btn track-period-btn"><strong>1교시</strong></button><h5>과제 최종 완성 + 강사 피드백</h5><span class="track-time">2시간</span><p>강사 1:1 개별 피드백
-기사 / 인터뷰 / AI 콘텐츠 최종 점검</p></div>
-              <div class="track-card media"><button type="button" class="timeline-inline-btn track-period-btn"><strong>2교시</strong></button><h5>과제 최종 완성 + 강사 피드백</h5><span class="track-time">2시간</span><p>강사 1:1 개별 피드백
-숏폼 / 카드뉴스 / 브랜딩 최종 점검</p></div>
-              <div class="track-card youtube"><button type="button" class="timeline-inline-btn track-period-btn"><strong>3교시</strong></button><h5>완전 자동화 최종 점검</h5><span class="track-time">2시간</span><p>1클릭 전체 파이프라인 가동 테스트
-수익 대시보드 실시간 확인
-오류 수정 및 최적화</p></div>
+              <div class="track-card journalist">
+                <button type="button" class="timeline-inline-btn track-period-btn"><strong>1교시</strong></button>
+                <h5>구독자 없어도 수익이 나는 이유가 있습니다 (40분)</h5>
+                <ul>
+                  <li>부제: "유튜브 수익은 구독자 숫자가 아니라 구조가 결정합니다"</li>
+                  <li>구독자 1,000명 미만 채널 수익 구조, 광고수익 vs AI 자동화 수익 비교</li>
+                  <li>소규모 채널 3가지 파이프라인: 콘텐츠→트래픽→외부 수익, 쿠팡·협찬·정보상품, 기사 노출→검색 유입</li>
+                  <li>AI 자동화가 필요한 현실적 이유, 구독자 수백 명 월 수익 사례</li>
+                </ul>
+                <ul class="practice-block">
+                  <li><span class="practice-badge">실습</span>내 채널(또는 운영 예정 채널)의 수익 파이프라인 초안 설계하기</li>
+                </ul>
+              </div>
+              <div class="track-card media">
+                <button type="button" class="timeline-inline-btn track-period-btn"><strong>2교시</strong></button>
+                <h5>AI가 콘텐츠를 대신 만들어 줍니다 (40분)</h5>
+                <ul>
+                  <li>부제: "하루 10분 투자로 AI가 썸네일·대본·기사·카드뉴스를 자동 완성합니다"</li>
+                  <li>AI 썸네일·대본 제작 봇 실전 사용법</li>
+                  <li>AI 상위노출 기사제작기 — 네이버·다음 검색 상위 노출, 기사→채널 유입→수익 연결</li>
+                  <li>카드뉴스 자동제작기, 쉽톡 배포·팬 소통 자동화 세팅</li>
+                </ul>
+                <ul class="practice-block">
+                  <li><span class="practice-badge">실습</span>AI 썸네일 봇 + AI 대본 봇으로 내 채널 콘텐츠 1개 실제 제작</li>
+                </ul>
+              </div>
+              <div class="track-card youtube">
+                <button type="button" class="timeline-inline-btn track-period-btn"><strong>3교시</strong></button>
+                <h5>자동화 파이프라인을 내 채널에 연결합니다 (40분)</h5>
+                <ul>
+                  <li>부제: "한 번 세팅하면 콘텐츠가 돌아가는 시스템을 직접 만듭니다"</li>
+                  <li>기획→대본→썸네일→업로드→배포 AI 자동화 전체 파이프라인</li>
+                  <li>유튜브·인스타·블로그·카카오 동시 배포, 채널 규모별 자동화 우선순위</li>
+                  <li>시스템 유지·관리법, 30일 자동화 루틴 플랜</li>
+                </ul>
+                <ul class="practice-block">
+                  <li><span class="practice-badge">실습</span>내 채널 AI 자동화 파이프라인 1단계 세팅 완료</li>
+                  <li><span class="practice-badge">Q&amp;A</span>본인 채널 상황에 맞는 자동화 전략 현장 질의응답 (10분)</li>
+                </ul>
+              </div>
             </div>
           </article>
           <article class="timeline-row">
-            <div class="timeline-time-col"><span>17:45 - 19:00</span><br><button type="button" class="timeline-inline-btn"><strong>전체</strong></button></div><div class="timeline-dot"></div>
+            <div class="timeline-time-col">17:30 - 18:30</div><div class="timeline-dot"></div>
+            <div class="timeline-content common"><h4>저녁 식사</h4><ul><li>석식 제공 (연수원 내 식당)</li></ul></div>
+          </article>
+          <article class="timeline-row">
+            <div class="timeline-time-col"><span>18:30 - 20:30</span><br><button type="button" class="timeline-inline-btn"><strong>개그우먼 조승희</strong></button><span class="timeline-inline-note">소통의 밤</span></div><div class="timeline-dot"></div>
             <div class="timeline-content common">
-              <h4>전체 Q&amp;A + 트랙 간 네트워킹</h4>
+              <h4>소통의 밤</h4>
               <ul>
-                <li>강사 전체 질의응답</li>
-                <li>트랙 간 수강생 네트워킹 시간</li>
+                <li><span class="practice-badge">EVENT</span> <strong class="timeline-event-prize">이벤트 당첨금 1,000만원 추첨</strong></li>
+                <li>2일간 집중 교육을 성실히 마친 수강생 여러분을 축하합니다</li>
+                <li>강사·수강생이 함께하는 자유로운 대화와 네트워킹</li>
+                <li>웃음과 감동으로 2박 3일 과정을 마무리하는 소통의 시간</li>
+                <li>수강생·강사진이 서로의 경험과 수료 소감을 나누는 축하·교류 프로그램</li>
               </ul>
             </div>
           </article>
@@ -4041,45 +4267,19 @@ STN 수신 AI 편집 업로드 배포 수익 추적</p></div>
       <div class="intensive-day-panel" data-day-panel="day3">
         <div class="day-timeline">
           <article class="timeline-row current">
-            <div class="timeline-time-col">10:00 - 11:30</div><div class="timeline-dot"></div>
-            <div class="track-grid">
-              <div class="track-card journalist"><button type="button" class="timeline-inline-btn track-period-btn"><strong>1교시</strong></button><h5>최종 결과물 점검</h5><span class="track-time">1시간 30분</span><p>기사 송고 최종 확인
-AI 홍보 콘텐츠 세트 완성 점검
-포트폴리오 정리</p></div>
-              <div class="track-card media"><button type="button" class="timeline-inline-btn track-period-btn"><strong>2교시</strong></button><h5>최종 결과물 점검</h5><span class="track-time">1시간 30분</span><p>숏폼 배포 완료 확인
-카드뉴스 SNS 게시 확인
-채널 브랜딩 최종 점검</p></div>
-              <div class="track-card youtube"><button type="button" class="timeline-inline-btn track-period-btn"><strong>3교시</strong></button><h5>최종 결과물 점검</h5><span class="track-time">1시간 30분</span><p>자동화 파이프라인 가동 최종 확인
-수익 대시보드 세팅 완료
-숏폼 자동 생성 시스템 점검</p></div>
-            </div>
-          </article>
-          <article class="timeline-row">
-            <div class="timeline-time-col">11:30 - 12:00</div><div class="timeline-dot"></div>
+            <div class="timeline-time-col"><span>10:00 - 12:00</span><br><span class="timeline-inline-note">수료증 교부 및 공지</span></div><div class="timeline-dot"></div>
             <div class="timeline-content common">
-              <h4>트랙별 우수 결과물 발표</h4>
+              <h4>수료식 + 기념 촬영</h4>
               <ul>
-                <li>각 트랙 2명 선정</li>
-                <li>결과물 발표</li>
-                <li>강사 총평</li>
+                <li>민간자격증 수여 (제2025-002178호)</li>
+                <li>에스티엔방송 대표 수료증 수여</li>
+                <li>단체 기념 촬영</li>
               </ul>
             </div>
           </article>
           <article class="timeline-row">
             <div class="timeline-time-col">12:00 - 13:00</div><div class="timeline-dot"></div>
-            <div class="timeline-content common"><h4>점심 식사</h4><ul><li>중식 제공 (연수원 내 식당)</li></ul></div>
-          </article>
-          <article class="timeline-row">
-            <div class="timeline-time-col">13:00 - 15:00</div><div class="timeline-dot"></div>
-            <div class="timeline-content common">
-              <h4>수료식 + 기념 촬영 + 귀가</h4>
-              <ul>
-                <li>민간자격증 수여 (제2025-002178호)</li>
-                <li>에스티엔방송 대표 수료증 수여</li>
-                <li>단체 기념 촬영</li>
-                <li>귀가</li>
-              </ul>
-            </div>
+            <div class="timeline-content common"><h4>점심 식사후 귀가</h4><ul><li>중식 제공 (연수원 내 식당)</li><li>귀가</li></ul></div>
           </article>
         </div>
       </div>
@@ -4115,6 +4315,23 @@ AI 도구 6개월 무료 이용권 포함</p></article>
   <footer>ⓒ 2026 STN Broadcasting. All Rights Reserved.</footer>
 
   <script>
+    (function initNavPayDropdown() {
+      var mobileDropdown = document.getElementById("nav-pay-mobile");
+      if (!mobileDropdown) return;
+      var toggle = mobileDropdown.querySelector(".nav-dropdown-toggle");
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var open = mobileDropdown.classList.toggle("is-open");
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      document.addEventListener("click", function () {
+        if (!mobileDropdown.classList.contains("is-open")) return;
+        mobileDropdown.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+      });
+    })();
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) entry.target.classList.add("active");
