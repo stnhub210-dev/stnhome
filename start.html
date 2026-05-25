@@ -451,16 +451,33 @@
       position: relative;
     }
     .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       color: var(--lime);
       font-weight: 800;
       text-decoration: none;
       flex-shrink: 0;
+      min-width: 0;
+    }
+    .logo-mark {
+      width: auto;
+      height: 46px;
+      flex-shrink: 0;
+      display: block;
+      object-fit: contain;
+    }
+    .logo-text {
+      line-height: 1.2;
+      letter-spacing: -0.02em;
     }
     .nav-links {
       display: flex;
       align-items: center;
       gap: 16px;
-      font-size: .92rem;
+      font-family: "Noto Sans KR", sans-serif;
+      font-size: calc(0.92rem + 1pt);
+      font-weight: 700;
       color: #dcdcdc;
     }
     @media (min-width: 1025px) {
@@ -478,7 +495,7 @@
         justify-self: center;
       }
     }
-    .nav-links a { color: inherit; text-decoration: none; }
+    .nav-links a { color: inherit; text-decoration: none; font-weight: 700; }
     .nav-links a:hover { color: var(--lime); }
     .nav-links a.nav-score-btn {
       padding: 6px 14px;
@@ -486,7 +503,7 @@
       background: var(--lime);
       color: #0a0a0a !important;
       font-weight: 800;
-      font-size: 0.86rem;
+      font-size: calc(0.86rem + 1pt);
       border: 1px solid rgba(124, 252, 0, 0.55);
       white-space: nowrap;
       transition: filter 0.2s ease, transform 0.2s ease;
@@ -606,7 +623,8 @@
     .nav-discount-mobile {
       display: none;
       flex-shrink: 0;
-      font-size: 0.8rem;
+      font-family: "Noto Sans KR", sans-serif;
+      font-size: calc(0.8rem + 1pt);
       font-weight: 800;
       color: #ccc;
       text-decoration: none;
@@ -620,8 +638,9 @@
       border-radius: 999px;
       border: 1px solid rgba(124, 252, 0, 0.35);
       background: rgba(124, 252, 0, 0.08);
-      font-size: 0.8rem;
+      font-size: calc(0.8rem + 1pt);
       font-weight: 800;
+      font-family: "Noto Sans KR", sans-serif;
       color: #e8ffe8;
     }
     .nav-pay-mobile .nav-dropdown-menu {
@@ -643,7 +662,8 @@
       background: var(--lime);
       color: #0a0a0a;
       font-weight: 800;
-      font-size: 0.8rem;
+      font-size: calc(0.8rem + 1pt);
+      font-family: "Noto Sans KR", sans-serif;
       text-decoration: none;
       border: 1px solid rgba(124, 252, 0, 0.55);
       white-space: nowrap;
@@ -4394,6 +4414,9 @@
         flex: 1 1 auto;
         padding-right: 10px;
       }
+      .logo-mark {
+        height: 40px;
+      }
       #hero {
         padding-top: calc(var(--nav-clear) + clamp(12px, 2.6vw, 22px));
         padding-bottom: 0;
@@ -4850,6 +4873,9 @@
         font-size: .84rem;
         line-height: 1.2;
       }
+      .logo-mark {
+        height: 36px;
+      }
       #hero {
         /* navbar top:8px + 세로패딩 5px×2 + nav-inner 54px */
         --nav-clear: calc(8px + 54px + 10px + env(safe-area-inset-top, 0px));
@@ -5064,12 +5090,107 @@
         filter: brightness(1.06);
       }
     }
+
+    /* ===== 카카오 채널 버튼 ===== */
+    .kakao-float {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      z-index: 9900;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+    .kakao-float-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      background: #FEE500;
+      color: #191919;
+      font-family: "Noto Sans KR", sans-serif;
+      font-weight: 800;
+      font-size: 0.92rem;
+      padding: 13px 20px;
+      border-radius: 999px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.38), 0 0 0 1.5px rgba(0,0,0,0.06);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+    .kakao-float-btn:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.42), 0 0 0 2px rgba(254,229,0,0.7);
+      filter: brightness(1.06);
+    }
+    .kakao-float-btn svg { flex-shrink: 0; }
+    .kakao-float-label {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 500;
+    }
+    .apply-kakao-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      margin-top: 12px;
+      padding: 15px 22px;
+      background: #FEE500;
+      color: #191919;
+      font-family: "Noto Sans KR", sans-serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.28);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+      letter-spacing: -0.01em;
+    }
+    .apply-kakao-btn:hover {
+      transform: scale(1.03);
+      filter: brightness(1.06);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.38);
+    }
+    .apply-kakao-or {
+      text-align: center;
+      color: #999;
+      font-size: 0.85rem;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+    .nav-kakao-btn {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 5px;
+      background: #FEE500;
+      color: #191919 !important;
+      font-weight: 800 !important;
+      font-size: calc(0.8rem + 1pt) !important;
+      padding: 6px 13px !important;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: filter 0.2s ease, transform 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-kakao-btn:hover {
+      filter: brightness(1.08);
+      transform: scale(1.04);
+    }
   </style>
 </head>
 <body>
   <nav class="navbar">
     <div class="container nav-inner">
-      <a class="logo" href="#hero">MEDIA 서포터즈 아카데미</a>
+      <a class="logo" href="#hero">
+        <img class="logo-mark" src="image/MSA(GREEN).png" alt="STN 미디어 서포터즈 아카데미" width="46" height="46" decoding="async" />
+        <span class="logo-text">MEDIA 서포터즈 아카데미</span>
+      </a>
       <a href="#earlybird" class="nav-discount-mobile">할인혜택</a>
       <div class="nav-pay-mobile nav-dropdown" id="nav-pay-mobile">
         <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true" aria-controls="nav-pay-mobile-menu">결제하기</button>
@@ -5083,7 +5204,6 @@
       <div class="nav-links">
         <a href="start.html">홈</a>
         <a href="curriculum.html#intensive-schedule">커리큐럼</a>
-        <a href="#benefits">혜택</a>
         <a href="#earlybird">할인혜택</a>
         <div class="nav-dropdown" id="nav-pay-desktop">
           <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true" aria-controls="nav-pay-desktop-menu">
@@ -5097,9 +5217,14 @@
           </div>
         </div>
         <a href="#directions">오시는길</a>
-        <a href="privacy.html">개인정보처리방침</a>
-        <a href="terms.html">이용약관</a>
         <a href="score.html" class="nav-score-btn">유튜브 진단하기</a>
+        <a href="http://pf.kakao.com/_TCjbX" target="_blank" rel="noopener noreferrer" class="nav-kakao-btn" aria-label="카카오 채널 추가">
+          <svg width="16" height="16" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="20" cy="19" rx="18" ry="16" fill="#191919"/>
+            <path d="M20 8C12.268 8 6 13.149 6 19.5c0 4.01 2.584 7.527 6.5 9.647L11 33l5.08-3.265C17.319 30.226 18.638 30.5 20 30.5c7.732 0 14-5.149 14-11.5S27.732 8 20 8Z" fill="#FEE500"/>
+          </svg>
+          카카오 채널
+        </a>
       </div>
     </div>
   </nav>
@@ -5716,6 +5841,13 @@
             </dl>
           </div>
           <p class="apply-contact">문의: 1599-1242</p>
+          <p class="apply-kakao-or">또는 카카오로 간편하게 문의하기</p>
+          <a href="http://pf.kakao.com/_TCjbX" target="_blank" rel="noopener noreferrer" class="apply-kakao-btn" aria-label="카카오 채널로 문의하기">
+            <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 4C10.059 4 2 11.163 2 20c0 5.601 3.25 10.534 8.2 13.498L8 36l7.252-3.86C16.448 32.376 18.2 32.5 20 32.5c9.941 0 18-7.163 18-16S29.941 4 20 4Z" fill="#191919"/>
+            </svg>
+            카카오 채널로 문의하기
+          </a>
         </div>
         <div class="apply-col apply-col-right">
           <article class="apply-chat-card">
@@ -6259,5 +6391,16 @@
     })();
 
   </script>
+
+  <a href="http://pf.kakao.com/_TCjbX" target="_blank" rel="noopener noreferrer" class="kakao-float" aria-label="카카오 채널 추가">
+    <div class="kakao-float-btn">
+      <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="20" cy="19.5" rx="18" ry="16.5" fill="#191919"/>
+        <path d="M20 8.5C12.268 8.5 6 13.47 6 19.5c0 3.84 2.36 7.22 5.97 9.32L10.5 33l4.9-3.14c1.5.29 3.04.44 4.6.44 7.732 0 14-5.149 14-11.5S27.732 8.5 20 8.5Z" fill="#FEE500"/>
+      </svg>
+      카카오 채널 추가
+    </div>
+    <span class="kakao-float-label">STN 미디어서포터즈</span>
+  </a>
 </body>
 </html>

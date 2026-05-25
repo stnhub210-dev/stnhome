@@ -88,17 +88,20 @@
     justify-content: space-between;
     border-bottom: 1px solid #1e1e1e;
   }
-  .logo { display: flex; align-items: center; gap: 10px; }
-  .logo-badge {
-    background: var(--green);
-    color: var(--dark);
-    font-size: 10px;
-    font-weight: 900;
-    padding: 4px 9px;
-    border-radius: 4px;
-    letter-spacing: .06em;
+  .logo { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .logo-mark {
+    width: auto;
+    height: 44px;
+    flex-shrink: 0;
+    display: block;
+    object-fit: contain;
   }
-  .logo-name { font-size: 13px; color: var(--gray); letter-spacing: .04em; }
+  .logo-name {
+    font-size: 13px;
+    color: var(--gray);
+    letter-spacing: .04em;
+    line-height: 1.25;
+  }
   .header-right { font-size: 11px; color: #444; }
 
   /* HERO */
@@ -1013,7 +1016,7 @@
 
 <div class="header">
   <div class="logo">
-    <div class="logo-badge">STN</div>
+    <img class="logo-mark" src="image/MSA(GREEN).png" alt="미디어 서포터즈 아카데미" width="44" height="44" decoding="async" />
     <div class="logo-name">미디어서포터즈 아카데미</div>
   </div>
   <div class="header-right">유튜브 채널 점수 진단</div>
