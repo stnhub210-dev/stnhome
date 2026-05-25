@@ -443,9 +443,41 @@
       border-bottom: 1px solid rgba(124, 252, 0, .25);
       backdrop-filter: blur(8px);
     }
-    .nav-inner { height: 68px; display: flex; align-items: center; justify-content: space-between; }
-    .logo { color: var(--lime); font-weight: 800; text-decoration: none; }
-    .nav-links { display: flex; gap: 16px; font-size: .92rem; color: #dcdcdc; }
+    .nav-inner {
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    .logo {
+      color: var(--lime);
+      font-weight: 800;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: .92rem;
+      color: #dcdcdc;
+    }
+    @media (min-width: 1025px) {
+      .nav-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        column-gap: 12px;
+      }
+      .logo {
+        grid-column: 1;
+        justify-self: start;
+      }
+      .nav-links {
+        grid-column: 2;
+        justify-self: center;
+      }
+    }
     .nav-links a { color: inherit; text-decoration: none; }
     .nav-links a:hover { color: var(--lime); }
     .nav-links a.nav-score-btn {
@@ -465,6 +497,8 @@
     }
     .nav-dropdown {
       position: relative;
+      display: flex;
+      align-items: center;
     }
     .nav-dropdown-toggle {
       display: inline-flex;
@@ -474,31 +508,37 @@
       border: none;
       font: inherit;
       color: inherit;
-      cursor: pointer;
+      cursor: default;
       padding: 0;
       white-space: nowrap;
+    }
+    #nav-pay-desktop .nav-dropdown-toggle {
+      cursor: default;
+    }
+    .nav-pay-mobile .nav-dropdown-toggle {
+      cursor: pointer;
     }
     .nav-dropdown-toggle svg {
       flex-shrink: 0;
       opacity: 0.75;
-      transition: transform 0.2s ease;
+      transition: transform 0.18s ease;
     }
-    .nav-dropdown.is-open .nav-dropdown-toggle svg,
-    .nav-dropdown:hover .nav-dropdown-toggle svg {
+    .nav-dropdown:hover .nav-dropdown-toggle svg,
+    .nav-dropdown.is-open .nav-dropdown-toggle svg {
       transform: rotate(180deg);
     }
-    .nav-dropdown-toggle:hover,
+    .nav-dropdown:hover .nav-dropdown-toggle,
     .nav-dropdown.is-open .nav-dropdown-toggle,
     .nav-dropdown:focus-within .nav-dropdown-toggle {
       color: var(--lime);
     }
     .nav-dropdown-menu {
       position: absolute;
-      top: calc(100% + 12px);
+      top: calc(100% - 1px);
       left: 50%;
-      transform: translateX(-50%) translateY(8px);
+      transform: translateX(-50%);
       min-width: 196px;
-      padding: 8px;
+      padding: 6px;
       border-radius: 12px;
       border: 1px solid var(--line);
       background: #141414;
@@ -506,16 +546,36 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+      transition: opacity 0.16s ease, visibility 0.16s ease;
       z-index: 1100;
     }
-    .nav-dropdown:hover .nav-dropdown-menu,
-    .nav-dropdown.is-open .nav-dropdown-menu,
-    .nav-dropdown:focus-within .nav-dropdown-menu {
+    .nav-dropdown-menu::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -6px;
+      height: 6px;
+    }
+    #nav-pay-desktop {
+      position: relative;
+    }
+    #nav-pay-desktop::after {
+      content: "";
+      position: absolute;
+      left: -10px;
+      right: -10px;
+      top: 100%;
+      height: 8px;
+      z-index: 1099;
+    }
+    #nav-pay-desktop:hover .nav-dropdown-menu,
+    #nav-pay-desktop:focus-within .nav-dropdown-menu,
+    .nav-pay-mobile.is-open .nav-dropdown-menu,
+    .nav-pay-mobile:focus-within .nav-dropdown-menu {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transform: translateX(-50%) translateY(0);
     }
     .nav-dropdown-menu a {
       display: block;
@@ -567,11 +627,12 @@
     .nav-pay-mobile .nav-dropdown-menu {
       left: auto;
       right: 0;
-      transform: translateY(8px);
+      transform: none;
+      top: calc(100% + 2px);
     }
     .nav-pay-mobile.is-open .nav-dropdown-menu,
     .nav-pay-mobile:focus-within .nav-dropdown-menu {
-      transform: translateY(0);
+      transform: none;
     }
     .nav-score-btn--mobile {
       display: none;
@@ -5015,6 +5076,7 @@
         <div class="nav-dropdown-menu" id="nav-pay-mobile-menu" role="menu">
           <a href="payment-earlybird.html" role="menuitem">얼리버드 할인<span class="nav-dropdown-price">1,548,000원</span></a>
           <a href="payment-student.html?approved=1" role="menuitem">대학생 할인<span class="nav-dropdown-price">990,000원</span></a>
+          <a href="payment-regular.html" role="menuitem">일반결제<span class="nav-dropdown-price">1,980,000원</span></a>
         </div>
       </div>
       <a href="score.html" class="nav-score-btn--mobile">유튜브 진단하기</a>
@@ -5031,6 +5093,7 @@
           <div class="nav-dropdown-menu" id="nav-pay-desktop-menu" role="menu">
             <a href="payment-earlybird.html" role="menuitem">얼리버드 할인<span class="nav-dropdown-price">1,548,000원</span></a>
             <a href="payment-student.html?approved=1" role="menuitem">대학생 할인<span class="nav-dropdown-price">990,000원</span></a>
+            <a href="payment-regular.html" role="menuitem">일반결제<span class="nav-dropdown-price">1,980,000원</span></a>
           </div>
         </div>
         <a href="#directions">오시는길</a>
@@ -5778,21 +5841,19 @@
     })();
 
     (function initNavPayDropdown() {
-      document.querySelectorAll(".nav-dropdown").forEach(function (dropdown) {
-        var toggle = dropdown.querySelector(".nav-dropdown-toggle");
-        if (!toggle) return;
-        toggle.addEventListener("click", function (e) {
-          e.stopPropagation();
-          var open = dropdown.classList.toggle("is-open");
-          toggle.setAttribute("aria-expanded", open ? "true" : "false");
-        });
+      var mobileDropdown = document.getElementById("nav-pay-mobile");
+      if (!mobileDropdown) return;
+      var toggle = mobileDropdown.querySelector(".nav-dropdown-toggle");
+      if (!toggle) return;
+      toggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var open = mobileDropdown.classList.toggle("is-open");
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
       });
       document.addEventListener("click", function () {
-        document.querySelectorAll(".nav-dropdown.is-open").forEach(function (dropdown) {
-          dropdown.classList.remove("is-open");
-          var toggle = dropdown.querySelector(".nav-dropdown-toggle");
-          if (toggle) toggle.setAttribute("aria-expanded", "false");
-        });
+        if (!mobileDropdown.classList.contains("is-open")) return;
+        mobileDropdown.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
       });
     })();
 
