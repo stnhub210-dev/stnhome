@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>결제 결과 | STN 미디어서포터즈 아카데미</title>
+  <meta name="description" content="미디어 서포터즈 양성과정 결제 결과 확인. STN 미디어서포터즈 아카데미.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="canonical" href="https://stnmedia.co.kr/payment_result.html">
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: #111111;
+      --line: #2a2a2a;
+      --lime: #7CFC00;
+      --text: #ffffff;
+      --muted: #bdbdbd;
+      --err: #ff6b6b;
+      --nav-max: 1160px;
+      --content-max: 720px;
+      --nav-clear: calc(68px + env(safe-area-inset-top, 0px));
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Noto Sans KR", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--lime);
+      outline-offset: 2px;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(10, 10, 10, 0.92);
+      border-bottom: 1px solid rgba(124, 252, 0, 0.25);
+      backdrop-filter: blur(10px);
+    }
+    .nav-inner {
+      width: min(92%, var(--nav-max));
+      margin: 0 auto;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 900;
+      font-size: clamp(1.15rem, 3.5vw, 1.45rem);
+      letter-spacing: -0.04em;
+    }
+    .nav-logo-mark {
+      color: var(--lime);
+      text-shadow: 0 0 18px rgba(124, 252, 0, 0.35);
+    }
+    .nav-safe {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(124, 252, 0, 0.45);
+      background: rgba(124, 252, 0, 0.08);
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #e8ffe8;
+      letter-spacing: 0.04em;
+    }
+    .nav-safe svg { flex-shrink: 0; opacity: 0.95; }
+    .nav-home {
+      flex-shrink: 0;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #ccc;
+      text-decoration: none;
+    }
+    .nav-home:hover { color: var(--lime); }
+
+    main {
+      padding: calc(var(--nav-clear) + 24px) 0 56px;
+    }
+    .wrap {
+      width: min(92%, var(--content-max));
+      margin: 0 auto;
+    }
+
+    .result-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: clamp(28px, 5vw, 40px);
+      text-align: center;
+    }
+    .result-icon {
+      font-size: 3rem;
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+    .result-title {
+      font-size: clamp(1.25rem, 4vw, 1.55rem);
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+    .result-desc {
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 600;
+      line-height: 1.65;
+      margin-bottom: 22px;
+    }
+    .result-desc a {
+      color: var(--lime);
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .result-desc a:hover { text-decoration: underline; }
+
+    .result-summary {
+      text-align: left;
+      padding: 16px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      margin-bottom: 22px;
+      font-size: 0.88rem;
+      display: grid;
+      gap: 8px;
+    }
+    .result-summary dt {
+      font-weight: 800;
+      color: #7a7a7a;
+      font-size: 0.75rem;
+      letter-spacing: 0.04em;
+    }
+    .result-summary dd {
+      font-weight: 700;
+      color: #f2f2f2;
+      margin-bottom: 4px;
+    }
+
+    .result-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease, filter 0.2s ease;
+      border: none;
+    }
+    .btn-back {
+      border: 1px solid var(--line);
+      background: #1a1a1a;
+      color: var(--text);
+    }
+    .btn-back:hover { border-color: var(--lime); color: var(--lime); }
+    .btn-primary {
+      background: var(--lime);
+      color: #0a0a0a;
+    }
+    .btn-primary:hover { filter: brightness(1.06); }
+    .btn-retry {
+      border: 1px solid rgba(255, 107, 107, 0.45);
+      background: rgba(255, 107, 107, 0.08);
+      color: #ffb4b4;
+    }
+    .btn-retry:hover {
+      border-color: var(--err);
+      color: #fff;
+    }
+
+    .loading-box {
+      text-align: center;
+      padding: 48px 24px;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #333;
+      border-top-color: var(--lime);
+      border-radius: 50%;
+      margin: 0 auto 14px;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #ccc;
+    }
+
+    .dev-note {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px dashed #444;
+      background: rgba(255, 255, 255, 0.02);
+      font-size: 0.78rem;
+      color: #777;
+      line-height: 1.55;
+      text-align: left;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      z-index: 3000;
+      max-width: min(92vw, 420px);
+      padding: 14px 18px;
+      border-radius: 12px;
+      background: #1e1e1e;
+      border: 1px solid #3a3a3a;
+      color: #fff;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+    }
+    .toast.is-show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    footer {
+      padding: 32px 0 40px;
+      text-align: center;
+      color: #909090;
+      font-size: 0.86rem;
+      line-height: 1.75;
+      border-top: 1px solid var(--line);
+    }
+    .footer-inner {
+      width: min(92%, var(--nav-max));
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .footer-brand {
+      color: #d4d4d4;
+      font-weight: 800;
+      font-size: 0.94rem;
+    }
+    .footer-contact a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .footer-contact a:hover { color: var(--lime); }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+    }
+    .footer-links a {
+      color: #bdbdbd;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .footer-links a:hover { color: var(--lime); }
+    .footer-copy {
+      margin-top: 6px;
+      color: #6f6f6f;
+      font-size: 0.82rem;
+    }
+    .footer-sep { margin: 0 6px; color: #555; }
+
+    @media (max-width: 540px) {
+      .nav-inner { height: 60px; }
+      main { padding-top: calc(60px + env(safe-area-inset-top, 0px) + 16px); }
+      .result-actions { flex-direction: column; }
+      .result-actions .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" aria-label="결제 헤더">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <a class="nav-logo" href="start.html"><span class="nav-logo-mark">STN</span><span>미디어</span></a>
+        <div class="nav-safe" title="안전한 결제">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2 4 5v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V5l-8-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="m9 12 2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>안전 결제</span>
+        </div>
+      </div>
+      <a class="nav-home" href="start.html">홈</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <div id="state-loading" class="loading-box" aria-live="polite">
+        <div class="spinner" aria-hidden="true"></div>
+        <p class="loading-text">결제 결과를 확인하고 있습니다…</p>
+      </div>
+
+      <div id="state-success" hidden>
+        <div class="result-card">
+          <div class="result-icon" aria-hidden="true">✅</div>
+          <h1 class="result-title">신청이 접수되었습니다</h1>
+          <p class="result-desc">입력하신 연락처로 영업일 기준 1~2일 내 담당자가 연락드립니다.<br />문의: <a href="tel:1599-1242">1599-1242</a></p>
+          <dl class="result-summary" id="success-summary"></dl>
+          <div class="result-actions">
+            <a class="btn btn-back" href="start.html">← 강의 소개 페이지로 돌아가기</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="state-fail" hidden>
+        <div class="result-card">
+          <div class="result-icon" aria-hidden="true">❌</div>
+          <h1 class="result-title">결제가 완료되지 않았습니다</h1>
+          <p class="result-desc" id="fail-message">결제가 취소되었거나 오류가 발생했습니다.<br />다시 시도해 주세요. 문의: <a href="tel:1599-1242">1599-1242</a></p>
+          <div class="result-actions">
+            <a class="btn btn-primary" href="payment.html">결제 다시 시도</a>
+            <a class="btn btn-back" href="start.html">강의 소개로 돌아가기</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="state-empty" hidden>
+        <div class="result-card">
+          <div class="result-icon" aria-hidden="true">ℹ️</div>
+          <h1 class="result-title">결제 정보를 확인할 수 없습니다</h1>
+          <p class="result-desc">결제 페이지에서 다시 신청해 주세요.<br />문의: <a href="tel:1599-1242">1599-1242</a></p>
+          <div class="result-actions">
+            <a class="btn btn-primary" href="payment.html">결제 페이지로 이동</a>
+            <a class="btn btn-back" href="start.html">강의 소개로 돌아가기</a>
+          </div>
+          <p class="dev-note">
+            나이스페이는 returnUrl로 POST(form-urlencoded) 결과를 전달합니다.
+            운영 환경에서는 서버에서 POST를 수신·검증한 뒤 이 페이지로 리다이렉트하거나,
+            승인 API 연동 후 결과 HTML을 렌더링해야 합니다.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer aria-label="회사 정보">
+    <div class="footer-inner">
+      <p class="footer-brand">상호명: 주식회사 플래닛네이처미디어<span class="footer-sep">·</span>대표자: 이미정<span class="footer-sep">·</span>사업자등록번호: 874-88-03314</p>
+      <p>주소: 인천광역시 부평구 부평대로 283, 부평우림라이온스밸리 A동 B115-16호 (청천동)</p>
+      <p>통신판매업 신고번호: 제2025-인천부평-1827호<span class="footer-sep">·</span>개인정보관리책임자: 이미정</p>
+      <p class="footer-contact">전화: <a href="tel:1599-1242">1599-1242</a><span class="footer-sep">·</span>이메일: <a href="mailto:lmj@stnsports.co.kr">lmj@stnsports.co.kr</a></p>
+      <div class="footer-links">
+        <a href="terms.html">이용약관</a>
+        <a href="privacy.html">개인정보처리방침</a>
+      </div>
+      <p class="footer-copy">© 2026 플래닛네이처미디어 All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var NICEPAY_MID = "nicepay00m";
+      var NICEPAY_CLIENT_ID = "test_";
+      var PENDING_KEY = "stnPaymentPending";
+
+      var stateLoading = document.getElementById("state-loading");
+      var stateSuccess = document.getElementById("state-success");
+      var stateFail = document.getElementById("state-fail");
+      var stateEmpty = document.getElementById("state-empty");
+      var successSummary = document.getElementById("success-summary");
+      var failMessage = document.getElementById("fail-message");
+      var toastEl = document.getElementById("toast");
+      var toastTimer;
+
+      function escapeHtml(s) {
+        return String(s == null ? "" : s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function formatWon(n) {
+        var num = Number(n);
+        if (!isFinite(num)) return "-";
+        return num.toLocaleString("ko-KR") + "원";
+      }
+
+      function showToast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add("is-show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toastEl.classList.remove("is-show");
+        }, 3200);
+      }
+
+      function showState(name) {
+        stateLoading.hidden = name !== "loading";
+        stateSuccess.hidden = name !== "success";
+        stateFail.hidden = name !== "fail";
+        stateEmpty.hidden = name !== "empty";
+      }
+
+      function readPending() {
+        try {
+          var raw = sessionStorage.getItem(PENDING_KEY);
+          return raw ? JSON.parse(raw) : null;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function clearPending() {
+        try {
+          sessionStorage.removeItem(PENDING_KEY);
+        } catch (e) {}
+      }
+
+      function parseQuery() {
+        var params = new URLSearchParams(window.location.search);
+        var obj = {};
+        params.forEach(function (value, key) {
+          obj[key] = value;
+        });
+        return obj;
+      }
+
+      function getResultCode(data) {
+        return data.resultCode || data.authResultCode || "";
+      }
+
+      function getResultMsg(data) {
+        return data.resultMsg || data.authResultMsg || "";
+      }
+
+      function isSuccessCode(code) {
+        return String(code) === "0000";
+      }
+
+      function buildSummaryHtml(info) {
+        return (
+          "<dt>프로그램명</dt><dd>" + escapeHtml(info.programName || info.goodsName || "-") + "</dd>" +
+          "<dt>교육기간</dt><dd>" + escapeHtml(info.period || "-") + "</dd>" +
+          "<dt>신청자</dt><dd>" + escapeHtml(info.applicantName || info.buyerName || "-") + "</dd>" +
+          "<dt>추천인</dt><dd>" + escapeHtml(info.referrer || "-") + "</dd>" +
+          "<dt>결제금액</dt><dd>" + escapeHtml(info.amountText || formatWon(info.amount)) + "</dd>" +
+          "<dt>결제수단</dt><dd>" + escapeHtml(info.payMethodLabel || "신용카드") + "</dd>" +
+          "<dt>주문번호</dt><dd>" + escapeHtml(info.orderId || "-") + "</dd>"
+        );
+      }
+
+      function parseMallReserved(raw) {
+        if (!raw) return {};
+        try {
+          return JSON.parse(raw.replace(/'/g, '"'));
+        } catch (e) {
+          return {};
+        }
+      }
+
+      function mergeResultInfo(query, pending) {
+        var mall = parseMallReserved(query.mallReserved);
+        var info = {
+          orderId: query.orderId || (pending && pending.orderId) || "",
+          amount: query.amount || (pending && pending.amount) || "",
+          goodsName: query.goodsName || (pending && pending.programName) || "",
+          programName: query.goodsName || (pending && pending.programName) || "",
+          period: pending && pending.period ? pending.period : "-",
+          applicantName: query.buyerName || (pending && pending.applicantName) || "-",
+          referrer: mall.referrer || (pending && pending.referrer) || "-",
+          payMethodLabel: "신용카드",
+          tid: query.tid || "",
+          signature: query.signature || query.authToken || "",
+          resultCode: getResultCode(query),
+          resultMsg: getResultMsg(query)
+        };
+        info.amountText = formatWon(info.amount);
+        return info;
+      }
+
+      /**
+       * TODO: 나이스페이 서버 승인·검증 API 연동
+       *
+       * 1) returnUrl로 POST된 인증/승인 데이터를 서버에서 수신
+       *    (authResultCode/resultCode, tid, orderId, amount, signature, authToken 등)
+       * 2) signature 위변조 검증
+       *    - Server 승인: hex(sha256(authToken + clientId + amount + secretKey))
+       *    - Client 승인: hex(sha256(tid + amount + ediDate + secretKey))
+       * 3) authResultCode/resultCode === '0000' 일 때 승인 API 호출
+       *    POST https://api.nicepay.co.kr/v1/payments/{tid}
+       *    Authorization: Basic base64(clientId:secretKey)
+       *    Body: { "amount": 결제금액 }
+       * 4) 승인 성공 시 주문 DB 저장 및 이 페이지로 query 리다이렉트
+       *    예) payment_result.html?resultCode=0000&orderId=...&amount=...
+       *
+       * MID(nicepay00m) · clientId · secretKey는 발급 후 교체
+       */
+      function verifyNicePayOnServer(authPayload) {
+        return Promise.resolve({
+          ok: isSuccessCode(getResultCode(authPayload)),
+          verified: false,
+          message: getResultMsg(authPayload) || "서버 검증 연동 예정"
+        });
+      }
+
+      function renderSuccess(info) {
+        successSummary.innerHTML = buildSummaryHtml(info);
+        showState("success");
+        clearPending();
+      }
+
+      function renderFail(message) {
+        failMessage.innerHTML =
+          escapeHtml(message || "결제가 취소되었거나 오류가 발생했습니다.") +
+          "<br />다시 시도해 주세요. 문의: <a href=\"tel:1599-1242\">1599-1242</a>";
+        showState("fail");
+        showToast(message || "결제가 완료되지 않았습니다.");
+      }
+
+      function init() {
+        showState("loading");
+
+        var query = parseQuery();
+        var pending = readPending();
+        var hasQuery = Object.keys(query).length > 0;
+        var resultCode = getResultCode(query);
+
+        if (hasQuery && isSuccessCode(resultCode)) {
+          var successInfo = mergeResultInfo(query, pending);
+          verifyNicePayOnServer(query).then(function (res) {
+            if (res.ok) {
+              renderSuccess(successInfo);
+            } else {
+              renderFail(res.message || "결제 검증에 실패했습니다.");
+            }
+          });
+          return;
+        }
+
+        if (hasQuery && resultCode && !isSuccessCode(resultCode)) {
+          renderFail(getResultMsg(query) || "결제 인증에 실패했습니다.");
+          clearPending();
+          return;
+        }
+
+        if (pending && pending.orderId) {
+          renderSuccess({
+            orderId: pending.orderId,
+            programName: pending.programName,
+            period: pending.period,
+            applicantName: pending.applicantName,
+            referrer: pending.referrer,
+            amount: pending.amount,
+            amountText: formatWon(pending.amount),
+            payMethodLabel: "신용카드"
+          });
+          return;
+        }
+
+        showState("empty");
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>

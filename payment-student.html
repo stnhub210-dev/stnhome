@@ -1857,7 +1857,7 @@
           </div>
           <div class="sum-total">
             <span class="sum-total-label">총 결제금액</span>
-            <span class="sum-total-val" id="sum-total">1,980,000원</span>
+            <span class="sum-total-val" id="sum-total">990,000원</span>
           </div>
           <button type="button" class="btn-submit" id="btn-submit" disabled>결제 신청하기 →</button>
           <p class="submit-hint">결제 버튼 클릭 시 입력하신 정보로 신청이 접수됩니다. 실제 결제는 담당자 확인 후 별도 안내됩니다.</p>
@@ -1937,6 +1937,66 @@
       var errApplyType = document.getElementById("err-apply-type");
 
       var STUDENT_KAKAO_1ON1_URL = "https://open.kakao.com/o/sw0sXbvi";
+      var PRICE = {
+        student: 990000,
+        regular: 1980000,
+        list: 1980000
+      };
+
+      function formatWon(n) {
+        return n.toLocaleString("ko-KR") + "원";
+      }
+
+      function splitVat(total) {
+        var supply = Math.round(total / 1.1);
+        return { supply: supply, vat: total - supply, total: total };
+      }
+
+      function tierLabel() {
+        return "대학생 인증 할인 50%";
+      }
+
+      function applyPriceUi() {
+        var total = PRICE.student;
+        var parts = splitVat(total);
+        if (sumSupplyEl) sumSupplyEl.textContent = formatWon(parts.supply);
+        if (sumVatEl) sumVatEl.textContent = formatWon(parts.vat);
+        if (sumTotalEl) sumTotalEl.textContent = formatWon(parts.total);
+        if (sumListRow && sumDiscountRow && sumListEl && sumDiscountEl) {
+          sumListRow.hidden = false;
+          sumDiscountRow.hidden = false;
+          sumListEl.textContent = formatWon(PRICE.list);
+          sumDiscountEl.textContent = "-" + formatWon(PRICE.list - PRICE.student);
+        }
+      }
+
+      function initFixedTier() {
+        applyPriceUi();
+      }
+
+      function getApplyType() {
+        var sel = document.querySelector('input[name="applyType"]:checked');
+        return sel ? sel.value : null;
+      }
+
+      function applyTypeLabel(type) {
+        if (type === "offline") return "오프라인 강의 신청 (노트북 준비)";
+        if (type === "online") return "온라인 강의 신청(줌으로 진행예정)";
+        return "-";
+      }
+
+      function validateApplyType() {
+        if (!getApplyType()) {
+          if (errApplyType) errApplyType.textContent = "신청 유형을 선택해 주세요.";
+          if (applyTypeWrap) applyTypeWrap.classList.add("is-error");
+          showToast("신청 유형을 선택해 주세요.");
+          return false;
+        }
+        if (errApplyType) errApplyType.textContent = "";
+        if (applyTypeWrap) applyTypeWrap.classList.remove("is-error");
+        return true;
+      }
+
       var studentPaymentApproved = /^(1|true|yes)$/i.test(
         (new URLSearchParams(window.location.search).get("approved") || "").trim()
       );

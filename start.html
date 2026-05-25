@@ -463,6 +463,116 @@
       color: #0a0a0a !important;
       filter: brightness(1.08);
     }
+    .nav-dropdown {
+      position: relative;
+    }
+    .nav-dropdown-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      padding: 0;
+      white-space: nowrap;
+    }
+    .nav-dropdown-toggle svg {
+      flex-shrink: 0;
+      opacity: 0.75;
+      transition: transform 0.2s ease;
+    }
+    .nav-dropdown.is-open .nav-dropdown-toggle svg,
+    .nav-dropdown:hover .nav-dropdown-toggle svg {
+      transform: rotate(180deg);
+    }
+    .nav-dropdown-toggle:hover,
+    .nav-dropdown.is-open .nav-dropdown-toggle,
+    .nav-dropdown:focus-within .nav-dropdown-toggle {
+      color: var(--lime);
+    }
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      min-width: 196px;
+      padding: 8px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #141414;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.48);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+      z-index: 1100;
+    }
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown.is-open .nav-dropdown-menu,
+    .nav-dropdown:focus-within .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .nav-dropdown-menu a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+    .nav-dropdown-menu a:hover {
+      background: rgba(124, 252, 0, 0.08);
+      color: var(--lime);
+    }
+    .nav-dropdown-price {
+      display: block;
+      margin-top: 3px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #888;
+    }
+    .nav-dropdown-menu a:hover .nav-dropdown-price {
+      color: rgba(124, 252, 0, 0.75);
+    }
+    .nav-pay-mobile {
+      display: none;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .nav-discount-mobile {
+      display: none;
+      flex-shrink: 0;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #ccc;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-discount-mobile:hover {
+      color: var(--lime);
+    }
+    .nav-pay-mobile .nav-dropdown-toggle {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(124, 252, 0, 0.35);
+      background: rgba(124, 252, 0, 0.08);
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #e8ffe8;
+    }
+    .nav-pay-mobile .nav-dropdown-menu {
+      left: auto;
+      right: 0;
+      transform: translateY(8px);
+    }
+    .nav-pay-mobile.is-open .nav-dropdown-menu,
+    .nav-pay-mobile:focus-within .nav-dropdown-menu {
+      transform: translateY(0);
+    }
     .nav-score-btn--mobile {
       display: none;
       align-items: center;
@@ -4209,6 +4319,8 @@
       }
       .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .nav-links { display: none; }
+      .nav-pay-mobile { display: block; }
+      .nav-discount-mobile { display: inline-flex; }
       .nav-score-btn--mobile {
         display: inline-flex;
       }
@@ -4897,13 +5009,31 @@
   <nav class="navbar">
     <div class="container nav-inner">
       <a class="logo" href="#hero">MEDIA 서포터즈 아카데미</a>
+      <a href="#earlybird" class="nav-discount-mobile">할인혜택</a>
+      <div class="nav-pay-mobile nav-dropdown" id="nav-pay-mobile">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true" aria-controls="nav-pay-mobile-menu">결제하기</button>
+        <div class="nav-dropdown-menu" id="nav-pay-mobile-menu" role="menu">
+          <a href="payment-earlybird.html" role="menuitem">얼리버드 할인<span class="nav-dropdown-price">1,548,000원</span></a>
+          <a href="payment-student.html?approved=1" role="menuitem">대학생 할인<span class="nav-dropdown-price">990,000원</span></a>
+        </div>
+      </div>
       <a href="score.html" class="nav-score-btn--mobile">유튜브 진단하기</a>
       <div class="nav-links">
         <a href="start.html">홈</a>
         <a href="curriculum.html#intensive-schedule">커리큐럼</a>
         <a href="#benefits">혜택</a>
+        <a href="#earlybird">할인혜택</a>
+        <div class="nav-dropdown" id="nav-pay-desktop">
+          <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true" aria-controls="nav-pay-desktop-menu">
+            결제하기
+            <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="nav-dropdown-menu" id="nav-pay-desktop-menu" role="menu">
+            <a href="payment-earlybird.html" role="menuitem">얼리버드 할인<span class="nav-dropdown-price">1,548,000원</span></a>
+            <a href="payment-student.html?approved=1" role="menuitem">대학생 할인<span class="nav-dropdown-price">990,000원</span></a>
+          </div>
+        </div>
         <a href="#directions">오시는길</a>
-        <a href="#faq">FAQ</a>
         <a href="privacy.html">개인정보처리방침</a>
         <a href="terms.html">이용약관</a>
         <a href="score.html" class="nav-score-btn">유튜브 진단하기</a>
@@ -5645,6 +5775,25 @@
         const diff = Math.ceil((deadline - now) / (1000 * 60 * 60 * 24));
         ddayEl.textContent = diff > 0 ? 'D-' + diff : diff === 0 ? 'D-Day' : '마감';
       }
+    })();
+
+    (function initNavPayDropdown() {
+      document.querySelectorAll(".nav-dropdown").forEach(function (dropdown) {
+        var toggle = dropdown.querySelector(".nav-dropdown-toggle");
+        if (!toggle) return;
+        toggle.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var open = dropdown.classList.toggle("is-open");
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+      });
+      document.addEventListener("click", function () {
+        document.querySelectorAll(".nav-dropdown.is-open").forEach(function (dropdown) {
+          dropdown.classList.remove("is-open");
+          var toggle = dropdown.querySelector(".nav-dropdown-toggle");
+          if (toggle) toggle.setAttribute("aria-expanded", "false");
+        });
+      });
     })();
 
     const observer = new IntersectionObserver((entries) => {
