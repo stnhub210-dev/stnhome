@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>STN 스킬업 | STN SKILL UP</title>
+  <title>강사 이정도면 끝!</title>
 
   <!-- 카카오톡 / SNS 공유 (Open Graph) -->
-  <meta property="og:title" content="최고의 강사진이 다 모였다">
-  <meta property="og:description" content="2026년 7월 10일(금)~12일(일) 배재대학교 | STN 스킬업 양성과정">
-  <meta property="og:image" content="https://stnmedia.kr/image/heromain.png">
+  <meta property="og:title" content="당신의 유튜브는 몇 점?">
+  <meta property="og:description" content="채널 아이디만 넣으면 100점 만점 점수 바로 확인 | STN 스킬업">
+  <meta property="og:image" content="https://stnmedia.kr/og-image.png">
   <meta property="og:url" content="https://stnmedia.kr/start.html">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
@@ -24,11 +24,6 @@
       --muted: #bdbdbd;
       --max: 1160px;
       --mentor-badge-fs: 1.64rem;
-      --green: #c6ff00;
-      --white: #ffffff;
-      --gold1: #f5c518;
-      --silver: #c0c0c0;
-      --bronze: #cd7f32;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -405,123 +400,11 @@
       border-bottom: 1px solid rgba(124, 252, 0, .25);
       backdrop-filter: blur(8px);
     }
-    .nav-inner {
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: nowrap;
-    }
-    .logo { color: var(--lime); font-weight: 800; text-decoration: none; display: flex; align-items: center; }
-    .logo-mark {
-      height: 52px;
-      max-width: 220px;
-      width: auto;
-      display: block;
-      object-fit: contain;
-    }
-    .nav-kakao-btn {
-      padding: 6px 14px;
-      border-radius: 999px;
-      background: #fee500;
-      color: #191919 !important;
-      font-weight: 800;
-      font-size: 0.86rem;
-      border: 1px solid rgba(0, 0, 0, 0.12);
-      white-space: nowrap;
-      transition: filter 0.2s ease, transform 0.2s ease;
-    }
-    .nav-kakao-btn:hover {
-      color: #191919 !important;
-      filter: brightness(1.06);
-    }
-    .nav-dropdown {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-    }
-    .nav-dropdown-trigger {
-      background: none;
-      border: none;
-      color: inherit;
-      font: inherit;
-      cursor: pointer;
-      padding: 0;
-      font-size: .92rem;
-    }
-    .nav-dropdown-trigger:hover { color: var(--lime); }
-    .nav-dropdown-menu {
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translate(-50%, 6px);
-      min-width: 220px;
-      background: #141414;
-      border: 1px solid rgba(124, 252, 0, 0.35);
-      border-radius: 10px;
-      padding: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      z-index: 1100;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
-    }
-    .nav-dropdown:hover .nav-dropdown-menu,
-    .nav-dropdown:focus-within .nav-dropdown-menu {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transform: translate(-50%, 0);
-    }
-    .nav-dropdown-menu a {
-      padding: 10px 12px;
-      color: #ececec;
-      text-decoration: none;
-      font-size: 0.86rem;
-      white-space: nowrap;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      border: 1px solid transparent;
-    }
-    .nav-dropdown-menu a:hover {
-      background: rgba(124, 252, 0, 0.1);
-      color: var(--lime);
-      border-color: rgba(124, 252, 0, 0.3);
-    }
-    .nav-dropdown-menu .menu-price {
-      color: #b8ff6a;
-      font-weight: 800;
-      font-size: 0.82rem;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: nowrap;
-      white-space: nowrap;
-      font-size: .92rem;
-      color: #dcdcdc;
-    }
-    .nav-links a { color: inherit; text-decoration: none; white-space: nowrap; }
+    .nav-inner { height: 68px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { color: var(--lime); font-weight: 800; text-decoration: none; }
+    .nav-links { display: flex; gap: 16px; font-size: .92rem; color: #dcdcdc; }
+    .nav-links a { color: inherit; text-decoration: none; }
     .nav-links a:hover { color: var(--lime); }
-    .navbar.is-scrolling .nav-links a,
-    .navbar.is-scrolling .nav-dropdown-trigger {
-      color: #eaffc2;
-      text-shadow: 0 0 10px rgba(124, 252, 0, 0.45);
-    }
-    .navbar.is-scrolling .nav-kakao-btn,
-    .navbar.is-scrolling .nav-links a.nav-score-btn {
-      box-shadow: 0 0 0 1px rgba(124, 252, 0, 0.45), 0 0 18px rgba(124, 252, 0, 0.26);
-      filter: brightness(1.05);
-    }
     .nav-links a.nav-score-btn {
       padding: 6px 14px;
       border-radius: 999px;
@@ -576,7 +459,7 @@
     #hero {
       /* 고정 헤더 + 노치 안전영역 아래부터 본문 노출 */
       --nav-clear: calc(68px + env(safe-area-inset-top, 0px));
-      padding-top: calc(var(--nav-clear) + clamp(30px, 4.2vw, 54px));
+      padding-top: calc(var(--nav-clear) + clamp(14px, 2.8vw, 26px));
       padding-bottom: 0;
       min-height: auto;
       border-bottom: 0;
@@ -589,7 +472,7 @@
     .hero-layout {
       display: flex;
       flex-direction: column;
-      gap: clamp(2px, 0.6vw, 8px);
+      gap: clamp(4px, 1.2vw, 12px);
       align-items: center;
       width: 100%;
       min-height: auto;
@@ -601,7 +484,7 @@
       max-width: 880px;
       width: 100%;
       text-align: center;
-      margin-top: 0;
+      margin-top: clamp(40px, 5vw, 68px);
     }
     .hero-highlight { color: var(--lime); text-shadow: 0 0 16px rgba(124,252,0,.25); }
     .hero-copy h1 {
@@ -610,40 +493,31 @@
       margin: 0;
       line-height: 1.16;
     }
-    .hero-title-logo {
-      line-height: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
-    }
-    .hero-main-logo {
-      width: min(74vw, 560px);
-      max-width: 100%;
-      height: auto;
-      display: block;
-      object-fit: contain;
-      opacity: 0;
-      transform: translateY(8px) scale(.98);
-    }
-    @keyframes hero-main-logo-in {
-      0% { opacity: 0; transform: translateY(10px) scale(.98); }
-      60% { opacity: 1; transform: translateY(0) scale(1.01); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
-    }
     .hero .sub {
-      margin: 12px 0 0;
+      margin: 18px 0 0;
       color: #ececec;
       font-size: clamp(1rem, 2vw, 1.32rem);
       text-align: center;
-      line-height: 1.55;
-      text-wrap: balance;
-      max-width: 28rem;
-      margin-inline: auto;
     }
-    .hero-mid-image,
-    .hero-motto {
-      display: none;
+    .hero .sub .hero-sub-l1,
+    .hero .sub .hero-sub-l2 {
+      display: inline;
+    }
+    .hero-mid-image {
+      width: min(100%, 210px);
+      max-width: 210px;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      margin-top: 24px;
+      opacity: 0;
+      transform: translateY(6px) scale(.96);
+      filter:
+        saturate(0)
+        brightness(2.25)
+        contrast(1.08)
+        drop-shadow(0 0 8px rgba(255,255,255,.85))
+        drop-shadow(0 0 22px rgba(255,255,255,.62));
     }
     @keyframes hero-logo-glass-shift {
       0% {
@@ -682,18 +556,18 @@
     }
     .hero-side {
       display: grid;
-      gap: 4px;
+      gap: 8px;
       width: 100%;
       justify-items: center;
       justify-content: center;
       align-self: center;
-      margin-top: clamp(14px, 2.2vw, 28px);
-      margin-bottom: 0;
-      transform: none;
+      margin-top: auto;
+      margin-bottom: -40px;
+      transform: translateY(-40px);
     }
     .hero-mentor-grid {
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       gap: 0;
       padding-left: 10px;
     }
@@ -726,20 +600,12 @@
       display: none;
     }
     .hero-all-image {
-      width: min(112vw, 1180px);
-      max-width: 1180px;
+      width: min(114%, 1140px);
+      max-width: 1140px;
       height: auto;
       display: block;
       object-fit: contain;
       filter: drop-shadow(0 10px 26px rgba(0,0,0,.35));
-      opacity: 0;
-      transform: translateY(0) scale(.985);
-    }
-    @keyframes hero-all-image-in {
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
     }
     @keyframes hero-mentor-in {
       to { opacity: 1; transform: translateY(0) scale(1); }
@@ -751,12 +617,6 @@
     .hero.reveal.active .hero-mentor-card:nth-child(2) { animation-delay: .36s; }
     .hero.reveal.active .hero-mentor-card:nth-child(3) { animation-delay: .6s; }
     .hero.reveal.active .hero-mentor-card:nth-child(4) { animation-delay: .84s; }
-    .hero.reveal.active .hero-main-logo {
-      animation: hero-main-logo-in .95s ease-out .08s forwards;
-    }
-    .hero.reveal.active .hero-all-image {
-      animation: hero-all-image-in .9s ease-out .24s forwards;
-    }
     .badges { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0 18px; }
     .badge {
       border: 1px solid rgba(124,252,0,.5);
@@ -844,116 +704,63 @@
     .section-calendar { min-height: auto; padding: 40px 0 48px; }
     .schedule-curriculum-bridge {
       min-height: auto;
-      padding: clamp(20px, 4vw, 40px) 0 clamp(28px, 5vw, 48px);
+      padding: clamp(28px, 5vw, 52px) 0 clamp(32px, 6vw, 72px);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #060606;
-      border-bottom: 1px solid #1a1a1a;
     }
     .schedule-curriculum-bridge-inner {
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       width: 100%;
     }
-    .schedule-curriculum-bridge-logo {
-      width: min(58vw, 336px);
-      max-width: 100%;
-      height: auto;
-      display: block;
-      object-fit: contain;
-      margin: 0 auto clamp(12px, 2.2vw, 20px);
-    }
-    @keyframes curriculum-bridge-face-sweep {
-      0% { transform: translateX(-130%); }
-      100% { transform: translateX(130%); }
-    }
-    /* 커리큘럼 버튼: 검정 면 + 좌→우 빛 스윕, 호버 네온 점등 */
-    .schedule-curriculum-bridge-btn-shell {
-      display: inline-flex;
-      border-radius: 16px;
-      transition: filter 0.32s ease;
-    }
     .schedule-curriculum-bridge-btn {
-      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-      isolation: isolate;
-      padding: clamp(20px, 3.2vw, 28px) clamp(40px, 6vw, 72px);
-      border-radius: 14px;
-      font-size: clamp(1.28rem, 2.6vw, 1.62rem);
+      padding: clamp(28px, 4.8vw, 38px) clamp(56px, 8.4vw, 88px);
+      border-radius: 999px;
+      font-size: clamp(1.84rem, 3.64vw, 2.12rem);
       font-weight: 800;
       letter-spacing: -0.02em;
-      line-height: 1.35;
-      color: var(--lime);
+      color: #111;
       text-decoration: none;
-      text-align: center;
-      border: 2px solid rgba(198, 255, 0, 0.45);
-      background: #000;
+      border: 1px solid rgba(12, 28, 6, 0.28);
+      background: var(--lime);
+      transform-origin: center;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
-      transition:
-        border-color 0.32s ease,
-        box-shadow 0.32s ease,
-        color 0.32s ease,
-        text-shadow 0.32s ease;
-    }
-    .schedule-curriculum-bridge-btn::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        transparent 36%,
-        rgba(198, 255, 0, 0.12) 44%,
-        rgba(223, 255, 102, 0.28) 50%,
-        rgba(198, 255, 0, 0.12) 56%,
-        transparent 64%,
-        transparent 100%
-      );
-      transform: translateX(-130%);
-      animation: curriculum-bridge-face-sweep 2.6s ease-in-out infinite;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .schedule-curriculum-bridge-btn-shell:hover .schedule-curriculum-bridge-btn,
-    .schedule-curriculum-bridge-btn-shell:has(.schedule-curriculum-bridge-btn:focus-visible) .schedule-curriculum-bridge-btn {
-      border-color: var(--lime);
-      color: #fff;
-      text-shadow:
-        0 0 10px rgba(198, 255, 0, 0.95),
-        0 0 22px rgba(198, 255, 0, 0.65),
-        0 0 36px rgba(198, 255, 0, 0.35);
       box-shadow:
-        0 0 18px rgba(198, 255, 0, 0.55),
-        0 0 36px rgba(198, 255, 0, 0.32),
-        0 0 56px rgba(198, 255, 0, 0.16),
-        inset 0 0 32px rgba(198, 255, 0, 0.18),
-        inset 0 0 64px rgba(198, 255, 0, 0.06);
+        0 0 0 1px rgba(20, 46, 10, 0.2),
+        0 12px 32px rgba(0, 0, 0, 0.4);
+      transition:
+        transform 0.32s cubic-bezier(0.34, 1, 0.64, 1),
+        border-color 0.28s ease,
+        box-shadow 0.28s ease,
+        background-color 0.28s ease,
+        color 0.28s ease;
     }
-    .schedule-curriculum-bridge-btn-shell:hover .schedule-curriculum-bridge-btn::before {
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        transparent 32%,
-        rgba(198, 255, 0, 0.2) 42%,
-        rgba(255, 255, 220, 0.55) 50%,
-        rgba(198, 255, 0, 0.2) 58%,
-        transparent 68%,
-        transparent 100%
-      );
+    .schedule-curriculum-bridge-btn:hover {
+      transform: scale(1.065);
+      color: #0a0a0a;
+      border-color: rgba(12, 28, 6, 0.42);
+      background: #94ff38;
+      box-shadow:
+        0 0 0 1px rgba(124, 252, 0, 0.55),
+        0 0 32px rgba(124, 252, 0, 0.55),
+        0 0 56px rgba(124, 252, 0, 0.28),
+        0 16px 40px rgba(0, 0, 0, 0.45);
     }
     .schedule-curriculum-bridge-btn:focus-visible {
       outline: none;
-    }
-    .schedule-curriculum-bridge-btn-shell:has(.schedule-curriculum-bridge-btn:focus-visible) {
-      filter: drop-shadow(0 0 10px rgba(198, 255, 0, 0.5));
+      transform: scale(1.055);
+      color: #0a0a0a;
+      border-color: rgba(12, 28, 6, 0.5);
+      background: #8fff33;
+      box-shadow:
+        0 0 0 2px rgba(10, 14, 10, 0.92),
+        0 0 0 3px rgba(20, 50, 8, 0.55),
+        0 0 32px rgba(124, 252, 0, 0.5);
     }
     .welcome-fit {
       min-height: auto;
@@ -1314,7 +1121,7 @@
       z-index: 0;
       padding: 11px 18px;
       font: inherit;
-      font-size: clamp(1.05rem, 1.85vw, 1.16rem);
+      font-size: clamp(0.95rem, 1.55vw, 1.05rem);
       font-weight: 800;
       letter-spacing: 0.03em;
       color: #fff;
@@ -1606,35 +1413,13 @@
       align-items: stretch;
       padding: 90px 0 84px;
       background: #090909;
-      scroll-margin-top: 88px;
-    }
-    .mentor-detail-panel {
-      background: #090909;
-      border-top: 1px solid rgba(198, 255, 0, 0.14);
-    }
-    .mentor-detail-panel[hidden] {
-      display: none !important;
-    }
-    .mentor-detail-panel .mentor-section {
-      display: none;
-      scroll-margin-top: 0;
-    }
-    .mentor-detail-panel .mentor-section.is-active {
-      display: block;
-    }
-    .mentor-preview--grid .mentor-preview-slide.is-selected {
-      border-color: var(--lime);
-      background: rgba(198, 255, 0, 0.09);
-      box-shadow:
-        0 0 20px rgba(198, 255, 0, 0.42),
-        0 0 40px rgba(198, 255, 0, 0.16);
     }
     .mentor-preview {
       position: relative;
       overflow: hidden;
       isolation: isolate;
       min-height: auto;
-      padding: clamp(24px, 4.2vw, 40px) 0 clamp(44px, 6.5vw, 68px);
+      padding: clamp(48px, 7vw, 72px) 0 clamp(44px, 6.5vw, 68px);
       background: #060606;
       border-bottom: 1px solid #1a1a1a;
     }
@@ -1642,7 +1427,9 @@
       position: absolute;
       inset: 0;
       z-index: 0;
-      background: #000;
+      background:
+        linear-gradient(to bottom, rgba(4, 10, 26, 0.28), transparent 42%),
+        url("image/psxtg0691047.jpg") center center / cover no-repeat #060c18;
       transform: translateZ(0);
     }
     .mentor-preview-bg-overlay {
@@ -1650,21 +1437,18 @@
       inset: 0;
       z-index: 1;
       pointer-events: none;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.32) 45%, rgba(0, 0, 0, 0.52) 100%);
+      background: linear-gradient(
+        180deg,
+        rgba(4, 8, 20, 0.62) 0%,
+        rgba(4, 8, 20, 0.42) 45%,
+        rgba(4, 8, 20, 0.72) 100%
+      );
     }
     .mentor-preview-inner {
       position: relative;
       z-index: 2;
-      max-width: min(96%, 1280px);
+      max-width: min(94%, 1180px);
       margin: 0 auto;
-    }
-    .mentor-preview-logo {
-      display: block;
-      width: min(55vw, 324px);
-      max-width: 100%;
-      height: auto;
-      margin: 0 auto clamp(12px, 2.2vw, 20px);
-      object-fit: contain;
     }
     .mentor-preview-kicker {
       text-align: center;
@@ -1673,96 +1457,45 @@
       letter-spacing: 0.05em;
       color: #fff;
       text-shadow: 0 2px 28px rgba(0, 0, 0, 0.45);
-      margin: 0 0 clamp(8px, 1.2vw, 12px);
+      margin: 0 0 clamp(24px, 3.8vw, 36px);
       line-height: 1.16;
-    }
-    .mentor-preview-hint {
-      text-align: center;
-      font-size: clamp(0.8rem, 1.75vw, 0.92rem);
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      color: rgba(255, 255, 255, 0.62);
-      margin: 0 0 clamp(22px, 3.4vw, 34px);
-      line-height: 1.5;
     }
     .mentor-preview-viewport {
       position: relative;
+      overflow: hidden;
       width: 100%;
     }
-    .mentor-preview--grid .mentor-preview-viewport {
-      overflow: visible;
-    }
-    .mentor-preview--grid .mentor-preview-track {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: clamp(14px, 2vw, 24px);
-      width: 100%;
-      transform: none;
-      transition: none;
-      will-change: auto;
-    }
-    @keyframes mentor-preview-neon {
-      0%, 100% {
-        box-shadow:
-          0 0 14px rgba(198, 255, 0, 0.32),
-          0 0 28px rgba(198, 255, 0, 0.14),
-          inset 0 0 20px rgba(198, 255, 0, 0.06);
-      }
-      50% {
-        box-shadow:
-          0 0 26px rgba(198, 255, 0, 0.58),
-          0 0 52px rgba(198, 255, 0, 0.28),
-          inset 0 0 28px rgba(198, 255, 0, 0.1);
-      }
-    }
-    .mentor-preview--grid .mentor-preview-slide {
-      box-sizing: border-box;
-      min-width: 0;
-      padding: clamp(12px, 1.6vw, 18px);
+    /* JS 실행 전에도 한 장(박문성)만 노출되도록 — 잘못된 너비로 옆 슬라이드가 비치지 않게 */
+    #mentor-preview .mentor-preview-track {
       display: flex;
-      flex-direction: column;
+      transform: translateX(0);
+      width: calc(var(--mentor-preview-slide-count, 8) * 100%);
+    }
+    #mentor-preview .mentor-preview-slide {
+      flex: 0 0 calc(100% / var(--mentor-preview-slide-count, 8));
+      min-width: 0;
+    }
+    .mentor-preview-track {
+      transition: transform 0.42s cubic-bezier(0.33, 1, 0.68, 1);
+      will-change: transform;
+    }
+    .mentor-preview-slide {
+      flex-shrink: 0;
+      box-sizing: border-box;
+      padding: clamp(12px, 2vw, 18px) 0;
+      display: flex;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: clamp(10px, 1.5vw, 14px);
-      text-align: center;
-      text-decoration: none;
-      color: inherit;
-      cursor: pointer;
-      background: rgba(0, 0, 0, 0.42);
-      border: 2px solid rgba(198, 255, 0, 0.42);
-      border-radius: 14px;
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
-      transition:
-        border-color 0.25s ease,
-        box-shadow 0.25s ease,
-        transform 0.25s ease,
-        background 0.25s ease;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .mentor-preview--grid .mentor-preview-slide:hover {
-      border-color: var(--lime);
-      background: rgba(198, 255, 0, 0.06);
-      transform: translateY(-4px);
-      animation: mentor-preview-neon 1.35s ease-in-out infinite;
-    }
-    .mentor-preview--grid .mentor-preview-slide:focus-visible {
-      outline: 2px solid var(--lime);
-      outline-offset: 3px;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .mentor-preview--grid .mentor-preview-slide:hover {
-        animation: none;
-        transform: none;
-        box-shadow: 0 0 20px rgba(198, 255, 0, 0.4);
-      }
+      gap: clamp(10px, 2vw, 22px);
+      text-align: left;
     }
     /* 모든 슬라이드 동일 프레임 — 파일 해상도·여백이 달라도 표시 영역 통일 */
     .mentor-preview-photo {
       flex-shrink: 0;
-      width: 100%;
-      max-width: 280px;
-      height: clamp(200px, 26vw, 300px);
-      margin: 0 auto;
+      width: clamp(280px, 40vw, 400px);
+      height: clamp(380px, 52vw, 540px);
+      margin: 0;
       border-radius: 0;
       overflow: hidden;
       background: transparent;
@@ -1777,25 +1510,23 @@
       object-fit: contain;
       object-position: center top;
     }
-    /* 강만훈: PNG 여백 때문에 상대적으로 작게 보여 다른 강사와 체감 크기 맞춤 확대 */
-    #mentor-preview .mentor-preview-slide:has(.mentor-preview-photo img[src*="KMH.png"]) .mentor-preview-photo img {
+    /* 강만훈: PNG 여백 때문에 상대적으로 작게 보여 닥터튜브 체감에 맞춤 확대 */
+    #mentor-preview .mentor-preview-slide:has(.mentor-preview-photo img[src$="KMH.png"]) .mentor-preview-photo img {
       transform: scale(1.26);
       transform-origin: center top;
     }
     .mentor-preview-text {
       flex: 1;
       min-width: 0;
-      width: 100%;
-      max-width: 100%;
+      max-width: min(100%, 28rem);
       display: flex;
       flex-direction: column;
-      gap: clamp(6px, 1vw, 10px);
+      gap: clamp(10px, 2vw, 14px);
       justify-content: center;
-      align-items: center;
     }
     .mentor-preview-name {
       margin: 0;
-      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      font-size: clamp(1.52rem, 4vw, 2.05rem);
       font-weight: 900;
       color: var(--lime);
       letter-spacing: -0.03em;
@@ -1803,76 +1534,283 @@
     }
     .mentor-preview-sum {
       margin: 0;
-      font-size: clamp(0.82rem, 1.6vw, 0.95rem);
+      font-size: clamp(1rem, 2.5vw, 1.14rem);
       font-weight: 600;
-      line-height: 1.55;
+      line-height: 1.65;
       color: #bdbdbd;
       word-break: keep-all;
       overflow-wrap: break-word;
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
-      line-clamp: 3;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
       overflow: hidden;
     }
+    .mentor-preview-dots {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: clamp(18px, 3vw, 24px);
+    }
+    .mentor-preview-dot {
+      width: 9px;
+      height: 9px;
+      padding: 0;
+      border: none;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.22);
+      cursor: pointer;
+      transition: background 0.22s ease, transform 0.22s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mentor-preview-dot[aria-current="true"] {
+      background: var(--lime);
+      transform: scale(1.15);
+    }
+    .mentor-preview-dot:focus-visible {
+      outline: 2px solid var(--lime);
+      outline-offset: 2px;
+    }
+    /* 태블릿·좁은 화면: 세로 배치 + 본문 가독성 */
     @media (max-width: 900px) {
       .mentor-preview {
-        padding: clamp(24px, 4.6vw, 34px)
+        padding: clamp(40px, 6vw, 56px)
           max(16px, env(safe-area-inset-right))
           clamp(36px, 5.5vw, 52px)
           max(16px, env(safe-area-inset-left));
       }
       .mentor-preview-inner {
         width: 100%;
-        max-width: min(100%, 720px);
+        max-width: min(100%, 560px);
         padding-inline: clamp(14px, 4vw, 22px);
         box-sizing: border-box;
       }
       .mentor-preview-kicker {
         font-size: clamp(1.85rem, 5.6vw + 0.35rem, 2.55rem);
         line-height: 1.22;
+        color: #fff;
+        text-wrap: balance;
+        hyphens: auto;
+        letter-spacing: 0.04em;
+      }
+      .mentor-preview-slide {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: clamp(10px, 2.2vw, 16px);
+        padding: clamp(10px, 2.2vw, 16px) 0;
+      }
+      .mentor-preview-photo {
+        width: min(100%, 340px);
+        height: clamp(360px, 72vw, 460px);
+        margin-inline: auto;
+      }
+      .mentor-preview-text {
+        align-items: stretch;
+        text-align: center;
+        width: 100%;
+        max-width: 34rem;
+        margin-inline: auto;
+        gap: clamp(10px, 2.2vw, 16px);
+        padding-inline: clamp(2px, 1vw, 8px);
+      }
+      .mentor-preview-name {
+        font-size: clamp(1.55rem, 4.25vw + 0.25rem, 1.95rem);
+        line-height: 1.34;
+      }
+      .mentor-preview-sum {
+        font-size: clamp(1.05rem, 2.75vw + 0.35rem, 1.22rem);
+        color: #c9c9c9;
         text-wrap: balance;
       }
-      .mentor-preview-logo {
-        width: min(55vw, 252px);
-        margin-bottom: clamp(10px, 2.8vw, 16px);
+      .mentor-preview-dots {
+        gap: clamp(11px, 2.8vw, 16px);
+        margin-top: clamp(22px, 4vw, 30px);
+        padding-block: 6px;
       }
-      .mentor-preview--grid .mentor-preview-track {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-template-rows: repeat(4, auto);
-        gap: clamp(12px, 2.5vw, 18px);
+      .mentor-preview-dot {
+        width: 11px;
+        height: 11px;
       }
-      .mentor-preview--grid .mentor-preview-photo {
-        height: clamp(160px, 38vw, 220px);
-        max-width: 100%;
-      }
-      .mentor-preview--grid .mentor-preview-name {
-        font-size: clamp(0.98rem, 2.8vw, 1.2rem);
-      }
-      .mentor-preview--grid .mentor-preview-sum {
-        font-size: clamp(0.78rem, 2.2vw, 0.9rem);
-        -webkit-line-clamp: 4;
-        line-clamp: 4;
+      .mentor-preview-dot[aria-current="true"] {
+        transform: scale(1.22);
       }
     }
     @media (max-width: 480px) {
       .mentor-preview-inner {
-        padding-inline: max(12px, env(safe-area-inset-left))
-          max(12px, env(safe-area-inset-right));
+        max-width: 100%;
+        padding-inline: max(14px, env(safe-area-inset-left))
+          max(14px, env(safe-area-inset-right));
       }
       .mentor-preview-kicker {
         font-size: clamp(1.62rem, 6.8vw + 0.25rem, 2.08rem);
-        margin-bottom: clamp(6px, 1.5vw, 10px);
+        letter-spacing: 0.035em;
+        color: #fff;
+        margin-bottom: clamp(18px, 5vw, 26px);
       }
-      .mentor-preview-logo {
-        width: min(54vw, 192px);
+      .mentor-preview-photo {
+        width: min(100%, 300px);
+        height: clamp(320px, 82vw, 420px);
       }
-      .mentor-preview-hint {
-        font-size: clamp(0.76rem, 3.2vw, 0.86rem);
-        margin-bottom: clamp(16px, 4.5vw, 24px);
+      .mentor-preview-name {
+        font-size: clamp(1.45rem, 6.1vw + 0.15rem, 1.68rem);
       }
-      .mentor-preview--grid .mentor-preview-photo {
-        height: clamp(140px, 42vw, 190px);
+      .mentor-preview-sum {
+        font-size: clamp(1.02rem, 3.9vw + 0.28rem, 1.14rem);
+        line-height: 1.62;
+      }
+      .mentor-preview-dot {
+        width: 12px;
+        height: 12px;
+      }
+    }
+    /* 터치 기기에서 도트·간격 확대 */
+    @media (max-width: 900px) and (hover: none) and (pointer: coarse) {
+      .mentor-preview-dots {
+        gap: clamp(14px, 3.6vw, 20px);
+        padding-inline: max(12px, env(safe-area-inset-left))
+          max(12px, env(safe-area-inset-right));
+      }
+      .mentor-preview-dot {
+        width: 13px;
+        height: 13px;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .mentor-preview-track {
+        transition: none;
+      }
+    }
+    .mentor-emphasis {
+      min-height: auto;
+      padding: clamp(56px, 9vw, 104px) 0 clamp(48px, 7.5vw, 88px);
+      background: #000;
+      position: relative;
+      overflow: hidden;
+    }
+    .mentor-emphasis .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .mentor-emphasis-message {
+      margin: 0;
+      font-weight: 900;
+      line-height: 1.38;
+      font-size: clamp(2.4rem, 5.95vw, 4.72rem);
+      color: inherit;
+      font-style: italic;
+      letter-spacing: -0.03em;
+      text-shadow: none;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+      transition:
+        transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .mentor-emphasis-message .mentor-emphasis-line {
+      display: inline-block;
+      color: #eaff80;
+      text-shadow:
+        0 1px 0 rgba(0, 0, 0, 0.92),
+        0 2px 3px rgba(0, 0, 0, 0.75);
+    }
+    .mentor-emphasis-message .mentor-emphasis-accent {
+      display: inline-block;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding: 2px clamp(4px, 1vw, 8px);
+      color: #fff;
+      font-size: 1.08em;
+      line-height: 1.28;
+      text-shadow:
+        0 1px 0 rgba(0, 0, 0, 0.88),
+        0 2px 3px rgba(0, 0, 0, 0.72);
+    }
+    /* 호버 시 네온(글로우 변화·점멸) 없음 — 살짝 떠오르는 변형만 */
+    .mentor-emphasis:hover .mentor-emphasis-message {
+      transform: translateY(-8px);
+    }
+    .mentor-emphasis-sronly {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .mentor-emphasis-message-cycle {
+      position: relative;
+    }
+    .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(2px, 0.75vw, 8px);
+      min-height: 0;
+      transform-origin: center center;
+    }
+    .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span {
+      margin: 0;
+      max-width: min(100%, 22em);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span {
+      animation: mentor-emphasis-line-in 0.58s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(1) { animation-delay: 0.06s; }
+    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(2) { animation-delay: 0.2s; }
+    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(3) { animation-delay: 0.34s; }
+    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(4) { animation-delay: 0.48s; }
+    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span:nth-child(5) { animation-delay: 0.62s; }
+    #mentor-emphasis.reveal.active .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner {
+      animation: mentor-emphasis-block-pulse 0.65s ease-in-out 1.48s 1 both;
+    }
+    @keyframes mentor-emphasis-line-in {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes mentor-emphasis-block-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    @media (max-width: 1024px) {
+      #mentor-emphasis .mentor-emphasis-message {
+        font-size: clamp(1.48rem, 3.65vw + 0.72rem, 2.08rem);
+        line-height: 1.38;
+        max-width: min(100%, 19em);
+        margin-inline: auto;
+        padding-inline: clamp(10px, 3.2vw, 20px);
+        word-break: keep-all;
+      }
+      #mentor-emphasis .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner {
+        gap: clamp(4px, 1.65vw, 12px);
+      }
+      #mentor-emphasis .mentor-emphasis-accent {
+        font-size: 1.02em;
+        padding-inline: clamp(3px, 0.85vw, 8px);
+      }
+    }
+    @media (max-width: 480px) {
+      #mentor-emphasis .mentor-emphasis-message {
+        font-size: clamp(1.2rem, 5.05vw + 0.52rem, 1.72rem);
+        line-height: 1.42;
+        max-width: min(94vw, 18em);
+      }
+      #mentor-emphasis .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner {
+        gap: clamp(6px, 2.2vw, 12px);
       }
     }
     .mentor-layout {
@@ -2281,13 +2219,15 @@
       text-shadow: 0 0 14px rgba(255, 255, 255, .3);
     }
     #mentor-sticky .mentor-career-summary,
-    #mentor-sticky-copy .mentor-career-summary {
+    #mentor-sticky-copy .mentor-career-summary,
+    #mentor-sticky-jhc .mentor-career-summary {
       margin-top: 12px;
       padding-top: 14px;
       border-top: 1px solid rgba(124,252,0,.22);
     }
     #mentor-sticky .mentor-career-summary-title,
-    #mentor-sticky-copy .mentor-career-summary-title {
+    #mentor-sticky-copy .mentor-career-summary-title,
+    #mentor-sticky-jhc .mentor-career-summary-title {
       font-size: .82rem;
       font-weight: 900;
       letter-spacing: .06em;
@@ -2295,7 +2235,8 @@
       margin: 0 0 10px;
     }
     #mentor-sticky .mentor-career-summary-list,
-    #mentor-sticky-copy .mentor-career-summary-list {
+    #mentor-sticky-copy .mentor-career-summary-list,
+    #mentor-sticky-jhc .mentor-career-summary-list {
       margin: 0;
       padding-left: 1.15em;
       color: #c8c8c8;
@@ -2303,11 +2244,13 @@
       line-height: 1.55;
     }
     #mentor-sticky .mentor-career-summary-list li,
-    #mentor-sticky-copy .mentor-career-summary-list li {
+    #mentor-sticky-copy .mentor-career-summary-list li,
+    #mentor-sticky-jhc .mentor-career-summary-list li {
       margin-bottom: 7px;
     }
     #mentor-sticky .mentor-career-summary-list li:last-child,
-    #mentor-sticky-copy .mentor-career-summary-list li:last-child {
+    #mentor-sticky-copy .mentor-career-summary-list li:last-child,
+    #mentor-sticky-jhc .mentor-career-summary-list li:last-child {
       margin-bottom: 0;
     }
     /* 강사 스텝 교시 라벨·버튼: 강만훈 교시 버튼과 동일 크기·테두리·호버 */
@@ -2910,305 +2853,128 @@
       animation-delay: 1.68s;
     }
 
-    /* ── EVENT SECTION ── */
-    .event-section {
+    .event {
       position: relative;
       overflow: hidden;
-      min-height: auto;
-      padding: 5rem 1.5rem;
-      text-align: center;
       background: #0a0612;
-      border-bottom: 1px solid var(--line);
+      text-align: center;
     }
     .event-video-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; z-index: 0;
     }
     .event-vignette {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
+      position: absolute; inset: 0; z-index: 1;
       background: radial-gradient(ellipse 90% 75% at 50% 50%, transparent 22%, rgba(8,4,14,.35) 100%);
-      pointer-events: none;
     }
-    .event-section .container {
-      position: relative;
-      z-index: 2;
+    .event .container { position: relative; z-index: 2; }
+    .event h2 {
+      color: var(--lime);
+      font-size: clamp(3.6rem, 6.2vw, 5.6rem);
+      line-height: 1.12;
+      margin-bottom: clamp(20px, 3vw, 36px);
     }
-    .event-tag {
+    .event h2 .event-title-big {
+      font-style: italic;
+      font-size: 1.5em;
       display: inline-block;
-      border: 1.5px solid var(--green);
-      color: var(--green);
-      font-size: 12px;
-      font-weight: 700;
-      padding: 5px 18px;
-      border-radius: 999px;
-      letter-spacing: .12em;
-      margin-bottom: 1.5rem;
-      animation: pulse-tag 2.4s ease-in-out infinite;
+      vertical-align: baseline;
+      margin-right: 0.06em;
     }
-    @keyframes pulse-tag {
-      0%,100% { box-shadow: 0 0 0 0 rgba(198,255,0,.0); }
-      50%      { box-shadow: 0 0 0 6px rgba(198,255,0,.12); }
-    }
-    .event-eyebrow {
-      font-size: 14px;
-      color: #fff;
-      font-weight: 500;
-      letter-spacing: .04em;
-      margin-bottom: .6rem;
-    }
-    .event-title {
-      font-size: clamp(32px, 7.4vw, 60px);
-      font-weight: 900;
-      line-height: 1.15;
-      letter-spacing: -.03em;
-      margin-bottom: 1rem;
-      word-break: keep-all;
-    }
-    .event-title .hl {
-      color: var(--green);
+    .event h2 .event-title-rest {
       display: inline-block;
-      font-size: 1.18em;
-      text-shadow:
-        0 0 10px rgba(198,255,0,.35),
-        0 0 24px rgba(198,255,0,.28),
-        0 0 42px rgba(198,255,0,.18);
-      animation: event-luck-glow 1.8s ease-in-out infinite;
     }
-    .event-title .hl-cobalt {
-      display: inline-block;
-      font-size: 1.18em;
-      color: #38bdf8;
-      text-shadow:
-        0 0 10px rgba(56, 189, 248, 0.4),
-        0 0 24px rgba(56, 189, 248, 0.3);
-    }
-    @keyframes event-luck-glow {
-      0%, 100% {
-        filter: brightness(1);
-        text-shadow:
-          0 0 10px rgba(198,255,0,.35),
-          0 0 24px rgba(198,255,0,.28),
-          0 0 42px rgba(198,255,0,.18);
-      }
-      50% {
-        filter: brightness(1.18);
-        text-shadow:
-          0 0 14px rgba(198,255,0,.52),
-          0 0 32px rgba(198,255,0,.4),
-          0 0 56px rgba(198,255,0,.28);
-      }
-    }
-    .event-sub {
-      font-size: clamp(14px, 3vw, 17px);
-      color: #fff;
-      line-height: 1.8;
-      font-weight: 500;
-      margin-bottom: 2.5rem;
-      word-break: keep-all;
-    }
-    .event-sub strong { color: var(--white); font-weight: 700; }
-
-    .total-banner {
-      max-width: 560px;
-      margin: 0 auto 2.5rem;
-      padding: 0;
-      background: none;
-      border: none;
-      border-radius: 0;
-      position: static;
-      overflow: visible;
-    }
-    .total-label {
-      font-size: 14px;
-      color: #fff;
-      letter-spacing: .1em;
-      font-weight: 700;
-      margin-bottom: .4rem;
-      text-transform: uppercase;
-    }
-    .total-amount {
-      font-size: clamp(68px, 16.8vw, 122px);
-      font-weight: 900;
-      color: var(--green);
-      letter-spacing: -.04em;
-      line-height: 1;
-      white-space: nowrap;
-      text-shadow: 0 0 40px rgba(198,255,0,.28);
-      margin-bottom: .35rem;
-    }
-    .total-note { font-size: 14px; color: #fff; font-weight: 500; }
-
-    .prizes-wrap {
-      max-width: 700px;
-      margin: 0 auto 2.5rem;
-    }
-    .prizes-label {
-      font-size: 12px;
-      color: #fff;
-      letter-spacing: .1em;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-    }
-    .prize-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-    .prize-card {
-      background: rgba(26, 26, 26, 0.55);
-      border: 2.85px solid rgba(198,255,0,.65);
-      border-radius: 16px;
-      padding: 1.6rem 1.1rem;
-      text-align: center;
-      transition: transform .2s, border-color .2s, box-shadow .2s;
-      opacity: 0;
-      transform: translateY(16px);
-      box-shadow:
-        0 0 10px rgba(198,255,0,.35),
-        0 0 22px rgba(198,255,0,.22),
-        0 0 40px rgba(198,255,0,.12),
-        inset 0 0 14px rgba(198,255,0,.06);
-    }
-    .prize-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--green);
-      animation: none;
-      box-shadow:
-        0 0 16px rgba(198,255,0,.55),
-        0 0 32px rgba(198,255,0,.38),
-        0 0 56px rgba(198,255,0,.22),
-        0 0 80px rgba(198,255,0,.1),
-        inset 0 0 20px rgba(198,255,0,.1);
-    }
-    .prize-card.rank-1,
-    .prize-card.rank-2,
-    .prize-card.rank-3 {
-      background: rgba(26, 26, 26, 0.55);
-      border-color: rgba(198,255,0,.65);
-    }
-    .event-section.reveal.active .prize-card:nth-child(1) {
-      animation: prize-fade-seq .55s ease .08s forwards, prize-neon-pulse 2.8s ease-in-out .78s infinite;
-    }
-    .event-section.reveal.active .prize-card:nth-child(2) {
-      animation: prize-fade-seq .55s ease .42s forwards, prize-neon-pulse 2.8s ease-in-out 1.12s infinite;
-    }
-    .event-section.reveal.active .prize-card:nth-child(3) {
-      animation: prize-fade-seq .55s ease .76s forwards, prize-neon-pulse 2.8s ease-in-out 1.46s infinite;
-    }
-
-    @keyframes prize-neon-pulse {
-      0%, 100% {
-        border-color: rgba(198,255,0,.55);
-        box-shadow:
-          0 0 10px rgba(198,255,0,.35),
-          0 0 22px rgba(198,255,0,.22),
-          0 0 40px rgba(198,255,0,.12),
-          inset 0 0 14px rgba(198,255,0,.06);
-      }
-      50% {
-        border-color: rgba(198,255,0,.9);
-        box-shadow:
-          0 0 16px rgba(198,255,0,.55),
-          0 0 34px rgba(198,255,0,.35),
-          0 0 58px rgba(198,255,0,.18),
-          inset 0 0 22px rgba(198,255,0,.1);
-      }
-    }
-
-    @keyframes prize-fade-seq {
-      from { opacity:0; transform: translateY(16px); }
-      to   { opacity:1; transform: translateY(0); }
-    }
-    .prize-rank-label {
-      font-size: clamp(16px, 3vw, 22px);
+    .event-tagline {
+      font-size: clamp(1.38rem, 4.2vw, 2.2rem);
       font-weight: 800;
-      letter-spacing: .04em;
-      margin-bottom: .45rem;
+      max-width: 22em;
+      margin: 0 auto 28px;
+      line-height: 1.58;
+      text-shadow: 0 1px 2px rgba(0,0,0,.92), 0 2px 16px rgba(0,0,0,.65), 0 0 18px rgba(124,252,0,.35);
+      animation: event-tagline-move 5s ease-in-out infinite;
     }
-    .rank-1 .prize-rank-label { color: #f5c518; }
-    .rank-2 .prize-rank-label { color: #c0c0c0; }
-    .rank-3 .prize-rank-label { color: #cd7f32; }
-    .prize-amount {
-      font-size: clamp(28px, 5.5vw, 38px);
+    .event-tagline .event-hero-word {
+      color: #ff9f3c;
       font-weight: 900;
-      letter-spacing: -.03em;
-      line-height: 1;
-      margin-bottom: .45rem;
+      font-size: 1.22em;
+      text-shadow: 0 0 18px rgba(255, 159, 60, 0.45);
     }
-    .rank-1 .prize-amount { color: #f5c518; }
-    .rank-2 .prize-amount { color: #c0c0c0; }
-    .rank-3 .prize-amount { color: #cd7f32; }
-    .prize-count { font-size: clamp(15px, 2.8vw, 18px); color: #fff; font-weight: 600; }
-
-    .event-info-grid {
-      width: min(100%, 780px);
-      margin: 0 auto 2rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+    @keyframes event-tagline-move {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(4px, -10px) rotate(.35deg); }
+      50% { transform: translate(-5px, -4px) rotate(-.3deg); }
+      75% { transform: translate(3px, -12px) rotate(.2deg); }
     }
-    .event-info-card {
-      background: rgba(26, 26, 26, 0.55);
-      border: 1px solid rgba(42, 42, 42, 0.7);
-      border-radius: 12px;
-      padding: 1.35rem 1.4rem;
-      min-height: 122px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    .event-cash {
+      margin: 0 0 clamp(24px, 5vw, 40px);
+      font-size: clamp(3.1rem, 12vw, 7.2rem);
+      font-weight: 900;
+      line-height: 1.02;
+      animation: event-cash-pop 2.8s ease-in-out infinite;
     }
-    .event-info-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(198,255,0,.5);
-      box-shadow: 0 0 20px rgba(198,255,0,.28), 0 0 40px rgba(198,255,0,.12), 0 8px 24px rgba(0,0,0,.4);
+    @keyframes event-cash-pop {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
     }
-    .ev-label { font-size: clamp(12px, 2.2vw, 14px); color: #fff; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .35rem; }
-    .ev-value { font-size: clamp(17px, 3.8vw, 22px); font-weight: 800; color: #fff; word-break: keep-all; line-height: 1.45; }
-    .ev-value .accent { color: var(--green); }
-
-    .event-notice {
-      width: min(100%, 780px);
-      margin: 0 auto;
-      background: rgba(20, 20, 20, 0.55);
-      border: 1px solid rgba(34, 34, 34, 0.7);
-      border-radius: 12px;
-      padding: 1.1rem 1.4rem;
-      text-align: left;
-      transition: border-color .25s ease, box-shadow .25s ease;
+    .cash-counter, .event-won {
+      display: inline-block;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      font-family: "Noto Sans KR", "Arial Black", "Helvetica Neue", sans-serif;
+      color: #f5fbff;
+      text-shadow:
+        0 2px 0 rgba(22, 60, 80, 0.9),
+        0 4px 0 rgba(15, 38, 52, 0.85),
+        0 8px 16px rgba(0, 0, 0, 0.58),
+        0 0 12px rgba(124, 252, 0, 0.42);
+      animation: event-neon-flicker 2.8s ease-in-out infinite;
     }
-    .event-notice:hover {
-      border-color: rgba(198,255,0,.35);
-      box-shadow: 0 0 22px rgba(198,255,0,.16), inset 0 0 20px rgba(198,255,0,.05);
+    .cash-counter {
+      transform: perspective(600px) rotateX(8deg);
+      color: #f9feff;
+      background-image: linear-gradient(90deg, #f6fffd 0%, #a3ffe8 28%, #66f7ff 62%, #7fb7ff 100%);
+      background-size: 0% 100%;
+      background-position: left center;
+      background-repeat: no-repeat;
+      transition: background-size 1.2s ease, text-shadow 1.2s ease, filter 1.2s ease;
+      text-shadow:
+        0 2px 0 rgba(24, 76, 104, 0.95),
+        0 5px 0 rgba(16, 48, 66, 0.88),
+        0 10px 18px rgba(0, 0, 0, 0.62),
+        0 0 18px rgba(124, 252, 0, 0.56);
+      filter: saturate(1.04) contrast(1.08);
     }
-    .ev-notice-title { font-size: 14px; color: var(--lime); font-weight: 800; letter-spacing: .1em; margin-bottom: .7rem; text-transform: uppercase; }
-    .ev-notice-list { list-style: none; display: flex; flex-direction: column; gap: .4rem; }
-    .ev-notice-list li {
-      font-size: 14px;
-      color: #fff;
-      font-weight: 400;
-      padding-left: 1rem;
-      position: relative;
-      line-height: 1.6;
-      word-break: keep-all;
+    .cash-counter.is-gradient {
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 100% 100%;
+      text-shadow:
+        0 0 1px rgba(230, 255, 250, 0.96),
+        0 0 10px rgba(102, 243, 255, 0.58),
+        0 0 22px rgba(127, 183, 255, 0.34),
+        0 10px 18px rgba(0, 0, 0, 0.54);
     }
-    .ev-notice-list li strong {
-      font-weight: 800;
-      color: #fff;
+    .event-won {
+      -webkit-text-stroke: 0;
+      color: #dff8ff;
+      text-shadow:
+        0 1px 0 rgba(20, 58, 78, 0.82),
+        0 3px 0 rgba(14, 40, 55, 0.8),
+        0 7px 12px rgba(0, 0, 0, 0.45),
+        0 0 9px rgba(124, 252, 0, 0.3);
+      filter: brightness(0.95);
+      opacity: 0.94;
     }
-    .ev-notice-list li::before { content: '·'; position: absolute; left: 0; color: #fff; font-weight: 700; }
-
-    @media (max-width: 480px) {
-      .prize-row { grid-template-columns: 1fr; }
-      .event-info-grid { grid-template-columns: 1fr; }
+    @keyframes event-neon-flicker {
+      0%, 100% { filter: brightness(1); opacity: 1; }
+      45% { filter: brightness(1.06); opacity: .98; }
+      48% { filter: brightness(.98); opacity: .97; }
+      52% { filter: brightness(1.08); opacity: .99; }
+    }
+    .event-note {
+      font-size: clamp(.95rem, 2.35vw, 1.12rem);
+      color: rgba(220,220,220,.9);
     }
 
     .timeline { display: grid; gap: 14px; margin-bottom: 24px; }
@@ -3282,6 +3048,11 @@
       grid-template-columns: 1fr;
       gap: 14px;
       margin: 0;
+    }
+    .benefits-pre {
+      min-height: auto;
+      padding: 56px 0 6px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
     }
     #benefits {
       padding: 44px 0 44px;
@@ -3589,215 +3360,90 @@
         align-items: start;
       }
     }
-    @property --earlybird-card-beam {
-      syntax: "<angle>";
-      initial-value: 0deg;
-      inherits: false;
-    }
-    @keyframes earlybird-card-beam-spin {
-      from { --earlybird-card-beam: 0deg; }
-      to { --earlybird-card-beam: 360deg; }
-    }
-    #earlybird {
-      --eb-lime: #c6ff00;
-      --eb-bg: #0d0d0d;
-      --eb-blue: #7eb8f7;
-      background: var(--eb-bg);
-      padding: 5rem 0;
-      border-bottom: 1px solid var(--line);
-      min-height: auto;
-      align-items: flex-start;
-    }
-    #earlybird .container { max-width: min(var(--max), 100%); padding-inline: clamp(16px, 5vw, 36px); }
-    #earlybird .earlybird-head { text-align: center; max-width: 52rem; margin: 0 auto 2.5rem; }
-    #earlybird .earlybird-logo {
-      width: min(100%, 420px);
-      height: auto;
-      display: block;
-      margin: 0 auto 12px;
-      object-fit: contain;
-    }
-    #earlybird .earlybird-title-pre { margin: 0 0 8px; font-size: 0.82rem; font-weight: 900; letter-spacing: 0.28em; color: var(--eb-lime); }
-    #earlybird .earlybird-title { margin: 0; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; color: var(--eb-lime); letter-spacing: -0.03em; }
-    #earlybird .earlybird-sub { margin: 12px 0 0; color: #888; font-size: 1rem; line-height: 1.65; }
-    #earlybird .earlybird-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 1100px; margin: 0 auto 1.25rem; }
-    #earlybird .earlybird-card {
-      background: #111;
-      border-radius: 16px;
-      padding: clamp(20px, 3.2vw, 28px);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      text-align: left;
-      transform-origin: center;
-      transition: transform 0.32s ease, box-shadow 0.32s ease, border-color 0.32s ease;
-    }
-    #earlybird .earlybird-card--eb { border: 2px solid var(--eb-lime); }
-    #earlybird .earlybird-card--student { border: 2px solid #2a2a2a; }
-    #earlybird .earlybird-card--eb:hover,
-    #earlybird .earlybird-card--eb.is-pay-active {
-      transform: scale(1.02);
-      border: 2px solid transparent;
-      background: linear-gradient(#111, #111) padding-box,
-        conic-gradient(from var(--earlybird-card-beam), rgba(198, 255, 0, 0.1) 0deg, rgba(223, 255, 102, 1) 72deg, rgba(198, 255, 0, 0.55) 84deg, rgba(198, 255, 0, 0.08) 180deg, rgba(198, 255, 0, 0.1) 360deg) border-box;
-      background-origin: border-box;
-      background-clip: padding-box, border-box;
-      animation: earlybird-card-beam-spin 2.8s linear infinite;
-      box-shadow: 0 0 22px rgba(198, 255, 0, 0.45), 0 14px 36px rgba(0, 0, 0, 0.42);
-    }
-    #earlybird .earlybird-card--student:hover,
-    #earlybird .earlybird-card--student.is-pay-active {
-      transform: scale(1.02);
-      border: 2px solid transparent;
-      background: linear-gradient(#111, #111) padding-box,
-        conic-gradient(from var(--earlybird-card-beam), rgba(42, 42, 42, 0.55) 0deg, rgba(186, 230, 253, 1) 72deg, rgba(59, 130, 246, 0.7) 84deg, rgba(42, 42, 42, 0.5) 180deg, rgba(42, 42, 42, 0.48) 360deg) border-box;
-      background-origin: border-box;
-      background-clip: padding-box, border-box;
-      animation: earlybird-card-beam-spin 2.8s linear infinite;
-      box-shadow: 0 0 22px rgba(94, 200, 255, 0.4), 0 14px 36px rgba(0, 0, 0, 0.42);
-    }
-    #earlybird .earlybird-card-head {
+    .benefits-pre .benefits-pre-text {
+      font-size: clamp(1.95rem, 3.9vw, 2.9rem);
+      font-weight: 900;
+      line-height: 1.28;
+      text-align: center;
+      color: #ffffff;
       display: grid;
-      gap: 8px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      gap: 10px;
     }
-    #earlybird .earlybird-card--eb .earlybird-card-head { border-bottom-color: rgba(198, 255, 0, 0.22); }
-    #earlybird .earlybird-card--student .earlybird-card-head { border-bottom-color: rgba(126, 184, 247, 0.22); }
-    #earlybird .earlybird-badge {
-      display: inline-flex;
-      align-self: flex-start;
-      padding: 10px 18px;
-      border-radius: 999px;
-      font-size: clamp(0.88rem, 2.1vw, 1.05rem);
-      font-weight: 900;
-    }
-    #earlybird .earlybird-badge--eb { background: var(--eb-lime); color: var(--eb-bg); box-shadow: 0 0 18px rgba(198, 255, 0, 0.35); }
-    #earlybird .earlybird-badge--student {
-      background: rgba(59, 130, 246, 0.18);
-      color: var(--eb-blue);
-      border: 1px solid rgba(59, 130, 246, 0.3);
-    }
-    #earlybird .earlybird-card-kicker {
-      margin: 0;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #888;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-    #earlybird .earlybird-card-cond {
-      margin: 0;
-      font-size: clamp(1rem, 2.2vw, 1.12rem);
-      font-weight: 900;
-      color: #f2f2f2;
-      line-height: 1.4;
-    }
-    #earlybird .earlybird-card--eb .earlybird-card-cond { color: #e8ffd0; }
-    #earlybird .earlybird-card--student .earlybird-card-cond { color: #d4e8ff; }
-    #earlybird .earlybird-price-row { display: flex; flex-direction: column; gap: 6px; }
-    #earlybird .earlybird-price-old { margin: 0; color: #555; text-decoration: line-through; font-weight: 700; }
-    #earlybird .earlybird-price { margin: 0; font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; letter-spacing: -0.03em; }
-    #earlybird .earlybird-card--eb .earlybird-price { color: var(--eb-lime); }
-    #earlybird .earlybird-card--student .earlybird-price { color: var(--eb-blue); }
-    #earlybird .earlybird-save { display: inline-flex; align-self: flex-start; padding: 8px 14px; border-radius: 999px; font-size: 0.82rem; font-weight: 800; }
-    #earlybird .earlybird-save--eb { background: rgba(198, 255, 0, 0.12); color: var(--eb-lime); border: 1px solid rgba(198, 255, 0, 0.2); }
-    #earlybird .earlybird-save--student { background: rgba(59, 130, 246, 0.1); color: var(--eb-blue); border: 1px solid rgba(59, 130, 246, 0.2); }
-    #earlybird .earlybird-meta {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid #2a2a2a;
-    }
-    #earlybird .earlybird-meta-label { display: block; font-size: 0.72rem; font-weight: 800; color: #777; letter-spacing: 0.06em; }
-    #earlybird .earlybird-meta-value { display: block; font-size: 0.9rem; font-weight: 700; color: #ddd; margin-top: 4px; }
-    #earlybird .earlybird-dday { font-size: 0.88rem; font-weight: 900; color: var(--eb-lime); white-space: nowrap; }
-    #earlybird .earlybird-notes { font-size: 0.86rem; color: #888; display: grid; gap: 6px; }
-    #earlybird .earlybird-notes p { margin: 0; }
-    #earlybird .earlybird-pay-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: auto;
-      padding: 14px 18px;
-      border-radius: 12px;
-      border: 1px solid transparent;
-      font: inherit;
-      font-size: 1rem;
-      font-weight: 900;
-      cursor: pointer;
-      width: 100%;
-      text-decoration: none;
-      box-sizing: border-box;
-    }
-    #earlybird .earlybird-pay-btn--eb { background: var(--eb-lime); color: var(--eb-bg); box-shadow: 0 0 16px rgba(198, 255, 0, 0.25); }
-    #earlybird .earlybird-pay-btn--student { background: linear-gradient(180deg, #60a5fa, #2563eb); color: #fff; }
-    #earlybird .earlybird-kakao-link {
-      display: flex;
-      justify-content: center;
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #a8a8a8;
-      text-decoration: none;
-      border: 1px solid #2a2a2a;
-    }
-    #earlybird .earlybird-checkout {
-      max-width: 1100px;
-      margin: 0 auto 1.5rem;
-      max-height: 0;
+    .benefits-pre-line {
       opacity: 0;
-      overflow: hidden;
-      transition: max-height 0.45s ease, opacity 0.35s ease;
+      transform: translateY(18px) scale(.98);
+      transform-origin: center;
     }
-    #earlybird .earlybird-checkout.is-open { max-height: 480px; opacity: 1; }
-    #earlybird .earlybird-checkout-panel { border-radius: 16px; border: 2px solid #2a2a2a; background: #111; padding: clamp(20px, 3vw, 28px); }
-    #earlybird .earlybird-checkout-panel--eb { border-color: rgba(198, 255, 0, 0.45); }
-    #earlybird .earlybird-checkout-panel--student { border-color: rgba(126, 184, 247, 0.45); }
-    #earlybird .earlybird-checkout-title { margin: 0 0 14px; font-size: 1.2rem; font-weight: 900; }
-    #earlybird .earlybird-checkout-panel--eb .earlybird-checkout-title { color: var(--eb-lime); }
-    #earlybird .earlybird-checkout-panel--student .earlybird-checkout-title { color: var(--eb-blue); }
-    #earlybird .earlybird-checkout-rows { display: grid; gap: 8px; margin-bottom: 14px; font-size: 0.92rem; }
-    #earlybird .earlybird-checkout-row { display: flex; justify-content: space-between; color: #ccc; font-weight: 600; }
-    #earlybird .earlybird-checkout-row strong { color: #fff; font-weight: 800; }
-    #earlybird .earlybird-checkout-row--strike strong { color: #777; text-decoration: line-through; }
-    #earlybird .earlybird-checkout-row--discount strong { color: #ffb4b4; }
-    #earlybird .earlybird-checkout-total {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 16px;
-      border-radius: 12px;
-      margin-bottom: 12px;
-      font-weight: 800;
+    .benefits-pre-phrase {
+      display: inline;
     }
-    #earlybird .earlybird-checkout-panel--eb .earlybird-checkout-total { border: 1px solid rgba(198, 255, 0, 0.4); background: rgba(198, 255, 0, 0.08); }
-    #earlybird .earlybird-checkout-panel--student .earlybird-checkout-total { border: 1px solid rgba(126, 184, 247, 0.4); background: rgba(59, 130, 246, 0.1); }
-    #earlybird .earlybird-checkout-total-val { font-size: 1.35rem; font-weight: 900; }
-    #earlybird .earlybird-checkout-panel--eb .earlybird-checkout-total-val { color: var(--eb-lime); }
-    #earlybird .earlybird-checkout-panel--student .earlybird-checkout-total-val { color: var(--eb-blue); }
-    #earlybird .earlybird-checkout-halbu { margin: 0 0 14px; font-size: 0.88rem; color: #9a9a9a; }
-    #earlybird .earlybird-checkout-go { display: flex; justify-content: center; width: 100%; padding: 14px; border-radius: 12px; font-weight: 900; text-decoration: none; }
-    #earlybird .earlybird-checkout-panel--eb .earlybird-checkout-go { background: var(--eb-lime); color: var(--eb-bg); }
-    #earlybird .earlybird-checkout-panel--student .earlybird-checkout-go { background: linear-gradient(180deg, #60a5fa, #2563eb); color: #fff; }
-    #earlybird .earlybird-legal { max-width: 1100px; margin: 0 auto; text-align: center; font-size: 0.84rem; color: #666; }
-    @media (max-width: 900px) { #earlybird .earlybird-grid { grid-template-columns: 1fr; } }
-    @media (prefers-reduced-motion: reduce) {
-      #earlybird .earlybird-card--eb:hover,
-      #earlybird .earlybird-card--eb.is-pay-active,
-      #earlybird .earlybird-card--student:hover,
-      #earlybird .earlybird-card--student.is-pay-active {
-        animation: none;
-        transform: none;
+    .benefits-pre-em {
+      display: inline-block;
+      color: var(--lime);
+      font-weight: 900;
+      font-size: 1.2em;
+      line-height: 1.2;
+      text-shadow: 0 0 14px rgba(124,252,0,.34);
+      letter-spacing: -0.01em;
+      vertical-align: baseline;
+    }
+    @keyframes benefits-pre-em-soft {
+      0%, 100% {
+        text-shadow: 0 0 12px rgba(124,252,0,.28);
+        transform: translateY(0) scale(1);
       }
-      #earlybird .earlybird-card--eb:hover,
-      #earlybird .earlybird-card--eb.is-pay-active { border-color: #dfff66; }
-      #earlybird .earlybird-card--student:hover,
-      #earlybird .earlybird-card--student.is-pay-active { border-color: rgba(126, 184, 247, 0.75); }
+      50% {
+        text-shadow: 0 0 22px rgba(124,252,0,.48), 0 0 36px rgba(124,252,0,.2);
+        transform: translateY(0) scale(1.04);
+      }
+    }
+    .benefits-pre.reveal.active .benefits-pre-em {
+      animation: benefits-pre-em-soft 2.5s ease-in-out infinite;
+    }
+    @keyframes benefits-pre-in-pop {
+      0% { opacity: 0; transform: translateY(18px) scale(.98); filter: blur(.2px); }
+      55% { opacity: 1; transform: translateY(0) scale(1.04); filter: blur(0); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .benefits-pre.reveal.active .benefits-pre-line {
+      animation: benefits-pre-in-pop .78s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .benefits-pre.reveal.active .benefits-pre-line:nth-child(1) { animation-delay: .08s; }
+    .benefits-pre.reveal.active .benefits-pre-line:nth-child(2) { animation-delay: .26s; }
+    .benefits-pre.reveal.active .benefits-pre-line:nth-child(3) { animation-delay: .44s; }
+    .benefits-pre.reveal.active .benefits-pre-line:nth-child(4) { animation-delay: .62s; }
+    @media (max-width: 1024px) {
+      .benefits-pre {
+        padding: 44px 0 14px;
+      }
+      .benefits-pre .benefits-pre-text {
+        font-size: clamp(1.34rem, 3.05vw + 0.72rem, 1.92rem);
+        line-height: 1.42;
+        gap: clamp(8px, 1.9vw, 14px);
+        max-width: min(92vw, 22em);
+        margin-inline: auto;
+        padding-inline: clamp(8px, 2.4vw, 16px);
+        word-break: keep-all;
+      }
+      .benefits-pre-line .benefits-pre-phrase {
+        display: block;
+      }
+      .benefits-pre-line .benefits-pre-phrase + .benefits-pre-phrase {
+        margin-top: 0.2em;
+      }
+      #benefits-pre .benefits-pre-em {
+        font-size: 1.1em;
+        line-height: 1.25;
+      }
+    }
+    @media (max-width: 480px) {
+      .benefits-pre .benefits-pre-text {
+        font-size: clamp(1.15rem, 5.35vw + 0.52rem, 1.72rem);
+        line-height: 1.46;
+      }
+      #benefits-pre .benefits-pre-em {
+        font-size: 1.06em;
+      }
     }
     .benefit-pill {
       display: block;
@@ -4080,39 +3726,13 @@
     #apply .apply-kakao-btn svg {
       flex-shrink: 0;
     }
-    #apply .apply-chat-benefits {
-      margin: 18px 0 0;
-      padding: 16px 14px;
-      border-radius: 12px;
-      background: rgba(15, 39, 68, 0.05);
-      border: 1px solid rgba(15, 39, 68, 0.1);
-      text-align: left;
-    }
-    #apply .apply-chat-benefits-group + .apply-chat-benefits-group {
-      margin-top: 14px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(15, 39, 68, 0.1);
-    }
-    #apply .apply-chat-benefits-heading {
-      margin: 0 0 8px;
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #0f2744;
-      line-height: 1.4;
-    }
-    #apply .apply-chat-benefits-list {
-      margin: 0;
-      padding: 0 0 0 1.15em;
-      list-style: disc;
-    }
-    #apply .apply-chat-benefits-list li {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #3a3a3a;
+    #apply .apply-chat-footnote {
+      margin: 14px 0 0;
+      font-size: 0.88rem;
       line-height: 1.55;
-    }
-    #apply .apply-chat-benefits-list li + li {
-      margin-top: 6px;
+      color: #6f6f6f;
+      font-weight: 500;
+      text-align: left;
     }
     @media (max-width: 960px) {
       #apply .apply-two-col {
@@ -4245,27 +3865,6 @@
       width: min(92%, var(--max));
       margin: 0 auto;
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: clamp(20px, 4vw, 44px);
-      
-    }
-    footer .footer-logo {
-      flex-shrink: 0;
-      display: block;
-      line-height: 0;
-    }
-    footer .footer-logo img {
-      width: auto;
-      height: 80px;
-      max-width: min(50vw, 320px);
-      object-fit: contain;
-      display: block;
-    }
-    footer .footer-content {
-      flex: 1;
-      min-width: 0;
-      display: flex;
       flex-direction: column;
       gap: 6px;
     }
@@ -4291,18 +3890,6 @@
       margin: 0 6px;
       color: #555;
     }
-    @media (max-width: 640px) {
-      footer .footer-inner {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        transform: none;
-      }
-      footer .footer-content {
-        width: 100%;
-        text-align: left;
-      }
-    }
 
     @media (max-width: 1024px) {
       .container { width: min(94%, var(--max)); }
@@ -4321,7 +3908,7 @@
         display: inline-flex;
       }
       #hero {
-        padding-top: calc(var(--nav-clear) + clamp(20px, 3.2vw, 30px));
+        padding-top: calc(var(--nav-clear) + clamp(12px, 2.6vw, 22px));
         padding-bottom: 0;
         align-items: flex-start;
       }
@@ -4330,7 +3917,7 @@
         padding-right: max(14px, env(safe-area-inset-right, 0px));
       }
       .hero-layout {
-        gap: clamp(2px, 1vw, 8px);
+        gap: clamp(14px, 3.2vw, 22px);
         min-height: auto;
       }
       .hero-copy {
@@ -4346,14 +3933,7 @@
         text-wrap: balance;
         letter-spacing: -0.03em;
       }
-      .hero-title-logo {
-        line-height: 0;
-      }
-      .hero-main-logo {
-        width: min(100%, 500px);
-      }
       .hero .sub {
-        margin-top: 10px;
         max-width: 36rem;
         margin-inline: auto;
         padding-inline: 4px;
@@ -4368,15 +3948,14 @@
       .hero-side {
         justify-self: stretch;
         align-self: center;
-        transform: none;
-        margin-top: clamp(10px, 2.2vw, 16px);
-        margin-bottom: 0;
+        transform: translateY(-22px);
+        margin-bottom: -22px;
         overflow: visible;
       }
       .hero-all-image {
-        width: min(124%, 920px);
-        max-width: none;
-        transform: scale(1.08);
+        width: 100%;
+        max-width: 100%;
+        transform: scale(1.05);
         transform-origin: center bottom;
       }
       .mentor-section .intensive-head h2 {
@@ -4478,7 +4057,7 @@
       #hero {
         /* navbar 세로 패딩 6px×2 + 헤더 본체 60px */
         --nav-clear: calc(60px + 12px + env(safe-area-inset-top, 0px));
-        padding-top: calc(var(--nav-clear) + clamp(16px, 3.2vw, 24px));
+        padding-top: calc(var(--nav-clear) + clamp(10px, 2.8vw, 18px));
         padding-bottom: 0;
         align-items: stretch;
         justify-content: center;
@@ -4500,7 +4079,7 @@
         width: 100%;
       }
       .hero-copy {
-        margin-top: 0;
+        margin-top: clamp(4px, 1.8vw, 14px);
         max-width: min(100%, 26rem);
         padding-inline: 4px;
         flex-shrink: 0;
@@ -4509,14 +4088,8 @@
         font-size: clamp(2rem, 6.55vw + 0.62rem, 2.92rem);
         line-height: 1.26;
       }
-      .hero-title-logo {
-        line-height: 0;
-      }
-      .hero-main-logo {
-        width: min(84vw, 430px);
-      }
       .hero .sub {
-        margin-top: 8px;
+        margin-top: 12px;
         font-size: clamp(1.02rem, 3.8vw, 1.24rem);
         line-height: 1.62;
         max-width: 24rem;
@@ -4531,38 +4104,34 @@
         line-height: 1.52;
         margin-top: clamp(12px, 3.2vw, 18px);
       }
+      .hero-mid-image {
+        width: min(100%, 144px);
+        max-width: 144px;
+        margin-top: 12px;
+        flex-shrink: 0;
+      }
       .hero-side {
         flex: 1 1 auto;
         display: flex;
         align-items: flex-end;
         justify-content: center;
         width: 100%;
-        min-height: 0;
-        margin-top: clamp(8px, 2.2vw, 14px);
+        min-height: clamp(200px, 42vh, 460px);
+        margin-top: 0;
         margin-bottom: 0;
         transform: none;
         overflow: hidden;
       }
       .hero-all-image {
-        width: min(144%, 860px);
+        width: min(132%, 720px);
         height: 100%;
         min-height: 100%;
         max-width: none;
         margin-inline: auto;
         object-fit: cover;
-        object-position: center 20%;
+        object-position: center 22%;
         transform: scale(1.14);
         transform-origin: center bottom;
-      }
-      #earlybird .earlybird-logo {
-        width: min(72vw, 340px);
-        margin-bottom: 10px;
-      }
-      .mentor-preview-logo {
-        width: min(62vw, 260px);
-      }
-      .schedule-curriculum-bridge-logo {
-        width: min(68vw, 268px);
       }
       .grid-3, .grid-4 { grid-template-columns: 1fr; }
       .cur-grid, .cur-grid.youtube { grid-template-columns: 1fr; }
@@ -4768,21 +4337,19 @@
       .intensive-tab .t-date { font-size: 1.02rem; }
       .intensive-cta { width: 100%; margin-left: 0; }
 
+      /* 커리큘럼 일정 버튼: 모바일에서 시각적 크기 약 50% */
       .schedule-curriculum-bridge {
         padding: clamp(14px, 2.5vw, 26px) 0 clamp(16px, 3vw, 36px);
       }
-      .schedule-curriculum-bridge-logo {
-        width: min(62vw, 256px);
-        margin-bottom: 12px;
-      }
-      .schedule-curriculum-bridge-btn-shell {
-        max-width: min(100%, 28rem);
-      }
       .schedule-curriculum-bridge-btn {
-        width: 100%;
-        padding: clamp(16px, 2.8vw, 22px) clamp(24px, 4.5vw, 40px);
-        font-size: clamp(1.05rem, 2.2vw + 0.35rem, 1.28rem);
+        padding: clamp(14px, 2.4vw, 19px) clamp(26px, 4.2vw, 44px);
+        font-size: clamp(0.9rem, 1.75vw + 0.42rem, 1.06rem);
         line-height: 1.35;
+        max-width: min(100%, 22rem);
+        text-align: center;
+        box-shadow:
+          0 0 0 1px rgba(20, 46, 10, 0.2),
+          0 6px 16px rgba(0, 0, 0, 0.38);
       }
     }
     @media (max-width: 480px) {
@@ -4801,14 +4368,14 @@
       #hero {
         /* navbar top:8px + 세로패딩 5px×2 + nav-inner 54px */
         --nav-clear: calc(8px + 54px + 10px + env(safe-area-inset-top, 0px));
-        padding-top: calc(var(--nav-clear) + clamp(12px, 2.8vw, 20px));
+        padding-top: calc(var(--nav-clear) + clamp(8px, 2.2vw, 16px));
         padding-bottom: 0;
         align-items: stretch;
         min-height: 100vh;
         min-height: 100svh;
       }
       .hero-copy {
-        margin-top: 0;
+        margin-top: clamp(4px, 1.8vw, 12px);
         max-width: min(100%, 20rem);
         flex-shrink: 0;
       }
@@ -4816,14 +4383,7 @@
         font-size: clamp(1.78rem, 8.2vw + 0.25rem, 2.55rem);
         line-height: 1.3;
       }
-      .hero-title-logo {
-        line-height: 0;
-      }
-      .hero-main-logo {
-        width: min(80vw, 350px);
-      }
       .hero .sub {
-        margin-top: 6px;
         font-size: clamp(0.98rem, 4.1vw, 1.12rem);
         max-width: 18.5rem;
       }
@@ -4831,24 +4391,19 @@
         font-size: clamp(1.05rem, 4.9vw, 1.42rem);
         line-height: 1.5;
       }
+      .hero-mid-image {
+        width: min(100%, 132px);
+        max-width: 132px;
+        flex-shrink: 0;
+      }
       .hero-side {
-        min-height: 0;
-        margin-top: 6px;
+        min-height: clamp(220px, 48vh, 520px);
       }
       .hero-all-image {
-        width: min(154%, 122vw);
-        object-position: center 16%;
-        transform: scale(1.2);
+        width: min(142%, 100vw);
+        object-position: center 18%;
+        transform: scale(1.22);
         transform-origin: center bottom;
-      }
-      #earlybird .earlybird-logo {
-        width: min(78vw, 300px);
-      }
-      .mentor-preview-logo {
-        width: min(62vw, 208px);
-      }
-      .schedule-curriculum-bridge-logo {
-        width: min(72vw, 232px);
       }
       #stn-asset.stn-asset {
         padding: 32px 0 40px;
@@ -4914,15 +4469,8 @@
       }
     }
     @media (prefers-reduced-motion: reduce) {
-      .event-tag { animation: none; }
-      .prize-card {
-        animation: none;
-        box-shadow:
-          0 0 10px rgba(198,255,0,.35),
-          0 0 22px rgba(198,255,0,.22),
-          0 0 40px rgba(198,255,0,.12),
-          inset 0 0 14px rgba(198,255,0,.06);
-      }
+      .event-tagline, .event-cash { animation: none; }
+      .cash-counter { transition: none; }
       #tracks .tracks-title .tracks-hit {
         opacity: 1;
         transform: none;
@@ -4979,19 +4527,46 @@
       #solution .solution-topic-btn:focus-visible {
         transform: none;
       }
-      .schedule-curriculum-bridge-btn::before {
-        animation: none;
-        opacity: 0;
+      .schedule-curriculum-bridge-btn {
+        transition:
+          border-color 0.22s ease,
+          box-shadow 0.22s ease,
+          background-color 0.22s ease,
+          color 0.22s ease;
       }
-      .schedule-curriculum-bridge-btn-shell:hover .schedule-curriculum-bridge-btn,
-      .schedule-curriculum-bridge-btn-shell:has(.schedule-curriculum-bridge-btn:focus-visible) .schedule-curriculum-bridge-btn {
-        text-shadow: none;
-        box-shadow: 0 0 14px rgba(198, 255, 0, 0.4);
+      .schedule-curriculum-bridge-btn:hover,
+      .schedule-curriculum-bridge-btn:focus-visible {
+        transform: none;
       }
-          .benefits-gift img {
+      .benefits-pre-line {
+        opacity: 1;
+        transform: none;
+        animation: none !important;
+      }
+      .benefits-pre-em {
+        animation: none !important;
+      }
+      .benefits-gift img {
         animation: none !important;
         will-change: auto;
         transform: none;
+      }
+      .mentor-emphasis:hover .mentor-emphasis-message {
+        transform: none;
+      }
+      .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 0;
+        animation: none !important;
+      }
+      .mentor-emphasis-message-cycle .mentor-emphasis-cycle-inner > span {
+        display: block;
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        max-width: none;
       }
       #apply .apply-col-right:hover {
         transform: none;
@@ -5001,44 +4576,6 @@
       #apply .apply-kakao-btn:hover {
         filter: brightness(1.06);
       }
-    }
-
-    .kakao-float-wrap {
-      position: fixed;
-      right: clamp(12px, 3vw, 24px);
-      bottom: clamp(16px, 4vw, 28px);
-      z-index: 1200;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
-    .kakao-float-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 18px;
-      border-radius: 999px;
-      background: #fee500;
-      color: #191919;
-      font-weight: 800;
-      font-size: 0.9rem;
-      text-decoration: none;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      transition: filter 0.2s ease, transform 0.2s ease;
-    }
-    .kakao-float-btn:hover {
-      filter: brightness(1.06);
-      transform: translateY(-2px);
-    }
-    .kakao-float-label {
-      width: auto;
-      height: 26px;
-      max-width: min(38vw, 130px);
-      display: block;
-      object-fit: contain;
-      align-self: center;
     }
   
 
@@ -5085,14 +4622,18 @@
   </nav>
 
   <section id="hero" class="hero reveal">
+    <video class="hero-video-bg" autoplay muted loop playsinline preload="auto">
+      <source src="image/ta02400000144_01.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-video-overlay"></div>
     <div class="container">
       <div class="hero-layout">
         <div class="hero-copy">
-          <h1 class="hero-title-logo">
-            <img class="hero-main-logo" src="image/MAIN-LOGO1.png" alt="STN SKILL UP" width="1024" height="512" loading="eager" decoding="async" />
-          </h1>
-          <p class="sub">기초부터 수익화까지, 당신의 스킬을 한 단계 위로</p>
+          <h1><span class="hero-highlight">미디어서포터즈</span> 양성 과정</h1>
+          <p class="sub"><span class="hero-sub-l1">에스티엔미디어가 함께하는</span> <span class="hero-sub-l2">유튜브 크리에이터 양성과정</span></p>
+          <p class="hero-motto">STN은 언제나 최선을 다합니다.</p>
         </div>
+        <img class="hero-mid-image" src="image/자산 11stn.png" alt="STN 로고 이미지" loading="eager" decoding="async" />
         <div class="hero-side" aria-label="강사진 소개 이미지">
           <img class="hero-all-image" src="image/heromain.png" alt="전체 강사진 이미지" loading="eager" decoding="async" />
         </div>
@@ -5104,7 +4645,7 @@
     <div class="container">
       <h2 class="tracks-title tracks-title-stack">
         <span class="tracks-title-row">
-          <span class="tracks-hit tracks-hit-lime tracks-stagger-1">STN 스킬업</span>
+          <span class="tracks-hit tracks-hit-lime tracks-stagger-1">미디어 서포터즈</span>
           <span class="tracks-hit tracks-hit-sky tracks-stagger-2">2박 3일!</span>
         </span>
         <span class="tracks-title-row">
@@ -5131,156 +4672,98 @@
     </div>
   </section>
 
-  <section id="event" class="event-section reveal" aria-label="특별 이벤트">
+  <section id="event" class="event reveal">
     <video class="event-video-bg" autoplay muted loop playsinline preload="auto">
       <source src="image/mony.mp4" type="video/mp4" />
     </video>
-    <div class="event-vignette" aria-hidden="true"></div>
+    <div class="event-vignette"></div>
     <div class="container">
-      <span class="event-tag">SPECIAL EVENT</span>
-      <p class="event-eyebrow">STN 스킬업 양성과정 수료자 대상</p>
-      <h2 class="event-title">교육 받고 <span class="hl">행운</span>의 <span class="hl-cobalt">주인공</span>이 되세요</h2>
-      <p class="event-sub">수료 후 추첨을 통해 <strong>총 1,000만 원</strong> 상당의 경품을 드립니다.</p>
-
-      <div class="total-banner">
-        <p class="total-label">Total Prize</p>
-        <p class="total-amount">1,000만원</p>
-        <p class="total-note">수료 후 전체 수강생 대상 추첨</p>
-      </div>
-
-      <div class="prizes-wrap">
-        <p class="prizes-label">Prize Breakdown</p>
-        <div class="prize-row">
-          <div class="prize-card rank-1">
-            <p class="prize-rank-label">1등</p>
-            <p class="prize-amount">300만원</p>
-            <p class="prize-count">1명</p>
-          </div>
-          <div class="prize-card rank-2">
-            <p class="prize-rank-label">2등</p>
-            <p class="prize-amount">200만원</p>
-            <p class="prize-count">2명</p>
-          </div>
-          <div class="prize-card rank-3">
-            <p class="prize-rank-label">3등</p>
-            <p class="prize-amount">100만원</p>
-            <p class="prize-count">3명</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="event-info-grid">
-        <div class="event-info-card">
-          <p class="ev-label">당첨 발표</p>
-          <p class="ev-value">7월 11일 (토) <span class="accent">20:00</span></p>
-        </div>
-        <div class="event-info-card">
-          <p class="ev-label">추첨 대상</p>
-          <p class="ev-value">교육 <span class="accent">수료 요건</span> 충족 수강생</p>
-        </div>
-        <div class="event-info-card">
-          <p class="ev-label">발표 방식</p>
-          <p class="ev-value">현장 · 온라인 <span class="accent">LIVE 방송</span></p>
-        </div>
-        <div class="event-info-card">
-          <p class="ev-label">실수령 안내</p>
-          <p class="ev-value">기타소득세 <span class="accent">22% 공제</span></p>
-        </div>
-      </div>
-
-      <div class="event-notice">
-        <p class="ev-notice-title">Notice</p>
-        <ul class="ev-notice-list">
-          <li><strong>당첨금</strong>은 기타소득 원천징수세 22% 공제 후 실수령액이 지급됩니다.</li>
-          <li><strong>당첨자</strong>는 신분증 확인 및 세무 처리에 필요한 개인정보 제공에 동의해야 합니다.</li>
-          <li><strong>교육 수료 요건 충족 수강생</strong>만 추첨 대상에 포함됩니다.</li>
-          <li><strong>당첨금 양도·현금화 대행</strong>은 불가하며, 허위·부정 참여 시 당첨이 취소될 수 있습니다.</li>
-          <li><strong>당첨자</strong>는 발표 후 안내되는 기한 내 필요 서류를 제출해야 합니다.</li>
-        </ul>
-      </div>
+      <h2><span class="event-title-big">빅!</span><span class="event-title-rest">특별이벤트</span></h2>
+      <p class="event-tagline">교육도 받고 천만원의 <span class="event-hero-word">주인공</span>이 되세요!</p>
+      <p class="event-cash">
+        <span class="cash-counter" data-target="10000000">0</span><span class="event-won">원</span>
+      </p>
+      <p class="event-note">수료 후 전체 수강생 중 1명 추첨</p>
     </div>
   </section>
 
-  <section id="mentor-preview" class="mentor-preview mentor-preview--grid reveal" aria-label="강사진 미리보기">
+  <section id="mentor-emphasis" class="mentor-emphasis reveal">
+    <div class="container">
+      <p class="mentor-emphasis-message mentor-emphasis-message-cycle">
+        <span class="mentor-emphasis-sronly">이보다 더 막강할 수는 없다. 각 분야 최고. 전문가 7명. 2박3일 집중 지도 합니다.</span>
+        <span class="mentor-emphasis-cycle-inner" aria-hidden="true">
+          <span class="mentor-emphasis-line">이보다 더 막강할 수는 없다 !</span>
+          <span class="mentor-emphasis-accent">각 분야 최고</span>
+          <span class="mentor-emphasis-accent">전문가 7명</span>
+          <span class="mentor-emphasis-line">2박3일</span>
+          <span class="mentor-emphasis-line">집중 지도 합니다</span>
+        </span>
+      </p>
+    </div>
+  </section>
+
+  <section id="mentor-preview" class="mentor-preview reveal" aria-label="강사진 미리보기">
     <div class="mentor-preview-bg" aria-hidden="true"></div>
     <div class="mentor-preview-bg-overlay" aria-hidden="true"></div>
     <div class="container mentor-preview-inner">
-      <img class="mentor-preview-logo" src="image/LOGOL-PNG.png" alt="STN SKILL UP" width="1024" height="256" loading="lazy" decoding="async" />
       <p class="mentor-preview-kicker">강사진 미리보기</p>
-      <p class="mentor-preview-hint">강사진 8명을 누르면 세부내용 보입니다.</p>
       <div class="mentor-preview-viewport" id="mentor-preview-viewport">
         <div class="mentor-preview-track" id="mentor-preview-track">
-          <a href="#mentor-sticky" class="mentor-preview-slide" aria-label="박문성 해설위원 상세 보기">
-            <div class="mentor-preview-photo"><img src="박문성1.png" alt="" width="480" height="540" loading="eager" fetchpriority="high" decoding="async" /></div>
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="박문성1.png" alt="박문성 해설위원" width="480" height="540" loading="eager" fetchpriority="high" decoding="async" /></div>
             <div class="mentor-preview-text">
               <p class="mentor-preview-name">박문성 해설위원</p>
               <p class="mentor-preview-sum">19년 현장 경험으로 스포츠 스토리텔링·콘텐츠 수익화를 이끕니다.</p>
             </div>
-          </a>
-          <a href="#mentor-sticky-copy" class="mentor-preview-slide" aria-label="강만훈 작가 상세 보기">
-            <div class="mentor-preview-photo"><img src="image/KMH.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
+          </div>
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="KMH.png" alt="강만훈 작가" width="480" height="540" loading="lazy" decoding="async" /></div>
             <div class="mentor-preview-text">
               <p class="mentor-preview-name">강만훈 작가</p>
               <p class="mentor-preview-sum">방송 기획·제작 노하우로 기획부터 제작·특집까지 한 번에 연결합니다.</p>
             </div>
-          </a>
-          <a href="#mentor-sticky-editkim" class="mentor-preview-slide" aria-label="에딧킴 강사 상세 보기">
-            <div class="mentor-preview-photo"><img src="image/editkim1.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
+          </div>
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="image/dtb.png" alt="닥터튜브 강사" width="480" height="540" loading="lazy" decoding="async" /></div>
+            <div class="mentor-preview-text">
+              <p class="mentor-preview-name">닥터튜브 강사</p>
+              <p class="mentor-preview-sum">데이터와 지표로 채널 구조·성장·수익 로드맵을 함께 짚습니다.</p>
+            </div>
+          </div>
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="image/editkim1.png" alt="에딧킴 강사" width="480" height="540" loading="lazy" decoding="async" /></div>
             <div class="mentor-preview-text">
               <p class="mentor-preview-name">에딧킴 강사</p>
               <p class="mentor-preview-sum">AI·캡컷으로 숏폼 기획·편집·업로드까지 원스톱 실전을 안내합니다.</p>
             </div>
-          </a>
-          <a href="#mentor-sticky-kcs" class="mentor-preview-slide" aria-label="김창수 강사 상세 보기">
-            <div class="mentor-preview-photo"><img src="image/KCS1.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
+          </div>
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="image/KCS1.png" alt="김창수 강사" width="480" height="540" loading="lazy" decoding="async" /></div>
             <div class="mentor-preview-text">
               <p class="mentor-preview-name">김창수 강사</p>
               <p class="mentor-preview-sum">AI 자동화와 실전 루틴으로 콘텐츠·전환·수익 구조를 설계합니다.</p>
             </div>
-          </a>
-          <a href="#mentor-sticky-bjh" class="mentor-preview-slide" aria-label="박정훈 강사 상세 보기">
-            <div class="mentor-preview-photo"><img src="image/bjh.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
+          </div>
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="image/bjh.png" alt="박정훈 강사" width="480" height="540" loading="lazy" decoding="async" /></div>
             <div class="mentor-preview-text">
               <p class="mentor-preview-name">박정훈 강사</p>
               <p class="mentor-preview-sum">스튜디오 분석으로 실패 패턴을 짚고 채널별 실행 전략을 제시합니다.</p>
             </div>
-          </a>
-          <a href="#mentor-sticky-jsh" class="mentor-preview-slide" aria-label="개그우먼 조승희 상세 보기">
-            <div class="mentor-preview-photo"><img src="image/jsh.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
+          </div>
+          <div class="mentor-preview-slide">
+            <div class="mentor-preview-photo"><img src="image/jsh.png" alt="개그우먼 조승희" width="480" height="540" loading="lazy" decoding="async" /></div>
             <div class="mentor-preview-text">
               <p class="mentor-preview-name">개그우먼 조승희</p>
               <p class="mentor-preview-sum">소통과 무대 경험으로 교육 현장에 감동과 웃음을 더합니다.</p>
             </div>
-          </a>
-          <a href="#mentor-sticky-kke" class="mentor-preview-slide" aria-label="김경은(단아쌤) 강사 상세 보기">
-            <div class="mentor-preview-photo"><img src="image/DAN.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
-            <div class="mentor-preview-text">
-              <p class="mentor-preview-name">김경은(단아쌤) 강사</p>
-              <p class="mentor-preview-sum">콘텐츠 구성과 전달력을 높이는 실전 코칭으로 채널 완성도를 끌어올립니다.</p>
-            </div>
-          </a>
-          <a href="#mentor-sticky-pjb" class="mentor-preview-slide" aria-label="편준범 강사 상세 보기">
-            <div class="mentor-preview-photo"><img src="image/PJB.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
-            <div class="mentor-preview-text">
-              <p class="mentor-preview-name">편준범 강사</p>
-              <p class="mentor-preview-sum">스마트폰과 입만으로 배우는 말로하는 AI 실전 교육을 진행합니다.</p>
-            </div>
-          </a>
+          </div>
         </div>
       </div>
+      <div class="mentor-preview-dots" id="mentor-preview-dots" role="tablist" aria-label="강사진 슬라이드"></div>
     </div>
   </section>
 
-  <section class="schedule-curriculum-bridge reveal" aria-label="커리큐럼 세부 일정 이동">
-    <div class="container schedule-curriculum-bridge-inner">
-      <img class="schedule-curriculum-bridge-logo" src="image/LOGOL-PNG.png" alt="STN SKILL UP" width="1024" height="256" loading="lazy" decoding="async" />
-      <div class="schedule-curriculum-bridge-btn-shell">
-        <a href="curriculum.html#intensive-schedule" class="schedule-curriculum-bridge-btn">2박 3일 커리큐럼 세부 일정 보러가기</a>
-      </div>
-    </div>
-  </section>
-
-  <div id="mentor-detail-panel" class="mentor-detail-panel" hidden aria-label="강사 상세">
   <section id="mentor-sticky" class="mentor-section reveal">
     <div class="container">
       <div class="intensive-head">
@@ -5340,7 +4823,7 @@
           <article class="mentor-sticky-card">
             <span class="mentor-badge">강사진</span>
             <div class="mentor-photo-wrap">
-              <img id="mentor-photo-copy" src="image/KMH.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
+              <img id="mentor-photo-copy" src="KMH.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
             </div>
             <h3 id="mentor-name-copy">강만훈 작가</h3>
             <p id="mentor-role-copy" class="mentor-role">방송작가 / 프로듀서<br>한,중 콘텐츠 / 기획,제작<br>SBS 특별상 작가 부문 수상</p>
@@ -5362,6 +4845,54 @@
             <p><button type="button" class="timeline-inline-btn mentor-period-btn"><strong>1교시</strong></button><strong class="mentor-part-title">콘텐츠는 왜 커머스와 융합할 수밖에 없는가</strong><br>· 기존 방송 콘텐츠와 뉴미디어 콘텐츠의 차이<br>· 조회수와 광고 수익만으로는 한계가 생기는 이유<br>· 브랜드가 단순 광고보다 콘텐츠형 노출을 원하는 이유<br>· PPL, 협찬, 브랜디드 콘텐츠가 커머스로 이어지는 흐름<br>· 중국 시장에서 콘텐츠와 커머스가 빠르게 결합되는 이유</p>
             <p><button type="button" class="timeline-inline-btn mentor-period-btn"><strong>2교시</strong></button><strong class="mentor-part-title">제작자는 커머스를 어떻게 콘텐츠에 연결해야 하는가</strong><br>· 콘텐츠 기획 단계에서 상품과 브랜드를 바라보는 방법<br>· 제품을 억지로 노출하지 않고 이야기 안에 녹이는 방식<br>· 롱폼, 숏폼, 라이브커머스의 역할 차이<br>· QR, 쿠폰, 구매 링크, 댓글 고정 등을 활용한 판매 연결 방식<br>· 한국과 중국 플랫폼에서 콘텐츠 소비와 구매 방식이 달라지는 지점</p>
             <p><button type="button" class="timeline-inline-btn mentor-period-btn"><strong>3교시</strong></button><strong class="mentor-part-title">실제 수익화 방식과 콘텐츠 상품화</strong><br>· 콘텐츠 제작자가 판매할 수 있는 상품의 종류<br>* 출연, 협찬, PPL<br>* 브랜디드 콘텐츠, 라이브커머스, 숏폼 패키지<br>* 채널 운영 대행, 왕홍/인플루언서 연계<br>· 브랜드 제안서와 미디어킷의 기본 개념<br>· 협찬 단가를 정할 때 고려해야 할 요소<br>· 콘텐츠 기획안이 실제 영업 자료로 바뀌는 과정<br>· 중국 커머스와 연결할 때 확인해야 할 기본 조건<br>* 상품 경쟁력, 가격, 사은품<br>* 물류 및 운영 가능성</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mentor-sticky-jhc" class="mentor-section reveal">
+    <div class="container">
+      <div class="intensive-head">
+        <h2><span class="intensive-head-phrase">닥터튜브 강사의</span> <span class="intensive-head-phrase">데이터 기반 채널 성장 코칭</span></h2>
+        <p>진단부터 실행까지, 유튜브 수익화 실전 전략</p>
+      </div>
+      <div class="mentor-layout">
+        <aside class="mentor-sticky-col">
+          <article class="mentor-sticky-card">
+            <span class="mentor-badge">강사진</span>
+            <div class="mentor-photo-wrap">
+              <img id="mentor-photo-jhc" src="image/dtb.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
+            </div>
+            <h3 id="mentor-name-jhc">닥터튜브 강사</h3>
+            <p id="mentor-role-jhc" class="mentor-role">유튜브 성장 컨설턴트 · 데이터 분석 기반 채널 코치</p>
+            <p id="mentor-bio-jhc" class="mentor-bio">"감이 아니라 데이터로 채널을 키웁니다."<br><br>- 채널 구조·트래픽·이탈률 핵심 지표 진단<br>- 검색/탐색 알고리즘에 맞는 콘텐츠 설계<br>- 수익화까지 연결되는 실행 로드맵 제시</p>
+            <div class="mentor-career-summary" aria-label="경력 요약">
+              <p class="mentor-career-summary-title">경력 요약</p>
+              <ul class="mentor-career-summary-list">
+                <li><strong>콘텐츠·채널 전략</strong> 지표 분석으로 성장 정체 구간 진단, 타겟·포맷·주제 구조 재설계 컨설팅</li>
+                <li><strong>알고리즘 실무 교육</strong> 검색/탐색 알고리즘 차이 적용, 썸네일·제목·업로드 흐름 성과 중심 최적화</li>
+                <li><strong>수익화 코칭</strong> 미디어킷·광고 단가·제안 포인트 설계 등 수익 연결 운영 체계</li>
+              </ul>
+            </div>
+          </article>
+        </aside>
+
+        <div class="mentor-steps">
+          <article
+            class="mentor-step active"
+            data-name="닥터튜브 강사"
+            data-role="유튜브 성장 컨설턴트 · 데이터 분석 기반 채널 코치"
+            data-image="image/dtb.png"
+            data-bio="&quot;감이 아니라 데이터로 채널을 키웁니다.&quot;<br><br>- 채널 구조·트래픽·이탈률 핵심 지표 진단<br>- 검색/탐색 알고리즘에 맞는 콘텐츠 설계<br>- 수익화까지 연결되는 실행 로드맵 제시">
+            <h4>채널 정밀 진단 & 성장 전략</h4>
+            <p>유튜브 채널의 병목을 찾고 개선하는 실전 프로세스</p>
+            <p>1) 데이터 진단<br>- 이탈률·유입경로·유령구독자 체크<br>- 타겟 미스매치 지점 파악<br>- 우선순위 개선 항목 도출</p>
+            <p>2) 노출 구조 최적화<br>- 검색형/탐색형 콘텐츠 비율 설계<br>- 썸네일·제목·초반 훅 개선<br>- 멀티포맷(롱폼·숏폼·라이브) 운영 전략</p>
+            <p>3) 수익화 연결 설계<br>- 채널 단계별 수익모델 선택<br>- 광고·브랜드 협업 기본 구조 이해<br>- 실행 가능한 4주 운영 플랜 수립</p>
+            <p>실습: 본인 채널 데이터 기반 진단표 작성 + 개선안 도출</p>
+            <h4>특별 특강</h4>
+            <p><strong class="mentor-highlight-title">"성장 정체를 뚫는 채널 리셋 전략"</strong><br><br>- 조회수 정체 구간에서 반드시 점검할 5가지<br>- 실패하는 운영 루틴과 성공하는 루틴의 차이<br>- Q&A 기반 맞춤 개선 방향 제시</p>
           </article>
         </div>
       </div>
@@ -5529,7 +5060,7 @@
             <div class="mentor-jsh-right-title" role="paragraph">
               <span class="mentor-jsh-quote mentor-jsh-quote--top" aria-hidden="true">“</span>
               <div class="mentor-jsh-body">
-                <div class="mentor-jsh-line"><span class="mentor-jsh-em">STN 스킬업 양성과정</span>에</div>
+                <div class="mentor-jsh-line"><span class="mentor-jsh-em">미디어서포터즈 양성과정</span>에</div>
                 <div class="mentor-jsh-line">참여하신 분들과</div>
                 <div class="mentor-jsh-line"><span class="mentor-jsh-em">감동과 소통의 시간</span>을 선사합니다.</div>
               </div>
@@ -5540,73 +5071,6 @@
       </div>
     </div>
   </section>
-  <section id="mentor-sticky-kke" class="mentor-section reveal">
-    <div class="container">
-      <div class="intensive-head">
-        <h2><span class="intensive-head-phrase">실무에 바로 쓰는</span> <span class="intensive-head-phrase">콘텐츠 완성도 강화</span></h2>
-        <p>김경은(단아쌤)교수와 함께 유튜브 크리에이터 지식 수익화 전략을 실전으로 익힙니다.</p>
-      </div>
-      <div class="mentor-layout">
-        <aside class="mentor-sticky-col">
-          <article class="mentor-sticky-card">
-            <span class="mentor-badge">콘텐츠 코칭</span>
-            <div class="mentor-photo-wrap">
-              <img id="mentor-photo-kke" src="image/DAN.png" alt="김경은(단아쌤) 강사 프로필 이미지" loading="lazy" decoding="async" />
-            </div>
-            <h3 id="mentor-name-kke">김경은(단아쌤)교수</h3>
-            <p id="mentor-role-kke" class="mentor-role">유튜브 크리에이터 수익화 코치 · 퍼널 마케팅 실전</p>
-            <p id="mentor-bio-kke" class="mentor-bio">안녕하세요, 프로필 사진 전달드립니다.<br><br>유튜브 크리에이터로 지식을 수익화하는 핵심 커리큘럼을 3교시로 압축해 진행합니다.</p>
-          </article>
-        </aside>
-        <div class="mentor-steps">
-          <article class="mentor-step active" data-name="김경은(단아쌤)교수" data-role="유튜브 크리에이터 수익화 코치 · 퍼널 마케팅 실전" data-image="image/DAN.png" data-bio="안녕하세요, 프로필 사진 전달드립니다.&lt;br&gt;&lt;br&gt;유튜브 크리에이터로 지식을 수익화하는 핵심 커리큘럼을 3교시로 압축해 진행합니다.">
-            <h4><span class="lecture-pill">1교시</span><br><span class="lecture-title">퍼널 마케팅과 구독 모델 구축</span></h4>
-            <p>- 고객 구매 여정을 단계별로 설계하는 퍼널 마케팅 개념</p>
-            <p>- 인지 → 관심 → 구매 → 재구매 수익 구조 이해</p>
-            <p>- 유튜브 채널을 퍼널 입구로 활용하는 전략</p>
-            <p>- 단 하나의 구독 상품으로 안정적인 고객 유치</p>
-            <h4><span class="lecture-pill">2교시</span><br><span class="lecture-title">전자책·VOD 판매와 쇼핑 연동 전략</span></h4>
-            <p>- 전자책 + VOD 강의를 연계한 지식 상품 패키징</p>
-            <p>- 유튜브 쇼핑 기능과 전자책 쇼핑몰 연결로 직접 판매 루트 구축</p>
-            <h4><span class="lecture-pill">3교시</span><br><span class="lecture-title">업셀링과 AI 자동화 설계</span></h4>
-            <p>- 고객 만족을 유지하면서 LTV를 높이는 업셀링(Up-selling) 3가지 방법</p>
-            <p>- AI를 통한 지식 수익화 자동화 설계</p>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section id="mentor-sticky-pjb" class="mentor-section reveal">
-    <div class="container">
-      <div class="intensive-head">
-        <h2><span class="intensive-head-phrase">스마트폰과 입만 가져오세요</span> <span class="intensive-head-phrase">말로하는 AI</span></h2>
-        <p>편준범 강사의 말로하는 인공지능 실전 클래스</p>
-      </div>
-      <div class="mentor-layout">
-        <aside class="mentor-sticky-col">
-          <article class="mentor-sticky-card">
-            <span class="mentor-badge">AI 실용강의</span>
-            <div class="mentor-photo-wrap">
-              <img id="mentor-photo-pjb" src="image/PJB.png" alt="편준범 강사 프로필 이미지" loading="lazy" decoding="async" />
-            </div>
-            <h3 id="mentor-name-pjb">편준범 강사</h3>
-            <p id="mentor-role-pjb" class="mentor-role">말로하는 인공지능 창시 · AI 실용강의 1인자</p>
-            <p id="mentor-bio-pjb" class="mentor-bio">1,200만명 시니어에게 AI를 장착시켜 전국 7만곳 경로당에 인공지능 홀을 만들겠습니다.<br><br>- AI ON Movement!<br>- 말로하는 인공지능 창시<br>- 가장쉬운AI (youtube)<br>- 30년 디자인회사 대표 역임<br>- 인공지능 침대 개발 제조<br>- 산자부 R&amp;D 심사위원<br>- 6500여명 시니어 AI 교육진행</p>
-          </article>
-        </aside>
-        <div class="mentor-steps">
-          <article class="mentor-step active" data-name="편준범 강사" data-role="말로하는 인공지능 창시 · AI 실용강의 1인자" data-image="image/PJB.png" data-bio="말로 하는 인공지능, 말로하는 AI 실전 강의입니다.&lt;br&gt;&lt;br&gt;- 스마트폰과 음성 명령만으로 AI를 바로 활용하는 방법&lt;br&gt;- 복잡한 설정 없이 실생활/콘텐츠에 적용하는 실전 루틴&lt;br&gt;- 초보자도 따라할 수 있는 단계별 활용 가이드">
-            <h4><span class="lecture-pill">대표 세션</span><br><span class="lecture-title">말로 하는 인공지능, 말로하는 AI 실전</span></h4>
-            <p>말로 하는 인공지능, 말로하는 AI 실전 강의입니다.</p>
-            <p>- 스마트폰과 음성 명령만으로 AI를 바로 활용하는 방법</p>
-            <p>- 복잡한 설정 없이 실생활/콘텐츠에 적용하는 실전 루틴</p>
-            <p>- 초보자도 따라할 수 있는 단계별 활용 가이드</p>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-  </div>
 
   <section id="solution" class="reveal">
     <div class="container">
@@ -5657,9 +5121,9 @@
           <div class="calendar-day is-pad"></div><div class="calendar-day is-pad"></div><div class="calendar-day is-pad"></div>
           <div class="calendar-day"><span class="cal-num">1</span></div><div class="calendar-day"><span class="cal-num">2</span></div><div class="calendar-day"><span class="cal-num">3</span></div><div class="calendar-day"><span class="cal-num">4</span></div>
           <div class="calendar-day"><span class="cal-num">5</span></div><div class="calendar-day"><span class="cal-num">6</span></div><div class="calendar-day"><span class="cal-num">7</span></div><div class="calendar-day"><span class="cal-num">8</span></div><div class="calendar-day"><span class="cal-num">9</span></div>
-          <div class="calendar-day is-highlight" data-cal-day="10" role="button" tabindex="0" aria-label="7월 10일 커리큐럼으로 이동"><span class="cal-num">10</span><span class="cal-label">STN<br>스킬업<br>교육</span></div>
-          <div class="calendar-day is-highlight" data-cal-day="11" role="button" tabindex="0" aria-label="7월 11일 커리큐럼으로 이동"><span class="cal-num">11</span><span class="cal-label">STN<br>스킬업<br>교육</span></div>
-          <div class="calendar-day is-highlight" data-cal-day="12" role="button" tabindex="0" aria-label="7월 12일 커리큐럼으로 이동"><span class="cal-num">12</span><span class="cal-label">STN<br>스킬업<br>교육</span></div>
+          <div class="calendar-day is-highlight" data-cal-day="10" role="button" tabindex="0" aria-label="7월 10일 커리큐럼으로 이동"><span class="cal-num">10</span><span class="cal-label">STN<br>미디어서포터즈<br>교육</span></div>
+          <div class="calendar-day is-highlight" data-cal-day="11" role="button" tabindex="0" aria-label="7월 11일 커리큐럼으로 이동"><span class="cal-num">11</span><span class="cal-label">STN<br>미디어서포터즈<br>교육</span></div>
+          <div class="calendar-day is-highlight" data-cal-day="12" role="button" tabindex="0" aria-label="7월 12일 커리큐럼으로 이동"><span class="cal-num">12</span><span class="cal-label">STN<br>미디어서포터즈<br>교육</span></div>
           <div class="calendar-day"><span class="cal-num">13</span></div><div class="calendar-day"><span class="cal-num">14</span></div><div class="calendar-day"><span class="cal-num">15</span></div><div class="calendar-day"><span class="cal-num">16</span></div><div class="calendar-day"><span class="cal-num">17</span></div><div class="calendar-day"><span class="cal-num">18</span></div>
           <div class="calendar-day"><span class="cal-num">19</span></div><div class="calendar-day"><span class="cal-num">20</span></div><div class="calendar-day"><span class="cal-num">21</span></div><div class="calendar-day"><span class="cal-num">22</span></div><div class="calendar-day"><span class="cal-num">23</span></div><div class="calendar-day"><span class="cal-num">24</span></div><div class="calendar-day"><span class="cal-num">25</span></div>
           <div class="calendar-day"><span class="cal-num">26</span></div><div class="calendar-day"><span class="cal-num">27</span></div><div class="calendar-day"><span class="cal-num">28</span></div><div class="calendar-day"><span class="cal-num">29</span></div><div class="calendar-day"><span class="cal-num">30</span></div><div class="calendar-day"><span class="cal-num">31</span></div>
@@ -5668,6 +5132,33 @@
         <p class="calendar-hint">날짜를 클릭하시면 일별로 커리큐럼으로 이동합니다.</p>
       </div>
     </section>
+
+  <section class="schedule-curriculum-bridge reveal" aria-label="커리큐럼 세부 일정 이동">
+    <div class="container schedule-curriculum-bridge-inner">
+      <a href="curriculum.html#intensive-schedule" class="schedule-curriculum-bridge-btn">2박 3일 커리큐럼 세부 일정 보러가기</a>
+    </div>
+  </section>
+
+  <section id="benefits-pre" class="benefits-pre reveal" aria-label="미디어·생존 메시지">
+    <div class="container">
+      <div class="benefits-pre-text">
+        <div class="benefits-pre-line">
+          <span class="benefits-pre-phrase"><span class="benefits-pre-em">유튜브·SNS·AI</span>, 이건</span>
+          <span class="benefits-pre-phrase">트렌드가 아니라 <span class="benefits-pre-em">생존</span>이다!</span>
+        </div>
+        <div class="benefits-pre-line"><span class="benefits-pre-em">지금</span> 시작하지 않으면,</div>
+        <div class="benefits-pre-line">
+          <span class="benefits-pre-phrase">나의 존재는 <span class="benefits-pre-em">시장</span>에서</span>
+          <span class="benefits-pre-phrase"><span class="benefits-pre-em">사라진다.</span></span>
+        </div>
+        <div class="benefits-pre-line">
+          <span class="benefits-pre-phrase"><span class="benefits-pre-em">시작하는 순간!</span></span>
+          <span class="benefits-pre-phrase"><span class="benefits-pre-em">나의 미래</span>는</span>
+          <span class="benefits-pre-phrase"><span class="benefits-pre-em">내가 만든다!</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section id="benefits" class="reveal">
     <div class="container">
@@ -5681,7 +5172,7 @@
             <div class="benefits-grid">
               <div class="benefit-pill">1. <span class="benefit-em">콘텐츠 제공</span> <span class="benefit-note">(수료후 3개월)</span></div>
               <div class="benefit-pill">2. <span class="benefit-em">수강생에 한해</span> 유튜브 멤버쉽 운영</div>
-              <div class="benefit-pill">3. <span class="benefit-em">STN 스킬업 자격증</span> <span class="benefit-note">민간자격 등록 (제2025-002178호)</span></div>
+              <div class="benefit-pill">3. <span class="benefit-em">미디어서포터즈 자격증</span> <span class="benefit-note">민간자격 등록 (제2025-002178호)</span></div>
               <div class="benefit-pill">4. <span class="benefit-em">AI자동화 프로그램</span><span class="benefit-note benefit-note--stack">(카드뉴스 자동 생성기, AI 상위노출 기사제작기등)</span></div>
               <div class="benefit-pill">5. <span class="benefit-em">STN 중계 및 촬영</span> 현장 투입가능</div>
               <div class="benefit-pill">6. <span class="benefit-em">지속관리</span></div>
@@ -5697,7 +5188,7 @@
       <div class="price-cut-layout">
         <div class="price-cut-left">수강료</div>
         <div class="price-cut-right">
-          <div class="price-cut-kicker"><span class="price-kicker-strong">8명 전문강사</span>의 모든 <span class="price-kicker-strong price-kicker-nohow"><span class="price-kicker-char">노</span><span class="price-kicker-char">하</span><span class="price-kicker-char">우</span></span>를 배우는 가격!</div>
+          <div class="price-cut-kicker"><span class="price-kicker-strong">7명 전문강사</span>의 모든 <span class="price-kicker-strong price-kicker-nohow"><span class="price-kicker-char">노</span><span class="price-kicker-char">하</span><span class="price-kicker-char">우</span></span>를 배우는 가격!</div>
           <div class="price-cut-price-stack">
             <del class="price-cut-old">4,500,000</del>
             <div class="price-cut-amount is-pingpong">
@@ -5713,68 +5204,6 @@
     </div>
   </section>
 
-  <section id="earlybird" class="earlybird reveal" aria-label="얼리버드 할인 혜택" data-earlybird-deadline="2026-06-15">
-    <div class="container">
-      <header class="earlybird-head">
-        <img class="earlybird-logo" src="image/LOGOL-PNG.png" alt="STN SKILL UP 로고" loading="lazy" decoding="async" />
-        <p class="earlybird-title-pre">LIMITED OFFER</p>
-        <h2 class="earlybird-title">얼리버드 할인혜택!</h2>
-        <p class="earlybird-sub">결제하기를 누르면 해당 할인이 적용된 결제 페이지로 이동합니다. 중복 적용은 불가합니다.</p>
-      </header>
-      <div class="earlybird-grid">
-        <article class="earlybird-card earlybird-card--eb" data-tier="earlybird">
-          <header class="earlybird-card-head">
-            <span class="earlybird-badge earlybird-badge--eb">얼리버드 20% 할인</span>
-            <p class="earlybird-card-kicker">기간 한정 특가</p>
-            <p class="earlybird-card-cond">2026년 6월 15일까지 결제하면</p>
-          </header>
-          <div class="earlybird-price-row">
-            <p class="earlybird-price-old">1,980,000원</p>
-            <p class="earlybird-price">1,584,000원</p>
-          </div>
-          <span class="earlybird-save earlybird-save--eb">396,000원 절약 (20%)</span>
-          <div class="earlybird-meta">
-            <div><span class="earlybird-meta-label">할인 마감일</span><span class="earlybird-meta-value">2026년 6월 15일</span></div>
-            <span class="earlybird-dday">D-0</span>
-          </div>
-          <div class="earlybird-notes">
-            <p>· 마감일 이후 정가(1,980,000원) 적용</p>
-            <p>· 할부 시 월 132,000원 (12개월, 카드사별 상이)</p>
-            <p>· 대학생 인증 할인과 중복 불가</p>
-          </div>
-          <a href="payment-earlybird.html" class="earlybird-pay-btn earlybird-pay-btn--eb">결제하기</a>
-          <a class="earlybird-kakao-link" href="https://open.kakao.com/o/gLhT5Kui" target="_blank" rel="noopener noreferrer">상담 · 할인 문의 (카카오)</a>
-        </article>
-        <article class="earlybird-card earlybird-card--student" data-tier="student">
-          <header class="earlybird-card-head">
-            <span class="earlybird-badge earlybird-badge--student">대학생 인증 할인 50%</span>
-            <p class="earlybird-card-kicker">재학생 · 휴학생 대상</p>
-            <p class="earlybird-card-cond">재학·휴학 증명서 인증 시 특별 지원가</p>
-          </header>
-          <div class="earlybird-price-row">
-            <p class="earlybird-price-old">1,980,000원</p>
-            <p class="earlybird-price">990,000원</p>
-          </div>
-          <span class="earlybird-save earlybird-save--student">990,000원 절약 (50%)</span>
-          <div class="earlybird-meta">
-            <div><span class="earlybird-meta-label">제출 서류</span><span class="earlybird-meta-value">재학·휴학·졸업유예 증명서</span></div>
-          </div>
-          <div class="earlybird-notes">
-            <p>· 국내대학(교) 재학생·휴학생·졸업유예자 한정</p>
-            <p>· 카카오 1:1 인증 후 결제 링크 발송 (사이트에서 바로 결제 불가)</p>
-            <p>· 얼리버드 할인과 중복 불가</p>
-          </div>
-          <a href="payment-student.html" class="earlybird-pay-btn earlybird-pay-btn--student">1:1 인증 신청하기</a>
-          <a class="earlybird-kakao-link" href="payment-student.html">인증 절차 안내 보기</a>
-        </article>
-      </div>
-      <div class="earlybird-legal">
-        <p>※ 두 가지 할인은 중복 적용되지 않습니다.</p>
-        <p>※ 얼리버드 마감일 이후 정가로 전환됩니다.</p>
-      </div>
-    </div>
-  </section>
-
   <section id="apply" class="final-cta reveal" aria-label="수강 신청">
     <div class="container">
       <div class="apply-two-col">
@@ -5785,13 +5214,17 @@
           <div class="apply-program-summary">
             <dl>
               <dt>프로그램명</dt>
-              <dd>STN 스킬업 양성과정</dd>
+              <dd>미디어 서포터즈 양성과정</dd>
               <dt>교육 기간</dt>
               <dd>2026. 7. 10 ~ 7. 12 (2박 3일)</dd>
               <dt>수업 방식</dt>
               <dd>오프라인 + 온라인 동시 진행</dd>
+              <dt>수강료</dt>
+              <dd>1,980,000원 <span class="apply-program-meta">(부가세 포함)</span></dd>
             </dl>
           </div>
+          <div class="apply-cta-wrap"><a href="payment.html" class="cta-btn apply-btn apply-btn--stacked" aria-label="결제 신청 페이지로 이동하여 수강 신청하기"><span class="apply-btn-line apply-btn-line--sm">수강신청서 작성하고</span><span class="apply-btn-line apply-btn-line--lg">결재하기</span></a></div>
+          <p class="apply-mail-hint">결재하기를 누르면 결제 신청 페이지로 이동합니다.<br />신청 접수 후, 영업일 기준 1~2일 내 연락드립니다.</p>
           <p class="apply-contact">문의: 1599-1242</p>
         </div>
         <div class="apply-col apply-col-right">
@@ -5803,27 +5236,12 @@
               href="https://open.kakao.com/o/gLhT5Kui"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="카카오 오픈채팅에서 강의자료 무료 신청하기"
+              aria-label="카카오톡 오픈채팅 미디어서포터즈 방으로 이동"
             >
               <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 3c-4.97 0-9 3.13-9 7 0 2.38 1.44 4.47 3.6 5.73-.13.47-.84 2.98-.87 3.18-.05.27.1.52.36.6.09.03.18.04.27.04.21 0 .41-.11.52-.29 0 0 2.28-3.12 2.65-3.65.55.08 1.12.12 1.7.12 4.97 0 9-3.13 9-7s-4.03-7-9-7z"/></svg>
-              강의자료 무료 신청하기
+              오픈채팅으로 문의하기
             </a>
-            <div class="apply-chat-benefits" aria-label="강의자료 구성">
-              <div class="apply-chat-benefits-group">
-                <p class="apply-chat-benefits-heading">수강전 :</p>
-                <ul class="apply-chat-benefits-list">
-                  <li>AI 상위노출 기사제작기 제공(평생)</li>
-                  <li>AI 썸네일, 대본 제작 봇 제공(평생)</li>
-                </ul>
-              </div>
-              <div class="apply-chat-benefits-group">
-                <p class="apply-chat-benefits-heading">수강후 :</p>
-                <ul class="apply-chat-benefits-list">
-                  <li>쉽톡 3개월 무료 이용권 제공</li>
-                  <li>카드뉴스 자동제작기 6개월 이용권 제공</li>
-                </ul>
-              </div>
-            </div>
+            <p class="apply-chat-footnote">PC에서는 카카오톡 앱 또는 모바일로 링크를 열어 참여해야 할 수 있습니다.</p>
           </article>
         </div>
       </div>
@@ -5893,34 +5311,15 @@
 
   <footer aria-label="회사 정보">
     <div class="footer-inner">
-      <a href="start.html" class="footer-logo" aria-label="STN SKILL UP 홈">
-        <img src="image/LOGOL2.png" alt="STN SKILL UP" width="220" height="53" decoding="async" />
-      </a>
-      <div class="footer-content">
       <p class="footer-brand">주식회사 플래닛네이처미디어<span class="footer-sep">·</span>대표자: 이미정<span class="footer-sep">·</span>사업자등록번호: 874-88-03314</p>
       <p>소재지: 인천광역시 부평구 부평대로 283, 부평우림라이온스밸리 A동 B115-16호 (청천동)</p>
       <p>통신판매업 신고번호: 제2025-인천부평-1827호</p>
       <p class="footer-contact">고객센터: <a href="tel:1599-1242">1599-1242</a><span class="footer-sep">·</span>이메일: <a href="mailto:lmj@stnsports.co.kr">lmj@stnsports.co.kr</a><span class="footer-sep">·</span><a href="privacy.html">개인정보처리방침</a><span class="footer-sep">·</span><a href="terms.html">이용약관</a></p>
       <p class="footer-copy">© 2026 플래닛네이처미디어 All rights reserved.</p>
-      </div>
     </div>
   </footer>
 
   <script>
-    (function initEarlybird() {
-      const section = document.getElementById('earlybird');
-      if (!section) return;
-
-      const deadlineStr = section.getAttribute('data-earlybird-deadline') || '2026-06-15';
-      const deadline = new Date(deadlineStr + 'T23:59:59+09:00');
-      const ddayEl = section.querySelector('.earlybird-dday');
-      if (ddayEl) {
-        const now = new Date();
-        const diff = Math.ceil((deadline - now) / (1000 * 60 * 60 * 24));
-        ddayEl.textContent = diff > 0 ? 'D-' + diff : diff === 0 ? 'D-Day' : '마감';
-      }
-    })();
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) entry.target.classList.add("active");
@@ -5928,56 +5327,142 @@
     }, { threshold: 0.18 });
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
-    // 강사진: 2행 그리드 — 미리보기 클릭 시 하단 패널에 상세 표시
     (function () {
-      const panel = document.getElementById("mentor-detail-panel");
-      const preview = document.getElementById("mentor-preview");
-      if (!panel || !preview) return;
+      const root = document.getElementById("mentor-preview");
+      const track = document.getElementById("mentor-preview-track");
+      const viewport = document.getElementById("mentor-preview-viewport");
+      const dotsWrap = document.getElementById("mentor-preview-dots");
+      if (!root || !track || !viewport || !dotsWrap) return;
 
-      const slides = Array.from(preview.querySelectorAll(".mentor-preview-slide[href^='#mentor-sticky']"));
-      const sections = Array.from(panel.querySelectorAll(".mentor-section"));
-      if (!slides.length || !sections.length) return;
+      const slides = Array.from(track.querySelectorAll(".mentor-preview-slide"));
+      const n = slides.length;
+      if (!n) return;
 
-      const navOffset = 88;
+      root.style.setProperty("--mentor-preview-slide-count", String(n));
 
-      const showMentor = (id) => {
-        const target = document.getElementById(id);
-        if (!target || !panel.contains(target)) return;
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const intervalMs = reduceMotion ? 6500 : 3600;
 
-        sections.forEach((section) => {
-          const active = section.id === id;
-          section.classList.toggle("is-active", active);
-          section.hidden = !active;
-          if (active) section.classList.add("active");
+      let index = 0;
+      let timer = null;
+      let sectionVisible = false;
+
+      slides.forEach((_, i) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "mentor-preview-dot";
+        b.setAttribute("aria-label", "강사 " + (i + 1) + " / " + n);
+        b.addEventListener("click", () => {
+          goTo(i);
+          restart();
         });
+        dotsWrap.appendChild(b);
+      });
+      const getDots = () => Array.from(dotsWrap.querySelectorAll(".mentor-preview-dot"));
 
-        slides.forEach((slide) => {
-          const active = slide.getAttribute("href") === "#" + id;
-          slide.classList.toggle("is-selected", active);
-          slide.setAttribute("aria-current", active ? "true" : "false");
-        });
-
-        panel.hidden = false;
-        panel.classList.add("is-open");
-
-        const top = panel.getBoundingClientRect().top + window.scrollY - navOffset;
-        window.scrollTo({
-          top: Math.max(0, top),
-          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-        });
+      const applyDots = () => {
+        getDots().forEach((d, i) => d.setAttribute("aria-current", i === index ? "true" : "false"));
       };
 
-      slides.forEach((slide) => {
-        slide.addEventListener("click", (e) => {
-          e.preventDefault();
-          const id = (slide.getAttribute("href") || "").replace(/^#/, "");
-          if (id) showMentor(id);
+      const layout = () => {
+        const w = viewport.offsetWidth;
+        if (!w) return;
+        track.style.width = n * w + "px";
+        slides.forEach((s) => {
+          s.style.flex = "0 0 " + w + "px";
+          s.style.width = w + "px";
         });
+        track.style.transform = "translateX(" + -index * w + "px)";
+      };
+
+      const goTo = (i) => {
+        index = ((i % n) + n) % n;
+        const w = viewport.offsetWidth;
+        if (w) track.style.transform = "translateX(" + -index * w + "px)";
+        applyDots();
+      };
+
+      const tick = () => {
+        goTo(index + 1);
+      };
+
+      const start = () => {
+        if (!sectionVisible) return;
+        if (timer) clearInterval(timer);
+        timer = window.setInterval(tick, intervalMs);
+      };
+      const stop = () => {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+      };
+      const restart = () => {
+        stop();
+        start();
+      };
+
+      layout();
+      goTo(0);
+
+      root.addEventListener("mouseenter", stop);
+      root.addEventListener("mouseleave", () => {
+        if (sectionVisible) start();
+      });
+      root.addEventListener("focusin", stop);
+      root.addEventListener("focusout", (e) => {
+        if (!root.contains(e.relatedTarget) && sectionVisible) start();
       });
 
-      const initialHash = window.location.hash.replace(/^#/, "");
-      if (initialHash && panel.querySelector("#" + CSS.escape(initialHash))) {
-        showMentor(initialHash);
+      let ro;
+      if (typeof ResizeObserver !== "undefined") {
+        ro = new ResizeObserver(() => {
+          layout();
+        });
+        ro.observe(viewport);
+      } else {
+        window.addEventListener("resize", layout, { passive: true });
+      }
+
+      requestAnimationFrame(() => {
+        layout();
+        goTo(0);
+      });
+
+      const relayoutSoon = () => {
+        requestAnimationFrame(() => {
+          layout();
+          goTo(index);
+        });
+      };
+      new MutationObserver(() => {
+        if (root.classList.contains("active")) relayoutSoon();
+      }).observe(root, { attributes: true, attributeFilter: ["class"] });
+
+      const onSectionVisibility = (isVisible) => {
+        if (isVisible && !sectionVisible) {
+          layout();
+          goTo(0);
+          sectionVisible = true;
+          start();
+        } else if (!isVisible && sectionVisible) {
+          sectionVisible = false;
+          stop();
+        } else if (isVisible && sectionVisible) {
+          relayoutSoon();
+        }
+      };
+
+      if (typeof IntersectionObserver !== "undefined") {
+        new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => onSectionVisibility(e.isIntersecting));
+          },
+          { threshold: 0.05 }
+        ).observe(viewport);
+      } else {
+        sectionVisible = true;
+        start();
       }
     })();
 
@@ -5987,6 +5472,39 @@
     if (heroVideo) heroVideo.play().catch(() => {});
     const eventVideo = document.querySelector(".event-video-bg");
     if (eventVideo) eventVideo.play().catch(() => {});
+    (function () {
+      const section = document.getElementById("event");
+      const counterEl = section && section.querySelector(".cash-counter");
+      if (!section || !counterEl) return;
+      const target = Number(counterEl.dataset.target) || 10000000;
+      let ran = false;
+      const format = (n) => n.toLocaleString("en-US");
+      const run = () => {
+        if (ran) return;
+        ran = true;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          counterEl.textContent = format(target);
+          counterEl.classList.add("is-gradient");
+          return;
+        }
+        const duration = 2400;
+        const start = performance.now();
+        const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+        const tick = (now) => {
+          const t = Math.min(1, (now - start) / duration);
+          counterEl.textContent = format(Math.floor(easeOutQuart(t) * target));
+          if (t < 1) requestAnimationFrame(tick);
+          else {
+            counterEl.textContent = format(target);
+            counterEl.classList.add("is-gradient");
+          }
+        };
+        requestAnimationFrame(tick);
+      };
+      new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) run(); });
+      }, { threshold: 0.28 }).observe(section);
+    })();
 
     (function () {
       const tabs = Array.from(document.querySelectorAll(".curriculum-tab"));
@@ -6056,6 +5574,53 @@
       };
 
       // 스크롤 위치를 기준으로 현재 가장 가까운 step을 활성화합니다.
+      const updateByScroll = () => {
+        const anchorY = window.innerHeight * 0.35;
+        let nearestIndex = 0;
+        let nearestDistance = Number.POSITIVE_INFINITY;
+
+        steps.forEach((step, index) => {
+          const rect = step.getBoundingClientRect();
+          const distance = Math.abs(rect.top - anchorY);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestIndex = index;
+          }
+        });
+
+        setActiveStep(nearestIndex);
+      };
+
+      updateByScroll();
+      window.addEventListener("scroll", updateByScroll, { passive: true });
+      window.addEventListener("resize", updateByScroll);
+    })();
+
+    (function () {
+      const section = document.getElementById("mentor-sticky-jhc");
+      if (!section) return;
+
+      const steps = Array.from(section.querySelectorAll(".mentor-step"));
+      const nameEl = document.getElementById("mentor-name-jhc");
+      const roleEl = document.getElementById("mentor-role-jhc");
+      const bioEl = document.getElementById("mentor-bio-jhc");
+      const photoEl = document.getElementById("mentor-photo-jhc");
+      if (!steps.length || !nameEl || !roleEl || !bioEl || !photoEl) return;
+
+      const applyStep = (step) => {
+        nameEl.textContent = step.dataset.name || "";
+        roleEl.textContent = step.dataset.role || "";
+        bioEl.innerHTML = step.dataset.bio || "";
+        if (step.dataset.image) photoEl.src = step.dataset.image;
+      };
+
+      const setActiveStep = (activeIndex) => {
+        steps.forEach((step, index) => {
+          step.classList.toggle("active", index === activeIndex);
+        });
+        applyStep(steps[activeIndex]);
+      };
+
       const updateByScroll = () => {
         const anchorY = window.innerHeight * 0.35;
         let nearestIndex = 0;
@@ -6267,29 +5832,6 @@
     })();
 
     (function () {
-      const navbar = document.querySelector(".navbar");
-      if (!navbar) return;
-      let scrollTicking = false;
-      let glowTimeout;
-
-      const flashOnScroll = () => {
-        if (scrollTicking) return;
-        scrollTicking = true;
-        requestAnimationFrame(() => {
-          navbar.classList.add("is-scrolling");
-          clearTimeout(glowTimeout);
-          glowTimeout = setTimeout(() => {
-            navbar.classList.remove("is-scrolling");
-          }, 240);
-          scrollTicking = false;
-        });
-      };
-
-      window.addEventListener("scroll", flashOnScroll, { passive: true });
-      window.addEventListener("wheel", flashOnScroll, { passive: true });
-    })();
-
-    (function () {
       const validCalDays = new Set(["10", "11", "12"]);
       const openCalDay = (calDay) => {
         const key = String(calDay);
@@ -6314,9 +5856,29 @@
 
   </script>
 
-  <div class="kakao-float-wrap">
-    <a class="kakao-float-btn" href="https://open.kakao.com/o/gLhT5Kui" target="_blank" rel="noopener noreferrer">카카오 채널 추가</a>
-    <img class="kakao-float-label" src="image/LOGOL-PNG.png" alt="STN SKILL UP" width="130" height="26" decoding="async" />
-  </div>
+<script>
+    (function () {
+      const navbar = document.querySelector(".navbar");
+      if (!navbar) return;
+      let scrollTicking = false;
+      let glowTimeout;
+
+      const flashOnScroll = () => {
+        if (scrollTicking) return;
+        scrollTicking = true;
+        requestAnimationFrame(() => {
+          navbar.classList.add("is-scrolling");
+          clearTimeout(glowTimeout);
+          glowTimeout = setTimeout(() => {
+            navbar.classList.remove("is-scrolling");
+          }, 240);
+          scrollTicking = false;
+        });
+      };
+
+      window.addEventListener("scroll", flashOnScroll, { passive: true });
+      window.addEventListener("wheel", flashOnScroll, { passive: true });
+    })();
+  </script>
 </body>
 </html>

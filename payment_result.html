@@ -1,19 +1,16 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>결제 결과 | STN 미디어서포터즈 아카데미</title>
-  <meta name="description" content="미디어 서포터즈 양성과정 결제 결과 확인. STN 미디어서포터즈 아카데미.">
+  <title>결제 결과 | STN 스킬업 아카데미</title>
+  <meta name="description" content="STN 스킬업 양성과정 결제 결과 확인. STN 스킬업 아카데미.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="naver-site-verification" content="afc3e1f512dcae5e825fb10f5d4e7599f8df0a5b" />
   <meta name="theme-color" content="#0a0a0a">
   <link rel="canonical" href="https://stnmedia.co.kr/payment_result.html">
 
-  <link rel="icon" type="image/x-icon" href="/image/favicon-512x512-256.ico">
-  <link rel="icon" type="image/png" sizes="512x512" href="/image/favicon-512x512.png">
-  <link rel="apple-touch-icon" href="/image/favicon-512x512.png">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -77,6 +74,14 @@
       font-weight: 900;
       font-size: clamp(1.15rem, 3.5vw, 1.45rem);
       letter-spacing: -0.04em;
+    }
+    .nav-logo-img {
+      width: auto;
+      height: 52px;
+      max-width: min(58vw, 220px);
+      display: block;
+      object-fit: contain;
+      flex-shrink: 0;
     }
     .nav-logo-mark {
       color: var(--lime);
@@ -278,6 +283,26 @@
       width: min(92%, var(--nav-max));
       margin: 0 auto;
       display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: clamp(20px, 4vw, 44px);
+    }
+    .footer-logo {
+      flex-shrink: 0;
+      display: block;
+      line-height: 0;
+    }
+    .footer-logo img {
+      width: auto;
+      height: 80px;
+      max-width: min(50vw, 320px);
+      object-fit: contain;
+      display: block;
+    }
+    .footer-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
       flex-direction: column;
       gap: 8px;
     }
@@ -292,23 +317,36 @@
     }
     .footer-contact a:hover { color: var(--lime); }
     .footer-links {
+      margin-top: 6px;
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 8px 16px;
     }
     .footer-links a {
-      color: #bdbdbd;
+      color: #b4b4b4;
       font-weight: 700;
       text-decoration: none;
     }
     .footer-links a:hover { color: var(--lime); }
     .footer-copy {
-      margin-top: 6px;
+      margin-top: 10px;
       color: #6f6f6f;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
     }
     .footer-sep { margin: 0 6px; color: #555; }
+    @media (max-width: 640px) {
+      .footer-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .footer-content {
+        width: 100%;
+        text-align: left;
+      }
+      .footer-links { justify-content: center; }
+    }
 
     @media (max-width: 540px) {
       .nav-inner { height: 60px; }
@@ -316,22 +354,47 @@
       .result-actions { flex-direction: column; }
       .result-actions .btn { width: 100%; }
     }
-  </style>
+  
+
+  /* Footer unified alignment override */
+  footer, footer.site-footer {
+    background: #000;
+  }
+  footer .footer-logo, .site-footer .footer-logo, .footer-logo {
+    margin-left: clamp(20px, 3vw, 44px);
+  }
+  footer .footer-content, .site-footer .footer-content, .footer-content {
+    text-align: left;
+  }
+  @media (max-width: 640px) {
+    footer .footer-content, .site-footer .footer-content, .footer-content {
+      text-align: left;
+    }
+  }
+
+</style>
 </head>
 <body>
-  <nav class="navbar" aria-label="결제 헤더">
-    <div class="nav-inner">
-      <div class="nav-brand">
-        <a class="nav-logo" href="start.html"><span class="nav-logo-mark">STN</span><span>미디어</span></a>
-        <div class="nav-safe" title="안전한 결제">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 2 4 5v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V5l-8-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-            <path d="m9 12 2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>안전 결제</span>
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a class="logo" href="start.html"><img class="logo-mark" src="image/LOGOL-PNG.png" alt="STN SKILL UP" width="220" height="53" decoding="async" /></a>
+      <a href="score.html" class="nav-score-btn--mobile">유튜브 진단하기</a>
+      <div class="nav-links">
+        <a href="start.html">홈</a>
+        <a href="curriculum.html#intensive-schedule">커리큐럼</a>
+        <a href="payment-earlybird.html">얼리버드 할인</a>
+        <div class="nav-dropdown">
+          <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">결제하기</button>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="payment-earlybird.html" role="menuitem"><span>얼리버드 할인</span><span class="menu-price">1,548,000원</span></a>
+            <a href="payment-regular.html" role="menuitem"><span>일반결제</span><span class="menu-price">1,980,000원</span></a>
+            <a href="payment-student.html" role="menuitem"><span>대학생 할인</span><span class="menu-price">990,000원</span></a>
+          </div>
         </div>
+        <a href="https://map.kakao.com/link/to/%EB%B0%B0%EC%9E%AC%EB%8C%80%ED%95%99%EA%B5%90" target="_blank" rel="noopener noreferrer">오시는길</a>
+        <a href="https://open.kakao.com/o/gLhT5Kui" class="nav-kakao-btn" target="_blank" rel="noopener noreferrer">카카오 채널</a>
+        <a href="score.html" class="nav-score-btn">유튜브 진단하기</a>
       </div>
-      <a class="nav-home" href="start.html">홈</a>
     </div>
   </nav>
 
@@ -339,7 +402,7 @@
     <div class="wrap">
       <div id="state-loading" class="loading-box" aria-live="polite">
         <div class="spinner" aria-hidden="true"></div>
-        <p class="loading-text">결제 결과를 확인하고 있습니다…</p>
+        <p class="loading-text">결제 결과를 확인하고 있습니다</p>
       </div>
 
       <div id="state-success" hidden>
@@ -349,7 +412,7 @@
           <p class="result-desc">입력하신 연락처로 영업일 기준 1~2일 내 담당자가 연락드립니다.<br />문의: <a href="tel:1599-1242">1599-1242</a></p>
           <dl class="result-summary" id="success-summary"></dl>
           <div class="result-actions">
-            <a class="btn btn-back" href="start.html">← 강의 소개 페이지로 돌아가기</a>
+            <a class="btn btn-back" href="start.html">강의 소개 페이지로 돌아가기</a>
           </div>
         </div>
       </div>
@@ -389,15 +452,20 @@
 
   <footer aria-label="회사 정보">
     <div class="footer-inner">
-      <p class="footer-brand">상호명: 주식회사 플래닛네이처미디어<span class="footer-sep">·</span>대표자: 이미정<span class="footer-sep">·</span>사업자등록번호: 874-88-03314</p>
-      <p>주소: 인천광역시 부평구 부평대로 283, 부평우림라이온스밸리 A동 B115-16호 (청천동)</p>
-      <p>통신판매업 신고번호: 제2025-인천부평-1827호<span class="footer-sep">·</span>개인정보관리책임자: 이미정</p>
-      <p class="footer-contact">전화: <a href="tel:1599-1242">1599-1242</a><span class="footer-sep">·</span>이메일: <a href="mailto:lmj@stnsports.co.kr">lmj@stnsports.co.kr</a></p>
+      <a href="start.html" class="footer-logo" aria-label="STN SKILL UP 홈">
+        <img src="image/LOGOL2.png" alt="STN SKILL UP" width="220" height="53" decoding="async" />
+      </a>
+      <div class="footer-content">
+      <p class="footer-brand">주식회사 플래닛네이처미디어<span class="footer-sep">·</span>대표자: 이미정<span class="footer-sep">·</span>사업자등록번호: 874-88-03314</p>
+      <p>소재지: 인천광역시 부평구 부평대로 283, 부평우림라이온스밸리 A동 B115-16호 (청천동)</p>
+      <p>통신판매업 신고번호: 제2025-인천부평-1827호</p>
+      <p class="footer-contact">고객센터: <a href="tel:1599-1242">1599-1242</a><span class="footer-sep">·</span>이메일: <a href="mailto:lmj@stnsports.co.kr">lmj@stnsports.co.kr</a></p>
       <div class="footer-links">
         <a href="terms.html">이용약관</a>
         <a href="privacy.html">개인정보처리방침</a>
       </div>
       <p class="footer-copy">© 2026 플래닛네이처미디어 All rights reserved.</p>
+      </div>
     </div>
   </footer>
 
@@ -524,27 +592,27 @@
       }
 
       /**
-       * TODO: 나이스페이 서버 승인·검증 API 연동
+       * TODO: 서버 승인·검증 API 연동
        *
-       * 1) returnUrl로 POST된 인증/승인 데이터를 서버에서 수신
+       * 1) returnUrl로 POST(승인/인증 결과)를 서버에서 수신
        *    (authResultCode/resultCode, tid, orderId, amount, signature, authToken 등)
-       * 2) signature 위변조 검증
-       *    - Server 승인: hex(sha256(authToken + clientId + amount + secretKey))
-       *    - Client 승인: hex(sha256(tid + amount + ediDate + secretKey))
-       * 3) authResultCode/resultCode === '0000' 일 때 승인 API 호출
+       * 2) signature 재검증
+       *    - Server 인증: hex(sha256(authToken + clientId + amount + secretKey))
+       *    - Client 인증: hex(sha256(tid + amount + ediDate + secretKey))
+       * 3) authResultCode/resultCode === '0000' → 승인 API 호출
        *    POST https://api.nicepay.co.kr/v1/payments/{tid}
        *    Authorization: Basic base64(clientId:secretKey)
        *    Body: { "amount": 결제금액 }
-       * 4) 승인 성공 시 주문 DB 저장 및 이 페이지로 query 리다이렉트
-       *    예) payment_result.html?resultCode=0000&orderId=...&amount=...
+       * 4) 승인 성공 시 주문 DB 저장 후 이 페이지로 query 리다이렉트
+       *     payment_result.html?resultCode=0000&orderId=...&amount=...
        *
-       * MID(nicepay00m) · clientId · secretKey는 발급 후 교체
+       * MID(nicepay00m) · clientId · secretKey는 발급값으로 교체
        */
       function verifyNicePayOnServer(authPayload) {
         return Promise.resolve({
           ok: isSuccessCode(getResultCode(authPayload)),
           verified: false,
-          message: getResultMsg(authPayload) || "서버 검증 연동 예정"
+          message: getResultMsg(authPayload) || "서버 검증 미연동 상태"
         });
       }
 
@@ -559,7 +627,7 @@
           escapeHtml(message || "결제가 취소되었거나 오류가 발생했습니다.") +
           "<br />다시 시도해 주세요. 문의: <a href=\"tel:1599-1242\">1599-1242</a>";
         showState("fail");
-        showToast(message || "결제가 완료되지 않았습니다.");
+        showToast(message || "결제가 완료되지 않았습니다");
       }
 
       function init() {
@@ -583,7 +651,7 @@
         }
 
         if (hasQuery && resultCode && !isSuccessCode(resultCode)) {
-          renderFail(getResultMsg(query) || "결제 인증에 실패했습니다.");
+          renderFail(getResultMsg(query) || "결제가 실패했습니다.");
           clearPending();
           return;
         }
@@ -608,13 +676,30 @@
       init();
     })();
   </script>
-  <script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
-  <script type="text/javascript">
-  if(!wcs_add) var wcs_add = {};
-  wcs_add["wa"] = "1ce25a49f3ccbf0";
-  if(window.wcs) {
-  wcs_do();
-  }
+
+<script>
+    (function () {
+      const navbar = document.querySelector(".navbar");
+      if (!navbar) return;
+      let scrollTicking = false;
+      let glowTimeout;
+
+      const flashOnScroll = () => {
+        if (scrollTicking) return;
+        scrollTicking = true;
+        requestAnimationFrame(() => {
+          navbar.classList.add("is-scrolling");
+          clearTimeout(glowTimeout);
+          glowTimeout = setTimeout(() => {
+            navbar.classList.remove("is-scrolling");
+          }, 240);
+          scrollTicking = false;
+        });
+      };
+
+      window.addEventListener("scroll", flashOnScroll, { passive: true });
+      window.addEventListener("wheel", flashOnScroll, { passive: true });
+    })();
   </script>
 </body>
 </html>

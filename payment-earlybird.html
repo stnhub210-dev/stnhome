@@ -1,61 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- ================== Title & SEO ================== -->
-  <title>얼리버드 결제 신청 | STN 미디어서포터즈 아카데미</title>
-
-  <meta name="title" content="얼리버드 결제 신청 | STN 미디어서포터즈 아카데미">
-  <meta name="description" content="미디어 서포터즈 양성과정 얼리버드 할인 수강료 결제 신청. STN 미디어서포터즈 아카데미 조기 등록 혜택.">
-  <meta name="keywords" content="얼리버드,미디어서포터즈 결제,수강료 할인,STN 미디어서포터즈,양성과정 신청">
-  <meta name="author" content="STN 미디어서포터즈 아카데미">
-  <meta name="robots" content="index, follow">
-  <meta name="googlebot" content="index, follow">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="naver-site-verification" content="afc3e1f512dcae5e825fb10f5d4e7599f8df0a5b" />
-
-  <!-- ================== Canonical ================== -->
-  <link rel="canonical" href="https://stnmedia.kr/payment-earlybird.html">
-
-  <!-- ================== Open Graph ================== -->
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="STN 미디어서포터즈 아카데미">
-  <meta property="og:title" content="얼리버드 결제 신청 | STN 미디어서포터즈 아카데미">
-  <meta property="og:description" content="미디어 서포터즈 양성과정 얼리버드 할인 수강료 결제 신청. 조기 등록 혜택.">
-  <meta property="og:url" content="https://stnmedia.kr/payment-earlybird.html">
-  <meta property="og:image" content="https://stnmedia.kr/ogimage.png">
-  <meta property="og:image:secure_url" content="https://stnmedia.kr/ogimage.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="STN 미디어서포터즈 아카데미 대표 이미지">
-  <meta property="og:locale" content="ko_KR">
-
-  <!-- ================== Twitter SEO ================== -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="얼리버드 결제 신청 | STN 미디어서포터즈 아카데미">
-  <meta name="twitter:description" content="미디어 서포터즈 양성과정 얼리버드 할인 수강료 결제 신청.">
-  <meta name="twitter:image" content="https://stnmedia.kr/ogimage.png">
-  <meta name="twitter:image:alt" content="STN 미디어서포터즈 아카데미 대표 이미지">
-
-  <!-- ================== Language ================== -->
-  <meta http-equiv="Content-Language" content="ko">
-  <meta name="language" content="Korean">
-
-  <!-- ================== Theme ================== -->
-  <meta name="theme-color" content="#0a0a0a">
-  <meta name="application-name" content="STN 미디어서포터즈 아카데미">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="STN 미디어서포터즈">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="msapplication-TileColor" content="#0a0a0a">
-
-  <!-- ================== Icons ================== -->
-  <link rel="icon" type="image/x-icon" href="/image/favicon-512x512-256.ico">
-  <link rel="icon" type="image/png" sizes="512x512" href="/image/favicon-512x512.png">
-  <link rel="apple-touch-icon" href="/image/favicon-512x512.png">
-  <link rel="manifest" href="/site.webmanifest">
+  <title>수강료 결제 신청 | STN 스킬업</title>
+  <meta name="description" content="STN 스킬업 양성과정 수강료 결제 신청 페이지입니다." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -69,7 +18,7 @@
       --muted: #bdbdbd;
       --err: #ff6b6b;
       --nav-max: 1160px;
-      --content-max: 960px;
+      --content-max: 820px;
       --nav-clear: calc(68px + env(safe-area-inset-top, 0px));
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -121,6 +70,13 @@
       font-weight: 900;
       font-size: clamp(1.15rem, 3.5vw, 1.45rem);
       letter-spacing: -0.04em;
+    }
+    .nav-logo-img {
+      width: auto;
+      height: 38px;
+      max-width: min(48vw, 220px);
+      display: block;
+      object-fit: contain;
     }
     .nav-logo-mark {
       color: var(--lime);
@@ -259,409 +215,6 @@
       color: #cfcfcf;
       margin-top: 6px;
     }
-
-    .apply-type-wrap {
-      padding: 4px;
-      border-radius: 18px;
-      border: 1px solid #333;
-      background: rgba(255, 255, 255, 0.02);
-      transition: box-shadow 0.2s ease;
-    }
-    .apply-type-wrap.is-error {
-      box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.45);
-    }
-    .step-split {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: clamp(18px, 3.5vw, 28px);
-      align-items: start;
-    }
-    .step-split-col {
-      min-width: 0;
-    }
-    .step-split-col + .step-split-col {
-      padding-left: clamp(16px, 3vw, 24px);
-      border-left: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .step-split-col .step-head {
-      margin-bottom: 14px;
-    }
-    .referrer-fields {
-      margin-top: 4px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .referrer-fields-head {
-      margin: 0 0 10px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 6px 8px;
-      line-height: 1.45;
-    }
-    .referrer-fields-title {
-      font-size: 0.88rem;
-      font-weight: 900;
-      color: #c8c8c8;
-      letter-spacing: -0.02em;
-    }
-    .referrer-fields-hint {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: #777;
-      word-break: keep-all;
-    }
-    .referrer-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 10px;
-    }
-    .referrer-row .field {
-      margin-bottom: 0;
-    }
-    .referrer-row .field-label {
-      margin-bottom: 6px;
-      font-size: 0.78rem;
-    }
-    .referrer-row .field-input {
-      padding: 10px 11px;
-      font-size: 0.88rem;
-      transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
-    }
-    @keyframes field-input-glow-pulse {
-      0%, 100% {
-        box-shadow: 0 0 0 1px rgba(124, 252, 0, 0.22), 0 0 16px rgba(124, 252, 0, 0.2);
-      }
-      50% {
-        box-shadow: 0 0 0 1px rgba(124, 252, 0, 0.42), 0 0 26px rgba(124, 252, 0, 0.38);
-      }
-    }
-    .step-split-col--info > .field .field-input {
-      transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
-    }
-    .step-split-col--info > .field .field-input:hover {
-      border-color: rgba(124, 252, 0, 0.5);
-      background: #181818;
-      animation: field-input-glow-pulse 1.35s ease-in-out infinite;
-    }
-    .step-split-col--info > .field .field-input:focus {
-      border-color: rgba(124, 252, 0, 0.65);
-      box-shadow: 0 0 0 2px rgba(124, 252, 0, 0.14), 0 0 24px rgba(124, 252, 0, 0.3);
-      animation: none;
-    }
-    .referrer-row .field-input:hover {
-      border-color: rgba(124, 252, 0, 0.45);
-      background: #181818;
-      animation: field-input-glow-pulse 1.35s ease-in-out infinite;
-    }
-    .referrer-row .field-input:focus {
-      border-color: rgba(124, 252, 0, 0.6);
-      box-shadow: 0 0 0 2px rgba(124, 252, 0, 0.14), 0 0 22px rgba(124, 252, 0, 0.28);
-      animation: none;
-    }
-    .apply-type-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    .apply-type-option {
-      position: relative;
-    }
-    .apply-type-option input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-    .apply-type-option label {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-height: 104px;
-      padding: 18px 14px 16px;
-      border-radius: 16px;
-      border: 2px solid #4a4a4a;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-      background: linear-gradient(165deg, #1a1a1a 0%, #121212 100%);
-      cursor: pointer;
-      text-align: center;
-      word-break: keep-all;
-      transition:
-        border-color 0.22s ease,
-        background 0.22s ease,
-        box-shadow 0.22s ease,
-        transform 0.22s ease;
-    }
-    .apply-type-option label > * {
-      position: relative;
-      z-index: 1;
-    }
-    .apply-type-option label::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      opacity: 0;
-      transition: opacity 0.22s ease;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .apply-type-option label::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 0;
-      transition: opacity 0.25s ease;
-    }
-    .apply-type-option--offline label::after {
-      box-shadow: inset 0 0 32px rgba(124, 252, 0, 0.2), 0 0 36px rgba(124, 252, 0, 0.35);
-    }
-    .apply-type-option--online label::after {
-      box-shadow: inset 0 0 32px rgba(94, 200, 255, 0.18), 0 0 36px rgba(94, 200, 255, 0.32);
-    }
-    @keyframes apply-box-glow {
-      0%, 100% { opacity: 0.55; }
-      50% { opacity: 1; }
-    }
-    .apply-type-option--offline label {
-      border-color: rgba(124, 252, 0, 0.42);
-    }
-    .apply-type-option--online label {
-      border-color: rgba(94, 200, 255, 0.42);
-    }
-    .apply-type-option--offline label::before {
-      background: radial-gradient(ellipse 90% 70% at 50% 0%, rgba(124, 252, 0, 0.14), transparent 68%);
-    }
-    .apply-type-option--online label::before {
-      background: radial-gradient(ellipse 90% 70% at 50% 0%, rgba(94, 200, 255, 0.14), transparent 68%);
-    }
-    .apply-type-check {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      border: 2px solid #555;
-      background: #0e0e0e;
-      flex-shrink: 0;
-      transition: border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
-    }
-    .apply-type-check::after {
-      content: "";
-      width: 6px;
-      height: 11px;
-      border: solid transparent;
-      border-width: 0 2.5px 2.5px 0;
-      transform: rotate(45deg) scale(0);
-      margin-top: -3px;
-      transition: transform 0.2s ease;
-    }
-    .apply-type-label-main {
-      display: block;
-      font-size: clamp(0.95rem, 2.8vw, 1.08rem);
-      font-weight: 900;
-      color: #f2f2f2;
-      line-height: 1.35;
-      letter-spacing: -0.02em;
-      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
-    }
-    .apply-type-label-sub {
-      display: block;
-      font-size: clamp(0.78rem, 2.2vw, 0.88rem);
-      font-weight: 700;
-      color: #9a9a9a;
-      line-height: 1.4;
-    }
-    .apply-type-option label:hover {
-      transform: translateY(-2px);
-    }
-    .apply-type-option label:hover::before {
-      opacity: 1;
-    }
-    .apply-type-option label:hover::after {
-      animation: apply-box-glow 1.35s ease-in-out infinite;
-    }
-    .apply-type-option--offline label:hover {
-      border-color: var(--lime);
-      box-shadow:
-        0 0 0 1px rgba(124, 252, 0, 0.45),
-        0 0 28px rgba(124, 252, 0, 0.42),
-        0 8px 24px rgba(0, 0, 0, 0.35);
-    }
-    .apply-type-option--offline label:hover::after {
-      opacity: 1;
-    }
-    .apply-type-option--online label:hover {
-      border-color: #5ec8ff;
-      box-shadow:
-        0 0 0 1px rgba(94, 200, 255, 0.45),
-        0 0 28px rgba(94, 200, 255, 0.38),
-        0 8px 24px rgba(0, 0, 0, 0.35);
-    }
-    .apply-type-option--online label:hover::after {
-      opacity: 1;
-    }
-    .apply-type-option--offline input:checked + label {
-      border-width: 3px;
-      border-color: var(--lime);
-      background: linear-gradient(165deg, rgba(124, 252, 0, 0.18) 0%, rgba(18, 28, 10, 0.95) 55%, #101010 100%);
-      box-shadow:
-        0 0 0 1px rgba(124, 252, 0, 0.35),
-        0 12px 32px rgba(124, 252, 0, 0.16),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
-      transform: translateY(-2px);
-    }
-    .apply-type-option--offline input:checked + label::before {
-      opacity: 1;
-    }
-    .apply-type-option--offline input:checked + label .apply-type-label-main {
-      color: #e8ffd0;
-    }
-    .apply-type-option--offline input:checked + label .apply-type-label-sub {
-      color: #b8e89a;
-    }
-    .apply-type-option--offline input:checked + label .apply-type-check {
-      border-color: var(--lime);
-      background: var(--lime);
-      box-shadow: 0 0 12px rgba(124, 252, 0, 0.5);
-    }
-    .apply-type-option--offline input:checked + label .apply-type-check::after {
-      border-color: #0a0a0a;
-      transform: rotate(45deg) scale(1);
-    }
-    .apply-type-option--online input:checked + label {
-      border-width: 3px;
-      border-color: #5ec8ff;
-      background: linear-gradient(165deg, rgba(94, 200, 255, 0.16) 0%, rgba(10, 22, 32, 0.95) 55%, #101010 100%);
-      box-shadow:
-        0 0 0 1px rgba(94, 200, 255, 0.35),
-        0 12px 32px rgba(94, 200, 255, 0.14),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
-      transform: translateY(-2px);
-    }
-    .apply-type-option--online input:checked + label::before {
-      opacity: 1;
-    }
-    .apply-type-option--online input:checked + label .apply-type-label-main {
-      color: #e8f6ff;
-    }
-    .apply-type-option--online input:checked + label .apply-type-label-sub {
-      color: #9ed0f5;
-    }
-    .apply-type-option--online input:checked + label .apply-type-check {
-      border-color: #5ec8ff;
-      background: #5ec8ff;
-      box-shadow: 0 0 12px rgba(94, 200, 255, 0.45);
-    }
-    .apply-type-option--online input:checked + label .apply-type-check::after {
-      border-color: #0a0a0a;
-      transform: rotate(45deg) scale(1);
-    }
-    .apply-type-option input:focus-visible + label {
-      outline: 2px solid var(--lime);
-      outline-offset: 3px;
-    }
-    .apply-type-msg {
-      margin-top: 12px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--err);
-      min-height: 1.2em;
-    }
-
-    @property --eb-deadline-beam {
-      syntax: "<angle>";
-      initial-value: 0deg;
-      inherits: false;
-    }
-    @keyframes eb-deadline-beam-spin {
-      from { --eb-deadline-beam: 0deg; }
-      to { --eb-deadline-beam: 360deg; }
-    }
-    .page-tier-earlybird .earlybird-deadline-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      min-height: 104px;
-      padding: 18px 14px 16px;
-      border-radius: 16px;
-      border: 2px solid transparent;
-      background: linear-gradient(165deg, #1a1a1a 0%, #121212 100%) padding-box,
-        conic-gradient(
-          from var(--eb-deadline-beam),
-          rgba(198, 255, 0, 0.12) 0deg,
-          rgba(223, 255, 102, 1) 72deg,
-          rgba(198, 255, 0, 0.6) 84deg,
-          rgba(198, 255, 0, 0.1) 180deg,
-          rgba(198, 255, 0, 0.12) 360deg
-        ) border-box;
-      background-origin: border-box;
-      background-clip: padding-box, border-box;
-      animation: eb-deadline-beam-spin 2.8s linear infinite;
-      box-shadow: 0 0 22px rgba(198, 255, 0, 0.28), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-      color: var(--tier-accent);
-      font: inherit;
-      font-size: clamp(1.25rem, 4.2vw, 1.55rem);
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      line-height: 1.25;
-      text-align: center;
-      text-shadow: 0 0 24px rgba(198, 255, 0, 0.35);
-      box-sizing: border-box;
-      word-break: keep-all;
-    }
-    @media (max-width: 768px) {
-      .step-split {
-        grid-template-columns: 1fr;
-      }
-      .step-split-col + .step-split-col {
-        padding-left: 0;
-        padding-top: 20px;
-        border-left: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-      }
-    }
-    @media (max-width: 520px) {
-      .apply-type-option label,
-      .page-tier-earlybird .earlybird-deadline-btn {
-        min-height: 96px;
-      }
-      .referrer-row {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-      }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .apply-type-option label,
-      .apply-type-option label:hover,
-      .apply-type-option input:checked + label {
-        transform: none;
-        transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
-      }
-      .apply-type-option label:hover::after {
-        animation: none;
-        opacity: 0.85;
-      }
-      .page-tier-earlybird .earlybird-deadline-btn {
-        animation: none;
-        border-color: rgba(198, 255, 0, 0.55);
-        background: linear-gradient(165deg, #1a1a1a 0%, #121212 100%);
-        box-shadow: 0 0 12px rgba(198, 255, 0, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-      }
-      .step-split-col--info > .field .field-input:hover,
-      .referrer-row .field-input:hover {
-        animation: none;
-        box-shadow: 0 0 0 1px rgba(124, 252, 0, 0.3), 0 0 18px rgba(124, 252, 0, 0.24);
-      }
-    }
-
 
     body.page-tier-earlybird {
       --lime: #c6ff00;
@@ -840,6 +393,17 @@
       color: var(--err);
       min-height: 1.2em;
     }
+    .field-inline-action {
+      margin-top: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(124, 252, 0, 0.5);
+      background: rgba(124, 252, 0, 0.1);
+      color: #eaffcf;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
     .pay-methods-wrap {
       border-radius: 14px;
@@ -886,208 +450,6 @@
     .pay-method input:focus-visible + label {
       outline: 2px solid var(--lime);
       outline-offset: 2px;
-    }
-
-    .fee-guide {
-      list-style: none;
-      display: grid;
-      gap: 8px;
-      margin-top: 4px;
-    }
-    .fee-guide li {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #e0e0e0;
-      line-height: 1.45;
-    }
-    .fee-guide strong {
-      color: var(--lime);
-      font-weight: 900;
-    }
-    .fee-guide .fee-guide-muted {
-      color: #9a9a9a;
-      font-size: 0.84rem;
-      font-weight: 600;
-    }
-    .price-tiers-wrap {
-      margin-bottom: 18px;
-      border-radius: 14px;
-      transition: box-shadow 0.2s ease;
-    }
-    .price-tiers-wrap.is-error {
-      box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.35);
-    }
-    @property --tier-border-angle {
-      syntax: "<angle>";
-      initial-value: 0deg;
-      inherits: false;
-    }
-    .price-tiers {
-      display: grid;
-      gap: 14px;
-    }
-    .price-tier {
-      position: relative;
-      --tier-accent: #7cfc00;
-      --tier-accent-soft: rgba(124, 252, 0, 0.14);
-      --tier-glow: rgba(124, 252, 0, 0.55);
-    }
-    .price-tier--student {
-      --tier-accent: #5ec8ff;
-      --tier-accent-soft: rgba(94, 200, 255, 0.12);
-      --tier-glow: rgba(94, 200, 255, 0.55);
-    }
-    .price-tier--earlybird {
-      --tier-accent: #7cfc00;
-      --tier-accent-soft: rgba(124, 252, 0, 0.14);
-      --tier-glow: rgba(124, 252, 0, 0.58);
-    }
-    .price-tier--regular {
-      --tier-accent: #ffb84d;
-      --tier-accent-soft: rgba(255, 184, 77, 0.12);
-      --tier-glow: rgba(255, 184, 77, 0.52);
-    }
-    .price-tier input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-    .price-tier label {
-      position: relative;
-      isolation: isolate;
-      display: grid;
-      gap: 6px;
-      padding: 16px 18px;
-      border-radius: 14px;
-      border: 2px solid color-mix(in srgb, var(--tier-accent) 42%, #2a2a2a);
-      background:
-        linear-gradient(155deg, rgba(255, 255, 255, 0.04) 0%, transparent 42%),
-        linear-gradient(180deg, #181818 0%, #121212 100%);
-      cursor: pointer;
-      overflow: hidden;
-      box-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.35),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
-      transition:
-        border-color 0.28s ease,
-        background-color 0.28s ease,
-        box-shadow 0.28s ease,
-        transform 0.28s cubic-bezier(0.34, 1, 0.64, 1);
-    }
-    .price-tier label::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      border-radius: inherit;
-      padding: 2px;
-      background: conic-gradient(
-        from var(--tier-border-angle),
-        transparent 0deg,
-        transparent 300deg,
-        var(--tier-accent) 318deg,
-        #fff 334deg,
-        var(--tier-accent) 350deg,
-        transparent 360deg
-      );
-      -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-      mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 0;
-      transition: opacity 0.3s ease;
-    }
-    .price-tier label::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: radial-gradient(
-        ellipse 80% 60% at 50% 0%,
-        var(--tier-accent-soft),
-        transparent 70%
-      );
-      opacity: 0;
-      pointer-events: none;
-      z-index: 0;
-      transition: opacity 0.3s ease;
-    }
-    .price-tier label > * {
-      position: relative;
-      z-index: 1;
-    }
-    .price-tier label:hover,
-    .price-tier input:checked + label {
-      border-color: color-mix(in srgb, var(--tier-accent) 78%, #fff);
-      background:
-        linear-gradient(155deg, var(--tier-accent-soft) 0%, transparent 48%),
-        linear-gradient(180deg, #1c1c1c 0%, #101010 100%);
-      box-shadow:
-        0 0 0 1px color-mix(in srgb, var(--tier-accent) 35%, transparent),
-        0 0 28px var(--tier-glow),
-        0 12px 28px rgba(0, 0, 0, 0.38);
-      transform: translateY(-2px);
-    }
-    .price-tier label:hover::before,
-    .price-tier input:checked + label::before {
-      opacity: 1;
-      animation: tier-border-chase 2.2s linear infinite;
-    }
-    .price-tier label:hover::after,
-    .price-tier input:checked + label::after {
-      opacity: 1;
-    }
-    @keyframes tier-border-chase {
-      to {
-        --tier-border-angle: 360deg;
-      }
-    }
-    .price-tier input:focus-visible + label {
-      outline: 2px solid var(--tier-accent);
-      outline-offset: 3px;
-    }
-    .price-tier-name {
-      display: block;
-      font-size: clamp(1rem, 2.2vw, 1.12rem);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 1.35;
-      color: var(--tier-accent);
-      text-shadow:
-        0 0 18px var(--tier-glow),
-        0 1px 0 rgba(0, 0, 0, 0.5);
-      padding-bottom: 8px;
-      margin-bottom: 2px;
-      border-bottom: 1px solid color-mix(in srgb, var(--tier-accent) 28%, transparent);
-    }
-    .price-tier input:checked + label .price-tier-name {
-      filter: brightness(1.12);
-    }
-    .price-tier-amount {
-      font-size: clamp(1.15rem, 2.8vw, 1.28rem);
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: -0.03em;
-      text-shadow: 0 0 14px rgba(255, 255, 255, 0.08);
-    }
-    .price-tier-note {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #a8a8a8;
-      line-height: 1.45;
-    }
-    .sum-row--discount strong {
-      color: #ffb4b4;
-    }
-    .sum-row--list strong {
-      color: #9a9a9a;
-      text-decoration: line-through;
-      font-weight: 700;
     }
 
     .pay-extra {
@@ -1477,6 +839,26 @@
       width: min(92%, var(--nav-max));
       margin: 0 auto;
       display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: clamp(20px, 4vw, 44px);
+    }
+    .footer-logo {
+      flex-shrink: 0;
+      display: block;
+      line-height: 0;
+    }
+    .footer-logo img {
+      width: auto;
+      height: 80px;
+      max-width: min(50vw, 320px);
+      object-fit: contain;
+      display: block;
+    }
+    .footer-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
       flex-direction: column;
       gap: 8px;
     }
@@ -1516,22 +898,21 @@
       margin: 0 6px;
       color: #555;
     }
+    @media (max-width: 640px) {
+      .footer-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .footer-content {
+        width: 100%;
+        text-align: left;
+      }
+      .footer-links { justify-content: center; }
+    }
 
     [hidden] {
       display: none !important;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .price-tier label:hover,
-      .price-tier input:checked + label {
-        transform: none;
-      }
-      .price-tier label:hover::before,
-      .price-tier input:checked + label::before {
-        animation: none;
-        opacity: 1;
-        --tier-border-angle: 45deg;
-      }
     }
 
     @media (max-width: 540px) {
@@ -1557,22 +938,47 @@
         padding-bottom: 48px;
       }
     }
-  </style>
+  
+
+  /* Footer unified alignment override */
+  footer, footer.site-footer {
+    background: #000;
+  }
+  footer .footer-logo, .site-footer .footer-logo, .footer-logo {
+    margin-left: clamp(20px, 3vw, 44px);
+  }
+  footer .footer-content, .site-footer .footer-content, .footer-content {
+    text-align: left;
+  }
+  @media (max-width: 640px) {
+    footer .footer-content, .site-footer .footer-content, .footer-content {
+      text-align: left;
+    }
+  }
+
+</style>
 </head>
 <body class="page-payment page-tier-earlybird">
-  <nav class="navbar" aria-label="결제 헤더">
-    <div class="nav-inner">
-      <div class="nav-brand">
-        <a class="nav-logo" href="start.html"><span class="nav-logo-mark">STN</span><span>미디어</span></a>
-        <div class="nav-safe" title="안전한 결제 안내">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 2 4 5v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V5l-8-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-            <path d="m9 12 2 2 4-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>안전결제</span>
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a class="logo" href="start.html"><img class="logo-mark" src="image/LOGOL-PNG.png" alt="STN SKILL UP" width="220" height="53" decoding="async" /></a>
+      <a href="score.html" class="nav-score-btn--mobile">유튜브 진단하기</a>
+      <div class="nav-links">
+        <a href="start.html">홈</a>
+        <a href="curriculum.html#intensive-schedule">커리큐럼</a>
+        <a href="payment-earlybird.html">얼리버드 할인</a>
+        <div class="nav-dropdown">
+          <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">결제하기</button>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="payment-earlybird.html" role="menuitem"><span>얼리버드 할인</span><span class="menu-price">1,548,000원</span></a>
+            <a href="payment-regular.html" role="menuitem"><span>일반결제</span><span class="menu-price">1,980,000원</span></a>
+            <a href="payment-student.html" role="menuitem"><span>대학생 할인</span><span class="menu-price">990,000원</span></a>
+          </div>
         </div>
+        <a href="https://map.kakao.com/link/to/%EB%B0%B0%EC%9E%AC%EB%8C%80%ED%95%99%EA%B5%90" target="_blank" rel="noopener noreferrer">오시는길</a>
+        <a href="https://open.kakao.com/o/gLhT5Kui" class="nav-kakao-btn" target="_blank" rel="noopener noreferrer">카카오 채널</a>
+        <a href="score.html" class="nav-score-btn">유튜브 진단하기</a>
       </div>
-      <a class="nav-home" href="start.html">홈</a>
     </div>
   </nav>
 
@@ -1589,88 +995,125 @@
         <p class="tier-plan-cond">2026년 6월 15일까지 결제 시 적용</p>
         <div class="tier-plan-prices">
           <p class="tier-plan-old">1,980,000원</p>
-          <p class="tier-plan-price">1,548,000원</p>
+          <p class="tier-plan-price">1,584,000원</p>
         </div>
-        <span class="tier-plan-save">432,000원 절약</span>
+        <span class="tier-plan-save">396,000원 절약 (20%)</span>
         <p class="tier-plan-note">대학생 할인과 중복 적용되지 않습니다. 마감일 이후 정가가 적용됩니다.</p>
       </div>
 
-
       <div id="payment-flow">
-        <section class="step-card step-card--split" aria-label="신청 상품 및 신청자 정보">
-          <div class="step-split">
-            <div class="step-split-col step-split-col--apply">
-              <div class="step-head">
-                <span class="step-badge" aria-hidden="true">STEP 1</span>
-                <h2 class="step-title" id="step1-title">신청 상품 확인</h2>
-              </div>
-              <div class="apply-type-wrap" id="apply-type-wrap">
-                <div class="apply-type-grid" role="radiogroup" aria-label="신청 유형">
-                  <div class="apply-type-option apply-type-option--offline">
-                    <input type="radio" name="applyType" id="apply-offline" value="offline" />
-                    <label for="apply-offline">
-                      <span class="apply-type-check" aria-hidden="true"></span>
-                      <span class="apply-type-label-main">오프라인 강의 신청</span>
-                      <span class="apply-type-label-sub">(노트북 준비)</span>
-                    </label>
-                  </div>
-                  <div class="apply-type-option apply-type-option--online">
-                    <input type="radio" name="applyType" id="apply-online" value="online" />
-                    <label for="apply-online">
-                      <span class="apply-type-check" aria-hidden="true"></span>
-                      <span class="apply-type-label-main">온라인 강의 신청</span>
-                      <span class="apply-type-label-sub">(줌으로 진행예정)</span>
-                    </label>
-                  </div>
-                  <div class="earlybird-deadline-btn" role="note" aria-label="얼리버드 할인은 2026년 6월 15일까지 적용됩니다">2026.6.15까지</div>
-                </div>
-                <p class="apply-type-msg" id="err-apply-type" role="alert"></p>
-              </div>
+        <section class="step-card" aria-labelledby="step1-title">
+          <div class="step-head">
+            <span class="step-badge" aria-hidden="true">STEP 1</span>
+            <h2 class="step-title" id="step1-title">신청 상품 확인</h2>
+          </div>
+          <dl class="info-grid">
+            <div class="info-row">
+              <dt>프로그램명</dt>
+              <dd>STN 스킬업 양성과정</dd>
             </div>
-            <div class="step-split-col step-split-col--info">
-              <div class="step-head">
-                <span class="step-badge" aria-hidden="true">STEP 2</span>
-                <h2 class="step-title" id="step2-title">신청자 정보 입력</h2>
-              </div>
-              <div class="field">
-                <label class="field-label" for="applicant-name">이름<span class="req" aria-hidden="true">*</span></label>
-                <input class="field-input" type="text" id="applicant-name" name="applicant-name" autocomplete="name" placeholder="홍길동" />
-                <p class="field-msg" id="err-name" role="alert"></p>
-              </div>
-              <div class="field">
-                <label class="field-label" for="applicant-phone">연락처<span class="req" aria-hidden="true">*</span></label>
-                <input class="field-input" type="tel" id="applicant-phone" name="applicant-phone" autocomplete="tel" inputmode="tel" placeholder="010-0000-0000" />
-                <p class="field-msg" id="err-phone" role="alert"></p>
-              </div>
-              <div class="field">
-                <label class="field-label" for="applicant-email">이메일<span class="req" aria-hidden="true">*</span></label>
-                <input class="field-input" type="email" id="applicant-email" name="applicant-email" autocomplete="email" placeholder="example@email.com" />
-                <p class="field-msg" id="err-email" role="alert"></p>
-              </div>
-              <div class="referrer-fields">
-                <p class="referrer-fields-head">
-                  <span class="referrer-fields-title">추천인</span>
-                  <span class="referrer-fields-hint">(추천인이 있는경우 입력 · 추천인 없는경우 비워두시면 됩니다)</span>
-                </p>
-                <div class="referrer-row">
-                  <div class="field">
-                    <label class="field-label" for="referrer-region">지역</label>
-                    <input class="field-input" type="text" id="referrer-region" name="referrer-region" autocomplete="address-level1" placeholder="" />
-                  </div>
-                  <div class="field">
-                    <label class="field-label" for="referrer-name">이름</label>
-                    <input class="field-input" type="text" id="referrer-name" name="referrer-name" autocomplete="name" placeholder="" />
-                  </div>
-                </div>
-              </div>
+            <div class="info-row">
+              <dt>교육 기간</dt>
+              <dd>2026. 7. 10 ~ 7. 12 (2박 3일)</dd>
             </div>
+            <div class="info-row">
+              <dt>교육 장소</dt>
+              <dd>배재대학교, 대전</dd>
+            </div>
+            <div class="info-row">
+              <dt>수강료</dt>
+              <dd>1,980,000원 <span class="meta-sub">(부가세 포함 / 공급가 1,800,000원 + VAT 180,000원)</span></dd>
+            </div>
+          </dl>
+          <div class="halbu-box">
+            <strong>12개월 할부 시 월 165,000원</strong>
+            <p>할부 적용 및 이자 여부는 카드사 정책에 따릅니다.</p>
           </div>
         </section>
 
-        <section class="step-card" aria-labelledby="step3-agree-title">
+        <section class="step-card" aria-labelledby="step2-title">
+          <div class="step-head">
+            <span class="step-badge" aria-hidden="true">STEP 2</span>
+            <h2 class="step-title" id="step2-title">신청자 정보 입력</h2>
+          </div>
+          <div class="field">
+            <label class="field-label" for="applicant-name">이름<span class="req" aria-hidden="true">*</span></label>
+            <input class="field-input" type="text" id="applicant-name" name="applicant-name" autocomplete="name" placeholder="홍길동" />
+            <p class="field-msg" id="err-name" role="alert"></p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="applicant-phone">연락처<span class="req" aria-hidden="true">*</span></label>
+            <input class="field-input" type="tel" id="applicant-phone" name="applicant-phone" autocomplete="tel" inputmode="tel" placeholder="010-0000-0000" />
+            <p class="field-msg" id="err-phone" role="alert"></p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="applicant-email">이메일<span class="req" aria-hidden="true">*</span></label>
+            <input class="field-input" type="email" id="applicant-email" name="applicant-email" autocomplete="email" placeholder="example@email.com" />
+            <p class="field-msg" id="err-email" role="alert"></p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="applicant-referrer">추천인</label>
+            <input class="field-input" type="text" id="applicant-referrer" name="applicant-referrer" autocomplete="off" placeholder="추천인 이름(선택)" />
+            <button type="button" class="field-inline-action" id="btn-referrer-none">없음</button>
+          </div>
+        </section>
+
+        <section class="step-card" aria-labelledby="step3-title">
           <div class="step-head">
             <span class="step-badge" aria-hidden="true">STEP 3</span>
-            <h2 class="step-title" id="step3-agree-title">약관 동의</h2>
+            <h2 class="step-title" id="step3-title">결제 수단 선택</h2>
+          </div>
+          <div class="pay-methods-wrap" id="pay-methods-wrap">
+            <div class="pay-methods" role="radiogroup" aria-label="결제 수단">
+            <div class="pay-method">
+              <input type="radio" name="payMethod" id="pay-card" value="card" />
+              <label for="pay-card">신용카드</label>
+            </div>
+            <div class="pay-method">
+              <input type="radio" name="payMethod" id="pay-transfer" value="transfer" />
+              <label for="pay-transfer">계좌이체</label>
+            </div>
+            <div class="pay-method">
+              <input type="radio" name="payMethod" id="pay-deposit" value="deposit" />
+              <label for="pay-deposit">무통장입금</label>
+            </div>
+            </div>
+          </div>
+          <div id="panel-card" class="pay-extra" aria-live="polite">
+            <p class="pay-extra-label">할부 개월</p>
+            <select class="pay-select" id="installment" aria-label="할부 개월 선택">
+              <option value="0">일시불</option>
+              <option value="2">2개월</option>
+              <option value="3">3개월</option>
+              <option value="6">6개월</option>
+              <option value="12" selected>12개월</option>
+            </select>
+            <p class="pay-hint">할부 이자 및 수수료는 카드사 정책에 따릅니다.</p>
+          </div>
+          <div id="panel-transfer" class="pay-extra" aria-live="polite">
+            <p class="pay-extra-label">계좌 정보 (계좌이체)</p>
+            <div class="bank-lines">
+              은행: <span>기업은행</span><br />
+              계좌번호: <span>483-075628-04-018</span><br />
+              예금주: <span>주식회사 플래닛네이처미디어</span>
+            </div>
+          </div>
+          <div id="panel-deposit" class="pay-extra" aria-live="polite">
+            <p class="pay-extra-label">입금 계좌 (무통장입금)</p>
+            <div class="bank-lines">
+              은행: <span>기업은행</span><br />
+              계좌번호: <span>483-075628-04-018</span><br />
+              예금주: <span>주식회사 플래닛네이처미디어</span>
+            </div>
+            <p class="pay-hint pay-hint--deposit">입금 기한은 신청일 기준 <strong class="emph-soft">3영업일</strong> 이내입니다. 기한 내 미입금 시 신청이 취소될 수 있습니다.</p>
+          </div>
+          <p class="field-msg" id="err-pay" role="alert"></p>
+        </section>
+
+        <section class="step-card" aria-labelledby="step4-title">
+          <div class="step-head">
+            <span class="step-badge" aria-hidden="true">STEP 4</span>
+            <h2 class="step-title" id="step4-title">약관 동의</h2>
           </div>
           <div class="agree-all">
             <label>
@@ -1758,20 +1201,18 @@
           </div>
         </section>
 
-        <section class="step-card" aria-labelledby="step4-amount-title">
+        <section class="step-card" aria-labelledby="step3-amount-title">
           <div class="step-head">
-            <span class="step-badge" aria-hidden="true">STEP 4</span>
-            <h2 class="step-title" id="step4-amount-title">최종 결제 금액</h2>
+            <span class="step-badge" aria-hidden="true">STEP 3</span>
+            <h2 class="step-title" id="step3-amount-title">최종 결제 금액</h2>
           </div>
           <div class="sum-rows">
-            <div class="sum-row sum-row--list" id="sum-row-list"><span>정가</span><strong id="sum-list">-</strong></div>
-            <div class="sum-row sum-row--discount" id="sum-row-discount"><span>얼리버드 할인 (20%)</span><strong id="sum-discount">-</strong></div>
-            <div class="sum-row"><span>수강료 (공급가)</span><strong id="sum-supply">-</strong></div>
-            <div class="sum-row"><span>부가세 (10%)</span><strong id="sum-vat">-</strong></div>
+            <div class="sum-row"><span>수강료</span><strong>1,800,000원</strong></div>
+            <div class="sum-row"><span>부가세 (10%)</span><strong>180,000원</strong></div>
           </div>
           <div class="sum-total">
             <span class="sum-total-label">총 결제금액</span>
-            <span class="sum-total-val" id="sum-total">1,980,000원</span>
+            <span class="sum-total-val">1,980,000원</span>
           </div>
           <button type="button" class="btn-submit" id="btn-submit" disabled>결제 신청하기 →</button>
           <p class="submit-hint">결제 버튼 클릭 시 입력하신 정보로 신청이 접수됩니다. 실제 결제는 담당자 확인 후 별도 안내됩니다.</p>
@@ -1801,6 +1242,10 @@
 
   <footer aria-label="회사 정보">
     <div class="footer-inner">
+      <a href="start.html" class="footer-logo" aria-label="STN SKILL UP 홈">
+        <img src="image/LOGOL2.png" alt="STN SKILL UP" width="220" height="53" decoding="async" />
+      </a>
+      <div class="footer-content">
       <p class="footer-brand">주식회사 플래닛네이처미디어<span class="footer-sep">·</span>대표자: 이미정<span class="footer-sep">·</span>사업자등록번호: 874-88-03314</p>
       <p>소재지: 인천광역시 부평구 부평대로 283, 부평우림라이온스밸리 A동 B115-16호 (청천동)</p>
       <p>통신판매업 신고번호: 제2025-인천부평-1827호</p>
@@ -1810,6 +1255,7 @@
         <a href="privacy.html">개인정보처리방침</a>
       </div>
       <p class="footer-copy">© 2026 플래닛네이처미디어 All rights reserved.</p>
+      </div>
     </div>
   </footer>
 
@@ -1821,11 +1267,18 @@
       var elName = document.getElementById("applicant-name");
       var elPhone = document.getElementById("applicant-phone");
       var elEmail = document.getElementById("applicant-email");
+      var elReferrer = document.getElementById("applicant-referrer");
+      var btnReferrerNone = document.getElementById("btn-referrer-none");
       var errName = document.getElementById("err-name");
       var errPhone = document.getElementById("err-phone");
       var errEmail = document.getElementById("err-email");
-      var elReferrerRegion = document.getElementById("referrer-region");
-      var elReferrerName = document.getElementById("referrer-name");
+      var errPay = document.getElementById("err-pay");
+      var payMethodsWrap = document.getElementById("pay-methods-wrap");
+      var payRadios = document.querySelectorAll('input[name="payMethod"]');
+      var panelCard = document.getElementById("panel-card");
+      var panelTransfer = document.getElementById("panel-transfer");
+      var panelDeposit = document.getElementById("panel-deposit");
+      var installment = document.getElementById("installment");
       var agreeAll = document.getElementById("agree-all");
       var agreePrivacy = document.getElementById("agree-privacy");
       var agreeRefund = document.getElementById("agree-refund");
@@ -1838,102 +1291,6 @@
       var loading = document.getElementById("loading-overlay");
       var toastEl = document.getElementById("toast");
       var toastTimer;
-      var FIXED_TIER = "earlybird";
-      var sumListRow = document.getElementById("sum-row-list");
-      var sumDiscountRow = document.getElementById("sum-row-discount");
-      var sumListEl = document.getElementById("sum-list");
-      var sumDiscountEl = document.getElementById("sum-discount");
-      var sumSupplyEl = document.getElementById("sum-supply");
-      var sumVatEl = document.getElementById("sum-vat");
-      var sumTotalEl = document.getElementById("sum-total");
-      var applyTypeWrap = document.getElementById("apply-type-wrap");
-      var applyTypeRadios = document.querySelectorAll('input[name="applyType"]');
-      var errApplyType = document.getElementById("err-apply-type");
-
-      var PRICE = {
-        student: 990000,
-        earlybird: 1548000,
-        regular: 1980000,
-        list: 1980000,
-        earlybirdDiscount: 432000
-      };
-      var EARLYBIRD_END = new Date("2026-06-15T23:59:59+09:00");
-
-      function formatWon(n) {
-        return n.toLocaleString("ko-KR") + "원";
-      }
-
-      function splitVat(total) {
-        var supply = Math.round(total / 1.1);
-        return { supply: supply, vat: total - supply, total: total };
-      }
-
-      function isEarlybirdOpen() {
-        return new Date() <= EARLYBIRD_END;
-      }
-
-      function getPriceTier() {
-        return FIXED_TIER;
-      }
-
-      function tierLabel() {
-        return "얼리버드 20% 할인 (~6/15)";
-      }
-
-      function applyPriceUi() {
-        var tier = FIXED_TIER;
-        if (!sumSupplyEl || !sumVatEl || !sumTotalEl) return;
-        var total = PRICE[tier];
-        if (!total) return;
-        var parts = splitVat(total);
-        sumSupplyEl.textContent = formatWon(parts.supply);
-        sumVatEl.textContent = formatWon(parts.vat);
-        sumTotalEl.textContent = formatWon(parts.total);
-        if (sumListRow && sumDiscountRow && sumListEl && sumDiscountEl) {
-          if (tier === "earlybird") {
-            sumListRow.hidden = false;
-            sumDiscountRow.hidden = false;
-            sumListEl.textContent = formatWon(PRICE.list);
-            sumDiscountEl.textContent = "-" + formatWon(PRICE.earlybirdDiscount);
-          } else if (tier === "student") {
-            sumListRow.hidden = false;
-            sumDiscountRow.hidden = false;
-            sumListEl.textContent = formatWon(PRICE.list);
-            sumDiscountEl.textContent = "-" + formatWon(PRICE.list - PRICE.student);
-          } else {
-            sumListRow.hidden = true;
-            sumDiscountRow.hidden = true;
-          }
-        }
-      }
-
-      function initFixedTier() {
-        applyPriceUi();
-      }
-
-      function getApplyType() {
-        var sel = document.querySelector('input[name="applyType"]:checked');
-        return sel ? sel.value : null;
-      }
-
-      function applyTypeLabel(type) {
-        if (type === "offline") return "오프라인 강의 신청 (노트북 준비)";
-        if (type === "online") return "온라인 강의 신청(줌으로 진행예정)";
-        return "-";
-      }
-
-      function validateApplyType() {
-        if (!getApplyType()) {
-          if (errApplyType) errApplyType.textContent = "신청 유형을 선택해 주세요.";
-          if (applyTypeWrap) applyTypeWrap.classList.add("is-error");
-          showToast("신청 유형을 선택해 주세요.");
-          return false;
-        }
-        if (errApplyType) errApplyType.textContent = "";
-        if (applyTypeWrap) applyTypeWrap.classList.remove("is-error");
-        return true;
-      }
-
 
       function showToast(msg) {
         toastEl.textContent = msg;
@@ -1992,13 +1349,32 @@
         return true;
       }
 
-      function referrerDisplay(val) {
-        var v = (val || "").trim();
-        return v ? v : "-";
+      function getPayMethod() {
+        var sel = document.querySelector('input[name="payMethod"]:checked');
+        return sel ? sel.value : null;
+      }
+
+      function validatePay() {
+        if (!getPayMethod()) {
+          errPay.textContent = "결제 수단을 선택해 주세요.";
+          payMethodsWrap.classList.add("is-error");
+          showToast("결제 수단을 선택해 주세요.");
+          return false;
+        }
+        errPay.textContent = "";
+        payMethodsWrap.classList.remove("is-error");
+        return true;
       }
 
       function requiredAgreesOk() {
         return agreePrivacy.checked && agreeRefund.checked && agreeTerms.checked;
+      }
+
+      function updatePanels() {
+        var m = getPayMethod();
+        panelCard.classList.toggle("is-visible", m === "card");
+        panelTransfer.classList.toggle("is-visible", m === "transfer");
+        panelDeposit.classList.toggle("is-visible", m === "deposit");
       }
 
       function updateSubmitState() {
@@ -2006,7 +1382,7 @@
           elName.value.trim() &&
           phoneRe.test(elPhone.value.replace(/\s/g, "")) &&
           emailRe.test(elEmail.value.trim());
-        btnSubmit.disabled = !(formOk && requiredAgreesOk() && getApplyType());
+        btnSubmit.disabled = !(formOk && requiredAgreesOk());
       }
 
       function syncAgreeAll() {
@@ -2026,6 +1402,15 @@
         clearFieldError(elEmail, errEmail);
         updateSubmitState();
       });
+      if (elReferrer) {
+        elReferrer.addEventListener("input", updateSubmitState);
+      }
+      if (btnReferrerNone && elReferrer) {
+        btnReferrerNone.addEventListener("click", function () {
+          elReferrer.value = "없음";
+          updateSubmitState();
+        });
+      }
 
       elName.addEventListener("blur", function () {
         if (!elName.value.trim()) return;
@@ -2039,6 +1424,17 @@
         if (!elEmail.value.trim()) return;
         if (!validateEmail()) showToast(errEmail.textContent);
       });
+
+      payRadios.forEach(function (r) {
+        r.addEventListener("change", function () {
+          errPay.textContent = "";
+          payMethodsWrap.classList.remove("is-error");
+          updatePanels();
+          updateSubmitState();
+        });
+      });
+
+      installment.addEventListener("change", updateSubmitState);
 
       agreeAll.addEventListener("change", function () {
         var on = agreeAll.checked;
@@ -2069,21 +1465,21 @@
         });
       });
 
-      applyTypeRadios.forEach(function (r) {
-        r.addEventListener("change", function () {
-          if (errApplyType) errApplyType.textContent = "";
-          if (applyTypeWrap) applyTypeWrap.classList.remove("is-error");
-          updateSubmitState();
-        });
-      });
+      function payMethodLabel() {
+        var m = getPayMethod();
+        if (m === "card") {
+          var n = parseInt(installment.value, 10);
+          if (!n) return "신용카드 (일시불)";
+          return "신용카드 (" + n + "개월 할부)";
+        }
+        if (m === "transfer") return "계좌이체";
+        if (m === "deposit") return "무통장입금";
+        return "-";
+      }
 
       function runValidationWithToast() {
         var ok = true;
         var firstMsg = "";
-        if (!validateApplyType()) {
-          ok = false;
-          firstMsg = firstMsg || "신청 유형을 선택해 주세요.";
-        }
         if (!validateName()) {
           ok = false;
           firstMsg = firstMsg || errName.textContent;
@@ -2095,6 +1491,10 @@
         if (!validateEmail()) {
           ok = false;
           firstMsg = firstMsg || errEmail.textContent;
+        }
+        if (!validatePay()) {
+          ok = false;
+          firstMsg = firstMsg || "결제 수단을 선택해 주세요.";
         }
         if (!requiredAgreesOk()) {
           ok = false;
@@ -2111,6 +1511,7 @@
         loading.classList.add("is-on");
         loading.setAttribute("aria-hidden", "false");
         setTimeout(function () {
+          var referrerText = elReferrer && elReferrer.value.trim() ? elReferrer.value.trim() : "-";
           loading.classList.remove("is-on");
           loading.setAttribute("aria-hidden", "true");
           flow.hidden = true;
@@ -2118,25 +1519,17 @@
           window.scrollTo({ top: 0, behavior: "smooth" });
 
           summaryEl.innerHTML =
-            "<dt>신청 유형</dt><dd>" +
-            escapeHtml(applyTypeLabel(getApplyType())) +
-            "</dd>" +
-            "<dt>프로그램명</dt><dd>미디어 서포터즈 양성과정</dd>" +
+            "<dt>프로그램명</dt><dd>STN 스킬업 양성과정</dd>" +
             "<dt>교육 기간</dt><dd>2026. 7. 10 ~ 7. 12 (2박 3일)</dd>" +
             "<dt>신청자 이름</dt><dd>" +
             escapeHtml(elName.value.trim()) +
             "</dd>" +
-            "<dt>요금 유형</dt><dd>" +
-            escapeHtml(tierLabel()) +
+            "<dt>추천인</dt><dd>" +
+            escapeHtml(referrerText) +
             "</dd>" +
-            "<dt>결제금액</dt><dd>" +
-            escapeHtml(sumTotalEl ? sumTotalEl.textContent : "-") +
-            "</dd>" +
-            "<dt>추천인 지역</dt><dd>" +
-            escapeHtml(referrerDisplay(elReferrerRegion && elReferrerRegion.value)) +
-            "</dd>" +
-            "<dt>추천인 이름</dt><dd>" +
-            escapeHtml(referrerDisplay(elReferrerName && elReferrerName.value)) +
+            "<dt>결제금액</dt><dd>1,980,000원</dd>" +
+            "<dt>결제수단</dt><dd>" +
+            escapeHtml(payMethodLabel()) +
             "</dd>";
         }, 1200);
       });
@@ -2149,17 +1542,34 @@
           .replace(/"/g, "&quot;");
       }
 
-      initFixedTier();
+      updatePanels();
       updateSubmitState();
     })();
   </script>
-  <script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
-  <script type="text/javascript">
-  if(!wcs_add) var wcs_add = {};
-  wcs_add["wa"] = "1ce25a49f3ccbf0";
-  if(window.wcs) {
-  wcs_do();
-  }
+
+<script>
+    (function () {
+      const navbar = document.querySelector(".navbar");
+      if (!navbar) return;
+      let scrollTicking = false;
+      let glowTimeout;
+
+      const flashOnScroll = () => {
+        if (scrollTicking) return;
+        scrollTicking = true;
+        requestAnimationFrame(() => {
+          navbar.classList.add("is-scrolling");
+          clearTimeout(glowTimeout);
+          glowTimeout = setTimeout(() => {
+            navbar.classList.remove("is-scrolling");
+          }, 240);
+          scrollTicking = false;
+        });
+      };
+
+      window.addEventListener("scroll", flashOnScroll, { passive: true });
+      window.addEventListener("wheel", flashOnScroll, { passive: true });
+    })();
   </script>
 </body>
 </html>
