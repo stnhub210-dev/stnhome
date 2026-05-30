@@ -5073,13 +5073,21 @@
       filter: brightness(1.06);
       transform: translateY(-2px);
     }
+    .kakao-float-logo {
+      display: block;
+      line-height: 0;
+      text-decoration: none;
+      align-self: center;
+    }
+    .kakao-float-logo:hover .kakao-float-label {
+      filter: brightness(1.08);
+    }
     .kakao-float-label {
       width: auto;
       height: 26px;
       max-width: min(38vw, 130px);
       display: block;
       object-fit: contain;
-      align-self: center;
     }
   
 
@@ -6357,7 +6365,9 @@
 
   <div class="kakao-float-wrap">
     <a class="kakao-float-btn" href="https://open.kakao.com/o/gLhT5Kui" target="_blank" rel="noopener noreferrer">카카오 채널 추가</a>
-    <img class="kakao-float-label" src="image/LOGOL-PNG.png" alt="STN SKILL UP" width="130" height="26" decoding="async" />
+    <a class="kakao-float-logo" href="start.html" aria-label="STN SKILL UP 홈">
+      <img class="kakao-float-label" src="image/LOGOL-PNG.png" alt="STN SKILL UP" width="130" height="26" decoding="async" />
+    </a>
   </div>
   <script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
   <script type="text/javascript">
