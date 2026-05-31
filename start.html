@@ -996,6 +996,21 @@
     .schedule-curriculum-bridge-btn-shell:has(.schedule-curriculum-bridge-btn:focus-visible) {
       filter: drop-shadow(0 0 10px rgba(198, 255, 0, 0.5));
     }
+    .schedule-curriculum-bridge-tagline {
+      margin: clamp(18px, 3.2vw, 28px) 0 0;
+      padding: 0 clamp(8px, 2vw, 16px);
+      max-width: 22em;
+      font-size: clamp(1.5rem, 3.8vw, 2.2rem);
+      font-weight: 900;
+      line-height: 1.35;
+      letter-spacing: -0.03em;
+      text-align: center;
+      color: var(--lime);
+      word-break: keep-all;
+      text-shadow:
+        0 0 16px rgba(198, 255, 0, 0.45),
+        0 0 32px rgba(198, 255, 0, 0.22);
+    }
     .welcome-fit {
       min-height: auto;
       padding: 58px 0 62px;
@@ -3375,9 +3390,26 @@
       letter-spacing: -0.02em;
       font-size: clamp(1.78rem, 3.5vw, 2.7rem);
       line-height: 1.25;
-      margin-bottom: clamp(18px, 3vw, 30px);
+      margin-bottom: clamp(10px, 1.6vw, 14px);
       text-align: center;
       text-shadow: 0 0 14px rgba(124,252,0,.22);
+    }
+    .price-cut-kicker-sub {
+      margin: 0 0 clamp(20px, 3.2vw, 32px);
+      padding: 0 clamp(8px, 2vw, 12px);
+      max-width: 20em;
+      font-size: clamp(1.22rem, 2.6vw, 1.82rem);
+      font-weight: 800;
+      line-height: 1.45;
+      letter-spacing: -0.02em;
+      text-align: center;
+      color: #f2f2f2;
+      word-break: keep-all;
+    }
+    .price-cut-kicker-sub-accent {
+      color: var(--lime);
+      font-weight: 900;
+      text-shadow: 0 0 14px rgba(124, 252, 0, 0.35);
     }
     .price-kicker-strong {
       font-size: 1.16em;
@@ -4825,6 +4857,10 @@
         font-size: clamp(1.05rem, 2.2vw + 0.35rem, 1.28rem);
         line-height: 1.35;
       }
+      .schedule-curriculum-bridge-tagline {
+        font-size: clamp(1.32rem, 4.2vw, 1.72rem);
+        margin-top: clamp(14px, 3vw, 22px);
+      }
     }
     @media (max-width: 480px) {
       section { padding: 76px 0 42px; }
@@ -5326,6 +5362,7 @@
       <div class="schedule-curriculum-bridge-btn-shell">
         <a href="curriculum.html#intensive-schedule" class="schedule-curriculum-bridge-btn">2박 3일 커리큐럼 세부 일정 보러가기</a>
       </div>
+      <p class="schedule-curriculum-bridge-tagline">단 3일만에 모든실무 마스터가능</p>
     </div>
   </section>
 
@@ -5747,6 +5784,7 @@
         <div class="price-cut-left">수강료</div>
         <div class="price-cut-right">
           <div class="price-cut-kicker"><span class="price-kicker-strong">8명 전문강사</span>의 모든 <span class="price-kicker-strong price-kicker-nohow"><span class="price-kicker-char">노</span><span class="price-kicker-char">하</span><span class="price-kicker-char">우</span></span>를 배우는 가격!</div>
+          <p class="price-cut-kicker-sub"><span class="price-cut-kicker-sub-accent">단 2일만에</span> 나도 컨텐츠전문가가 되실수 있습니다</p>
           <div class="price-cut-price-stack">
             <del class="price-cut-old">4,500,000</del>
             <div class="price-cut-amount is-pingpong">
