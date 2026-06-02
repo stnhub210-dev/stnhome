@@ -215,6 +215,17 @@
     .payment-amount-full {
       margin-top: 16px;
     }
+    .pay-amount-methods {
+      margin: 20px 0;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+    .pay-section-label {
+      margin: 0 0 12px;
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: #e8e8e8;
+    }
 
     .payment-fields-grid {
       display: grid;
@@ -1628,6 +1639,50 @@
             <span class="sum-total-label">총 결제금액</span>
             <span class="sum-total-val">990,000원</span>
           </div>
+          <div class="pay-amount-methods">
+            <p class="pay-section-label" id="pay-method-title">결제수단</p>
+            <div class="pay-methods-wrap" id="pay-methods-wrap">
+              <div class="pay-methods" role="radiogroup" aria-labelledby="pay-method-title">
+                <div class="pay-method">
+                  <input type="radio" name="payMethod" id="pay-card" value="card" />
+                  <label for="pay-card">신용카드</label>
+                </div>
+                <div class="pay-method">
+                  <input type="radio" name="payMethod" id="pay-transfer" value="transfer" />
+                  <label for="pay-transfer">계좌이체</label>
+                </div>
+                <div class="pay-method">
+                  <input type="radio" name="payMethod" id="pay-deposit" value="deposit" />
+                  <label for="pay-deposit">가상계좌</label>
+                </div>
+              </div>
+            </div>
+            <div id="panel-card" class="pay-extra" aria-live="polite">
+              <p class="pay-extra-label">할부 개월</p>
+              <select class="pay-select" id="installment" aria-label="할부 개월 선택">
+                <option value="0">일시불</option>
+                <option value="2">2개월</option>
+                <option value="3">3개월</option>
+                <option value="6">6개월</option>
+                <option value="12" selected>12개월</option>
+              </select>
+              <p class="pay-hint">할부 선택 시 이용하시는 카드사 정책에 따릅니다.</p>
+            </div>
+            <div id="panel-transfer" class="pay-extra" aria-live="polite">
+              <p class="pay-extra-label">입금 정보 (계좌이체)</p>
+              <div class="bank-lines">
+                은행: <span>우리은행</span><br />
+                계좌번호: <span>483-075628-04-018</span><br />
+                예금주: <span>주식회사 플래닛네이처미디어</span>
+              </div>
+            </div>
+            <div id="panel-deposit" class="pay-extra" aria-live="polite">
+              <p class="pay-extra-label">입금 안내 (가상계좌)</p>
+              <p class="pay-hint">신청 접수 후 담당자가 발급한 가상계좌로 입금해 주세요.</p>
+              <p class="pay-hint pay-hint--deposit">입금 기한은 안내일로부터 <strong class="emph-soft">3영업일</strong> 이내입니다. 기한 내 미입금 시 신청이 취소될 수 있습니다.</p>
+            </div>
+            <p class="field-msg" id="err-pay" role="alert"></p>
+          </div>
           <button type="button" class="btn-submit" id="btn-submit" disabled>결제 신청하기 →</button>
           <p class="submit-hint">결제 버튼 클릭 시 입력하신 정보로 신청이 접수됩니다. 실제 결제는 담당자 확인 후 별도 안내됩니다.</p>
         </section>
@@ -1822,6 +1877,15 @@
       }
 
       function validatePay() {
+        if (!payMethodsWrap || !errPay) return true;
+        if (!getPayMethod()) {
+          errPay.textContent = "결제 수단을 선택해 주세요.";
+          payMethodsWrap.classList.add("is-error");
+          showToast("결제 수단을 선택해 주세요.");
+          return false;
+        }
+        errPay.textContent = "";
+        payMethodsWrap.classList.remove("is-error");
         return true;
       }
 
@@ -1829,7 +1893,13 @@
         return agreePrivacy.checked && agreeRefund.checked && agreeTerms.checked;
       }
 
-      function updatePanels() {}
+      function updatePanels() {
+        if (!panelCard || !panelTransfer || !panelDeposit) return;
+        var m = getPayMethod();
+        panelCard.classList.toggle("is-visible", m === "card");
+        panelTransfer.classList.toggle("is-visible", m === "transfer");
+        panelDeposit.classList.toggle("is-visible", m === "deposit");
+      }
 
       function updateSubmitState() {
         var formOk =
@@ -1838,7 +1908,7 @@
           emailRe.test(elEmail.value.trim()) &&
           agreeKakaoCert &&
           agreeKakaoCert.checked;
-        btnSubmit.disabled = !(formOk && requiredAgreesOk());
+        btnSubmit.disabled = !(formOk && requiredAgreesOk() && getPayMethod());
       }
 
       function syncAgreeAll() {
@@ -1905,6 +1975,19 @@
         if (!validateEmail()) showToast(errEmail.textContent);
       });
 
+      payRadios.forEach(function (r) {
+        r.addEventListener("change", function () {
+          if (errPay) errPay.textContent = "";
+          if (payMethodsWrap) payMethodsWrap.classList.remove("is-error");
+          updatePanels();
+          updateSubmitState();
+        });
+      });
+
+      if (installment) {
+        installment.addEventListener("change", updateSubmitState);
+      }
+
       agreeAll.addEventListener("change", function () {
         var on = agreeAll.checked;
         agreePrivacy.checked = on;
@@ -1935,7 +2018,15 @@
       });
 
       function payMethodLabel() {
-        return "담당자 안내 후 결정";
+        var m = getPayMethod();
+        if (m === "card") {
+          var n = installment ? parseInt(installment.value, 10) : 0;
+          if (!n) return "신용카드 (일시불)";
+          return "신용카드 (" + n + "개월 할부)";
+        }
+        if (m === "transfer") return "계좌이체";
+        if (m === "deposit") return "가상계좌";
+        return "-";
       }
 
       function runValidationWithToast() {
@@ -1952,6 +2043,10 @@
         if (!validateEmail()) {
           ok = false;
           firstMsg = firstMsg || errEmail.textContent;
+        }
+        if (!validatePay()) {
+          ok = false;
+          firstMsg = firstMsg || errPay.textContent;
         }
         if (!validateCert()) {
           ok = false;
