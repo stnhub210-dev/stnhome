@@ -56,6 +56,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <!-- 헥토파이낸셜 결제 JS -->
+  <script src="https://pg.hectofinancial.com/stdpay/js/stdpay.js"></script>
+  <script>
+    (function () {
+      if (typeof HPay !== "undefined") return;
+      var fallback = document.createElement("script");
+      fallback.src = "https://npg.settlebank.co.kr/spay/js/stdpay.js";
+      document.head.appendChild(fallback);
+    })();
+  </script>
   <style>
     :root {
       --bg: #0a0a0a;
@@ -1596,8 +1606,8 @@
             </div>
             <p class="field-msg" id="err-pay" role="alert"></p>
           </div>
-          <button type="button" class="btn-submit" id="btn-submit" disabled>결제 신청하기 →</button>
-          <p class="submit-hint">결제 버튼 클릭 시 입력하신 정보로 신청이 접수됩니다. 실제 결제는 담당자 확인 후 별도 안내됩니다.</p>
+          <button type="button" class="btn-submit" id="btn-submit" disabled>결제하기 →</button>
+          <p class="submit-hint">결제 버튼 클릭 시 헥토파이낸셜 결제창이 열립니다.<br />입력하신 정보는 결제 및 교육 운영 목적으로만 사용됩니다.</p>
         </section>
 
       <div id="payment-complete" hidden>
@@ -1615,7 +1625,7 @@
   <div class="loading-overlay" id="loading-overlay" aria-hidden="true">
     <div class="loading-box">
       <div class="spinner" aria-hidden="true"></div>
-      <p class="loading-text">신청 접수 처리 중입니다…</p>
+      <p class="loading-text">결제창을 불러오는 중입니다…</p>
     </div>
   </div>
 
@@ -1642,6 +1652,10 @@
 
   <script>
     (function () {
+      var MCHT_ID = "M2665490";
+      var TRD_AMT = "1980000";
+      var WORKER_URL = "https://stn-api.stnhub210.workers.dev/hecto-hash";
+
       var phoneRe = /^01[016789]-?\d{3,4}-?\d{4}$/;
       var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -1891,32 +1905,73 @@
         return ok;
       }
 
-      btnSubmit.addEventListener("click", function () {
+      btnSubmit.addEventListener("click", async function () {
         if (!runValidationWithToast()) return;
+
         loading.classList.add("is-on");
         loading.setAttribute("aria-hidden", "false");
-        setTimeout(function () {
-          var referrerText = elReferrer && elReferrer.value.trim() ? elReferrer.value.trim() : "-";
+
+        try {
+          var now = new Date();
+          var pad = function (n) { return String(n).padStart(2, "0"); };
+          var trdDt = now.getFullYear() + pad(now.getMonth() + 1) + pad(now.getDate());
+          var trdTm = pad(now.getHours()) + pad(now.getMinutes()) + pad(now.getSeconds());
+          var rand4 = Math.random().toString(36).substring(2, 6).toUpperCase();
+          var mchtTrdNo = "STN-" + trdDt + "-" + rand4;
+
+          var hashRes = await fetch(WORKER_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              mchtId: MCHT_ID,
+              trdDt: trdDt,
+              trdTm: trdTm,
+              mchtTrdNo: mchtTrdNo,
+              trdAmt: TRD_AMT
+            })
+          });
+          if (!hashRes.ok) throw new Error("해시 API 오류");
+          var hashData = await hashRes.json();
+          if (!hashData.pktHash) throw new Error("해시 생성 실패");
+
           loading.classList.remove("is-on");
           loading.setAttribute("aria-hidden", "true");
-          flow.hidden = true;
-          complete.hidden = false;
-          window.scrollTo({ top: 0, behavior: "smooth" });
 
-          summaryEl.innerHTML =
-            "<dt>프로그램명</dt><dd>STN 스킬업 양성과정</dd>" +
-            "<dt>교육 기간</dt><dd>2026. 7. 10 ~ 7. 12 (2박 3일)</dd>" +
-            "<dt>신청자 이름</dt><dd>" +
-            escapeHtml(elName.value.trim()) +
-            "</dd>" +
-            "<dt>추천인</dt><dd>" +
-            escapeHtml(referrerText) +
-            "</dd>" +
-            "<dt>결제금액</dt><dd>1,980,000원</dd>" +
-            "<dt>결제수단</dt><dd>" +
-            escapeHtml(payMethodLabel()) +
-            "</dd>";
-        }, 1200);
+          var method = getPayMethod();
+          var payParams = {
+            mchtId: MCHT_ID,
+            method: method === "card" ? "card" : method === "transfer" ? "bank" : "vbank",
+            trdDt: trdDt,
+            trdTm: trdTm,
+            mchtTrdNo: mchtTrdNo,
+            mchtName: "STN스킬업",
+            mchtEName: "STNSkillUp",
+            pmtPrdtNm: "STN스킬업 1기 집중캠프",
+            trdAmt: TRD_AMT,
+            custNm: elName.value.trim(),
+            custMail: elEmail.value.trim(),
+            custMphNo: elPhone.value.replace(/-/g, ""),
+            notiUrl: "https://stn-api.stnhub210.workers.dev/hecto-notify",
+            nextUrl: "https://stnmedia.kr/payment_result.html",
+            cancUrl: "https://stnmedia.kr/payment-regular.html",
+            pktHash: hashData.pktHash
+          };
+
+          if (method === "card" && installment) {
+            payParams.quota = installment.value || "00";
+          }
+
+          if (typeof HPay !== "undefined" && typeof HPay.pay === "function") {
+            HPay.pay(payParams);
+          } else {
+            showToast("결제 모듈을 불러오지 못했습니다. 페이지를 새로고침한 뒤 다시 시도해 주세요.");
+          }
+        } catch (e) {
+          loading.classList.remove("is-on");
+          loading.setAttribute("aria-hidden", "true");
+          showToast("결제 처리 중 오류가 발생했습니다. 고객센터(1599-1242)로 문의해 주세요.");
+          console.error(e);
+        }
       });
 
       function escapeHtml(s) {
