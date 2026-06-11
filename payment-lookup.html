@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <title>결제 조회 | STN 스킬업</title>
+  <meta name="description" content="이름과 연락처로 STN 스킬업 양성과정 결제·신청 상태를 조회합니다." />
+  <link rel="canonical" href="https://stnmedia.kr/payment-lookup.html" />
+  <link rel="icon" type="image/x-icon" href="/image/favicon-512x512-256.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: #111111;
+      --line: #2a2a2a;
+      --lime: #7CFC00;
+      --text: #ffffff;
+      --muted: #bdbdbd;
+      --err: #ff6b6b;
+      --warn: #ffb84d;
+      --nav-max: 1160px;
+      --content-max: 720px;
+      --nav-clear: calc(68px + env(safe-area-inset-top, 0px));
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Noto Sans KR", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    .navbar {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(10,10,10,.92);
+      border-bottom: 1px solid rgba(124,252,0,.25);
+      backdrop-filter: blur(10px);
+    }
+    .nav-inner {
+      width: min(92%, var(--nav-max));
+      margin: 0 auto; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo-mark { height: 52px; width: auto; max-width: min(58vw, 220px); }
+    .nav-links { display: flex; gap: 18px; align-items: center; }
+    .nav-links a { font-size: .88rem; font-weight: 700; color: #ccc; }
+    .nav-links a:hover { color: var(--lime); }
+    main { padding: calc(var(--nav-clear) + 24px) 0 56px; }
+    .wrap { width: min(92%, var(--content-max)); margin: 0 auto; }
+    .lookup-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: clamp(24px, 5vw, 36px);
+    }
+    .lookup-title {
+      font-size: clamp(1.3rem, 4vw, 1.6rem);
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .lookup-desc {
+      color: var(--muted);
+      font-size: .92rem;
+      margin-bottom: 22px;
+    }
+    .lookup-form { display: grid; gap: 14px; margin-bottom: 18px; }
+    .field-label {
+      display: block;
+      font-size: .86rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .field-input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #151515;
+      color: var(--text);
+      font: inherit;
+    }
+    .field-input:focus {
+      outline: none;
+      border-color: rgba(124,252,0,.55);
+      box-shadow: 0 0 0 2px rgba(124,252,0,.12);
+    }
+    .field-input.is-error { border-color: var(--err); }
+    .field-msg { margin-top: 6px; font-size: .82rem; color: var(--err); min-height: 1.2em; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 48px; padding: 0 20px; border-radius: 12px;
+      border: none; font: inherit; font-weight: 800; cursor: pointer;
+    }
+    .btn-primary { width: 100%; background: var(--lime); color: #0a0a0a; }
+    .btn-primary:hover { filter: brightness(1.06); }
+    .btn-primary:disabled { opacity: .55; cursor: not-allowed; }
+    .result-block { margin-top: 22px; }
+    .result-block[hidden] { display: none !important; }
+    .result-empty {
+      padding: 28px 16px; text-align: center;
+      border-radius: 12px; border: 1px dashed #444;
+      color: var(--muted); font-size: .9rem;
+    }
+    .payment-item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px 18px;
+      background: rgba(255,255,255,.02);
+      margin-bottom: 12px;
+    }
+    .payment-item-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; margin-bottom: 12px; flex-wrap: wrap;
+    }
+    .payment-item-title { font-weight: 900; font-size: 1rem; }
+    .status-badge {
+      display: inline-flex; padding: 4px 10px; border-radius: 999px;
+      font-size: .78rem; font-weight: 800;
+    }
+    .status-paid { background: rgba(124,252,0,.15); color: var(--lime); }
+    .status-pending { background: rgba(255,184,77,.15); color: var(--warn); }
+    .status-failed, .status-cancelled { background: rgba(255,107,107,.15); color: var(--err); }
+    .payment-summary {
+      display: grid; gap: 8px; font-size: .88rem;
+    }
+    .payment-summary dt { color: #7a7a7a; font-size: .75rem; font-weight: 800; }
+    .payment-summary dd { font-weight: 700; margin-bottom: 2px; }
+    .lookup-note {
+      margin-top: 16px; padding: 12px 14px; border-radius: 10px;
+      border: 1px dashed #444; color: #888; font-size: .8rem; line-height: 1.6;
+    }
+    footer {
+      padding: 32px 0 40px; text-align: center; color: #909090;
+      font-size: .86rem; border-top: 1px solid var(--line);
+    }
+    @media (max-width: 1024px) { .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a class="logo" href="start.html"><img class="logo-mark" src="image/LOGOL-PNG.png" alt="STN SKILL UP" width="220" height="53" decoding="async" /></a>
+      <div class="nav-links">
+        <a href="start.html">홈</a>
+        <a href="payment-earlybird.html">결제하기</a>
+        <a href="payment-lookup.html">결제 조회</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="wrap">
+      <div class="lookup-card">
+        <h1 class="lookup-title">결제 조회</h1>
+        <p class="lookup-desc">신청 시 입력한 <strong>이름</strong>과 <strong>연락처</strong>로 결제·접수 상태를 확인할 수 있습니다.</p>
+
+        <form id="lookup-form" class="lookup-form" novalidate>
+          <div>
+            <label class="field-label" for="lookup-name">이름</label>
+            <input class="field-input" type="text" id="lookup-name" name="name" autocomplete="name" placeholder="홍길동" required>
+            <p class="field-msg" id="err-name"></p>
+          </div>
+          <div>
+            <label class="field-label" for="lookup-phone">연락처</label>
+            <input class="field-input" type="tel" id="lookup-phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="010-0000-0000" required>
+            <p class="field-msg" id="err-phone"></p>
+          </div>
+          <button type="submit" class="btn btn-primary" id="lookup-submit">조회하기</button>
+        </form>
+
+        <div class="result-block" id="result-block" hidden>
+          <div id="result-list"></div>
+        </div>
+
+        <p class="lookup-note">
+          조회되지 않으면 입력 정보를 다시 확인해 주세요. 카드 결제는 즉시 완료, 계좌이체·가상계좌는 입금 확인 후 완료 처리됩니다.<br>
+          문의: <a href="tel:1599-1242">1599-1242</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 플래닛네이처미디어 · STN 스킬업</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/admin/assets/js/config.js"></script>
+  <script src="/js/payment-service.js"></script>
+  <script>
+    (function () {
+      var phoneRe = /^01[016789]-?\d{3,4}-?\d{4}$/;
+      var form = document.getElementById('lookup-form');
+      var elName = document.getElementById('lookup-name');
+      var elPhone = document.getElementById('lookup-phone');
+      var errName = document.getElementById('err-name');
+      var errPhone = document.getElementById('err-phone');
+      var resultBlock = document.getElementById('result-block');
+      var resultList = document.getElementById('result-list');
+      var submitBtn = document.getElementById('lookup-submit');
+
+      function escapeHtml(s) {
+        return String(s == null ? '' : s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      function formatWon(n) {
+        var num = Number(n);
+        if (!isFinite(num)) return '-';
+        return num.toLocaleString('ko-KR') + '원';
+      }
+
+      function formatDate(iso) {
+        if (!iso) return '-';
+        var d = new Date(iso);
+        if (isNaN(d.getTime())) return '-';
+        return d.toLocaleString('ko-KR', {
+          year: 'numeric', month: '2-digit', day: '2-digit',
+          hour: '2-digit', minute: '2-digit'
+        });
+      }
+
+      function statusLabel(status) {
+        var map = {
+          paid: '결제 완료',
+          pending: '접수·입금 대기',
+          failed: '결제 실패',
+          cancelled: '취소'
+        };
+        return map[status] || status || '-';
+      }
+
+      function renderResults(rows) {
+        resultBlock.hidden = false;
+        if (!rows.length) {
+          resultList.innerHTML = '<div class="result-empty">일치하는 결제·신청 내역이 없습니다.<br>이름과 연락처를 다시 확인해 주세요.</div>';
+          return;
+        }
+
+        resultList.innerHTML = rows.map(function (row) {
+          var status = row.status || 'pending';
+          return (
+            '<article class="payment-item">' +
+              '<div class="payment-item-head">' +
+                '<div class="payment-item-title">' + escapeHtml(row.program_name || 'STN 스킬업 양성과정') + '</div>' +
+                '<span class="status-badge status-' + escapeHtml(status) + '">' + statusLabel(status) + '</span>' +
+              '</div>' +
+              '<dl class="payment-summary">' +
+                '<dt>신청자</dt><dd>' + escapeHtml(row.applicant_name) + '</dd>' +
+                '<dt>과정/요금제</dt><dd>' + escapeHtml(row.tier || '-') + '</dd>' +
+                '<dt>결제금액</dt><dd>' + formatWon(row.amount) + '</dd>' +
+                '<dt>결제수단</dt><dd>' + escapeHtml(row.pay_method || '-') + '</dd>' +
+                '<dt>신청일</dt><dd>' + formatDate(row.created_at) + '</dd>' +
+                '<dt>주문번호</dt><dd>' + escapeHtml(row.order_id || '-') + '</dd>' +
+              '</dl>' +
+            '</article>'
+          );
+        }).join('');
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        errName.textContent = '';
+        errPhone.textContent = '';
+        elName.classList.remove('is-error');
+        elPhone.classList.remove('is-error');
+
+        var name = elName.value.trim();
+        var phone = elPhone.value.trim();
+        var valid = true;
+
+        if (!name) {
+          errName.textContent = '이름을 입력해 주세요.';
+          elName.classList.add('is-error');
+          valid = false;
+        }
+        if (!phone) {
+          errPhone.textContent = '연락처를 입력해 주세요.';
+          elPhone.classList.add('is-error');
+          valid = false;
+        } else if (!phoneRe.test(phone.replace(/\s/g, ''))) {
+          errPhone.textContent = '휴대폰 번호 형식을 확인해 주세요.';
+          elPhone.classList.add('is-error');
+          valid = false;
+        }
+        if (!valid) return;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = '조회 중...';
+
+        try {
+          var rows = await window.STNPaymentService.lookupPayments(name, phone);
+          renderResults(rows);
+        } catch (err) {
+          resultBlock.hidden = false;
+          resultList.innerHTML = '<div class="result-empty">조회 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.</div>';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '조회하기';
+        }
+      });
+
+      var params = new URLSearchParams(window.location.search);
+      if (params.get('name')) elName.value = params.get('name');
+      if (params.get('phone')) elPhone.value = params.get('phone');
+    })();
+  </script>
+</body>
+</html>

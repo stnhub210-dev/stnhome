@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>추천인 코드 관리 | STN 관리자</title>
+  <link rel="icon" type="image/x-icon" href="/image/favicon-512x512-256.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+  <div class="admin-shell">
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <img src="/image/favicon-512x512.png" alt="STN">
+        <div>
+          <strong>STN Admin</strong>
+          <span>스킬업 운영</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="관리자 메뉴">
+        <a class="nav-item" href="dashboard.html">결제 신청 관리</a>
+        <a class="nav-item is-active" href="referrals.html">추천인 코드</a>
+        <a class="nav-item" href="visitors.html">방문자 통계</a>
+        <a class="nav-item" href="../index.html" target="_blank" rel="noopener noreferrer">사이트 보기</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div id="admin-user-email">-</div>
+        <button type="button" class="btn btn-ghost" id="logout-btn" style="width:100%; margin-top:10px;">로그아웃</button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <div class="demo-banner" id="demo-banner" hidden>
+        데모 모드입니다. 발급·수정 내용은 브라우저 세션에만 저장됩니다.
+      </div>
+
+      <header class="admin-topbar">
+        <div>
+          <h2>추천인 코드 관리</h2>
+          <p>할인 코드를 발급하고 사용 현황을 관리합니다.</p>
+        </div>
+        <button type="button" class="btn btn-ghost" id="refresh-btn">새로고침</button>
+      </header>
+
+      <section class="panel form-panel">
+        <div class="panel-head">
+          <h3>새 추천인 코드 발급</h3>
+        </div>
+        <form id="referral-form" class="admin-form">
+          <div class="form-grid">
+            <div class="field">
+              <label for="ref-code">코드<span class="req">*</span></label>
+              <div class="input-with-btn">
+                <input class="field-input" type="text" id="ref-code" name="code" placeholder="예: STN2026" maxlength="20" required>
+                <button type="button" class="btn btn-ghost btn-sm" id="btn-gen-code">자동생성</button>
+              </div>
+            </div>
+            <div class="field">
+              <label for="ref-label">추천인명<span class="req">*</span></label>
+              <input class="field-input" type="text" id="ref-label" name="label" placeholder="예: 김강사" required>
+            </div>
+            <div class="field">
+              <label for="ref-discount-type">할인 방식<span class="req">*</span></label>
+              <select class="field-input" id="ref-discount-type" name="discount_type" required>
+                <option value="percent">퍼센트 할인 (%)</option>
+                <option value="fixed">정액 할인 (원)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ref-discount-value">할인 값<span class="req">*</span></label>
+              <input class="field-input" type="number" id="ref-discount-value" name="discount_value" min="1" placeholder="10 또는 50000" required>
+            </div>
+            <div class="field">
+              <label for="ref-max-uses">최대 사용 횟수</label>
+              <input class="field-input" type="number" id="ref-max-uses" name="max_uses" min="1" placeholder="비우면 무제한">
+            </div>
+            <div class="field">
+              <label for="ref-valid-until">만료일</label>
+              <input class="field-input" type="date" id="ref-valid-until" name="valid_until">
+            </div>
+            <div class="field field-full">
+              <label for="ref-notes">메모</label>
+              <input class="field-input" type="text" id="ref-notes" name="notes" placeholder="내부 메모 (선택)">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">코드 발급</button>
+            <p id="form-message" class="form-message" hidden></p>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel" style="margin-top:18px;">
+        <div class="panel-head">
+          <h3>발급된 코드 목록</h3>
+          <span class="panel-meta" id="list-meta">-</span>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>코드</th>
+                <th>추천인명</th>
+                <th>할인</th>
+                <th>사용</th>
+                <th>만료일</th>
+                <th>상태</th>
+                <th>관리</th>
+              </tr>
+            </thead>
+            <tbody id="referrals-body">
+              <tr><td colspan="7" class="table-empty">불러오는 중...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination" id="referrals-pagination" hidden aria-label="코드 목록 페이지">
+          <button type="button" class="page-btn" id="page-prev">이전</button>
+          <div class="page-numbers" id="page-numbers"></div>
+          <button type="button" class="page-btn" id="page-next">다음</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/supabase-client.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/referrals.js"></script>
+  <script>
+    window.stnAdminReferrals.init().catch(function (err) {
+      console.error(err);
+    });
+  </script>
+</body>
+</html>
