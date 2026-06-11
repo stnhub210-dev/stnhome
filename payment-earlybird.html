@@ -1717,6 +1717,26 @@
         return true;
       }
 
+      function formatPhoneInput(value) {
+        var digits = String(value || "").replace(/\D/g, "").slice(0, 11);
+        if (digits.length <= 3) return digits;
+        if (digits.length <= 7) return digits.slice(0, 3) + "-" + digits.slice(3);
+        return digits.slice(0, 3) + "-" + digits.slice(3, 7) + "-" + digits.slice(7);
+      }
+
+      function applyPhoneFormat(input) {
+        var start = input.selectionStart;
+        var before = input.value;
+        var formatted = formatPhoneInput(before);
+        input.value = formatted;
+        if (start == null) return;
+        var diff = formatted.length - before.length;
+        var nextPos = Math.max(0, Math.min(formatted.length, start + diff));
+        try {
+          input.setSelectionRange(nextPos, nextPos);
+        } catch (_) {}
+      }
+
       function validatePhone() {
         var raw = elPhone.value.replace(/\s/g, "");
         if (!raw) {
@@ -1793,6 +1813,14 @@
         updateSubmitState();
       });
       elPhone.addEventListener("input", function () {
+        applyPhoneFormat(elPhone);
+        clearFieldError(elPhone, errPhone);
+        updateSubmitState();
+      });
+      elPhone.addEventListener("paste", function (e) {
+        e.preventDefault();
+        var text = (e.clipboardData || window.clipboardData).getData("text");
+        elPhone.value = formatPhoneInput(text);
         clearFieldError(elPhone, errPhone);
         updateSubmitState();
       });
