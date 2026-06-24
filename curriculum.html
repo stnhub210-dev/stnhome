@@ -3997,23 +3997,23 @@
       <div class="intensive-head">
         <img class="intensive-head-logo" src="image/LOGOL-PNG.png" alt="STN SKILL UP" loading="lazy" decoding="async" />
         <h2>2박 3일 커리큐럼 세부 일정</h2>
-        <p>2026년 7월 10일(금) ~ 7월 12일(일)</p>
+        <p>2026년 8월15일(토) ~ 8월17일(월)</p>
       </div>
 
       <div class="intensive-tabs" role="tablist" aria-label="2박 3일 커리큐럼 세부 일정 탭">
         <button class="intensive-tab active" type="button" data-day-tab="day1">
           <span class="t-day">DAY 1</span>
-          <span class="t-date">7월 10일 (금)</span>
+          <span class="t-date">8월 15일 (토)</span>
           <span class="t-time">10:00 - 18:00</span>
         </button>
         <button class="intensive-tab" type="button" data-day-tab="day2">
           <span class="t-day">DAY 2</span>
-          <span class="t-date">7월 11일 (토)</span>
+          <span class="t-date">8월 16일 (일)</span>
           <span class="t-time">10:00 - 19:00</span>
         </button>
         <button class="intensive-tab" type="button" data-day-tab="day3">
           <span class="t-day">DAY 3</span>
-          <span class="t-date">7월 12일 (일)</span>
+          <span class="t-date">8월 17일 (월)</span>
           <span class="t-time">10:00 - 15:00</span>
         </button>
         <a class="intensive-cta" href="index.html#apply">온라인강의 동시 진행</a>
@@ -4321,7 +4321,7 @@ AI 도구 6개월 무료 이용권 포함</p></article>
 
       const params = new URLSearchParams(location.search);
       const rawDay = params.get("day");
-      const calToTab = { "10": "day1", "11": "day2", "12": "day3" };
+      const calToTab = { "15": "day1", "16": "day2", "17": "day3" };
       const qDay = rawDay ? (calToTab[rawDay] || rawDay) : null;
       if (qDay && tabs.some((t) => t.dataset.dayTab === qDay)) {
         activate(qDay);
