@@ -246,7 +246,7 @@
       var payOptions = {
         env: envUrl(),
         mchtId: c.mchtId,
-        method: 'CA',
+        method: 'card',
         trdDt: ts.trdDt,
         trdTm: ts.trdTm,
         mchtTrdNo: mchtTrdNo,
