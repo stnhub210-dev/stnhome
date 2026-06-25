@@ -1472,13 +1472,16 @@
             <p class="field-msg" id="err-email" role="alert"></p>
           </div>
           <div class="field">
-            <label class="field-label" for="applicant-referrer">추천인 코드</label>
+            <label class="field-label" for="applicant-discount-code">할인코드</label>
             <div class="input-with-btn">
-              <input class="field-input" type="text" id="applicant-referrer" name="applicant-referrer" autocomplete="off" placeholder="코드 입력 (선택)" maxlength="20" />
-              <button type="button" class="btn btn-ghost btn-sm" id="btn-apply-referrer">코드 확인</button>
+              <input class="field-input" type="text" id="applicant-discount-code" name="applicant-discount-code" autocomplete="off" placeholder="할인 코드 입력 (선택)" maxlength="20" />
+              <button type="button" class="btn btn-ghost btn-sm" id="btn-apply-discount">코드 확인</button>
             </div>
-            <button type="button" class="field-inline-action" id="btn-referrer-none">추천인 없음</button>
-            <p class="field-msg" id="err-referrer" role="alert"></p>
+            <p class="field-msg" id="err-discount-code" role="alert"></p>
+          </div>
+          <div class="field">
+            <label class="field-label" for="applicant-referrer-code">추천인 코드</label>
+            <input class="field-input" type="text" id="applicant-referrer-code" name="applicant-referrer-code" autocomplete="off" placeholder="추천인 코드 입력 (선택)" maxlength="20" />
           </div>
           </div>
         </section>
@@ -1587,7 +1590,7 @@
           <div class="sum-rows">
             <div class="sum-row"><span>수강료</span><strong>1,440,000원</strong></div>
             <div class="sum-row"><span>부가세 (10%)</span><strong>144,000원</strong></div>
-            <div class="sum-row sum-row-discount" id="sum-referral-discount" hidden><span>추천인 할인</span><strong>-0원</strong></div>
+            <div class="sum-row sum-row-discount" id="sum-referral-discount" hidden><span>할인코드 할인</span><strong>-0원</strong></div>
           </div>
           <div class="sum-total">
             <span class="sum-total-label">총 결제금액</span>
@@ -1692,8 +1695,7 @@
       var elName = document.getElementById("applicant-name");
       var elPhone = document.getElementById("applicant-phone");
       var elEmail = document.getElementById("applicant-email");
-      var elReferrer = document.getElementById("applicant-referrer");
-      var btnReferrerNone = document.getElementById("btn-referrer-none");
+      var elReferrerCode = document.getElementById("applicant-referrer-code");
       var errName = document.getElementById("err-name");
       var errPhone = document.getElementById("err-phone");
       var errEmail = document.getElementById("err-email");
@@ -1830,8 +1832,8 @@
         clearFieldError(elEmail, errEmail);
         updateSubmitState();
       });
-      if (elReferrer) {
-        elReferrer.addEventListener("input", updateSubmitState);
+      if (elReferrerCode) {
+        elReferrerCode.addEventListener("input", updateSubmitState);
       }
 
       var PROGRAM_AMOUNT = 1584000;
@@ -1950,7 +1952,7 @@
               phone: elPhone.value.trim(),
               email: elEmail.value.trim()
             },
-            referrer: referral ? referral.getReferrerValue() : null,
+            referrer: elReferrerCode && elReferrerCode.value.trim() ? elReferrerCode.value.trim() : null,
             referralCode: referral ? referral.getReferralCode() : null,
             onPopupOpen: function () {
               loading.classList.remove("is-on");

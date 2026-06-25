@@ -1,5 +1,5 @@
 /**
- * 결제 페이지 추천인 코드 검증·할인 적용
+ * 결제 페이지 할인코드 검증·할인 적용
  */
 (function (global) {
   var applied = null;
@@ -56,8 +56,8 @@
       var opts = options || {};
       var state = {
         baseAmount: Number(opts.baseAmount) || 0,
-        elInput: document.getElementById(opts.inputId || 'applicant-referrer'),
-        elMsg: document.getElementById(opts.msgId || 'err-referrer'),
+        elInput: document.getElementById(opts.inputId || 'applicant-discount-code'),
+        elMsg: document.getElementById(opts.msgId || 'err-discount-code'),
         elTotal: document.getElementById(opts.totalId || 'sum-total-val'),
         elDiscountRow: document.getElementById(opts.discountRowId || 'sum-referral-discount'),
         onAmountChange: typeof opts.onAmountChange === 'function' ? opts.onAmountChange : null,
@@ -67,19 +67,11 @@
       this._state = state;
       applied = null;
 
-      var applyBtn = document.getElementById(opts.applyBtnId || 'btn-apply-referrer');
-      var noneBtn = document.getElementById(opts.noneBtnId || 'btn-referrer-none');
+      var applyBtn = document.getElementById(opts.applyBtnId || 'btn-apply-discount');
 
       if (applyBtn) {
         applyBtn.addEventListener('click', function () {
           window.STNReferralPublic.applyCode();
-        });
-      }
-
-      if (noneBtn && state.elInput) {
-        noneBtn.addEventListener('click', function () {
-          window.STNReferralPublic.clearCode();
-          state.elInput.value = '';
         });
       }
 
@@ -213,9 +205,9 @@
       if (applied && normalizeCode(raw) === normalizeCode(applied.code)) return true;
 
       if (state.showToast) {
-        state.showToast('추천인 코드 확인 버튼을 눌러 주세요.');
+        state.showToast('할인코드 확인 버튼을 눌러 주세요.');
       } else {
-        this.setMessage('추천인 코드 확인 버튼을 눌러 주세요.');
+        this.setMessage('할인코드 확인 버튼을 눌러 주세요.');
       }
       return false;
     },
