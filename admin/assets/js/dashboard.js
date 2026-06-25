@@ -2,24 +2,6 @@
   var TABLE = 'payment_applications';
   var PAGE_SIZE = 10;
 
-  var DEMO_ROWS = [
-    { created_at: '2026-05-29T15:10:00+09:00', applicant_name: '정하은', applicant_phone: '010-2100-1101', program_name: '얼리버드 할인', amount: 1548000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260529-021', referrer: 'STN-EARLY10' },
-    { created_at: '2026-05-29T13:25:00+09:00', applicant_name: '오준혁', applicant_phone: '010-2100-1102', program_name: '대학생 할인', amount: 990000, pay_method: '계좌이체', status: 'pending', order_id: 'STN-20260529-020', referrer: null },
-    { created_at: '2026-05-29T11:40:00+09:00', applicant_name: '한지우', applicant_phone: '010-2100-1103', program_name: '일반 결제', amount: 1980000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260529-019', referrer: '추천인 없음' },
-    { created_at: '2026-05-28T18:55:00+09:00', applicant_name: '김민수', applicant_phone: '010-1234-5678', program_name: '얼리버드 할인', amount: 1548000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260528-001', referrer: 'KIM2024' },
-    { created_at: '2026-05-28T16:20:00+09:00', applicant_name: '윤서준', applicant_phone: '010-2100-1104', program_name: '일반 결제', amount: 1980000, pay_method: '계좌이체', status: 'failed', order_id: 'STN-20260528-018', referrer: null },
-    { created_at: '2026-05-28T14:05:00+09:00', applicant_name: '배수아', applicant_phone: '010-2100-1105', program_name: '대학생 할인', amount: 990000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260528-017', referrer: 'YOUTUBE5' },
-    { created_at: '2026-05-27T11:05:00+09:00', applicant_name: '이서연', applicant_phone: '010-9876-5432', program_name: '대학생 할인', amount: 990000, pay_method: '계좌이체', status: 'pending', order_id: 'STN-20260527-014', referrer: null },
-    { created_at: '2026-05-27T09:30:00+09:00', applicant_name: '장도윤', applicant_phone: '010-2100-1106', program_name: '얼리버드 할인', amount: 1548000, pay_method: '신용카드', status: 'cancelled', order_id: 'STN-20260527-016', referrer: 'STN-EARLY10' },
-    { created_at: '2026-05-26T20:15:00+09:00', applicant_name: '신예린', applicant_phone: '010-2100-1107', program_name: '일반 결제', amount: 1980000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260526-015', referrer: '추천인 없음' },
-    { created_at: '2026-05-26T09:40:00+09:00', applicant_name: '박지훈', applicant_phone: '010-5555-1212', program_name: '일반 결제', amount: 1980000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260526-008', referrer: 'PARK15' },
-    { created_at: '2026-05-25T17:50:00+09:00', applicant_name: '최유진', applicant_phone: '010-2100-1108', program_name: '얼리버드 할인', amount: 1548000, pay_method: '계좌이체', status: 'pending', order_id: 'STN-20260525-013', referrer: null },
-    { created_at: '2026-05-25T10:20:00+09:00', applicant_name: '임태양', applicant_phone: '010-2100-1109', program_name: '대학생 할인', amount: 990000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260525-012', referrer: 'STUDENT10' },
-    { created_at: '2026-05-24T14:35:00+09:00', applicant_name: '송민재', applicant_phone: '010-2100-1110', program_name: '일반 결제', amount: 1980000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260524-011', referrer: null },
-    { created_at: '2026-05-23T11:10:00+09:00', applicant_name: '강하늘', applicant_phone: '010-2100-1111', program_name: '얼리버드 할인', amount: 1548000, pay_method: '계좌이체', status: 'paid', order_id: 'STN-20260523-010', referrer: 'KIM2024' },
-    { created_at: '2026-05-22T08:45:00+09:00', applicant_name: '노지안', applicant_phone: '010-2100-1112', program_name: '대학생 할인', amount: 990000, pay_method: '신용카드', status: 'pending', order_id: 'STN-20260522-009', referrer: '추천인 없음' }
-  ];
-
   var sourceRows = [];
   var allRows = [];
   var currentPage = 1;
@@ -358,14 +340,6 @@
     setText('stat-amount', formatWon(amount));
   }
 
-  function showDemoBanner() {
-    var banner = document.getElementById('demo-banner');
-    if (!banner) return;
-    if (window.stnAdminAuth.isDemoSession()) {
-      banner.hidden = false;
-    }
-  }
-
   function bindPaginationControls() {
     var prevBtn = document.getElementById('page-prev');
     var nextBtn = document.getElementById('page-next');
@@ -432,11 +406,6 @@
     showTableMessage('데이터를 불러오는 중...');
     hidePagination();
 
-    if (window.stnAdminAuth.isDemoSession()) {
-      setApplications(DEMO_ROWS.slice());
-      return;
-    }
-
     var client = window.getSupabaseClient();
     var result = await client
       .from(TABLE)
@@ -450,16 +419,12 @@
 
   window.stnAdminDashboard = {
     init: async function () {
-      var session = await window.stnAdminAuth.requireAuth();
+      var session = await window.stnAdminShell.initAuth();
       if (!session) return;
 
-      var userEmail = session.user && session.user.email;
-      setText('admin-user-email', userEmail || '관리자');
-      showDemoBanner();
       bindPaginationControls();
       bindFilterControls();
       window.stnAdminDatePicker.bind();
-      window.stnAdminAuth.bindLogout(document.getElementById('logout-btn'));
 
       var refreshBtn = document.getElementById('refresh-btn');
       if (refreshBtn) {

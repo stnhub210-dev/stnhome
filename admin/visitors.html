@@ -36,16 +36,15 @@
     </aside>
 
     <main class="admin-main">
-      <div class="demo-banner" id="demo-banner" hidden>
-        데모 모드입니다. 아래 방문자 데이터는 샘플입니다.
-      </div>
-
       <header class="admin-topbar">
         <div>
           <h2>방문자 통계</h2>
           <p>페이지뷰·순방문자·기기·접속경로를 확인합니다.</p>
         </div>
-        <button type="button" class="btn btn-ghost" id="refresh-btn">새로고침</button>
+        <div class="admin-topbar-actions">
+          <button type="button" class="btn btn-ghost" id="refresh-btn">새로고침</button>
+          <button type="button" class="btn btn-ghost" data-logout>로그아웃</button>
+        </div>
       </header>
 
       <section class="stats-grid stats-grid-6" aria-label="방문 요약">
@@ -120,6 +119,7 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/supabase-client.js"></script>
   <script src="assets/js/auth.js"></script>
+  <script src="assets/js/admin-shell.js"></script>
   <script src="assets/js/visitors.js"></script>
   <script>
     window.stnAdminVisitors.init().catch(function (err) {

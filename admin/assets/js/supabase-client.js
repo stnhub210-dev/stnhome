@@ -9,11 +9,6 @@
     );
   };
 
-  window.isDemoMode = function () {
-    var cfg = window.STN_ADMIN_CONFIG || {};
-    return !!cfg.demoMode;
-  };
-
   function getConfig() {
     var cfg = window.STN_ADMIN_CONFIG || {};
     if (!window.isSupabaseConfigured()) {

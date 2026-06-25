@@ -2,32 +2,6 @@
   var TABLE = 'page_views';
   var PAGE_SIZE = 10;
 
-  var DEMO_VIEWS = [
-    { page_path: '/', page_title: '유튜브 채널 점수 진단', visitor_id: 'v1', referrer: 'https://www.google.com/', user_agent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Chrome/120.0.0.0 Mobile Safari/537.36', created_at: '2026-05-29T10:12:00+09:00' },
-    { page_path: '/start.html', page_title: 'STN 스킬업 양성과정', visitor_id: 'v2', referrer: 'https://www.naver.com/', user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0.0.0 Safari/537.36', created_at: '2026-05-29T09:40:00+09:00' },
-    { page_path: '/', page_title: '유튜브 채널 점수 진단', visitor_id: 'v3', referrer: '', user_agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Safari/605.1.15', created_at: '2026-05-29T08:55:00+09:00' },
-    { page_path: '/curriculum.html', page_title: '교육 커리큘럼', visitor_id: 'v4', referrer: 'https://stnmedia.kr/start.html', user_agent: 'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/124.0.0.0 Mobile Safari/537.36', created_at: '2026-05-28T22:10:00+09:00' },
-    { page_path: '/start.html', page_title: 'STN 스킬업 양성과정', visitor_id: 'v1', referrer: 'https://www.youtube.com/', user_agent: 'Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Safari/604.1', created_at: '2026-05-28T20:30:00+09:00' },
-    { page_path: '/score.html', page_title: '유튜브 채널 점수 진단', visitor_id: 'v5', referrer: 'https://search.naver.com/', user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0', created_at: '2026-05-28T18:05:00+09:00' },
-    { page_path: '/payment-earlybird.html', page_title: '얼리버드 결제', visitor_id: 'v6', referrer: 'https://stnmedia.kr/start.html', user_agent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148', created_at: '2026-05-28T15:20:00+09:00' },
-    { page_path: '/', page_title: '유튜브 채널 점수 진단', visitor_id: 'v7', referrer: 'https://www.instagram.com/', user_agent: 'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/124.0.0.0 Mobile Safari/537.36', created_at: '2026-05-28T11:00:00+09:00' },
-    { page_path: '/start.html', page_title: 'STN 스킬업 양성과정', visitor_id: 'v8', referrer: 'https://www.google.com/', user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Edg/124.0.0.0', created_at: '2026-05-27T16:45:00+09:00' },
-    { page_path: '/curriculum.html', page_title: '교육 커리큘럼', visitor_id: 'v2', referrer: 'https://stnmedia.kr/', user_agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/124.0.0.0 Safari/537.36', created_at: '2026-05-27T14:30:00+09:00' },
-    { page_path: '/', page_title: '유튜브 채널 점수 진단', visitor_id: 'v9', referrer: '', user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/123.0.0.0 Safari/537.36', created_at: '2026-05-27T09:15:00+09:00' },
-    { page_path: '/start.html', page_title: 'STN 스킬업 양성과정', visitor_id: 'v10', referrer: 'https://blog.naver.com/example', user_agent: 'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 Chrome/122.0.0.0 Mobile Safari/537.36', created_at: '2026-05-26T21:00:00+09:00' },
-    { page_path: '/', page_title: '유튜브 채널 점수 진단', visitor_id: 'v11', referrer: 'https://www.google.com/', user_agent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148', created_at: '2026-05-26T13:40:00+09:00' },
-    { page_path: '/score.html', page_title: '유튜브 채널 점수 진단', visitor_id: 'v3', referrer: 'https://stnmedia.kr/start.html', user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0.0.0 Safari/537.36', created_at: '2026-05-25T19:20:00+09:00' },
-    { page_path: '/start.html', page_title: 'STN 스킬업 양성과정', visitor_id: 'v12', referrer: 'https://www.naver.com/', user_agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Safari/605.1.15', created_at: '2026-05-25T10:05:00+09:00' },
-    { page_path: '/', page_title: '유튜브 채널 점수 진단', visitor_id: 'v13', referrer: 'https://www.youtube.com/', user_agent: 'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/124.0.0.0 Mobile Safari/537.36', created_at: '2026-05-24T17:50:00+09:00' },
-    { page_path: '/curriculum.html', page_title: '교육 커리큘럼', visitor_id: 'v14', referrer: 'https://search.daum.net/', user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0', created_at: '2026-05-24T12:30:00+09:00' },
-    { page_path: '/', page_title: '유튜브 채널 점수 진단', visitor_id: 'v15', referrer: '', user_agent: 'Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Safari/604.1', created_at: '2026-05-23T08:20:00+09:00' },
-    { page_path: '/payment-earlybird.html', page_title: '얼리버드 결제', visitor_id: 'v16', referrer: 'https://stnmedia.kr/curriculum.html', user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0.0.0 Safari/537.36', created_at: '2026-05-22T14:10:00+09:00' },
-    { page_path: '/start.html', page_title: 'STN 스킬업 양성과정', visitor_id: 'v17', referrer: 'https://www.google.com/', user_agent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148', created_at: '2026-05-21T11:35:00+09:00' },
-    { page_path: '/score.html', page_title: '유튜브 채널 점수 진단', visitor_id: 'v18', referrer: 'https://www.naver.com/', user_agent: 'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 Chrome/121.0.0.0 Mobile Safari/537.36', created_at: '2026-05-20T09:50:00+09:00' },
-    { page_path: '/', page_title: '유튜브 채널 점수 진단', visitor_id: 'v19', referrer: 'https://t.co/example', user_agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/124.0.0.0 Safari/537.36', created_at: '2026-05-19T18:25:00+09:00' },
-    { page_path: '/curriculum.html', page_title: '교육 커리큘럼', visitor_id: 'v20', referrer: 'https://stnmedia.kr/start.html', user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Edg/124.0.0.0', created_at: '2026-05-18T16:00:00+09:00' }
-  ];
-
   var allRows = [];
   var currentPage = 1;
   var chartPeriod = 'week';
@@ -333,11 +307,6 @@
     renderRecent();
   }
 
-  function showDemoBanner() {
-    var banner = document.getElementById('demo-banner');
-    if (banner && window.stnAdminAuth.isDemoSession()) banner.hidden = false;
-  }
-
   function bindPaginationControls() {
     var prevBtn = document.getElementById('visits-page-prev');
     var nextBtn = document.getElementById('visits-page-next');
@@ -361,11 +330,6 @@
   }
 
   async function loadViews() {
-    if (window.stnAdminAuth.isDemoSession()) {
-      renderStats(aggregate(DEMO_VIEWS));
-      return;
-    }
-
     var client = window.getSupabaseClient();
     var since = new Date();
     since.setDate(since.getDate() - 60);
@@ -383,12 +347,9 @@
 
   window.stnAdminVisitors = {
     init: async function () {
-      var session = await window.stnAdminAuth.requireAuth();
+      var session = await window.stnAdminShell.initAuth();
       if (!session) return;
 
-      setText('admin-user-email', (session.user && session.user.email) || '관리자');
-      showDemoBanner();
-      window.stnAdminAuth.bindLogout(document.getElementById('logout-btn'));
       bindPaginationControls();
       bindChartPeriodTabs();
 

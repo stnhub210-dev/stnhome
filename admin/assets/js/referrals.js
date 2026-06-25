@@ -3,20 +3,6 @@
   var PAGE_SIZE = 10;
   var PAYMENT_LINK_BASE = 'https://stnmedia.kr/payment-regular.html?ref=';
 
-  var demoRows = [
-    { id: 'demo-1', code: 'STN10', label: '김강사', discount_type: 'percent', discount_value: 10, max_uses: null, used_count: 8, valid_from: '2026-05-01', valid_until: '2026-12-31', is_active: true, notes: '강사 추천 기본 코드', created_at: '2026-05-01T10:00:00+09:00' },
-    { id: 'demo-2', code: 'WELCOME50', label: '오픈 기념', discount_type: 'fixed', discount_value: 50000, max_uses: 100, used_count: 23, valid_from: '2026-06-01', valid_until: '2026-08-31', is_active: true, notes: '', created_at: '2026-05-10T14:00:00+09:00' },
-    { id: 'demo-3', code: 'VIP20', label: '박멘토', discount_type: 'percent', discount_value: 20, max_uses: 5, used_count: 5, valid_from: null, valid_until: null, is_active: false, notes: '사용 완료', created_at: '2026-04-20T09:00:00+09:00' },
-    { id: 'demo-4', code: 'STUDENT5', label: '학생 제휴', discount_type: 'percent', discount_value: 5, max_uses: 50, used_count: 12, valid_from: '2026-05-15', valid_until: '2026-10-31', is_active: true, notes: '', created_at: '2026-05-15T11:30:00+09:00' },
-    { id: 'demo-5', code: 'PARTNER100', label: '제휴사 A', discount_type: 'fixed', discount_value: 100000, max_uses: 20, used_count: 3, valid_from: '2026-07-01', valid_until: '2026-09-30', is_active: true, notes: 'B2B 제휴', created_at: '2026-05-18T16:00:00+09:00' },
-    { id: 'demo-6', code: 'LAUNCH15', label: '런칭 프로모', discount_type: 'percent', discount_value: 15, max_uses: null, used_count: 41, valid_from: null, valid_until: null, is_active: true, notes: '', created_at: '2026-05-20T08:00:00+09:00' },
-    { id: 'demo-7', code: 'OFFLINE30', label: '오프라인 박람회', discount_type: 'fixed', discount_value: 30000, max_uses: 30, used_count: 7, valid_from: '2026-06-15', valid_until: '2026-07-31', is_active: true, notes: '', created_at: '2026-05-22T13:00:00+09:00' },
-    { id: 'demo-8', code: 'TESTCODE', label: '테스트', discount_type: 'percent', discount_value: 1, max_uses: 1, used_count: 0, valid_from: '2026-06-01', valid_until: '2026-06-30', is_active: false, notes: '비활성 테스트', created_at: '2026-05-25T10:00:00+09:00' },
-    { id: 'demo-9', code: 'MEDIA7', label: '미디어팀', discount_type: 'percent', discount_value: 7, max_uses: null, used_count: 15, valid_from: null, valid_until: null, is_active: true, notes: '', created_at: '2026-05-26T09:00:00+09:00' },
-    { id: 'demo-10', code: 'FRIEND5', label: '지인 추천', discount_type: 'percent', discount_value: 5, max_uses: 200, used_count: 56, valid_from: '2026-05-01', valid_until: '2026-12-31', is_active: true, notes: '', created_at: '2026-05-27T15:00:00+09:00' },
-    { id: 'demo-11', code: 'SPECIAL200', label: '스페셜 VIP', discount_type: 'fixed', discount_value: 200000, max_uses: 3, used_count: 1, valid_from: '2026-09-01', valid_until: '2026-11-30', is_active: true, notes: 'VIP 전용', created_at: '2026-05-28T11:00:00+09:00' }
-  ];
-
   var allRows = [];
   var currentPage = 1;
   var editingRowId = null;
@@ -292,30 +278,6 @@
   }
 
   async function createReferral(payload) {
-    if (window.stnAdminAuth.isDemoSession()) {
-      var exists = demoRows.some(function (r) {
-        return r.code.toUpperCase() === payload.code.toUpperCase();
-      });
-      if (exists) throw new Error('이미 존재하는 코드입니다.');
-
-      demoRows.unshift({
-        id: 'demo-' + Date.now(),
-        code: payload.code.toUpperCase(),
-        label: payload.label,
-        discount_type: payload.discount_type,
-        discount_value: payload.discount_value,
-        max_uses: payload.max_uses,
-        used_count: 0,
-        valid_from: payload.valid_from,
-        valid_until: payload.valid_until,
-        is_active: true,
-        notes: payload.notes || '',
-        created_at: new Date().toISOString()
-      });
-      setRows(demoRows.slice());
-      return;
-    }
-
     var client = window.getSupabaseClient();
     var result = await client.from(TABLE).insert(payload).select().single();
     if (result.error) throw result.error;
@@ -323,22 +285,6 @@
   }
 
   async function updateReferral(id, payload) {
-    if (window.stnAdminAuth.isDemoSession()) {
-      var row = demoRows.find(function (r) { return String(r.id) === String(id); });
-      if (!row) throw new Error('수정할 코드를 찾을 수 없습니다.');
-
-      row.label = payload.label;
-      row.discount_type = payload.discount_type;
-      row.discount_value = payload.discount_value;
-      row.max_uses = payload.max_uses;
-      row.valid_from = payload.valid_from;
-      row.valid_until = payload.valid_until;
-      row.notes = payload.notes || '';
-      row.is_active = payload.is_active;
-      setRows(demoRows.slice(), true);
-      return;
-    }
-
     var client = window.getSupabaseClient();
     var updatePayload = {
       label: payload.label,
@@ -358,12 +304,6 @@
   async function toggleActive(id) {
     var row = allRows.find(function (r) { return String(r.id) === String(id); });
     if (!row) return;
-
-    if (window.stnAdminAuth.isDemoSession()) {
-      row.is_active = !row.is_active;
-      setRows(demoRows.slice(), true);
-      return;
-    }
 
     var client = window.getSupabaseClient();
     var result = await client
@@ -478,11 +418,6 @@
     showTableMessage('데이터를 불러오는 중...');
     hidePagination();
 
-    if (window.stnAdminAuth.isDemoSession()) {
-      setRows(demoRows.slice(), keepPage);
-      return;
-    }
-
     var client = window.getSupabaseClient();
     var result = await client
       .from(TABLE)
@@ -549,23 +484,15 @@
     if (nextBtn) nextBtn.addEventListener('click', function () { goToPage(currentPage + 1); });
   }
 
-  function showDemoBanner() {
-    var banner = document.getElementById('demo-banner');
-    if (banner && window.stnAdminAuth.isDemoSession()) banner.hidden = false;
-  }
-
   window.stnAdminReferrals = {
     init: async function () {
-      var session = await window.stnAdminAuth.requireAuth();
+      var session = await window.stnAdminShell.initAuth();
       if (!session) return;
 
-      setText('admin-user-email', (session.user && session.user.email) || '관리자');
-      showDemoBanner();
       bindForm();
       bindEditModal();
       bindPagination();
       window.stnAdminDatePicker.bind();
-      window.stnAdminAuth.bindLogout(document.getElementById('logout-btn'));
 
       var refreshBtn = document.getElementById('refresh-btn');
       if (refreshBtn) {

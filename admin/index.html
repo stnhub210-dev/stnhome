@@ -21,6 +21,12 @@
       </div>
     </div>
 
+    <div class="login-authed-panel" id="authed-panel" hidden>
+      <p><strong id="authed-email">관리자</strong>으로 로그인되어 있습니다.</p>
+      <a href="dashboard.html" class="btn btn-primary">대시보드로 이동</a>
+      <button type="button" class="btn btn-ghost" data-logout>로그아웃</button>
+    </div>
+
     <form id="login-form">
       <div class="field">
         <label for="email">이메일</label>
@@ -31,19 +37,11 @@
         <input type="password" id="password" name="password" autocomplete="current-password" placeholder="비밀번호" required>
       </div>
       <button type="submit" class="btn btn-primary">로그인</button>
-      <button type="button" class="btn btn-demo" id="demo-enter-btn" hidden>데모로 바로 입장</button>
       <p id="login-message" class="form-message" hidden></p>
     </form>
 
-    <p class="config-note" id="demo-note" hidden>
-      <strong>임시 데모 모드</strong><br>
-      이메일: <code>demo@stnmedia.kr</code><br>
-      비밀번호: <code>stnadmin</code>
-    </p>
-
-    <p class="config-note" id="setup-note">
-      Supabase 연동 시 <code>config.js</code>에 URL·anon key 입력 후
-      <code>demoMode: false</code> 로 변경하세요.
+    <p class="config-note" id="setup-note" hidden>
+      Supabase 연동 시 <code>admin/assets/js/config.js</code>에 URL·anon key를 입력하세요.
     </p>
   </main>
 
@@ -53,15 +51,11 @@
   <script src="assets/js/auth.js"></script>
   <script>
     (async function () {
-      var cfg = window.STN_ADMIN_CONFIG || {};
-      if (cfg.demoMode) {
-        document.getElementById('demo-note').hidden = false;
-        document.getElementById('demo-enter-btn').hidden = false;
-        document.getElementById('email').value = cfg.demoEmail || '';
-        window.stnAdminAuth.bindDemoEnter(document.getElementById('demo-enter-btn'));
+      if (!window.isSupabaseConfigured()) {
+        document.getElementById('setup-note').hidden = false;
       }
 
-      await window.stnAdminAuth.redirectIfAuthed();
+      await window.stnAdminAuth.setupLoginPage();
       window.stnAdminAuth.bindLoginForm(
         document.getElementById('login-form'),
         document.getElementById('login-message')

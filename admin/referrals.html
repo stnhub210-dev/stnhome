@@ -36,16 +36,15 @@
     </aside>
 
     <main class="admin-main">
-      <div class="demo-banner" id="demo-banner" hidden>
-        데모 모드입니다. 발급·수정 내용은 브라우저 세션에만 저장됩니다.
-      </div>
-
       <header class="admin-topbar">
         <div>
           <h2>추천인 코드 관리</h2>
           <p>할인 코드를 발급하고 사용 현황을 관리합니다.</p>
         </div>
-        <button type="button" class="btn btn-ghost" id="refresh-btn">새로고침</button>
+        <div class="admin-topbar-actions">
+          <button type="button" class="btn btn-ghost" id="refresh-btn">새로고침</button>
+          <button type="button" class="btn btn-ghost" data-logout>로그아웃</button>
+        </div>
       </header>
 
       <section class="panel form-panel">
@@ -237,6 +236,7 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/supabase-client.js"></script>
   <script src="assets/js/auth.js"></script>
+  <script src="assets/js/admin-shell.js"></script>
   <script src="assets/js/date-picker.js"></script>
   <script src="assets/js/referrals.js"></script>
   <script>
