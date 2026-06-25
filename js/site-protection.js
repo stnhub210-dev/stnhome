@@ -6,9 +6,11 @@
   'use strict';
 
   if (window.__STN_SITE_PROTECTION__) return;
+  if (document.querySelector('.admin-shell') || /\/admin(?:\/|$)/i.test(location.pathname)) return;
   window.__STN_SITE_PROTECTION__ = true;
 
   var STYLE_ID = 'stn-site-protection-style';
+  var lastPointerTarget = null;
 
   function injectStyles() {
     if (document.getElementById(STYLE_ID)) return;
@@ -18,8 +20,11 @@
       'html.stn-protected, html.stn-protected body {' +
       '-webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }' +
       'html.stn-protected input, html.stn-protected textarea, html.stn-protected select,' +
+      'html.stn-protected button, html.stn-protected label,' +
       'html.stn-protected [contenteditable="true"], html.stn-protected [data-allow-select] {' +
       '-webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }' +
+      'html.stn-protected input[type="checkbox"], html.stn-protected input[type="radio"] {' +
+      '-webkit-user-select: auto; user-select: auto; pointer-events: auto; }' +
       'html.stn-protected img, html.stn-protected video, html.stn-protected svg,' +
       'html.stn-protected picture, html.stn-protected canvas {' +
       '-webkit-user-drag: none; user-drag: none; pointer-events: auto; }' +
@@ -37,14 +42,25 @@
   function isEditableArea(el) {
     if (!el || !el.closest) return false;
     return !!el.closest(
-      'input, textarea, select, option, [contenteditable="true"], [data-allow-select]'
+      'input, textarea, select, option, button, label, [contenteditable="true"], [data-allow-select]'
     );
   }
 
+  function shouldAllowInteraction(e) {
+    var el = targetFromEvent(e);
+    if (isEditableArea(el)) return true;
+    if (lastPointerTarget && isEditableArea(lastPointerTarget)) return true;
+    if (typeof e.composedPath === 'function') {
+      return e.composedPath().some(function (node) {
+        return node && node.nodeType === 1 && isEditableArea(node);
+      });
+    }
+    return false;
+  }
+
   function blockUnlessEditable(e) {
-    if (isEditableArea(targetFromEvent(e))) return;
+    if (shouldAllowInteraction(e)) return;
     e.preventDefault();
-    e.stopPropagation();
     return false;
   }
 
@@ -85,9 +101,18 @@
   document.addEventListener(
     'mousedown',
     function (e) {
-      if (e.button === 1 && !isEditableArea(targetFromEvent(e))) {
+      lastPointerTarget = targetFromEvent(e);
+      if (e.button === 1 && !isEditableArea(lastPointerTarget)) {
         e.preventDefault();
       }
+    },
+    true
+  );
+
+  document.addEventListener(
+    'pointerdown',
+    function (e) {
+      lastPointerTarget = targetFromEvent(e);
     },
     true
   );

@@ -184,7 +184,19 @@
       if (checked) selectedIds.add(key);
       else selectedIds.delete(key);
     });
-    renderTable();
+    syncRowCheckboxStates();
+  }
+
+  function syncRowCheckboxStates() {
+    var tbody = document.getElementById('referrals-body');
+    if (tbody) {
+      tbody.querySelectorAll('.row-select').forEach(function (checkbox) {
+        var id = String(checkbox.getAttribute('data-id') || '');
+        checkbox.checked = selectedIds.has(id);
+      });
+    }
+    updateBulkToolbar();
+    updateSelectAllState();
   }
 
   function pruneSelection() {
@@ -291,8 +303,10 @@
       return (
         '<tr data-id="' + escapeHtml(row.id) + '">' +
           '<td class="table-check-col">' +
-            '<input type="checkbox" class="row-select" data-id="' + escapeHtml(row.id) + '"' +
-              (isChecked ? ' checked' : '') + ' aria-label="' + escapeHtml(row.code) + ' 선택">' +
+            '<label class="table-check-label">' +
+              '<input type="checkbox" class="row-select" data-id="' + escapeHtml(row.id) + '"' +
+                (isChecked ? ' checked' : '') + ' aria-label="' + escapeHtml(row.code) + ' 선택">' +
+            '</label>' +
           '</td>' +
           '<td><strong class="code-pill">' + escapeHtml(row.code) + '</strong></td>' +
           '<td>' + escapeHtml(row.label) + '</td>' +
@@ -310,12 +324,6 @@
         '</tr>'
       );
     }).join('');
-
-    tbody.querySelectorAll('.row-select').forEach(function (checkbox) {
-      checkbox.addEventListener('change', function () {
-        toggleRowSelection(checkbox.getAttribute('data-id'), checkbox.checked);
-      });
-    });
 
     tbody.querySelectorAll('[data-action]').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -596,14 +604,25 @@
   }
 
   function bindBulkToolbar() {
-    var selectAll = document.getElementById('select-all-referrals');
+    var tableWrap = document.getElementById('referrals-table-wrap');
     var activateBtn = document.getElementById('bulk-activate-btn');
     var deactivateBtn = document.getElementById('bulk-deactivate-btn');
     var deleteBtn = document.getElementById('bulk-delete-btn');
 
-    if (selectAll) {
-      selectAll.addEventListener('change', function () {
-        toggleSelectAllOnPage(selectAll.checked);
+    if (tableWrap && tableWrap.dataset.selectionBound !== '1') {
+      tableWrap.dataset.selectionBound = '1';
+      tableWrap.addEventListener('change', function (e) {
+        var target = e.target;
+        if (!target || target.type !== 'checkbox') return;
+
+        if (target.id === 'select-all-referrals') {
+          toggleSelectAllOnPage(target.checked);
+          return;
+        }
+
+        if (target.classList.contains('row-select')) {
+          toggleRowSelection(target.getAttribute('data-id'), target.checked);
+        }
       });
     }
 

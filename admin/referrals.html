@@ -129,12 +129,14 @@
             <button type="button" class="btn btn-ghost btn-sm btn-danger" id="bulk-delete-btn" disabled>선택 삭제</button>
           </div>
         </div>
-        <div class="table-wrap" data-allow-select>
+        <div class="table-wrap" id="referrals-table-wrap" data-allow-select>
           <table class="data-table">
             <thead>
               <tr>
                 <th class="table-check-col" scope="col">
-                  <input type="checkbox" id="select-all-referrals" aria-label="현재 페이지 전체 선택">
+                  <label class="table-check-label">
+                    <input type="checkbox" id="select-all-referrals" aria-label="현재 페이지 전체 선택">
+                  </label>
                 </th>
                 <th>코드</th>
                 <th>추천인명</th>
@@ -256,6 +258,5 @@
       console.error(err);
     });
   </script>
-  <script src="/js/site-protection.js"></script>
 </body>
 </html>
