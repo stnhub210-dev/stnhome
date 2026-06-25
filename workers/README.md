@@ -18,9 +18,9 @@
 | 코드 | PG URL | 의미 | 조치 |
 |------|--------|------|------|
 | **1901** | tbnpg | 해시·암호화키가 **해당 서버**와 불일치 | 운영 키는 `npg`만 사용. tbnpg는 `nxca_jt_il` 테스트 키 전용 |
-| **ST09** | npg | **MID 미등록** (운영 미개통) | 헥토에 `M2665490` npg 개통·카드사 심사 완료 요청 |
+| **ST09** | npg | **MID 미등록** (운영 미개통) | 헥토에 해당 MID npg 개통·카드사 심사 완료 요청 |
 
-`M2665490` + 발급받은 운영 키 → **`npg.settlebank.co.kr`만** 사용합니다.
+운영 MID + 발급받은 운영 키 → **`npg.settlebank.co.kr`만** 사용합니다.
 
 ### ST09 (가맹점 정보 미확인)
 
@@ -29,7 +29,7 @@
 - 카드사 심사·연동 중 → `tbnpg.settlebank.co.kr` + 해당 MID
 - 운영 개통 완료 → `npg.settlebank.co.kr` + 운영 MID·키
 
-### 운영 (MID `M2665490`)
+### 운영 (MID `stnmedia01` 등)
 
 ```bash
 cd workers
@@ -42,7 +42,7 @@ npx wrangler secret put HECTO_AES_KEY
 npx wrangler deploy
 ```
 
-프론트: `js/settle-pg-config.js` → `isTest: false`, `mchtId: 'M2665490'`, PG `npg.settlebank.co.kr`
+프론트: `js/settle-pg-config.js` → `isTest: false`, `mchtId: 'stnmedia01'`, PG `npg.settlebank.co.kr`
 
 ### 테스트 (MID `nxca_jt_il` — 헥토 기술문서 표준)
 
@@ -86,7 +86,7 @@ SHA256( mchtId + method + mchtTrdNo + trdDt + trdTm + trdAmt평문 + hashKey )
 
 `js/settle-pg-config.js`
 
-- `isTest: false` → `npg.settlebank.co.kr`, MID `M2665490` (운영)
+- `isTest: false` → `npg.settlebank.co.kr`, MID `stnmedia01` (운영)
 - `isTest: true` → `tbnpg.settlebank.co.kr`, MID `nxca_jt_il` (테스트)
 
 ## 헥토에 등록할 notiUrl
