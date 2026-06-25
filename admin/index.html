@@ -27,7 +27,7 @@
       <button type="button" class="btn btn-ghost" data-logout>로그아웃</button>
     </div>
 
-    <form id="login-form">
+    <form id="login-form" method="post" action="index.html" onsubmit="return false;" novalidate>
       <div class="field">
         <label for="email">이메일</label>
         <input type="email" id="email" name="email" autocomplete="username" placeholder="admin@example.com" required>
@@ -41,10 +41,25 @@
     </form>
 
     <p class="config-note" id="setup-note" hidden>
-      Supabase 연동 시 <code>admin/assets/js/config.js</code>에 URL·anon key를 입력하세요.
+      Supabase가 아직 연결되지 않았습니다.<br>
+      <code>admin/assets/js/config.js</code>에 프로젝트 URL·anon key를 입력한 뒤 배포해 주세요.<br>
+      (Supabase 대시보드 → Project Settings → API)
     </p>
   </main>
 
+  <script>
+    (function () {
+      try {
+        var url = new URL(window.location.href);
+        var hadAuthParams = url.searchParams.has('email') || url.searchParams.has('password');
+        if (hadAuthParams) {
+          url.searchParams.delete('email');
+          url.searchParams.delete('password');
+          window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+        }
+      } catch (_) {}
+    })();
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/config.js"></script>
   <script src="assets/js/supabase-client.js"></script>
