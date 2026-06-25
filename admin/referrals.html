@@ -117,14 +117,25 @@
       </section>
 
       <section class="panel" style="margin-top:18px;">
-        <div class="panel-head">
+        <div class="panel-head panel-head-tabs">
           <h3>발급된 코드 목록</h3>
           <span class="panel-meta" id="list-meta">-</span>
         </div>
-        <div class="table-wrap">
+        <div class="bulk-toolbar" id="referrals-bulk-toolbar">
+          <p class="bulk-toolbar-meta" id="bulk-selection-meta">선택 <strong>0</strong>건</p>
+          <div class="bulk-toolbar-actions">
+            <button type="button" class="btn btn-ghost btn-sm" id="bulk-activate-btn" disabled>선택 활성화</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="bulk-deactivate-btn" disabled>선택 비활성화</button>
+            <button type="button" class="btn btn-ghost btn-sm btn-danger" id="bulk-delete-btn" disabled>선택 삭제</button>
+          </div>
+        </div>
+        <div class="table-wrap" data-allow-select>
           <table class="data-table">
             <thead>
               <tr>
+                <th class="table-check-col" scope="col">
+                  <input type="checkbox" id="select-all-referrals" aria-label="현재 페이지 전체 선택">
+                </th>
                 <th>코드</th>
                 <th>추천인명</th>
                 <th>할인</th>
@@ -136,7 +147,7 @@
               </tr>
             </thead>
             <tbody id="referrals-body">
-              <tr><td colspan="8" class="table-empty">불러오는 중...</td></tr>
+              <tr><td colspan="9" class="table-empty">불러오는 중...</td></tr>
             </tbody>
           </table>
         </div>
@@ -154,8 +165,8 @@
     <div class="admin-modal-panel" role="document">
       <div class="admin-modal-head">
         <div>
-          <h3 id="edit-modal-title">추천인 코드 수정</h3>
-          <p class="admin-modal-sub">발급된 코드 정보를 변경합니다. 코드 문자열은 수정할 수 없습니다.</p>
+          <h3 id="edit-modal-title">할인코드 수정</h3>
+          <p class="admin-modal-sub">발급된 할인코드 정보를 변경합니다. 코드 문자열은 수정할 수 없습니다.</p>
         </div>
         <button type="button" class="admin-modal-close" aria-label="닫기" data-close-modal>&times;</button>
       </div>

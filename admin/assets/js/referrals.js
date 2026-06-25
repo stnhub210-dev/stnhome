@@ -6,6 +6,7 @@
   var allRows = [];
   var currentPage = 1;
   var editingRowId = null;
+  var selectedIds = new Set();
 
   function setText(id, text) {
     var el = document.getElementById(id);
@@ -132,8 +133,65 @@
   function showTableMessage(text) {
     var tbody = document.getElementById('referrals-body');
     if (!tbody) return;
-    tbody.innerHTML = '<tr><td colspan="8" class="table-empty">' + escapeHtml(text) + '</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" class="table-empty">' + escapeHtml(text) + '</td></tr>';
     hidePagination();
+    updateBulkToolbar();
+    updateSelectAllState();
+  }
+
+  function updateBulkToolbar() {
+    var count = selectedIds.size;
+    var meta = document.getElementById('bulk-selection-meta');
+    var activateBtn = document.getElementById('bulk-activate-btn');
+    var deactivateBtn = document.getElementById('bulk-deactivate-btn');
+    var deleteBtn = document.getElementById('bulk-delete-btn');
+    if (meta) meta.innerHTML = '선택 <strong>' + count + '</strong>건';
+    if (activateBtn) activateBtn.disabled = count === 0;
+    if (deactivateBtn) deactivateBtn.disabled = count === 0;
+    if (deleteBtn) deleteBtn.disabled = count === 0;
+  }
+
+  function updateSelectAllState() {
+    var selectAll = document.getElementById('select-all-referrals');
+    if (!selectAll) return;
+
+    var pageRows = getPageRows();
+    if (!pageRows.length) {
+      selectAll.checked = false;
+      selectAll.indeterminate = false;
+      return;
+    }
+
+    var selectedOnPage = pageRows.filter(function (row) {
+      return selectedIds.has(String(row.id));
+    }).length;
+
+    selectAll.checked = selectedOnPage === pageRows.length;
+    selectAll.indeterminate = selectedOnPage > 0 && selectedOnPage < pageRows.length;
+  }
+
+  function toggleRowSelection(id, checked) {
+    var key = String(id);
+    if (checked) selectedIds.add(key);
+    else selectedIds.delete(key);
+    updateBulkToolbar();
+    updateSelectAllState();
+  }
+
+  function toggleSelectAllOnPage(checked) {
+    getPageRows().forEach(function (row) {
+      var key = String(row.id);
+      if (checked) selectedIds.add(key);
+      else selectedIds.delete(key);
+    });
+    renderTable();
+  }
+
+  function pruneSelection() {
+    var validIds = new Set(allRows.map(function (row) { return String(row.id); }));
+    selectedIds.forEach(function (id) {
+      if (!validIds.has(id)) selectedIds.delete(id);
+    });
   }
 
   function hidePagination() {
@@ -217,7 +275,7 @@
     if (!tbody) return;
 
     if (!allRows.length) {
-      showTableMessage('발급된 추천인 코드가 없습니다.');
+      showTableMessage('발급된 할인코드가 없습니다.');
       setText('list-meta', '0건');
       return;
     }
@@ -228,8 +286,14 @@
       var statusClass = row.is_active ? 'status-paid' : 'status-cancelled';
       var statusText = row.is_active ? '활성' : '비활성';
       var toggleLabel = row.is_active ? '비활성화' : '활성화';
+      var rowId = String(row.id);
+      var isChecked = selectedIds.has(rowId);
       return (
         '<tr data-id="' + escapeHtml(row.id) + '">' +
+          '<td class="table-check-col">' +
+            '<input type="checkbox" class="row-select" data-id="' + escapeHtml(row.id) + '"' +
+              (isChecked ? ' checked' : '') + ' aria-label="' + escapeHtml(row.code) + ' 선택">' +
+          '</td>' +
           '<td><strong class="code-pill">' + escapeHtml(row.code) + '</strong></td>' +
           '<td>' + escapeHtml(row.label) + '</td>' +
           '<td>' + escapeHtml(formatDiscount(row)) + '</td>' +
@@ -246,6 +310,12 @@
         '</tr>'
       );
     }).join('');
+
+    tbody.querySelectorAll('.row-select').forEach(function (checkbox) {
+      checkbox.addEventListener('change', function () {
+        toggleRowSelection(checkbox.getAttribute('data-id'), checkbox.checked);
+      });
+    });
 
     tbody.querySelectorAll('[data-action]').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -266,6 +336,8 @@
       });
     });
 
+    updateBulkToolbar();
+    updateSelectAllState();
     renderPagination();
   }
 
@@ -273,6 +345,7 @@
     allRows = rows.slice().sort(function (a, b) {
       return new Date(b.created_at) - new Date(a.created_at);
     });
+    pruneSelection();
     if (!keepPage) currentPage = 1;
     renderTable();
   }
@@ -302,16 +375,54 @@
   }
 
   async function toggleActive(id) {
-    var row = allRows.find(function (r) { return String(r.id) === String(id); });
-    if (!row) return;
+    await setActiveBulk([id], null);
+  }
+
+  async function setActiveBulk(ids, isActive) {
+    var idList = (ids || []).map(String).filter(Boolean);
+    if (!idList.length) return;
+
+    if (isActive == null) {
+      var row = allRows.find(function (r) { return String(r.id) === idList[0]; });
+      if (!row) return;
+      isActive = !row.is_active;
+    }
 
     var client = window.getSupabaseClient();
     var result = await client
       .from(TABLE)
-      .update({ is_active: !row.is_active })
-      .eq('id', id);
+      .update({ is_active: !!isActive })
+      .in('id', idList);
     if (result.error) throw result.error;
     await loadRows(true);
+    showFormMessage(
+      idList.length + '건이 ' + (isActive ? '활성화' : '비활성화') + '되었습니다.',
+      'ok'
+    );
+  }
+
+  async function deleteReferrals(ids) {
+    var idList = (ids || []).map(String).filter(Boolean);
+    if (!idList.length) return;
+
+    var labels = idList.map(function (id) {
+      var row = allRows.find(function (r) { return String(r.id) === id; });
+      return row ? row.code : id;
+    });
+
+    var message = idList.length === 1
+      ? '할인코드 "' + labels[0] + '"을(를) 삭제할까요?\n삭제 후에는 복구할 수 없습니다.'
+      : '선택한 ' + idList.length + '건의 할인코드를 삭제할까요?\n삭제 후에는 복구할 수 없습니다.';
+
+    if (!window.confirm(message)) return;
+
+    var client = window.getSupabaseClient();
+    var result = await client.from(TABLE).delete().in('id', idList);
+    if (result.error) throw result.error;
+
+    idList.forEach(function (id) { selectedIds.delete(id); });
+    await loadRows(true);
+    showFormMessage(idList.length + '건이 삭제되었습니다.', 'ok');
   }
 
   function openEditModal(id) {
@@ -402,7 +513,7 @@
       try {
         await updateReferral(editingRowId, parsed.payload);
         closeEditModal();
-        showFormMessage('추천인 코드가 수정되었습니다.', 'ok');
+        showFormMessage('할인코드가 수정되었습니다.', 'ok');
       } catch (err) {
         showEditFormMessage(err.message || '수정에 실패했습니다.', 'error');
       } finally {
@@ -467,7 +578,7 @@
       try {
         await createReferral(parsed.payload);
         form.reset();
-        showFormMessage('추천인 코드가 발급되었습니다.', 'ok');
+        showFormMessage('할인코드가 발급되었습니다.', 'ok');
       } catch (err) {
         showFormMessage(err.message || '발급에 실패했습니다.', 'error');
       } finally {
@@ -484,6 +595,51 @@
     if (nextBtn) nextBtn.addEventListener('click', function () { goToPage(currentPage + 1); });
   }
 
+  function bindBulkToolbar() {
+    var selectAll = document.getElementById('select-all-referrals');
+    var activateBtn = document.getElementById('bulk-activate-btn');
+    var deactivateBtn = document.getElementById('bulk-deactivate-btn');
+    var deleteBtn = document.getElementById('bulk-delete-btn');
+
+    if (selectAll) {
+      selectAll.addEventListener('change', function () {
+        toggleSelectAllOnPage(selectAll.checked);
+      });
+    }
+
+    if (activateBtn) {
+      activateBtn.addEventListener('click', function () {
+        var ids = Array.from(selectedIds);
+        activateBtn.disabled = true;
+        setActiveBulk(ids, true).catch(function (err) {
+          showFormMessage(err.message || '활성화에 실패했습니다.', 'error');
+        }).finally(function () {
+          updateBulkToolbar();
+        });
+      });
+    }
+
+    if (deactivateBtn) {
+      deactivateBtn.addEventListener('click', function () {
+        var ids = Array.from(selectedIds);
+        deactivateBtn.disabled = true;
+        setActiveBulk(ids, false).catch(function (err) {
+          showFormMessage(err.message || '비활성화에 실패했습니다.', 'error');
+        }).finally(function () {
+          updateBulkToolbar();
+        });
+      });
+    }
+
+    if (deleteBtn) {
+      deleteBtn.addEventListener('click', function () {
+        deleteReferrals(Array.from(selectedIds)).catch(function (err) {
+          showFormMessage(err.message || '삭제에 실패했습니다.', 'error');
+        });
+      });
+    }
+  }
+
   window.stnAdminReferrals = {
     init: async function () {
       var session = await window.stnAdminShell.initAuth();
@@ -492,6 +648,7 @@
       bindForm();
       bindEditModal();
       bindPagination();
+      bindBulkToolbar();
       window.stnAdminDatePicker.bind();
 
       var refreshBtn = document.getElementById('refresh-btn');
