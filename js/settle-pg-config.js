@@ -8,7 +8,7 @@ window.STN_SETTLE_PG = {
   isTest: true,
   mchtId: 'nxca_jt_il',
   workerBaseUrl: 'https://stn-api.stnhub210.workers.dev',
-  // Worker 미배포 시 테스트 폴백용 (운영 전 Worker 시크릿으로 대체 후 제거)
+  // Worker 실패 시 폴백 — nxca_jt_il 테스트 키와 동일해야 함
   testHashKey: 'ST1009281328226982205',
   testAesKey: 'pgSettle30y739r82jtd709yOfZ2yK5K',
   mchtName: 'STN스킬업',

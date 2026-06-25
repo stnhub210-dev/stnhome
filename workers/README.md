@@ -11,6 +11,23 @@
 
 ## Cloudflare 시크릿 설정
 
+**MID와 키는 반드시 한 세트로 맞춰야 합니다.** 키가 다르면 `1901 해시값 불일치` 오류가 납니다.
+
+### 테스트 (MID `nxca_jt_il`)
+
+```bash
+npx wrangler secret put HECTO_HASH_KEY
+# ST1009281328226982205
+
+npx wrangler secret put HECTO_AES_KEY
+# pgSettle30y739r82jtd709yOfZ2yK5K
+```
+
+### 운영 (헥토에서 발급받은 본인 MID·키)
+
+운영 MID(예: `M2665490`)를 쓸 때는 **그 MID에 맞는** 해시·암호화 키를 넣으세요.  
+`nxca_jt_il` 테스트 키와 운영 MID를 섞으면 안 됩니다.
+
 ```bash
 npx wrangler secret put HECTO_AES_KEY
 # 테스트: pgSettle30y739r82jtd709yOfZ2yK5K
