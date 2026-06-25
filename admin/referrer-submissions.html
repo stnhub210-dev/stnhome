@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>관리자 대시보드 | STN 스킬업</title>
+  <title>추천인 코드 신청자 | STN 관리자</title>
   <link rel="icon" type="image/x-icon" href="/image/favicon-512x512-256.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,8 +23,8 @@
       </div>
 
       <nav class="sidebar-nav" aria-label="관리자 메뉴">
-        <a class="nav-item is-active" href="dashboard.html">결제 신청 관리</a>
-        <a class="nav-item" href="referrer-submissions.html">추천인 코드 신청자</a>
+        <a class="nav-item" href="dashboard.html">결제 신청 관리</a>
+        <a class="nav-item is-active" href="referrer-submissions.html">추천인 코드 신청자</a>
         <a class="nav-item" href="referrals.html">할인코드 관리</a>
         <a class="nav-item" href="visitors.html">방문자 통계</a>
         <a class="nav-item" href="../index.html" target="_blank" rel="noopener noreferrer">사이트 보기</a>
@@ -39,8 +39,8 @@
     <main class="admin-main">
       <header class="admin-topbar">
         <div>
-          <h2 id="dashboard-title">결제 신청 관리</h2>
-          <p id="dashboard-desc">Supabase에 저장된 수강 신청·결제 내역을 확인합니다.</p>
+          <h2 id="dashboard-title">추천인 코드 신청자</h2>
+          <p id="dashboard-desc">결제 신청 시 추천인 코드를 입력한 내역만 표시합니다.</p>
         </div>
         <div class="admin-topbar-actions">
           <button type="button" class="btn btn-ghost" id="refresh-btn">새로고침</button>
@@ -50,7 +50,7 @@
 
       <section class="stats-grid" aria-label="요약 통계">
         <article class="stat-card">
-          <span>전체 신청</span>
+          <span>추천인 코드 입력</span>
           <strong id="stat-total">0</strong>
         </article>
         <article class="stat-card">
@@ -71,8 +71,8 @@
         <div class="panel-head panel-head-tabs">
           <h3>신청 내역</h3>
           <div class="period-tabs dashboard-view-tabs" id="dashboard-view-tabs" role="tablist" aria-label="신청 내역 보기">
-            <a class="period-tab is-active" href="dashboard.html" data-dashboard-view="all" aria-current="page">전체</a>
-            <a class="period-tab" href="referrer-submissions.html" data-dashboard-view="referrer-only">추천인 코드 입력</a>
+            <a class="period-tab" href="dashboard.html" data-dashboard-view="all">전체</a>
+            <a class="period-tab is-active" href="referrer-submissions.html" data-dashboard-view="referrer-only" aria-current="page">추천인 코드 입력</a>
           </div>
         </div>
 
@@ -96,11 +96,11 @@
                 <option value="cancelled">취소</option>
               </select>
             </div>
-            <div class="filter-field" id="filter-referrer-field">
+            <div class="filter-field" id="filter-referrer-field" hidden>
               <label for="filter-referrer">추천인 코드</label>
               <select id="filter-referrer" class="filter-input">
                 <option value="">전체</option>
-                <option value="has">입력됨</option>
+                <option value="has" selected>입력됨</option>
                 <option value="none">없음</option>
               </select>
             </div>
@@ -179,7 +179,7 @@
   <script src="assets/js/date-picker.js"></script>
   <script src="assets/js/dashboard.js"></script>
   <script>
-    window.stnAdminDashboard.init().catch(function (err) {
+    window.stnAdminDashboard.init({ view: 'referrer-only' }).catch(function (err) {
       var tbody = document.getElementById('applications-body');
       if (tbody) {
         tbody.innerHTML = '<tr><td colspan="9" class="table-empty">' + (err.message || '초기화 실패') + '</td></tr>';

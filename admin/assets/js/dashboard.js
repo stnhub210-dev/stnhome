@@ -1,6 +1,7 @@
 (function () {
   var TABLE = 'payment_applications';
   var PAGE_SIZE = 10;
+  var viewMode = 'all';
 
   var sourceRows = [];
   var allRows = [];
@@ -57,6 +58,88 @@
       .replace(/"/g, '&quot;');
   }
 
+  function isReferrerOnlyView() {
+    return viewMode === 'referrer-only';
+  }
+
+  function getDefaultReferrerFilter() {
+    return isReferrerOnlyView() ? 'has' : '';
+  }
+
+  function emptyFilters() {
+    return {
+      name: '',
+      phoneSuffix: '',
+      status: '',
+      referrer: getDefaultReferrerFilter(),
+      referrerText: '',
+      dateFrom: '',
+      dateTo: ''
+    };
+  }
+
+  function applyReferrerOnlyViewUi() {
+    document.body.classList.add('is-referrer-only-view');
+
+    var topTitle = document.getElementById('dashboard-title');
+    var topDesc = document.getElementById('dashboard-desc');
+    if (topTitle) topTitle.textContent = '추천인 코드 신청자';
+    if (topDesc) {
+      topDesc.textContent = '결제 신청 시 추천인 코드를 입력한 내역만 표시합니다.';
+    }
+
+    var referrerField = document.getElementById('filter-referrer-field');
+    if (referrerField) referrerField.hidden = true;
+
+    var viewTabs = document.getElementById('dashboard-view-tabs');
+    if (viewTabs) {
+      viewTabs.querySelectorAll('[data-dashboard-view]').forEach(function (tab) {
+        var active = tab.getAttribute('data-dashboard-view') === 'referrer-only';
+        tab.classList.toggle('is-active', active);
+        if (tab.tagName === 'A') {
+          tab.setAttribute('aria-current', active ? 'page' : 'false');
+        }
+      });
+    }
+  }
+
+  function applyAllViewUi() {
+    document.body.classList.remove('is-referrer-only-view');
+
+    var topTitle = document.getElementById('dashboard-title');
+    var topDesc = document.getElementById('dashboard-desc');
+    if (topTitle) topTitle.textContent = '결제 신청 관리';
+    if (topDesc) {
+      topDesc.textContent = 'Supabase에 저장된 수강 신청·결제 내역을 확인합니다.';
+    }
+
+    var referrerField = document.getElementById('filter-referrer-field');
+    if (referrerField) referrerField.hidden = false;
+
+    var viewTabs = document.getElementById('dashboard-view-tabs');
+    if (viewTabs) {
+      viewTabs.querySelectorAll('[data-dashboard-view]').forEach(function (tab) {
+        var active = tab.getAttribute('data-dashboard-view') === 'all';
+        tab.classList.toggle('is-active', active);
+        if (tab.tagName === 'A') {
+          tab.setAttribute('aria-current', active ? 'page' : 'false');
+        }
+      });
+    }
+  }
+
+  function syncReferrerFilterToForm(filters) {
+    var referrerEl = document.getElementById('filter-referrer');
+    if (!referrerEl) return;
+    referrerEl.value = filters.referrer || '';
+  }
+
+  function filterRows(rows, filters) {
+    return rows.filter(function (row) {
+      return matchesFilters(row, filters);
+    });
+  }
+
   function phoneDigits(phone) {
     return String(phone || '').replace(/\D/g, '');
   }
@@ -96,7 +179,7 @@
       name: (nameEl && nameEl.value.trim()) || '',
       phoneSuffix: (phoneEl && phoneEl.value.replace(/\D/g, '')) || '',
       status: (statusEl && statusEl.value) || '',
-      referrer: (referrerEl && referrerEl.value) || '',
+      referrer: (referrerEl && referrerEl.value) || getDefaultReferrerFilter(),
       referrerText: (referrerTextEl && referrerTextEl.value.trim()) || '',
       dateFrom: (fromEl && fromEl.value) || '',
       dateTo: (toEl && toEl.value) || ''
@@ -104,11 +187,12 @@
   }
 
   function hasActiveFilters(filters) {
+    var referrerFilterActive = filters.referrer && !(isReferrerOnlyView() && filters.referrer === 'has');
     return !!(
       filters.name ||
       filters.phoneSuffix ||
       filters.status ||
-      filters.referrer ||
+      referrerFilterActive ||
       filters.referrerText ||
       filters.dateFrom ||
       filters.dateTo
@@ -165,9 +249,7 @@
       return false;
     }
 
-    allRows = sourceRows.filter(function (row) {
-      return matchesFilters(row, activeFilters);
-    });
+    allRows = filterRows(sourceRows, activeFilters);
 
     currentPage = 1;
     updateStats(allRows);
@@ -187,12 +269,31 @@
     }
 
     if (!hasActiveFilters(activeFilters)) {
+      if (isReferrerOnlyView()) {
+        el.hidden = false;
+        el.innerHTML =
+          '추천인 코드 입력 <strong>' +
+          count.toLocaleString('ko-KR') +
+          '</strong>건 (전체 ' +
+          sourceRows.length.toLocaleString('ko-KR') +
+          '건)';
+        return;
+      }
       el.hidden = true;
       el.textContent = '';
       return;
     }
 
     el.hidden = false;
+    if (isReferrerOnlyView()) {
+      el.innerHTML =
+        '검색 결과 <strong>' +
+        count.toLocaleString('ko-KR') +
+        '</strong>건 (추천인 코드 입력 ' +
+        filterRows(sourceRows, emptyFilters()).length.toLocaleString('ko-KR') +
+        '건)';
+      return;
+    }
     el.innerHTML = '검색 결과 <strong>' + count.toLocaleString('ko-KR') + '</strong>건 (전체 ' + sourceRows.length.toLocaleString('ko-KR') + '건)';
   }
 
@@ -200,20 +301,13 @@
     var form = document.getElementById('applications-filter');
     if (form) form.reset();
 
-    activeFilters = {
-      name: '',
-      phoneSuffix: '',
-      status: '',
-      referrer: '',
-      referrerText: '',
-      dateFrom: '',
-      dateTo: ''
-    };
+    activeFilters = emptyFilters();
+    syncReferrerFilterToForm(activeFilters);
 
-    allRows = sourceRows.slice();
+    allRows = filterRows(sourceRows, activeFilters);
     currentPage = 1;
     updateStats(allRows);
-    updateFilterResult(0, false);
+    updateFilterResult(allRows.length, false);
     renderRows();
   }
 
@@ -296,7 +390,11 @@
     }
 
     if (!allRows.length) {
-      showTableMessage('조건에 맞는 신청 내역이 없습니다.');
+      showTableMessage(
+        isReferrerOnlyView()
+          ? '추천인 코드를 입력한 신청 내역이 없습니다.'
+          : '조건에 맞는 신청 내역이 없습니다.'
+      );
       return;
     }
 
@@ -382,23 +480,17 @@
 
   function setApplications(rows) {
     sourceRows = rows.slice();
-    allRows = rows.slice();
+    activeFilters = emptyFilters();
+    syncReferrerFilterToForm(activeFilters);
+    allRows = filterRows(sourceRows, activeFilters);
     currentPage = 1;
-    activeFilters = {
-      name: '',
-      phoneSuffix: '',
-      status: '',
-      referrer: '',
-      referrerText: '',
-      dateFrom: '',
-      dateTo: ''
-    };
 
     var form = document.getElementById('applications-filter');
     if (form) form.reset();
+    syncReferrerFilterToForm(activeFilters);
 
     updateStats(allRows);
-    updateFilterResult(0, false);
+    updateFilterResult(allRows.length, false);
     renderRows();
   }
 
@@ -418,7 +510,16 @@
   }
 
   window.stnAdminDashboard = {
-    init: async function () {
+    init: async function (options) {
+      options = options || {};
+      viewMode = options.view === 'referrer-only' ? 'referrer-only' : 'all';
+
+      if (isReferrerOnlyView()) {
+        applyReferrerOnlyViewUi();
+      } else {
+        applyAllViewUi();
+      }
+
       var session = await window.stnAdminShell.initAuth();
       if (!session) return;
 
