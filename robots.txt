@@ -3,6 +3,7 @@ Allow: /
 
 # 결제 결과/내부 스크립트 경로는 검색 노출 제외
 Disallow: /payment_result.html
+Disallow: /payment-test.html
 Allow: /payment-lookup.html
 Disallow: /admin/
 Disallow: /workers/

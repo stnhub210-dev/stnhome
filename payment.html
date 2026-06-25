@@ -229,7 +229,7 @@
     /* PAY METHODS */
     .pay-methods-wrap { border-radius: 14px; transition: box-shadow .2s ease; }
     .pay-methods-wrap.is-error { box-shadow: 0 0 0 2px rgba(255,107,107,.35); }
-    .pay-methods { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+    .pay-methods { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
     .pay-method { position: relative; }
     .pay-method input { position: absolute; opacity: 0; pointer-events: none; }
     .pay-method label {
@@ -257,7 +257,6 @@
       color: var(--text); font-family: inherit; font-weight: 600; font-size: .9rem;
     }
     .pay-hint { margin-top: 10px; font-size: .82rem; color: #9a9a9a; line-height: 1.5; }
-    .pay-hint--deposit { margin-top: 12px; }
     .emph-soft { color: #e0e0e0; font-weight: 800; }
     .bank-lines { font-size: .9rem; color: #e0e0e0; font-weight: 600; line-height: 1.7; }
     .bank-lines span { color: var(--tier-accent); font-weight: 800; }
@@ -267,7 +266,7 @@
       padding: 14px 16px; border-radius: 12px;
       border: 1px solid rgba(124,252,0,.4); background: rgba(124,252,0,.07); margin-bottom: 14px;
     }
-    .agree-all label { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: .95rem; cursor: pointer; }
+    .agree-all label { display: flex; align-items: center; gap: 10px; width: 100%; font-weight: 900; font-size: .95rem; cursor: pointer; }
     .agree-item {
       border: 1px solid var(--line); border-radius: 12px;
       padding: 12px 14px; margin-bottom: 10px; background: rgba(255,255,255,.02);
@@ -462,7 +461,7 @@
             </div>
             <div class="agree-item">
               <div class="agree-top">
-                <label for="agree-privacy"><input class="chk" type="checkbox" id="agree-privacy" /> 개인정보 수집·이용 동의</label>
+                <label><input class="chk" type="checkbox" id="agree-privacy" /> 개인정보 수집·이용 동의</label>
                 <div class="agree-actions">
                   <span class="agree-tag">필수</span>
                   <button type="button" class="agree-toggle" data-target="detail-privacy">펼치기</button>
@@ -477,7 +476,7 @@
             </div>
             <div class="agree-item">
               <div class="agree-top">
-                <label for="agree-refund"><input class="chk" type="checkbox" id="agree-refund" /> 환불 규정 확인 및 동의</label>
+                <label><input class="chk" type="checkbox" id="agree-refund" /> 환불 규정 확인 및 동의</label>
                 <div class="agree-actions">
                   <span class="agree-tag">필수</span>
                   <button type="button" class="agree-toggle" data-target="detail-refund">펼치기</button>
@@ -495,7 +494,7 @@
             </div>
             <div class="agree-item">
               <div class="agree-top">
-                <label for="agree-terms"><input class="chk" type="checkbox" id="agree-terms" /> 서비스 이용약관 동의</label>
+                <label><input class="chk" type="checkbox" id="agree-terms" /> 서비스 이용약관 동의</label>
                 <div class="agree-actions">
                   <span class="agree-tag">필수</span>
                   <button type="button" class="agree-toggle" data-target="detail-terms">펼치기</button>
@@ -511,7 +510,7 @@
             </div>
             <div class="agree-item">
               <div class="agree-top">
-                <label for="agree-marketing"><input class="chk" type="checkbox" id="agree-marketing" /> 이벤트·신규 과정 안내 수신 동의</label>
+                <label><input class="chk" type="checkbox" id="agree-marketing" /> 이벤트·신규 과정 안내 수신 동의</label>
                 <div class="agree-actions">
                   <span class="agree-tag opt">선택</span>
                   <button type="button" class="agree-toggle" data-target="detail-marketing">펼치기</button>
@@ -550,10 +549,6 @@
                 <input type="radio" name="payMethod" id="pay-transfer" value="transfer" />
                 <label for="pay-transfer">계좌이체</label>
               </div>
-              <div class="pay-method">
-                <input type="radio" name="payMethod" id="pay-vbank" value="vbank" />
-                <label for="pay-vbank">가상계좌</label>
-              </div>
             </div>
           </div>
           <div id="panel-card" class="pay-extra">
@@ -574,10 +569,6 @@
               계좌번호: <span>483-075628-04-018</span><br />
               예금주: <span>주식회사 플래닛네이처미디어</span>
             </div>
-          </div>
-          <div id="panel-vbank" class="pay-extra">
-            <p class="pay-extra-label">가상계좌 안내</p>
-            <p class="pay-hint">결제 완료 후 발급된 가상계좌로 <strong class="emph-soft">3영업일 이내</strong> 입금해 주세요.</p>
           </div>
           <p class="field-msg" id="err-pay" role="alert"></p>
         </div>
@@ -625,6 +616,7 @@
     </div>
   </footer>
 
+  <script src="js/payment-agreements.js"></script>
   <script>
   (function () {
     var MCHT_ID = "stnmedia01";
@@ -647,7 +639,6 @@
     var payRadios  = document.querySelectorAll('input[name="payMethod"]');
     var panelCard  = document.getElementById("panel-card");
     var panelTransfer = document.getElementById("panel-transfer");
-    var panelVbank = document.getElementById("panel-vbank");
     var installment = document.getElementById("installment");
     var agreeAll   = document.getElementById("agree-all");
     var agreePrivacy  = document.getElementById("agree-privacy");
@@ -693,7 +684,6 @@
       var m = getPayMethod();
       panelCard.classList.toggle("is-visible", m==="card");
       panelTransfer.classList.toggle("is-visible", m==="transfer");
-      panelVbank.classList.toggle("is-visible", m==="vbank");
     }
 
     function updateSubmit() {
@@ -701,8 +691,12 @@
       btnSubmit.disabled = !(ok && requiredOk() && getPayMethod());
     }
 
-    function syncAll() {
-      agreeAll.checked = agreePrivacy.checked && agreeRefund.checked && agreeTerms.checked && agreeMarketing.checked;
+    if (window.STNPaymentAgreements) {
+      window.STNPaymentAgreements.bind({
+        agreeAll: agreeAll,
+        children: [agreePrivacy, agreeRefund, agreeTerms, agreeMarketing],
+        onChange: updateSubmit
+      });
     }
 
     elName.addEventListener("input", function(){ clearErr(elName,errName); updateSubmit(); });
@@ -717,13 +711,6 @@
 
     payRadios.forEach(function(r){ r.addEventListener("change", function(){ errPay.textContent=""; payMethodsWrap.classList.remove("is-error"); updatePanels(); updateSubmit(); }); });
     if(installment) installment.addEventListener("change", updateSubmit);
-
-    agreeAll.addEventListener("change", function(){
-      var on=agreeAll.checked;
-      agreePrivacy.checked=agreeRefund.checked=agreeTerms.checked=agreeMarketing.checked=on;
-      updateSubmit();
-    });
-    [agreePrivacy,agreeRefund,agreeTerms,agreeMarketing].forEach(function(c){ c.addEventListener("change", function(){ syncAll(); updateSubmit(); }); });
 
     document.querySelectorAll(".agree-toggle").forEach(function(btn){
       btn.addEventListener("click", function(){
@@ -775,7 +762,7 @@
         var method = getPayMethod();
         var payParams = {
           mchtId:    MCHT_ID,
-          method:    method === "card" ? "card" : method === "transfer" ? "bank" : "vbank",
+          method:    method === "card" ? "card" : "bank",
           trdDt:     trdDt,
           trdTm:     trdTm,
           mchtTrdNo: mchtTrdNo,

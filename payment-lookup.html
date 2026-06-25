@@ -203,6 +203,13 @@
       var resultList = document.getElementById('result-list');
       var submitBtn = document.getElementById('lookup-submit');
 
+      if (window.STNPaymentService && window.STNPaymentService.bindPhoneFormat) {
+        window.STNPaymentService.bindPhoneFormat(elPhone, function () {
+          errPhone.textContent = '';
+          elPhone.classList.remove('is-error');
+        });
+      }
+
       function escapeHtml(s) {
         return String(s == null ? '' : s)
           .replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -308,7 +315,9 @@
 
       var params = new URLSearchParams(window.location.search);
       if (params.get('name')) elName.value = params.get('name');
-      if (params.get('phone')) elPhone.value = params.get('phone');
+      if (params.get('phone') && window.STNPaymentService) {
+        elPhone.value = window.STNPaymentService.formatPhoneInput(params.get('phone'));
+      }
     })();
   </script>
 </body>

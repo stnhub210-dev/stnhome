@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>결제 연동 테스트 (100원) | STN</title>
+  <meta name="description" content="헥토파이낸셜 결제창 연동 테스트용 페이지입니다. 실결제 100원이 청구될 수 있습니다." />
+  <link rel="icon" type="image/x-icon" href="/image/favicon-512x512-256.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: #111111;
+      --line: #2a2a2a;
+      --lime: #7cfc00;
+      --text: #ffffff;
+      --muted: #bdbdbd;
+      --err: #ff6b6b;
+      --warn: #ffb84d;
+      --content-max: 560px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Noto Sans KR", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    .wrap {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 28px 18px 56px;
+    }
+    .test-banner {
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 184, 77, 0.45);
+      background: rgba(255, 184, 77, 0.1);
+      color: #ffd9a0;
+      font-size: 0.88rem;
+      font-weight: 700;
+      line-height: 1.55;
+      margin-bottom: 22px;
+    }
+    .test-banner strong { color: var(--warn); }
+    .page-head { margin-bottom: 22px; }
+    .page-kicker {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    .page-title {
+      font-size: clamp(1.45rem, 4vw, 1.85rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .page-lead {
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+    .step-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: clamp(20px, 4vw, 28px);
+      margin-bottom: 16px;
+    }
+    .step-title {
+      font-size: 1.05rem;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+    .field { margin-bottom: 14px; }
+    .field:last-child { margin-bottom: 0; }
+    .field-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #b0b0b0;
+      margin-bottom: 8px;
+    }
+    .field-label .req { color: var(--lime); margin-left: 2px; }
+    .field-input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #151515;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .field-input:focus {
+      outline: none;
+      border-color: rgba(124, 252, 0, 0.55);
+      box-shadow: 0 0 0 2px rgba(124, 252, 0, 0.12);
+    }
+    .field-input.is-error { border-color: var(--err); }
+    .field-msg {
+      min-height: 1.2em;
+      margin-top: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--err);
+    }
+    .sum-total {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(124, 252, 0, 0.45);
+      background: rgba(124, 252, 0, 0.08);
+      margin-bottom: 16px;
+    }
+    .sum-total-label { font-weight: 800; }
+    .sum-total-val {
+      font-weight: 900;
+      font-size: 1.35rem;
+      color: var(--lime);
+    }
+    .pay-note {
+      font-size: 0.84rem;
+      color: #9a9a9a;
+      font-weight: 600;
+      margin-bottom: 16px;
+      line-height: 1.55;
+    }
+    .agree-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #ccc;
+      margin-bottom: 18px;
+    }
+    .agree-row input { margin-top: 4px; accent-color: var(--lime); }
+    .btn-submit {
+      width: 100%;
+      padding: 16px 20px;
+      border: none;
+      border-radius: 14px;
+      background: var(--lime);
+      color: #0a0a0a;
+      font-family: inherit;
+      font-size: 1.02rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .btn-submit:hover:not(:disabled) { filter: brightness(1.06); }
+    .btn-submit:disabled { opacity: 0.38; cursor: not-allowed; }
+    .submit-hint {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: #8c8c8c;
+      line-height: 1.55;
+      text-align: center;
+    }
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .loading-overlay.is-on { display: flex; }
+    .loading-box {
+      text-align: center;
+      padding: 24px 32px;
+      border-radius: 16px;
+      background: var(--card);
+      border: 1px solid var(--line);
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #333;
+      border-top-color: var(--lime);
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-size: 0.9rem; font-weight: 700; color: #ccc; }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(12px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 3000;
+      max-width: min(92vw, 420px);
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: #1a1a1a;
+      border: 1px solid var(--line);
+      color: #f2f2f2;
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .toast.is-show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #888;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .back-link:hover { color: var(--lime); }
+    input[name="payMethod"] { position: absolute; opacity: 0; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="test-banner" role="status">
+      <strong>운영자 전용 테스트 페이지</strong> — 신용카드로 <strong>100원</strong>이 실제 결제될 수 있습니다. 일반 고객에게 공유하지 마세요.
+    </div>
+
+    <header class="page-head">
+      <p class="page-kicker">payment test</p>
+      <h1 class="page-title">결제 연동 테스트</h1>
+      <p class="page-lead">헥토파이낸셜 SettlePG 결제창 연동을 100원으로 검증합니다.</p>
+    </header>
+
+    <div id="payment-flow">
+      <section class="step-card" aria-labelledby="info-title">
+        <h2 class="step-title" id="info-title">신청자 정보</h2>
+        <div class="field">
+          <label class="field-label" for="applicant-name">이름<span class="req" aria-hidden="true">*</span></label>
+          <input class="field-input" type="text" id="applicant-name" autocomplete="name" placeholder="홍길동" />
+          <p class="field-msg" id="err-name" role="alert"></p>
+        </div>
+        <div class="field">
+          <label class="field-label" for="applicant-phone">연락처<span class="req" aria-hidden="true">*</span></label>
+          <input class="field-input" type="tel" id="applicant-phone" autocomplete="tel" inputmode="tel" placeholder="010-0000-0000" />
+          <p class="field-msg" id="err-phone" role="alert"></p>
+        </div>
+        <div class="field">
+          <label class="field-label" for="applicant-email">이메일<span class="req" aria-hidden="true">*</span></label>
+          <input class="field-input" type="email" id="applicant-email" autocomplete="email" placeholder="example@email.com" />
+          <p class="field-msg" id="err-email" role="alert"></p>
+        </div>
+      </section>
+
+      <section class="step-card" aria-labelledby="pay-title">
+        <h2 class="step-title" id="pay-title">결제</h2>
+        <div class="sum-total">
+          <span class="sum-total-label">테스트 결제금액</span>
+          <span class="sum-total-val">100원</span>
+        </div>
+        <p class="pay-note">결제수단: 신용카드 (일시불)<br />BC카드 할부 제한</p>
+        <input type="radio" name="payMethod" id="pay-card" value="card" checked />
+        <label class="agree-row" for="agree-test">
+          <input type="checkbox" id="agree-test" />
+          <span>테스트 결제임을 확인했으며, 100원이 청구될 수 있음에 동의합니다.</span>
+        </label>
+        <button type="button" class="btn-submit" id="btn-submit" disabled>100원 결제 테스트 →</button>
+        <p class="submit-hint">결제 버튼 클릭 시 헥토파이낸셜 결제창이 열립니다.<br />완료 후 <a href="payment_result.html" style="color:#7cfc00">결제 결과 페이지</a>로 이동합니다.</p>
+      </section>
+    </div>
+
+    <a class="back-link" href="payment-regular.html">← 일반 결제 페이지로</a>
+  </main>
+
+  <div class="loading-overlay" id="loading-overlay" aria-hidden="true">
+    <div class="loading-box">
+      <div class="spinner" aria-hidden="true"></div>
+      <p class="loading-text">결제창을 불러오는 중입니다…</p>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="admin/assets/js/config.js"></script>
+  <script src="js/payment-service.js"></script>
+  <script src="js/settle-pg-config.js"></script>
+  <script src="js/settle-pg.js"></script>
+  <script>
+    (function () {
+      var PROGRAM_AMOUNT = 100;
+      var phoneRe = /^01[016789]-?\d{3,4}-?\d{4}$/;
+      var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      var elName = document.getElementById("applicant-name");
+      var elPhone = document.getElementById("applicant-phone");
+      var elEmail = document.getElementById("applicant-email");
+      var agreeTest = document.getElementById("agree-test");
+      var btnSubmit = document.getElementById("btn-submit");
+      var loading = document.getElementById("loading-overlay");
+      var toastEl = document.getElementById("toast");
+      var errName = document.getElementById("err-name");
+      var errPhone = document.getElementById("err-phone");
+      var errEmail = document.getElementById("err-email");
+      var toastTimer;
+
+      function showToast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add("is-show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toastEl.classList.remove("is-show");
+        }, 3200);
+      }
+
+      function clearFieldError(input, errEl) {
+        input.classList.remove("is-error");
+        errEl.textContent = "";
+      }
+
+      function setFieldError(input, errEl, msg) {
+        input.classList.add("is-error");
+        errEl.textContent = msg;
+      }
+
+      function validateName() {
+        if (!elName.value.trim()) {
+          setFieldError(elName, errName, "이름을 입력해 주세요.");
+          return false;
+        }
+        clearFieldError(elName, errName);
+        return true;
+      }
+
+      function validatePhone() {
+        var raw = elPhone.value.replace(/\s/g, "");
+        if (!raw) {
+          setFieldError(elPhone, errPhone, "연락처를 입력해 주세요.");
+          return false;
+        }
+        if (!phoneRe.test(raw)) {
+          setFieldError(elPhone, errPhone, "휴대폰 번호 형식을 확인해 주세요.");
+          return false;
+        }
+        clearFieldError(elPhone, errPhone);
+        return true;
+      }
+
+      function validateEmail() {
+        var v = elEmail.value.trim();
+        if (!v) {
+          setFieldError(elEmail, errEmail, "이메일을 입력해 주세요.");
+          return false;
+        }
+        if (!emailRe.test(v)) {
+          setFieldError(elEmail, errEmail, "이메일 형식을 확인해 주세요.");
+          return false;
+        }
+        clearFieldError(elEmail, errEmail);
+        return true;
+      }
+
+      function updateSubmitState() {
+        var ok =
+          elName.value.trim() &&
+          phoneRe.test(elPhone.value.replace(/\s/g, "")) &&
+          emailRe.test(elEmail.value.trim()) &&
+          agreeTest.checked;
+        btnSubmit.disabled = !ok;
+      }
+
+      window.STNPaymentService.bindPhoneFormat(elPhone, function () {
+        clearFieldError(elPhone, errPhone);
+        updateSubmitState();
+      });
+
+      elName.addEventListener("input", function () {
+        clearFieldError(elName, errName);
+        updateSubmitState();
+      });
+      elEmail.addEventListener("input", function () {
+        clearFieldError(elEmail, errEmail);
+        updateSubmitState();
+      });
+      agreeTest.addEventListener("change", updateSubmitState);
+
+      btnSubmit.addEventListener("click", async function () {
+        if (!validateName() || !validatePhone() || !validateEmail()) {
+          showToast("입력 정보를 확인해 주세요.");
+          return;
+        }
+        if (!agreeTest.checked) {
+          showToast("테스트 결제 동의에 체크해 주세요.");
+          return;
+        }
+
+        loading.classList.add("is-on");
+        loading.setAttribute("aria-hidden", "false");
+
+        try {
+          if (!window.STNSettlePG) {
+            throw new Error("결제 모듈을 불러오지 못했습니다.");
+          }
+
+          await window.STNSettlePG.startPayment({
+            amount: PROGRAM_AMOUNT,
+            payMethodKey: "card",
+            orderPrefix: "STN-TST",
+            tier: "결제 테스트",
+            programName: "STN 결제 연동 테스트 (100원)",
+            cancUrl: "https://stnmedia.kr/payment-test.html",
+            installment: "00",
+            customer: {
+              name: elName.value.trim(),
+              phone: elPhone.value.trim(),
+              email: elEmail.value.trim()
+            },
+            onPending: function (data) {
+              if (window.STNPaymentService) {
+                window.STNPaymentService.savePending(data);
+              }
+            }
+          });
+        } catch (e) {
+          showToast(e.message || "결제 처리 중 오류가 발생했습니다.");
+          console.error(e);
+        } finally {
+          loading.classList.remove("is-on");
+          loading.setAttribute("aria-hidden", "true");
+        }
+      });
+
+      updateSubmitState();
+    })();
+  </script>
+</body>
+</html>
