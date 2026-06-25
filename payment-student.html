@@ -724,6 +724,9 @@
       font-size: 0.75rem;
       color: #888;
     }
+    .pay-methods-wrap + .pay-hint--bc {
+      margin-top: 8px;
+    }
     .emph-soft {
       color: #e0e0e0;
       font-weight: 800;
@@ -1686,6 +1689,7 @@
                 </div>
               </div>
             </div>
+            <p class="pay-hint pay-hint--bc">BC카드 할부 제한</p>
             <div id="panel-card" class="pay-extra" aria-live="polite">
               <p class="pay-extra-label">할부 개월</p>
               <select class="pay-select" id="installment" aria-label="할부 개월 선택">
@@ -1696,7 +1700,6 @@
                 <option value="12" selected>12개월</option>
               </select>
               <p class="pay-hint">할부 선택 시 이용하시는 카드사 정책에 따릅니다.</p>
-              <p class="pay-hint pay-hint--bc">BC카드 할부 제한</p>
             </div>
             <div id="panel-transfer" class="pay-extra" aria-live="polite">
               <p class="pay-extra-label">입금 정보 (계좌이체)</p>
