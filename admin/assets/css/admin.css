@@ -222,21 +222,6 @@ a { color: inherit; text-decoration: none; }
   flex-shrink: 0;
 }
 
-.login-authed-panel {
-  display: grid;
-  gap: 12px;
-}
-
-.login-authed-panel p {
-  color: var(--muted);
-  font-size: 0.92rem;
-  line-height: 1.5;
-}
-
-.login-authed-panel strong {
-  color: var(--text);
-}
-
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

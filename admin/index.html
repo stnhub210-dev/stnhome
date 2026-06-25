@@ -21,12 +21,6 @@
       </div>
     </div>
 
-    <div class="login-authed-panel" id="authed-panel" hidden>
-      <p><strong id="authed-email">관리자</strong>으로 로그인되어 있습니다.</p>
-      <a href="dashboard.html" class="btn btn-primary">대시보드로 이동</a>
-      <button type="button" class="btn btn-ghost" data-logout>로그아웃</button>
-    </div>
-
     <form id="login-form" method="post" action="index.html" onsubmit="return false;" novalidate>
       <div class="field">
         <label for="email">이메일</label>
@@ -70,7 +64,7 @@
         document.getElementById('setup-note').hidden = false;
       }
 
-      await window.stnAdminAuth.setupLoginPage();
+      await window.stnAdminAuth.redirectIfAuthed();
       window.stnAdminAuth.bindLoginForm(
         document.getElementById('login-form'),
         document.getElementById('login-message')

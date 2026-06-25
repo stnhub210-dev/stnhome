@@ -75,27 +75,6 @@
       });
     },
 
-    setupLoginPage: async function () {
-      if (!window.isSupabaseConfigured()) return;
-
-      var session = await this.getSession();
-      if (!session) return;
-
-      var panel = document.getElementById('authed-panel');
-      var form = document.getElementById('login-form');
-      var emailEl = document.getElementById('authed-email');
-
-      if (panel && form) {
-        if (emailEl) emailEl.textContent = (session.user && session.user.email) || '관리자';
-        panel.hidden = false;
-        form.hidden = true;
-        this.bindLogoutAll();
-        return;
-      }
-
-      window.location.replace('dashboard.html');
-    },
-
     bindLoginForm: function (form, messageEl) {
       if (!form) return;
 
