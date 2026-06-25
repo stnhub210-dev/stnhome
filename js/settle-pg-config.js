@@ -1,11 +1,12 @@
 /**
  * 헥토파이낸셜 SettlePG v1.2 — 신용카드(표준 결제창)
  *
- * mchtId: 헥토에서 발급한 상점 ID
- * 해시·암호화 키는 Worker 시크릿(HECTO_HASH_KEY, HECTO_AES_KEY)에만 저장
+ * mchtId: 헥토에서 발급한 상점 ID (M2665490 = 운영)
+ * isTest: false → npg.settlebank.co.kr (운영)
+ * 해시·암호화 키 → Worker 시크릿 HECTO_HASH_KEY, HECTO_AES_KEY
  */
 window.STN_SETTLE_PG = {
-  isTest: true,
+  isTest: false,
   mchtId: 'M2665490',
   workerBaseUrl: 'https://stn-api.stnhub210.workers.dev',
   mchtName: 'STN스킬업',

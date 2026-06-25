@@ -255,6 +255,7 @@
         mchtEName: c.mchtEName,
         pmtPrdtNm: options.programName || c.productName,
         mchtCustNm: prepared.mchtCustNm || options.customer.name,
+        cphoneNo: String(options.customer.phone || '').replace(/\D/g, ''),
         notiUrl: workerUrl('/hecto-notify'),
         nextUrl: c.nextUrl,
         cancUrl: options.cancUrl,
