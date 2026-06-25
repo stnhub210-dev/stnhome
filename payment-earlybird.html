@@ -646,6 +646,11 @@
     .pay-hint--deposit {
       margin-top: 12px;
     }
+    .pay-hint--bc {
+      margin-top: 6px;
+      font-size: 0.75rem;
+      color: #888;
+    }
     .emph-soft {
       color: #e0e0e0;
       font-weight: 800;
@@ -1618,6 +1623,7 @@
                 <option value="12" selected>12개월</option>
               </select>
               <p class="pay-hint">할부 선택 시 이용하시는 카드사 정책에 따릅니다.</p>
+              <p class="pay-hint pay-hint--bc">BC카드 할부 제한</p>
             </div>
             <div id="panel-transfer" class="pay-extra" aria-live="polite">
               <p class="pay-extra-label">입금 정보 (계좌이체)</p>
@@ -1634,8 +1640,8 @@
             </div>
             <p class="field-msg" id="err-pay" role="alert"></p>
           </div>
-          <button type="button" class="btn-submit" id="btn-submit" disabled>결제 신청하기 →</button>
-          <p class="submit-hint">결제 버튼 클릭 시 입력하신 정보로 신청이 접수됩니다. 실제 결제는 담당자 확인 후 별도 안내됩니다.</p>
+          <button type="button" class="btn-submit" id="btn-submit" disabled>결제하기 →</button>
+          <p class="submit-hint">결제 버튼 클릭 시 헥토파이낸셜 결제창이 열립니다.<br />입력하신 정보는 결제 및 교육 운영 목적으로만 사용됩니다.</p>
         </section>
 
       <div id="payment-complete" hidden>
@@ -1656,7 +1662,7 @@
   <div class="loading-overlay" id="loading-overlay" aria-hidden="true">
     <div class="loading-box">
       <div class="spinner" aria-hidden="true"></div>
-      <p class="loading-text">신청 접수 처리 중입니다…</p>
+      <p class="loading-text">결제창을 불러오는 중입니다…</p>
     </div>
   </div>
 
@@ -1749,26 +1755,6 @@
         return true;
       }
 
-      function formatPhoneInput(value) {
-        var digits = String(value || "").replace(/\D/g, "").slice(0, 11);
-        if (digits.length <= 3) return digits;
-        if (digits.length <= 7) return digits.slice(0, 3) + "-" + digits.slice(3);
-        return digits.slice(0, 3) + "-" + digits.slice(3, 7) + "-" + digits.slice(7);
-      }
-
-      function applyPhoneFormat(input) {
-        var start = input.selectionStart;
-        var before = input.value;
-        var formatted = formatPhoneInput(before);
-        input.value = formatted;
-        if (start == null) return;
-        var diff = formatted.length - before.length;
-        var nextPos = Math.max(0, Math.min(formatted.length, start + diff));
-        try {
-          input.setSelectionRange(nextPos, nextPos);
-        } catch (_) {}
-      }
-
       function validatePhone() {
         var raw = elPhone.value.replace(/\s/g, "");
         if (!raw) {
@@ -1844,15 +1830,7 @@
         clearFieldError(elName, errName);
         updateSubmitState();
       });
-      elPhone.addEventListener("input", function () {
-        applyPhoneFormat(elPhone);
-        clearFieldError(elPhone, errPhone);
-        updateSubmitState();
-      });
-      elPhone.addEventListener("paste", function (e) {
-        e.preventDefault();
-        var text = (e.clipboardData || window.clipboardData).getData("text");
-        elPhone.value = formatPhoneInput(text);
+      window.STNPaymentService.bindPhoneFormat(elPhone, function () {
         clearFieldError(elPhone, errPhone);
         updateSubmitState();
       });

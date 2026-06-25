@@ -646,6 +646,11 @@
     .pay-hint--deposit {
       margin-top: 12px;
     }
+    .pay-hint--bc {
+      margin-top: 6px;
+      font-size: 0.75rem;
+      color: #888;
+    }
     .emph-soft {
       color: #e0e0e0;
       font-weight: 800;
@@ -1606,6 +1611,7 @@
                 <option value="12" selected>12개월</option>
               </select>
               <p class="pay-hint">할부 선택 시 이용하시는 카드사 정책에 따릅니다.</p>
+              <p class="pay-hint pay-hint--bc">BC카드 할부 제한</p>
             </div>
             <div id="panel-transfer" class="pay-extra" aria-live="polite">
               <p class="pay-extra-label">입금 정보 (계좌이체)</p>
@@ -1811,7 +1817,7 @@
         clearFieldError(elName, errName);
         updateSubmitState();
       });
-      elPhone.addEventListener("input", function () {
+      window.STNPaymentService.bindPhoneFormat(elPhone, function () {
         clearFieldError(elPhone, errPhone);
         updateSubmitState();
       });

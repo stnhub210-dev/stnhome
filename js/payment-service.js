@@ -170,9 +170,50 @@
     } catch (_) {}
   }
 
+  function formatPhoneInput(value) {
+    var digits = String(value || '').replace(/\D/g, '').slice(0, 11);
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 7) return digits.slice(0, 3) + '-' + digits.slice(3);
+    return digits.slice(0, 3) + '-' + digits.slice(3, 7) + '-' + digits.slice(7);
+  }
+
+  function applyPhoneFormat(input) {
+    if (!input) return;
+    var start = input.selectionStart;
+    var before = input.value;
+    var formatted = formatPhoneInput(before);
+    input.value = formatted;
+    if (start == null) return;
+    var diff = formatted.length - before.length;
+    var nextPos = Math.max(0, Math.min(formatted.length, start + diff));
+    try {
+      input.setSelectionRange(nextPos, nextPos);
+    } catch (_) {}
+  }
+
+  function bindPhoneFormat(input, onAfter) {
+    if (!input) return;
+    function after() {
+      if (typeof onAfter === 'function') onAfter();
+    }
+    input.addEventListener('input', function () {
+      applyPhoneFormat(input);
+      after();
+    });
+    input.addEventListener('paste', function (e) {
+      e.preventDefault();
+      var text = (e.clipboardData || window.clipboardData).getData('text');
+      input.value = formatPhoneInput(text);
+      after();
+    });
+  }
+
   global.STNPaymentService = {
     PENDING_KEY: PENDING_KEY,
     normalizePhone: normalizePhone,
+    formatPhoneInput: formatPhoneInput,
+    applyPhoneFormat: applyPhoneFormat,
+    bindPhoneFormat: bindPhoneFormat,
     generateOrderId: generateOrderId,
     mapStatusForPayMethod: mapStatusForPayMethod,
     savePayment: savePayment,
