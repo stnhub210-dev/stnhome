@@ -1,14 +1,15 @@
 /**
- * 헥토파이낸셜 신용카드 표준 결제창 (SettlePG v1.2)
+ * 헥토파이낸셜 신용카드 표준 결제창 (SettlePG v1.2) — 운영
  *
- * 테스트: nxca_jt_il + tbnpg.settlebank.co.kr
+ * MID: M2665490
+ * PG: https://npg.settlebank.co.kr
  * 해시·암호화 키 → Cloudflare Worker 시크릿 (HECTO_HASH_KEY, HECTO_AES_KEY)
  *
  * 해시: SHA256(mchtId + method + mchtTrdNo + trdDt + trdTm + trdAmt평문 + hashKey)
  */
 window.STN_SETTLE_PG = {
-  isTest: true,
-  mchtId: 'nxca_jt_il',
+  isTest: false,
+  mchtId: 'M2665490',
   workerBaseUrl: 'https://stn-api.stnhub210.workers.dev',
   mchtName: 'STN스킬업',
   mchtEName: 'STNSkillUp',

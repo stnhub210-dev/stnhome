@@ -13,9 +13,24 @@
 
 **MID와 키는 반드시 한 세트로 맞춰야 합니다.** 키가 다르면 `1901 해시값 불일치` 오류가 납니다.
 
-### 테스트 (MID `nxca_jt_il` — 기술문서 표준)
+### 운영 (MID `M2665490`)
 
-헥토 **신용카드 표준 결제창** 테스트는 아래 세트만 사용합니다. 다른 키를 넣으면 `1901` 해시 오류가 납니다.
+```bash
+cd workers
+npx wrangler secret put HECTO_HASH_KEY
+# 헥토에서 발급한 운영 해시(라이선스) 키
+
+npx wrangler secret put HECTO_AES_KEY
+# 헥토에서 발급한 운영 암호화 키
+
+npx wrangler deploy
+```
+
+프론트: `js/settle-pg-config.js` → `isTest: false`, `mchtId: 'M2665490'`, PG `npg.settlebank.co.kr`
+
+### 테스트 (MID `nxca_jt_il` — 헥토 기술문서 표준)
+
+개발·검증용만 사용. 운영 MID·키와 섞지 마세요.
 
 ```bash
 npx wrangler secret put HECTO_HASH_KEY
@@ -23,35 +38,6 @@ npx wrangler secret put HECTO_HASH_KEY
 
 npx wrangler secret put HECTO_AES_KEY
 # pgSettle30y739r82jtd709yOfZ2yK5K
-```
-
-검증 예시 (문서 샘플과 동일해야 함):
-
-- 입력: `nxca_jt_il`, `card`, `CARD20260625104008`, `20260625`, `104008`, `1000`
-- pktHash: `d0708f61b157d58b20a44a143887767d5cf2c0210c11d615d1881990f24ddf3e`
-- trdAmt(암호화): `AntV/eDpxIaKF0hJiePDKA==`
-
-### 운영 (MID `M2665490` 등)
-
-```bash
-npx wrangler secret put HECTO_HASH_KEY
-# ST1009281328226982205
-
-npx wrangler secret put HECTO_AES_KEY
-# pgSettle30y739r82jtd709yOfZ2yK5K
-```
-
-### 운영 (헥토에서 발급받은 본인 MID·키)
-
-운영 MID(예: `M2665490`)를 쓸 때는 **그 MID에 맞는** 해시·암호화 키를 넣으세요.  
-`nxca_jt_il` 테스트 키와 운영 MID를 섞으면 안 됩니다.
-
-```bash
-npx wrangler secret put HECTO_AES_KEY
-# 테스트: pgSettle30y739r82jtd709yOfZ2yK5K
-
-npx wrangler secret put HECTO_HASH_KEY
-# 테스트: ST1009281328226982205
 ```
 
 ### 관리자 대시보드 연동 (선택, 권장)
@@ -84,8 +70,8 @@ SHA256( mchtId + method + mchtTrdNo + trdDt + trdTm + trdAmt평문 + hashKey )
 
 `js/settle-pg-config.js`
 
-- `isTest: true` → `tbnpg.settlebank.co.kr`, MID `nxca_jt_il`
-- `isTest: false` → `npg.settlebank.co.kr`, 운영 MID·키
+- `isTest: false` → `npg.settlebank.co.kr`, MID `M2665490` (운영)
+- `isTest: true` → `tbnpg.settlebank.co.kr`, MID `nxca_jt_il` (테스트)
 
 ## 헥토에 등록할 notiUrl
 
