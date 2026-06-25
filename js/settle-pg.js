@@ -1,8 +1,9 @@
 /**
- * 헥토파이낸셜 SettlePG v1.2 — 신용카드 표준 결제창
- * SETTLE_PG.pay(options, null) popup
+ * 헥토파이낸셜 신용카드 표준 결제창
+ * 기술문서 /card/main.do 직접 POST (popup)
  *
- * 해시·금액 암호화는 Worker /hecto-prepare 에서 처리
+ * 해시: SHA256(mchtId + method + mchtTrdNo + trdDt + trdTm + trdAmt평문 + hashKey)
+ * 암호화: Worker /hecto-prepare (AES-256/ECB/PKCS5 + Base64)
  */
 (function (global) {
   function cfg() {
@@ -22,16 +23,22 @@
   }
 
   function envUrl() {
-    return cfg().isTest ? 'https://tbnpg.settlebank.co.kr' : 'https://npg.settlebank.co.kr';
-  }
-
-  function sdkUrl() {
-    return envUrl() + '/resources/js/v1/SettlePG_v1.2.js';
+    var c = cfg();
+    if (c.pgEnv) return String(c.pgEnv).replace(/\/$/, '');
+    return c.isTest ? 'https://tbnpg.settlebank.co.kr' : 'https://npg.settlebank.co.kr';
   }
 
   function workerUrl(path) {
     var base = String(cfg().workerBaseUrl || '').replace(/\/$/, '');
     return base + path;
+  }
+
+  function normalizeAmount(amount) {
+    var n = Math.max(0, Math.round(Number(amount)));
+    if (!Number.isFinite(n) || n <= 0) {
+      throw new Error('결제 금액이 올바르지 않습니다.');
+    }
+    return String(n);
   }
 
   function buildMchtParam(options) {
@@ -42,49 +49,11 @@
     return parts.join('&');
   }
 
-  function loadSdk() {
-    return new Promise(function (resolve, reject) {
-      if (global.SETTLE_PG && typeof global.SETTLE_PG.pay === 'function') {
-        resolve(global.SETTLE_PG);
-        return;
-      }
-
-      var existing = document.querySelector('script[data-settle-pg-sdk]');
-      if (existing) {
-        existing.addEventListener('load', function () {
-          if (global.SETTLE_PG) resolve(global.SETTLE_PG);
-          else reject(new Error('SETTLE_PG 로드 실패'));
-        });
-        existing.addEventListener('error', function () {
-          reject(new Error('결제 스크립트 로드 실패'));
-        });
-        return;
-      }
-
-      var script = document.createElement('script');
-      script.src = sdkUrl();
-      script.async = true;
-      script.setAttribute('data-settle-pg-sdk', '1');
-      script.onload = function () {
-        if (global.SETTLE_PG && typeof global.SETTLE_PG.pay === 'function') {
-          resolve(global.SETTLE_PG);
-        } else {
-          reject(new Error('SETTLE_PG 객체를 찾을 수 없습니다.'));
-        }
-      };
-      script.onerror = function () {
-        reject(new Error('SettlePG 스크립트를 불러오지 못했습니다.'));
-      };
-      document.head.appendChild(script);
-    });
-  }
-
   function parsePrepareBody(data) {
     if (!data || typeof data !== 'object') return null;
     if (data.pktHash && data.trdAmt) return data;
     if (data.error) throw new Error(data.error);
 
-    // 구 Worker 등 비정상 응답 형식
     if (Array.isArray(data.content) && data.content[0] && data.content[0].text) {
       try {
         var inner = JSON.parse(data.content[0].text);
@@ -94,113 +63,89 @@
     return null;
   }
 
-  async function sha256Hex(text) {
-    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
-    return Array.from(new Uint8Array(buf))
-      .map(function (b) { return b.toString(16).padStart(2, '0'); })
-      .join('');
-  }
-
-  function aesKeyBytes(aesKeyStr) {
-    var raw = new TextEncoder().encode(String(aesKeyStr));
-    if (raw.length >= 32) return raw.slice(0, 32);
-    var padded = new Uint8Array(32);
-    padded.set(raw);
-    return padded;
-  }
-
-  function bytesToBase64(bytes) {
-    var binary = '';
-    for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-    return btoa(binary);
-  }
-
-  var aesJsPromise = null;
-
-  function loadAesJs() {
-    if (!aesJsPromise) {
-      aesJsPromise = import('https://cdn.jsdelivr.net/npm/aes-js@3.1.2/+esm');
-    }
-    return aesJsPromise;
-  }
-
-  async function aes256EcbEncryptBase64(plainText, aesKeyStr) {
-    var aesjs = await loadAesJs();
-    var key = aesKeyBytes(aesKeyStr);
-    var textBytes = aesjs.utils.utf8.toBytes(String(plainText));
-    var padded = aesjs.padding.pkcs7.pad(textBytes);
-    var aesEcb = new aesjs.ModeOfOperation.ecb(key);
-    return bytesToBase64(aesEcb.encrypt(padded));
-  }
-
-  async function prepareLocally(payload) {
-    var c = cfg();
-    if (!c.isTest || !c.testHashKey || !c.testAesKey) return null;
-
-    var method = payload.method || 'card';
-    var trdAmtPlain = String(payload.trdAmt);
-    var raw =
-      String(payload.mchtId) +
-      String(method) +
-      String(payload.mchtTrdNo) +
-      String(payload.trdDt) +
-      String(payload.trdTm) +
-      trdAmtPlain +
-      String(c.testHashKey);
-
-    var result = {
-      pktHash: await sha256Hex(raw),
-      trdAmt: await aes256EcbEncryptBase64(trdAmtPlain, c.testAesKey),
-      mchtTrdNo: payload.mchtTrdNo,
-      method: method,
-    };
-
-    if (payload.mchtCustNm) {
-      result.mchtCustNm = await aes256EcbEncryptBase64(payload.mchtCustNm, c.testAesKey);
-    }
-    if (payload.email) {
-      result.email = await aes256EcbEncryptBase64(payload.email, c.testAesKey);
-    }
-
-    return result;
-  }
-
   async function fetchPrepare(payload) {
-    var prepared = null;
-    var workerError = null;
+    var res = await fetch(workerUrl('/hecto-prepare'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
 
-    try {
-      var res = await fetch(workerUrl('/hecto-prepare'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (res.ok) {
-        prepared = parsePrepareBody(await res.json());
-      } else {
-        workerError = await res.text();
-      }
-    } catch (err) {
-      workerError = err.message || String(err);
+    if (!res.ok) {
+      var text = await res.text();
+      throw new Error(text || '결제 준비 API 오류');
     }
 
-    if (prepared) return prepared;
-
-    var local = await prepareLocally(payload);
-    if (local) {
-      console.warn('Worker 결제 준비 실패 — 테스트 로컬 폴백 사용:', workerError || '빈 응답');
-      return local;
+    var prepared = parsePrepareBody(await res.json());
+    if (!prepared) {
+      throw new Error(
+        'pktHash 생성 실패: Worker에 HECTO_HASH_KEY, HECTO_AES_KEY가 MID와 맞게 설정되어 있는지 확인해 주세요.'
+      );
     }
+    return prepared;
+  }
 
-    throw new Error(
-      workerError ||
-        'pktHash 생성 실패: Cloudflare Worker(stn-api)에 결제 코드를 배포하고 HECTO_HASH_KEY, HECTO_AES_KEY 시크릿을 설정해 주세요.'
+  function appendHidden(form, name, value) {
+    if (value === undefined || value === null || value === '') return;
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = name;
+    input.value = String(value);
+    form.appendChild(input);
+  }
+
+  /** 기술문서 FORM-SUBMIT 방식 — 문서에 있는 필드만 전송 */
+  function openCardPaymentPopup(payData) {
+    var ui = payData.ui || { width: 430, height: 660 };
+    var width = parseInt(ui.width, 10) || 430;
+    var height = parseInt(ui.height, 10) || 660;
+    var left = Math.max(0, Math.floor((screen.width - width) / 2));
+    var top = Math.max(0, Math.floor((screen.height - height) / 2));
+    var popupName = 'STN_HectoPay_' + Date.now();
+
+    var popup = window.open(
+      '',
+      popupName,
+      'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top + ',scrollbars=yes'
     );
+    if (!popup) {
+      throw new Error('팝업이 차단되었습니다. 팝업 차단을 해제한 뒤 다시 시도해 주세요.');
+    }
+
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = envUrl() + '/card/main.do';
+    form.target = popupName;
+    form.acceptCharset = 'UTF-8';
+
+    appendHidden(form, 'mchtId', payData.mchtId);
+    appendHidden(form, 'method', 'card');
+    appendHidden(form, 'trdDt', payData.trdDt);
+    appendHidden(form, 'trdTm', payData.trdTm);
+    appendHidden(form, 'mchtTrdNo', payData.mchtTrdNo);
+    appendHidden(form, 'mchtName', payData.mchtName);
+    appendHidden(form, 'mchtEName', payData.mchtEName);
+    appendHidden(form, 'pmtPrdtNm', payData.pmtPrdtNm);
+    appendHidden(form, 'trdAmt', payData.trdAmt);
+    appendHidden(form, 'notiUrl', payData.notiUrl);
+    appendHidden(form, 'nextUrl', payData.nextUrl);
+    appendHidden(form, 'cancUrl', payData.cancUrl);
+    appendHidden(form, 'pktHash', payData.pktHash);
+
+    if (payData.mchtCustNm) appendHidden(form, 'mchtCustNm', payData.mchtCustNm);
+    if (payData.email) appendHidden(form, 'email', payData.email);
+    if (payData.cphoneNo) appendHidden(form, 'cphoneNo', payData.cphoneNo);
+    if (payData.mchtParam) appendHidden(form, 'mchtParam', payData.mchtParam);
+    if (payData.taxTypeCd) appendHidden(form, 'taxTypeCd', payData.taxTypeCd);
+    if (payData.instmtMon) appendHidden(form, 'instmtMon', payData.instmtMon);
+
+    document.body.appendChild(form);
+    form.submit();
+    setTimeout(function () {
+      if (form.parentNode) form.parentNode.removeChild(form);
+    }, 1000);
   }
 
   global.STNSettlePG = {
-    /** 신용카드 결제창 실행 */
     startCardPayment: async function (options) {
       var c = cfg();
       if (!c.mchtId) throw new Error('SettlePG mchtId가 설정되지 않았습니다.');
@@ -210,12 +155,12 @@
       var rand = Math.random().toString(36).substring(2, 6).toUpperCase();
       var prefix = String(options.orderPrefix || 'STN').replace(/[^A-Za-z0-9]/g, '');
       var mchtTrdNo = prefix + ts.trdDt + ts.trdTm + rand;
-      var trdAmtPlain = String(options.amount);
+      var trdAmtPlain = normalizeAmount(options.amount);
 
       if (typeof options.onPending === 'function') {
         options.onPending({
           orderId: mchtTrdNo,
-          amount: Number(options.amount),
+          amount: Number(trdAmtPlain),
           applicantName: options.customer.name,
           phone: options.customer.phone,
           email: options.customer.email,
@@ -239,14 +184,8 @@
         email: options.customer.email,
       });
 
-      if (!prepared.pktHash || !prepared.trdAmt) {
-        throw new Error('pktHash 또는 거래금액 암호화에 실패했습니다.');
-      }
-
-      var payOptions = {
-        env: envUrl(),
+      openCardPaymentPopup({
         mchtId: c.mchtId,
-        method: 'card',
         trdDt: ts.trdDt,
         trdTm: ts.trdTm,
         mchtTrdNo: mchtTrdNo,
@@ -254,29 +193,18 @@
         mchtName: c.mchtName,
         mchtEName: c.mchtEName,
         pmtPrdtNm: options.programName || c.productName,
-        mchtCustNm: prepared.mchtCustNm || options.customer.name,
+        mchtCustNm: prepared.mchtCustNm,
         cphoneNo: String(options.customer.phone || '').replace(/\D/g, ''),
+        email: prepared.email,
         notiUrl: workerUrl('/hecto-notify'),
         nextUrl: c.nextUrl,
         cancUrl: options.cancUrl,
         pktHash: prepared.pktHash,
-        ui: c.ui || { type: 'popup', width: '430', height: '660' },
+        taxTypeCd: c.taxTypeCd || 'N',
         instmtMon: options.installment || '00',
-      };
-
-      if (c.taxTypeCd) {
-        payOptions.taxTypeCd = c.taxTypeCd;
-      }
-
-      if (prepared.email) {
-        payOptions.email = prepared.email;
-      }
-
-      var mchtParam = buildMchtParam(options);
-      if (mchtParam) payOptions.mchtParam = mchtParam;
-
-      var sdk = await loadSdk();
-      sdk.pay(payOptions, null);
+        mchtParam: buildMchtParam(options) || undefined,
+        ui: c.ui || { type: 'popup', width: '430', height: '660' },
+      });
     },
 
     startPayment: async function (options) {

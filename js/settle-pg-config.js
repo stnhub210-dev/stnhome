@@ -9,6 +9,7 @@
  */
 window.STN_SETTLE_PG = {
   isTest: false,
+  pgEnv: 'https://npg.settlebank.co.kr',
   mchtId: 'M2665490',
   workerBaseUrl: 'https://stn-api.stnhub210.workers.dev',
   mchtName: 'STN스킬업',

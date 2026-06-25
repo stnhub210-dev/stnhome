@@ -43,9 +43,11 @@ async function sha256Hex(text) {
     .join('');
 }
 
+/** PHP openssl_encrypt(AES-256-ECB)와 동일 — 키는 UTF-8 32바이트 */
 function aesKeyBytes(aesKeyStr) {
   const raw = Buffer.from(String(aesKeyStr), 'utf8');
-  if (raw.length >= 32) return raw.subarray(0, 32);
+  if (raw.length === 32) return raw;
+  if (raw.length > 32) return raw.subarray(0, 32);
   const padded = Buffer.alloc(32);
   raw.copy(padded);
   return padded;
