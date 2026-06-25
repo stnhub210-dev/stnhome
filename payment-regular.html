@@ -56,6 +56,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://tbnpg.settlebank.co.kr/resources/js/v1/SettlePG_v1.2.js"></script>
   <style>
     :root {
       --bg: #0a0a0a;
@@ -1666,6 +1667,12 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="admin/assets/js/config.js"></script>
+  <script src="js/referral-public.js"></script>
+  <script src="js/payment-service.js"></script>
+  <script src="js/settle-pg-config.js"></script>
+  <script src="js/settle-pg.js"></script>
   <script>
     (function () {
       var PROGRAM_AMOUNT = 1980000;
@@ -1820,10 +1827,7 @@
       if (window.STNReferralPublic) {
         window.STNReferralPublic.init({
           baseAmount: PROGRAM_AMOUNT,
-          showToast: showToast,
-          onAmountChange: function (amount) {
-            trdAmt = String(amount);
-          }
+          showToast: showToast
         });
       }
 
@@ -1981,13 +1985,7 @@
       updateSubmitState();
     })();
   </script>
-  <script src="/js/settle-pg-config.js"></script>
-  <script src="/js/settle-pg.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/admin/assets/js/config.js"></script>
-  <script src="/js/referral-public.js"></script>
-  <script src="/js/payment-service.js"></script>
-  <script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
+  <script type="text/javascript" src="https://wcs.pstatic.net/wcslog.js"></script>
   <script type="text/javascript">
   if(!wcs_add) var wcs_add = {};
   wcs_add["wa"] = "1ce25a49f3ccbf0";
