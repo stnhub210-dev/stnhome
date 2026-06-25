@@ -208,8 +208,8 @@
 
       var ts = tradeTimestamp();
       var rand = Math.random().toString(36).substring(2, 6).toUpperCase();
-      var prefix = options.orderPrefix || 'STN';
-      var mchtTrdNo = prefix + '-' + ts.trdDt + '-' + rand;
+      var prefix = String(options.orderPrefix || 'STN').replace(/[^A-Za-z0-9]/g, '');
+      var mchtTrdNo = prefix + ts.trdDt + ts.trdTm + rand;
       var trdAmtPlain = String(options.amount);
 
       if (typeof options.onPending === 'function') {
@@ -263,6 +263,10 @@
         ui: c.ui || { type: 'popup', width: '430', height: '660' },
         instmtMon: options.installment || '00',
       };
+
+      if (c.taxTypeCd) {
+        payOptions.taxTypeCd = c.taxTypeCd;
+      }
 
       if (prepared.email) {
         payOptions.email = prepared.email;
