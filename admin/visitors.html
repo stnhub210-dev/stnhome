@@ -43,7 +43,7 @@
       <header class="admin-topbar">
         <div>
           <h2>방문자 통계</h2>
-          <p>사이트 페이지뷰·순방문자·인기 페이지를 확인합니다.</p>
+          <p>페이지뷰·순방문자·기기·접속경로를 확인합니다.</p>
         </div>
         <button type="button" class="btn btn-ghost" id="refresh-btn">새로고침</button>
       </header>
@@ -58,71 +58,61 @@
           <strong id="stat-unique-today">0</strong>
         </article>
         <article class="stat-card">
-          <span>최근 7일</span>
+          <span>주간(7일) 페이지뷰</span>
           <strong id="stat-views-week">0</strong>
         </article>
         <article class="stat-card">
-          <span>7일 순방문자</span>
+          <span>주간 순방문자</span>
           <strong id="stat-unique-week">0</strong>
         </article>
         <article class="stat-card">
-          <span>최근 30일</span>
+          <span>월간(30일) 페이지뷰</span>
           <strong id="stat-views-month">0</strong>
         </article>
         <article class="stat-card">
-          <span>전체 기록</span>
-          <strong id="stat-views-total">0</strong>
+          <span>월간 순방문자</span>
+          <strong id="stat-unique-month">0</strong>
         </article>
       </section>
 
       <section class="panel" style="margin-bottom:18px;">
-        <div class="panel-head">
-          <h3>최근 7일 방문 추이</h3>
+        <div class="panel-head panel-head-tabs">
+          <h3>방문 추이</h3>
+          <div class="period-tabs" role="tablist" aria-label="방문 추이 기간">
+            <button type="button" class="period-tab is-active" id="chart-period-week" role="tab" aria-selected="true">주간</button>
+            <button type="button" class="period-tab" id="chart-period-month" role="tab" aria-selected="false">월간</button>
+          </div>
         </div>
         <div class="chart-grid" id="visitor-chart" aria-label="일별 방문 차트"></div>
       </section>
 
-      <div class="panel-grid">
-        <section class="panel">
-          <div class="panel-head">
-            <h3>인기 페이지 TOP 10</h3>
-          </div>
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>경로</th>
-                  <th>조회수</th>
-                </tr>
-              </thead>
-              <tbody id="top-pages-body">
-                <tr><td colspan="2" class="table-empty">불러오는 중...</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="panel">
-          <div class="panel-head">
-            <h3>최근 방문 기록</h3>
-          </div>
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>시간</th>
-                  <th>경로</th>
-                  <th>페이지</th>
-                  <th>방문자 ID</th>
-                </tr>
-              </thead>
-              <tbody id="recent-views-body">
-                <tr><td colspan="4" class="table-empty">불러오는 중...</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
+      <section class="panel">
+        <div class="panel-head">
+          <h3>최근 방문 기록</h3>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>시간</th>
+                <th>경로</th>
+                <th>페이지</th>
+                <th>기기</th>
+                <th>접속경로</th>
+                <th>방문자 ID</th>
+              </tr>
+            </thead>
+            <tbody id="recent-views-body">
+              <tr><td colspan="6" class="table-empty">불러오는 중...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination" id="visits-pagination" hidden aria-label="방문 기록 페이지">
+          <button type="button" class="page-btn" id="visits-page-prev" aria-label="이전 페이지">이전</button>
+          <div class="page-numbers" id="visits-page-numbers"></div>
+          <button type="button" class="page-btn" id="visits-page-next" aria-label="다음 페이지">다음</button>
+        </div>
+      </section>
     </main>
   </div>
 

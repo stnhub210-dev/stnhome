@@ -910,9 +910,34 @@
       }
 
       function renderSuccess(info) {
-        successSummary.innerHTML = buildSummaryHtml(info);
-        showState("success");
-        clearPending();
+        var pending = readPending();
+
+        function showSuccessUi() {
+          successSummary.innerHTML = buildSummaryHtml(info);
+          showState("success");
+          clearPending();
+        }
+
+        if (window.STNPaymentService && pending) {
+          window.STNPaymentService.savePayment({
+            order_id: info.orderId || pending.orderId,
+            applicant_name: info.applicantName || pending.applicantName,
+            applicant_phone: pending.phone,
+            applicant_email: pending.email,
+            referrer: info.referrer && info.referrer !== "-" ? info.referrer : pending.referrer,
+            referral_code: pending.referral_code,
+            program_name: pending.programName || info.programName || "STN 스킬업 양성과정",
+            tier: pending.tier || "일반 결제",
+            amount: Number(info.amount) || pending.amount,
+            pay_method: "신용카드",
+            status: "paid"
+          }).then(showSuccessUi).catch(function () {
+            showSuccessUi();
+          });
+          return;
+        }
+
+        showSuccessUi();
       }
 
       function renderFail(message) {
@@ -969,6 +994,9 @@
       init();
     })();
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/admin/assets/js/config.js"></script>
+  <script src="/js/payment-service.js"></script>
 
 <script>
     (function () {

@@ -3,25 +3,35 @@
   var PAGE_SIZE = 10;
 
   var DEMO_ROWS = [
-    { created_at: '2026-05-29T15:10:00+09:00', applicant_name: '정하은', applicant_phone: '010-2100-1101', program_name: '얼리버드 할인', amount: 1548000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260529-021' },
-    { created_at: '2026-05-29T13:25:00+09:00', applicant_name: '오준혁', applicant_phone: '010-2100-1102', program_name: '대학생 할인', amount: 990000, pay_method: '계좌이체', status: 'pending', order_id: 'STN-20260529-020' },
-    { created_at: '2026-05-29T11:40:00+09:00', applicant_name: '한지우', applicant_phone: '010-2100-1103', program_name: '일반 결제', amount: 1980000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260529-019' },
-    { created_at: '2026-05-28T18:55:00+09:00', applicant_name: '김민수', applicant_phone: '010-1234-5678', program_name: '얼리버드 할인', amount: 1548000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260528-001' },
-    { created_at: '2026-05-28T16:20:00+09:00', applicant_name: '윤서준', applicant_phone: '010-2100-1104', program_name: '일반 결제', amount: 1980000, pay_method: '계좌이체', status: 'failed', order_id: 'STN-20260528-018' },
-    { created_at: '2026-05-28T14:05:00+09:00', applicant_name: '배수아', applicant_phone: '010-2100-1105', program_name: '대학생 할인', amount: 990000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260528-017' },
-    { created_at: '2026-05-27T11:05:00+09:00', applicant_name: '이서연', applicant_phone: '010-9876-5432', program_name: '대학생 할인', amount: 990000, pay_method: '계좌이체', status: 'pending', order_id: 'STN-20260527-014' },
-    { created_at: '2026-05-27T09:30:00+09:00', applicant_name: '장도윤', applicant_phone: '010-2100-1106', program_name: '얼리버드 할인', amount: 1548000, pay_method: '신용카드', status: 'cancelled', order_id: 'STN-20260527-016' },
-    { created_at: '2026-05-26T20:15:00+09:00', applicant_name: '신예린', applicant_phone: '010-2100-1107', program_name: '일반 결제', amount: 1980000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260526-015' },
-    { created_at: '2026-05-26T09:40:00+09:00', applicant_name: '박지훈', applicant_phone: '010-5555-1212', program_name: '일반 결제', amount: 1980000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260526-008' },
-    { created_at: '2026-05-25T17:50:00+09:00', applicant_name: '최유진', applicant_phone: '010-2100-1108', program_name: '얼리버드 할인', amount: 1548000, pay_method: '계좌이체', status: 'pending', order_id: 'STN-20260525-013' },
-    { created_at: '2026-05-25T10:20:00+09:00', applicant_name: '임태양', applicant_phone: '010-2100-1109', program_name: '대학생 할인', amount: 990000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260525-012' },
-    { created_at: '2026-05-24T14:35:00+09:00', applicant_name: '송민재', applicant_phone: '010-2100-1110', program_name: '일반 결제', amount: 1980000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260524-011' },
-    { created_at: '2026-05-23T11:10:00+09:00', applicant_name: '강하늘', applicant_phone: '010-2100-1111', program_name: '얼리버드 할인', amount: 1548000, pay_method: '계좌이체', status: 'paid', order_id: 'STN-20260523-010' },
-    { created_at: '2026-05-22T08:45:00+09:00', applicant_name: '노지안', applicant_phone: '010-2100-1112', program_name: '대학생 할인', amount: 990000, pay_method: '신용카드', status: 'pending', order_id: 'STN-20260522-009' }
+    { created_at: '2026-05-29T15:10:00+09:00', applicant_name: '정하은', applicant_phone: '010-2100-1101', program_name: '얼리버드 할인', amount: 1548000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260529-021', referrer: 'STN-EARLY10' },
+    { created_at: '2026-05-29T13:25:00+09:00', applicant_name: '오준혁', applicant_phone: '010-2100-1102', program_name: '대학생 할인', amount: 990000, pay_method: '계좌이체', status: 'pending', order_id: 'STN-20260529-020', referrer: null },
+    { created_at: '2026-05-29T11:40:00+09:00', applicant_name: '한지우', applicant_phone: '010-2100-1103', program_name: '일반 결제', amount: 1980000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260529-019', referrer: '추천인 없음' },
+    { created_at: '2026-05-28T18:55:00+09:00', applicant_name: '김민수', applicant_phone: '010-1234-5678', program_name: '얼리버드 할인', amount: 1548000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260528-001', referrer: 'KIM2024' },
+    { created_at: '2026-05-28T16:20:00+09:00', applicant_name: '윤서준', applicant_phone: '010-2100-1104', program_name: '일반 결제', amount: 1980000, pay_method: '계좌이체', status: 'failed', order_id: 'STN-20260528-018', referrer: null },
+    { created_at: '2026-05-28T14:05:00+09:00', applicant_name: '배수아', applicant_phone: '010-2100-1105', program_name: '대학생 할인', amount: 990000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260528-017', referrer: 'YOUTUBE5' },
+    { created_at: '2026-05-27T11:05:00+09:00', applicant_name: '이서연', applicant_phone: '010-9876-5432', program_name: '대학생 할인', amount: 990000, pay_method: '계좌이체', status: 'pending', order_id: 'STN-20260527-014', referrer: null },
+    { created_at: '2026-05-27T09:30:00+09:00', applicant_name: '장도윤', applicant_phone: '010-2100-1106', program_name: '얼리버드 할인', amount: 1548000, pay_method: '신용카드', status: 'cancelled', order_id: 'STN-20260527-016', referrer: 'STN-EARLY10' },
+    { created_at: '2026-05-26T20:15:00+09:00', applicant_name: '신예린', applicant_phone: '010-2100-1107', program_name: '일반 결제', amount: 1980000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260526-015', referrer: '추천인 없음' },
+    { created_at: '2026-05-26T09:40:00+09:00', applicant_name: '박지훈', applicant_phone: '010-5555-1212', program_name: '일반 결제', amount: 1980000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260526-008', referrer: 'PARK15' },
+    { created_at: '2026-05-25T17:50:00+09:00', applicant_name: '최유진', applicant_phone: '010-2100-1108', program_name: '얼리버드 할인', amount: 1548000, pay_method: '계좌이체', status: 'pending', order_id: 'STN-20260525-013', referrer: null },
+    { created_at: '2026-05-25T10:20:00+09:00', applicant_name: '임태양', applicant_phone: '010-2100-1109', program_name: '대학생 할인', amount: 990000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260525-012', referrer: 'STUDENT10' },
+    { created_at: '2026-05-24T14:35:00+09:00', applicant_name: '송민재', applicant_phone: '010-2100-1110', program_name: '일반 결제', amount: 1980000, pay_method: '신용카드', status: 'paid', order_id: 'STN-20260524-011', referrer: null },
+    { created_at: '2026-05-23T11:10:00+09:00', applicant_name: '강하늘', applicant_phone: '010-2100-1111', program_name: '얼리버드 할인', amount: 1548000, pay_method: '계좌이체', status: 'paid', order_id: 'STN-20260523-010', referrer: 'KIM2024' },
+    { created_at: '2026-05-22T08:45:00+09:00', applicant_name: '노지안', applicant_phone: '010-2100-1112', program_name: '대학생 할인', amount: 990000, pay_method: '신용카드', status: 'pending', order_id: 'STN-20260522-009', referrer: '추천인 없음' }
   ];
 
+  var sourceRows = [];
   var allRows = [];
   var currentPage = 1;
+  var activeFilters = {
+    name: '',
+    phoneSuffix: '',
+    status: '',
+    referrer: '',
+    referrerText: '',
+    dateFrom: '',
+    dateTo: ''
+  };
 
   function formatWon(n) {
     var num = Number(n);
@@ -65,10 +75,170 @@
       .replace(/"/g, '&quot;');
   }
 
+  function phoneDigits(phone) {
+    return String(phone || '').replace(/\D/g, '');
+  }
+
+  function hasReferrerValue(referrer) {
+    var value = String(referrer || '').trim();
+    if (!value || value === '-' || value === '추천인 없음') return false;
+    return true;
+  }
+
+  function renderReferrerCell(referrer) {
+    if (!hasReferrerValue(referrer)) {
+      return '<span class="referrer-badge none">없음</span>';
+    }
+    return '<span class="referrer-badge has">' + escapeHtml(referrer) + '</span>';
+  }
+
+  function rowDateKey(iso) {
+    var d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return '';
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return y + '-' + m + '-' + day;
+  }
+
+  function readFiltersFromForm() {
+    var nameEl = document.getElementById('filter-name');
+    var phoneEl = document.getElementById('filter-phone-suffix');
+    var statusEl = document.getElementById('filter-status');
+    var referrerEl = document.getElementById('filter-referrer');
+    var referrerTextEl = document.getElementById('filter-referrer-text');
+    var fromEl = document.getElementById('filter-date-from');
+    var toEl = document.getElementById('filter-date-to');
+
+    return {
+      name: (nameEl && nameEl.value.trim()) || '',
+      phoneSuffix: (phoneEl && phoneEl.value.replace(/\D/g, '')) || '',
+      status: (statusEl && statusEl.value) || '',
+      referrer: (referrerEl && referrerEl.value) || '',
+      referrerText: (referrerTextEl && referrerTextEl.value.trim()) || '',
+      dateFrom: (fromEl && fromEl.value) || '',
+      dateTo: (toEl && toEl.value) || ''
+    };
+  }
+
+  function hasActiveFilters(filters) {
+    return !!(
+      filters.name ||
+      filters.phoneSuffix ||
+      filters.status ||
+      filters.referrer ||
+      filters.referrerText ||
+      filters.dateFrom ||
+      filters.dateTo
+    );
+  }
+
+  function matchesFilters(row, filters) {
+    if (filters.name) {
+      var name = String(row.applicant_name || '');
+      if (name.indexOf(filters.name) === -1) return false;
+    }
+
+    if (filters.phoneSuffix) {
+      var digits = phoneDigits(row.applicant_phone);
+      if (!digits || digits.slice(-filters.phoneSuffix.length) !== filters.phoneSuffix) {
+        return false;
+      }
+    }
+
+    if (filters.status && row.status !== filters.status) {
+      return false;
+    }
+
+    var hasReferrer = hasReferrerValue(row.referrer);
+    if (filters.referrer === 'has' && !hasReferrer) return false;
+    if (filters.referrer === 'none' && hasReferrer) return false;
+
+    if (filters.referrerText) {
+      var referrerValue = String(row.referrer || '');
+      if (referrerValue.toLowerCase().indexOf(filters.referrerText.toLowerCase()) === -1) {
+        return false;
+      }
+    }
+
+    var dateKey = rowDateKey(row.created_at);
+    if (filters.dateFrom && (!dateKey || dateKey < filters.dateFrom)) {
+      return false;
+    }
+    if (filters.dateTo && (!dateKey || dateKey > filters.dateTo)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  function applyFilters() {
+    activeFilters = readFiltersFromForm();
+
+    if (activeFilters.dateFrom && activeFilters.dateTo && activeFilters.dateFrom > activeFilters.dateTo) {
+      showTableMessage('시작일은 종료일보다 늦을 수 없습니다.');
+      updateFilterResult(0, true);
+      hidePagination();
+      updateStats([]);
+      return false;
+    }
+
+    allRows = sourceRows.filter(function (row) {
+      return matchesFilters(row, activeFilters);
+    });
+
+    currentPage = 1;
+    updateStats(allRows);
+    updateFilterResult(allRows.length, false);
+    renderRows();
+    return true;
+  }
+
+  function updateFilterResult(count, isError) {
+    var el = document.getElementById('filter-result-text');
+    if (!el) return;
+
+    if (isError) {
+      el.hidden = false;
+      el.innerHTML = '<span style="color:var(--err)">기간 조건을 확인해 주세요.</span>';
+      return;
+    }
+
+    if (!hasActiveFilters(activeFilters)) {
+      el.hidden = true;
+      el.textContent = '';
+      return;
+    }
+
+    el.hidden = false;
+    el.innerHTML = '검색 결과 <strong>' + count.toLocaleString('ko-KR') + '</strong>건 (전체 ' + sourceRows.length.toLocaleString('ko-KR') + '건)';
+  }
+
+  function resetFilters() {
+    var form = document.getElementById('applications-filter');
+    if (form) form.reset();
+
+    activeFilters = {
+      name: '',
+      phoneSuffix: '',
+      status: '',
+      referrer: '',
+      referrerText: '',
+      dateFrom: '',
+      dateTo: ''
+    };
+
+    allRows = sourceRows.slice();
+    currentPage = 1;
+    updateStats(allRows);
+    updateFilterResult(0, false);
+    renderRows();
+  }
+
   function showTableMessage(text) {
     var tbody = document.getElementById('applications-body');
     if (!tbody) return;
-    tbody.innerHTML = '<tr><td colspan="8" class="table-empty">' + text + '</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" class="table-empty">' + text + '</td></tr>';
     hidePagination();
   }
 
@@ -138,8 +308,13 @@
     var tbody = document.getElementById('applications-body');
     if (!tbody) return;
 
-    if (!allRows.length) {
+    if (!sourceRows.length) {
       showTableMessage('등록된 신청 내역이 없습니다.');
+      return;
+    }
+
+    if (!allRows.length) {
+      showTableMessage('조건에 맞는 신청 내역이 없습니다.');
       return;
     }
 
@@ -153,6 +328,7 @@
           '<td>' + escapeHtml(row.program_name || row.tier || '-') + '</td>' +
           '<td>' + formatWon(row.amount) + '</td>' +
           '<td>' + escapeHtml(row.pay_method || '-') + '</td>' +
+          '<td>' + renderReferrerCell(row.referrer) + '</td>' +
           '<td><span class="status-badge status-' + escapeHtml(row.status || 'pending') + '">' + statusLabel(row.status) + '</span></td>' +
           '<td class="mono">' + escapeHtml(row.order_id || '-') + '</td>' +
         '</tr>'
@@ -205,10 +381,50 @@
     }
   }
 
+  function bindFilterControls() {
+    var form = document.getElementById('applications-filter');
+    var resetBtn = document.getElementById('filter-reset');
+    var phoneEl = document.getElementById('filter-phone-suffix');
+
+    if (phoneEl) {
+      phoneEl.addEventListener('input', function () {
+        phoneEl.value = phoneEl.value.replace(/\D/g, '').slice(0, 4);
+      });
+    }
+
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        applyFilters();
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function () {
+        resetFilters();
+      });
+    }
+  }
+
   function setApplications(rows) {
+    sourceRows = rows.slice();
     allRows = rows.slice();
     currentPage = 1;
+    activeFilters = {
+      name: '',
+      phoneSuffix: '',
+      status: '',
+      referrer: '',
+      referrerText: '',
+      dateFrom: '',
+      dateTo: ''
+    };
+
+    var form = document.getElementById('applications-filter');
+    if (form) form.reset();
+
     updateStats(allRows);
+    updateFilterResult(0, false);
     renderRows();
   }
 
@@ -241,14 +457,41 @@
       setText('admin-user-email', userEmail || '관리자');
       showDemoBanner();
       bindPaginationControls();
+      bindFilterControls();
+      window.stnAdminDatePicker.bind();
       window.stnAdminAuth.bindLogout(document.getElementById('logout-btn'));
 
       var refreshBtn = document.getElementById('refresh-btn');
       if (refreshBtn) {
         refreshBtn.addEventListener('click', function () {
-          loadApplications().catch(function (err) {
-            showTableMessage('데이터 로드 실패: ' + (err.message || err));
-          });
+          var hadFilters = hasActiveFilters(activeFilters);
+          var savedFilters = hadFilters ? Object.assign({}, activeFilters) : null;
+
+          loadApplications()
+            .then(function () {
+              if (!savedFilters) return;
+
+              var nameEl = document.getElementById('filter-name');
+              var phoneEl = document.getElementById('filter-phone-suffix');
+              var statusEl = document.getElementById('filter-status');
+              var referrerEl = document.getElementById('filter-referrer');
+              var referrerTextEl = document.getElementById('filter-referrer-text');
+              var fromEl = document.getElementById('filter-date-from');
+              var toEl = document.getElementById('filter-date-to');
+
+              if (nameEl) nameEl.value = savedFilters.name;
+              if (phoneEl) phoneEl.value = savedFilters.phoneSuffix;
+              if (statusEl) statusEl.value = savedFilters.status;
+              if (referrerEl) referrerEl.value = savedFilters.referrer;
+              if (referrerTextEl) referrerTextEl.value = savedFilters.referrerText;
+              if (fromEl) fromEl.value = savedFilters.dateFrom;
+              if (toEl) toEl.value = savedFilters.dateTo;
+
+              applyFilters();
+            })
+            .catch(function (err) {
+              showTableMessage('데이터 로드 실패: ' + (err.message || err));
+            });
         });
       }
 

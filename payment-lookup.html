@@ -254,6 +254,7 @@
                 '<dt>신청자</dt><dd>' + escapeHtml(row.applicant_name) + '</dd>' +
                 '<dt>과정/요금제</dt><dd>' + escapeHtml(row.tier || '-') + '</dd>' +
                 '<dt>결제금액</dt><dd>' + formatWon(row.amount) + '</dd>' +
+                '<dt>추천인 코드</dt><dd>' + escapeHtml(row.referrer || '-') + '</dd>' +
                 '<dt>결제수단</dt><dd>' + escapeHtml(row.pay_method || '-') + '</dd>' +
                 '<dt>신청일</dt><dd>' + formatDate(row.created_at) + '</dd>' +
                 '<dt>주문번호</dt><dd>' + escapeHtml(row.order_id || '-') + '</dd>' +

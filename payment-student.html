@@ -528,6 +528,27 @@
       color: var(--err);
       min-height: 1.2em;
     }
+    .field-msg.is-ok { color: var(--lime); }
+    .input-with-btn {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+    }
+    .input-with-btn .field-input { flex: 1; min-width: 0; }
+    .btn-sm {
+      min-height: 44px;
+      padding: 0 14px;
+      white-space: nowrap;
+      font-size: 0.86rem;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #151515;
+      color: #ddd;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-sm:hover { border-color: var(--lime); color: var(--lime); }
+    .sum-row-discount strong { color: var(--lime); }
     .field-inline-action {
       margin-top: 8px;
       padding: 6px 12px;
@@ -1510,9 +1531,13 @@
             <p class="field-msg" id="err-email" role="alert"></p>
           </div>
           <div class="field">
-            <label class="field-label" for="applicant-referrer">추천인</label>
-            <input class="field-input" type="text" id="applicant-referrer" name="applicant-referrer" autocomplete="off" placeholder="추천인 이름(선택)" />
+            <label class="field-label" for="applicant-referrer">추천인 코드</label>
+            <div class="input-with-btn">
+              <input class="field-input" type="text" id="applicant-referrer" name="applicant-referrer" autocomplete="off" placeholder="코드 입력 (선택)" maxlength="20" />
+              <button type="button" class="btn btn-ghost btn-sm" id="btn-apply-referrer">코드 확인</button>
+            </div>
             <button type="button" class="field-inline-action" id="btn-referrer-none">추천인 없음</button>
+            <p class="field-msg" id="err-referrer" role="alert"></p>
           </div>
           <div class="field field--full">
             <label class="field-label">재학·휴학 증명서 제출<span class="req" aria-hidden="true">*</span></label>
@@ -1634,10 +1659,11 @@
           <div class="sum-rows">
             <div class="sum-row"><span>수강료</span><strong>900,000원</strong></div>
             <div class="sum-row"><span>부가세 (10%)</span><strong>90,000원</strong></div>
+            <div class="sum-row sum-row-discount" id="sum-referral-discount" hidden><span>추천인 할인</span><strong>-0원</strong></div>
           </div>
           <div class="sum-total">
             <span class="sum-total-label">총 결제금액</span>
-            <span class="sum-total-val">990,000원</span>
+            <span class="sum-total-val" id="sum-total-val">990,000원</span>
           </div>
           <div class="pay-amount-methods">
             <p class="pay-section-label" id="pay-method-title">결제수단</p>
@@ -1931,10 +1957,13 @@
       if (elReferrer) {
         elReferrer.addEventListener("input", updateSubmitState);
       }
-      if (btnReferrerNone && elReferrer) {
-        btnReferrerNone.addEventListener("click", function () {
-          elReferrer.value = "추천인 없음";
-          updateSubmitState();
+
+      var PROGRAM_AMOUNT = 990000;
+
+      if (window.STNReferralPublic) {
+        window.STNReferralPublic.init({
+          baseAmount: PROGRAM_AMOUNT,
+          showToast: showToast
         });
       }
 
@@ -2064,31 +2093,73 @@
 
       btnSubmit.addEventListener("click", function () {
         if (!runValidationWithToast()) return;
+        if (window.STNReferralPublic && !window.STNReferralPublic.validateBeforeSubmit()) return;
         loading.classList.add("is-on");
         loading.setAttribute("aria-hidden", "false");
-        setTimeout(function () {
-          var referrerText = elReferrer && elReferrer.value.trim() ? elReferrer.value.trim() : "-";
+
+        var referral = window.STNReferralPublic || null;
+        var finalAmount = referral ? referral.getFinalAmount() : PROGRAM_AMOUNT;
+        var referrerValue = referral ? referral.getReferrerValue() : null;
+        var referralCode = referral ? referral.getReferralCode() : null;
+        var payMethodKey = getPayMethod();
+        var orderId = window.STNPaymentService
+          ? window.STNPaymentService.generateOrderId("STN-ST")
+          : "STN-ST-" + Date.now();
+
+        var paymentRecord = {
+          order_id: orderId,
+          applicant_name: elName.value.trim(),
+          applicant_phone: elPhone.value.trim(),
+          applicant_email: elEmail.value.trim(),
+          referrer: referrerValue,
+          referral_code: referralCode,
+          program_name: "STN 스킬업 양성과정",
+          tier: "대학생 할인",
+          amount: finalAmount,
+          pay_method: payMethodLabel(),
+          status: window.STNPaymentService
+            ? window.STNPaymentService.mapStatusForPayMethod(payMethodKey)
+            : (payMethodKey === "card" ? "paid" : "pending")
+        };
+
+        var finish = function () {
           loading.classList.remove("is-on");
           loading.setAttribute("aria-hidden", "true");
           flow.hidden = true;
           complete.hidden = false;
           window.scrollTo({ top: 0, behavior: "smooth" });
 
+          var amountText = referral
+            ? referral.formatWon(finalAmount)
+            : finalAmount.toLocaleString("ko-KR") + "원";
+
           summaryEl.innerHTML =
+            "<dt>주문번호</dt><dd>" + escapeHtml(orderId) + "</dd>" +
             "<dt>프로그램명</dt><dd>STN 스킬업 양성과정</dd>" +
             "<dt>교육 기간</dt><dd>2026. 8. 15 ~ 8. 17 (2박 3일)</dd>" +
             "<dt>신청자 이름</dt><dd>" +
             escapeHtml(elName.value.trim()) +
             "</dd>" +
-            "<dt>추천인</dt><dd>" +
-            escapeHtml(referrerText) +
+            "<dt>추천인 코드</dt><dd>" +
+            escapeHtml(referrerValue || "-") +
             "</dd>" +
             "<dt>증명서</dt><dd>카카오 1:1 전송 예정</dd>" +
-            "<dt>결제금액</dt><dd>990,000원</dd>" +
+            "<dt>결제금액</dt><dd>" + escapeHtml(amountText) + "</dd>" +
             "<dt>결제수단</dt><dd>" +
             escapeHtml(payMethodLabel()) +
             "</dd>";
-        }, 1200);
+        };
+
+        if (window.STNPaymentService) {
+          window.STNPaymentService.savePayment(paymentRecord).then(finish).catch(function () {
+            loading.classList.remove("is-on");
+            loading.setAttribute("aria-hidden", "true");
+            showToast("저장 중 오류가 발생했습니다. 고객센터로 문의해 주세요.");
+          });
+          return;
+        }
+
+        setTimeout(finish, 1200);
       });
 
       function escapeHtml(s) {
@@ -2103,31 +2174,10 @@
       updateSubmitState();
     })();
   </script>
-
-<script>
-    (function () {
-      const navbar = document.querySelector(".navbar");
-      if (!navbar) return;
-      let scrollTicking = false;
-      let glowTimeout;
-
-      const flashOnScroll = () => {
-        if (scrollTicking) return;
-        scrollTicking = true;
-        requestAnimationFrame(() => {
-          navbar.classList.add("is-scrolling");
-          clearTimeout(glowTimeout);
-          glowTimeout = setTimeout(() => {
-            navbar.classList.remove("is-scrolling");
-          }, 240);
-          scrollTicking = false;
-        });
-      };
-
-      window.addEventListener("scroll", flashOnScroll, { passive: true });
-      window.addEventListener("wheel", flashOnScroll, { passive: true });
-    })();
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/admin/assets/js/config.js"></script>
+  <script src="/js/referral-public.js"></script>
+  <script src="/js/payment-service.js"></script>
   <script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
   <script type="text/javascript">
   if(!wcs_add) var wcs_add = {};

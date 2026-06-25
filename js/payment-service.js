@@ -1,9 +1,10 @@
 /**
- * 결제 신청 저장 · 이름+연락처 조회
+ * 결제 신청 저장 · 이름+연락처 조회 · 추천인 코드 사용 집계
  * Supabase 연동 시 DB 저장, 미연동 시 localStorage 사용
  */
 (function (global) {
   var STORAGE_KEY = 'stn_payment_records';
+  var PENDING_KEY = 'stnPaymentPending';
   var TABLE = 'payment_applications';
 
   function normalizePhone(phone) {
@@ -56,6 +57,20 @@
     return 'pending';
   }
 
+  async function incrementReferralUsage(referralCode) {
+    if (!referralCode || !isSupabaseConfigured()) return;
+    try {
+      var client = getClient();
+      var result = await client.rpc('increment_referral_usage', { p_code: referralCode });
+      if (result.error) throw result.error;
+      if (result.data && result.data.ok === false) {
+        console.warn('추천인 코드 사용 집계 실패:', result.data.message);
+      }
+    } catch (err) {
+      console.warn('추천인 코드 사용 집계 오류:', err);
+    }
+  }
+
   async function savePayment(record) {
     var payload = {
       order_id: record.order_id,
@@ -93,6 +108,10 @@
           notes: payload.notes
         });
         if (result.error) throw result.error;
+
+        if (record.referral_code) {
+          await incrementReferralUsage(record.referral_code);
+        }
       } catch (err) {
         console.warn('Supabase 저장 실패, localStorage에만 저장됨:', err);
       }
@@ -130,11 +149,37 @@
     });
   }
 
+  function savePending(data) {
+    try {
+      sessionStorage.setItem(PENDING_KEY, JSON.stringify(data));
+    } catch (_) {}
+  }
+
+  function readPending() {
+    try {
+      var raw = sessionStorage.getItem(PENDING_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function clearPending() {
+    try {
+      sessionStorage.removeItem(PENDING_KEY);
+    } catch (_) {}
+  }
+
   global.STNPaymentService = {
+    PENDING_KEY: PENDING_KEY,
     normalizePhone: normalizePhone,
     generateOrderId: generateOrderId,
     mapStatusForPayMethod: mapStatusForPayMethod,
     savePayment: savePayment,
-    lookupPayments: lookupPayments
+    lookupPayments: lookupPayments,
+    savePending: savePending,
+    readPending: readPending,
+    clearPending: clearPending,
+    incrementReferralUsage: incrementReferralUsage
   };
 })(window);

@@ -86,6 +86,7 @@ returns table (
   amount integer,
   pay_method text,
   status text,
+  referrer text,
   created_at timestamptz
 )
 language plpgsql
@@ -107,6 +108,7 @@ begin
     pa.amount,
     pa.pay_method,
     pa.status,
+    pa.referrer,
     pa.created_at
   from public.payment_applications pa
   where trim(pa.applicant_name) = trim(p_name)
@@ -238,6 +240,55 @@ end;
 $$;
 
 grant execute on function public.validate_referral_code(text) to anon, authenticated;
+
+-- 추천인 코드 사용 횟수 증가 (결제 저장 후 anon 호출)
+create or replace function public.increment_referral_usage(p_code text)
+returns json
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  r public.referral_codes%rowtype;
+begin
+  select * into r
+  from public.referral_codes
+  where upper(code) = upper(trim(p_code))
+  for update;
+
+  if not found then
+    return json_build_object('ok', false, 'message', '코드를 찾을 수 없습니다.');
+  end if;
+
+  if not r.is_active then
+    return json_build_object('ok', false, 'message', '비활성화된 코드입니다.');
+  end if;
+
+  if r.valid_from is not null and r.valid_from > now() then
+    return json_build_object('ok', false, 'message', '아직 사용할 수 없는 코드입니다.');
+  end if;
+
+  if r.valid_until is not null and r.valid_until < now() then
+    return json_build_object('ok', false, 'message', '만료된 코드입니다.');
+  end if;
+
+  if r.max_uses is not null and r.used_count >= r.max_uses then
+    return json_build_object('ok', false, 'message', '사용 횟수가 초과되었습니다.');
+  end if;
+
+  update public.referral_codes
+  set used_count = used_count + 1
+  where id = r.id;
+
+  return json_build_object(
+    'ok', true,
+    'code', r.code,
+    'used_count', r.used_count + 1
+  );
+end;
+$$;
+
+grant execute on function public.increment_referral_usage(text) to anon, authenticated;
 
 -- 관리자 계정은 Supabase Auth → Users 에서 직접 생성하세요.
 -- Authentication → Users → Add user (email/password)

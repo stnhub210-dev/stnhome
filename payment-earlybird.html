@@ -528,6 +528,27 @@
       color: var(--err);
       min-height: 1.2em;
     }
+    .field-msg.is-ok { color: var(--lime); }
+    .input-with-btn {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+    }
+    .input-with-btn .field-input { flex: 1; min-width: 0; }
+    .btn-sm {
+      min-height: 44px;
+      padding: 0 14px;
+      white-space: nowrap;
+      font-size: 0.86rem;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #151515;
+      color: #ddd;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-sm:hover { border-color: var(--lime); color: var(--lime); }
+    .sum-row-discount strong { color: var(--lime); }
     .field-inline-action {
       margin-top: 8px;
       padding: 6px 12px;
@@ -1448,9 +1469,13 @@
             <p class="field-msg" id="err-email" role="alert"></p>
           </div>
           <div class="field">
-            <label class="field-label" for="applicant-referrer">추천인</label>
-            <input class="field-input" type="text" id="applicant-referrer" name="applicant-referrer" autocomplete="off" placeholder="추천인 이름(선택)" />
+            <label class="field-label" for="applicant-referrer">추천인 코드</label>
+            <div class="input-with-btn">
+              <input class="field-input" type="text" id="applicant-referrer" name="applicant-referrer" autocomplete="off" placeholder="코드 입력 (선택)" maxlength="20" />
+              <button type="button" class="btn btn-ghost btn-sm" id="btn-apply-referrer">코드 확인</button>
+            </div>
             <button type="button" class="field-inline-action" id="btn-referrer-none">추천인 없음</button>
+            <p class="field-msg" id="err-referrer" role="alert"></p>
           </div>
           </div>
         </section>
@@ -1559,10 +1584,11 @@
           <div class="sum-rows">
             <div class="sum-row"><span>수강료</span><strong>1,440,000원</strong></div>
             <div class="sum-row"><span>부가세 (10%)</span><strong>144,000원</strong></div>
+            <div class="sum-row sum-row-discount" id="sum-referral-discount" hidden><span>추천인 할인</span><strong>-0원</strong></div>
           </div>
           <div class="sum-total">
             <span class="sum-total-label">총 결제금액</span>
-            <span class="sum-total-val">1,584,000원</span>
+            <span class="sum-total-val" id="sum-total-val">1,584,000원</span>
           </div>
           <div class="pay-amount-methods">
             <p class="pay-section-label" id="pay-method-title">결제수단</p>
@@ -1831,10 +1857,13 @@
       if (elReferrer) {
         elReferrer.addEventListener("input", updateSubmitState);
       }
-      if (btnReferrerNone && elReferrer) {
-        btnReferrerNone.addEventListener("click", function () {
-          elReferrer.value = "추천인 없음";
-          updateSubmitState();
+
+      var PROGRAM_AMOUNT = 1584000;
+
+      if (window.STNReferralPublic) {
+        window.STNReferralPublic.init({
+          baseAmount: PROGRAM_AMOUNT,
+          showToast: showToast
         });
       }
 
@@ -1934,14 +1963,16 @@
         return ok;
       }
 
-      var PROGRAM_AMOUNT = 1584000;
-
       btnSubmit.addEventListener("click", function () {
         if (!runValidationWithToast()) return;
+        if (window.STNReferralPublic && !window.STNReferralPublic.validateBeforeSubmit()) return;
         loading.classList.add("is-on");
         loading.setAttribute("aria-hidden", "false");
 
-        var referrerText = elReferrer && elReferrer.value.trim() ? elReferrer.value.trim() : "-";
+        var referral = window.STNReferralPublic || null;
+        var finalAmount = referral ? referral.getFinalAmount() : PROGRAM_AMOUNT;
+        var referrerValue = referral ? referral.getReferrerValue() : null;
+        var referralCode = referral ? referral.getReferralCode() : null;
         var payMethod = payMethodLabel();
         var payMethodKey = getPayMethod();
         var orderId = window.STNPaymentService
@@ -1953,10 +1984,11 @@
           applicant_name: elName.value.trim(),
           applicant_phone: elPhone.value.trim(),
           applicant_email: elEmail.value.trim(),
-          referrer: referrerText === "-" ? null : referrerText,
+          referrer: referrerValue,
+          referral_code: referralCode,
           program_name: "STN 스킬업 양성과정",
           tier: "얼리버드 할인",
-          amount: PROGRAM_AMOUNT,
+          amount: finalAmount,
           pay_method: payMethod,
           status: window.STNPaymentService
             ? window.STNPaymentService.mapStatusForPayMethod(payMethodKey)
@@ -1983,13 +2015,17 @@
             lookupLink.href = "payment-lookup.html?" + q.toString();
           }
 
+          var amountText = referral
+            ? referral.formatWon(finalAmount)
+            : finalAmount.toLocaleString("ko-KR") + "원";
+
           summaryEl.innerHTML =
             "<dt>주문번호</dt><dd>" + escapeHtml(orderId) + "</dd>" +
             "<dt>프로그램명</dt><dd>STN 스킬업 양성과정</dd>" +
             "<dt>교육 기간</dt><dd>2026. 8. 15 ~ 8. 17 (2박 3일)</dd>" +
             "<dt>신청자 이름</dt><dd>" + escapeHtml(paymentRecord.applicant_name) + "</dd>" +
-            "<dt>추천인</dt><dd>" + escapeHtml(referrerText) + "</dd>" +
-            "<dt>결제금액</dt><dd>1,584,000원</dd>" +
+            "<dt>추천인 코드</dt><dd>" + escapeHtml(referrerValue || "-") + "</dd>" +
+            "<dt>결제금액</dt><dd>" + escapeHtml(amountText) + "</dd>" +
             "<dt>결제수단</dt><dd>" + escapeHtml(payMethod) + "</dd>" +
             "<dt>상태</dt><dd>" + (paymentRecord.status === "paid" ? "결제 완료" : "접수·입금 대기") + "</dd>";
         }).catch(function () {
@@ -2038,6 +2074,7 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/admin/assets/js/config.js"></script>
+  <script src="/js/referral-public.js"></script>
   <script src="/js/payment-service.js"></script>
   <script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
   <script type="text/javascript">
