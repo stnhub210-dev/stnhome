@@ -9,11 +9,14 @@
  */
 
 const ALLOW_ORIGINS = [
+  'https://stnmedia.kr',
+  'https://www.stnmedia.kr',
   'https://stnhub210-dev.github.io',
   'https://strhub210-dev.github.io',
 ];
 
-export function corsHeaders(request) {
+export function corsHeaders(request, allowList) {
+  const origins = allowList || ALLOW_ORIGINS;
   const origin = request.headers.get('Origin');
   if (!origin || origin === 'null') {
     return {
@@ -23,7 +26,7 @@ export function corsHeaders(request) {
       'Access-Control-Max-Age': '86400',
     };
   }
-  const allow = ALLOW_ORIGINS.includes(origin) ? origin : ALLOW_ORIGINS[0];
+  const allow = origins.includes(origin) ? origin : origins[0];
   return {
     'Access-Control-Allow-Origin': allow,
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',

@@ -1963,76 +1963,49 @@
         return ok;
       }
 
-      btnSubmit.addEventListener("click", function () {
+      btnSubmit.addEventListener("click", async function () {
         if (!runValidationWithToast()) return;
         if (window.STNReferralPublic && !window.STNReferralPublic.validateBeforeSubmit()) return;
         loading.classList.add("is-on");
         loading.setAttribute("aria-hidden", "false");
 
-        var referral = window.STNReferralPublic || null;
-        var finalAmount = referral ? referral.getFinalAmount() : PROGRAM_AMOUNT;
-        var referrerValue = referral ? referral.getReferrerValue() : null;
-        var referralCode = referral ? referral.getReferralCode() : null;
-        var payMethod = payMethodLabel();
-        var payMethodKey = getPayMethod();
-        var orderId = window.STNPaymentService
-          ? window.STNPaymentService.generateOrderId("STN-EB")
-          : "STN-EB-" + Date.now();
+        try {
+          var referral = window.STNReferralPublic || null;
+          var finalAmount = referral ? referral.getFinalAmount() : PROGRAM_AMOUNT;
+          var payMethodKey = getPayMethod();
 
-        var paymentRecord = {
-          order_id: orderId,
-          applicant_name: elName.value.trim(),
-          applicant_phone: elPhone.value.trim(),
-          applicant_email: elEmail.value.trim(),
-          referrer: referrerValue,
-          referral_code: referralCode,
-          program_name: "STN 스킬업 양성과정",
-          tier: "얼리버드 할인",
-          amount: finalAmount,
-          pay_method: payMethod,
-          status: window.STNPaymentService
-            ? window.STNPaymentService.mapStatusForPayMethod(payMethodKey)
-            : (payMethodKey === "card" ? "paid" : "pending")
-        };
-
-        var savePromise = window.STNPaymentService
-          ? window.STNPaymentService.savePayment(paymentRecord)
-          : Promise.resolve(paymentRecord);
-
-        savePromise.then(function () {
-          loading.classList.remove("is-on");
-          loading.setAttribute("aria-hidden", "true");
-          flow.hidden = true;
-          complete.hidden = false;
-          window.scrollTo({ top: 0, behavior: "smooth" });
-
-          var lookupLink = document.getElementById("lookup-link");
-          if (lookupLink) {
-            var q = new URLSearchParams({
-              name: paymentRecord.applicant_name,
-              phone: paymentRecord.applicant_phone
-            });
-            lookupLink.href = "payment-lookup.html?" + q.toString();
+          if (!window.STNSettlePG) {
+            throw new Error("결제 모듈을 불러오지 못했습니다.");
           }
 
-          var amountText = referral
-            ? referral.formatWon(finalAmount)
-            : finalAmount.toLocaleString("ko-KR") + "원";
-
-          summaryEl.innerHTML =
-            "<dt>주문번호</dt><dd>" + escapeHtml(orderId) + "</dd>" +
-            "<dt>프로그램명</dt><dd>STN 스킬업 양성과정</dd>" +
-            "<dt>교육 기간</dt><dd>2026. 8. 15 ~ 8. 17 (2박 3일)</dd>" +
-            "<dt>신청자 이름</dt><dd>" + escapeHtml(paymentRecord.applicant_name) + "</dd>" +
-            "<dt>추천인 코드</dt><dd>" + escapeHtml(referrerValue || "-") + "</dd>" +
-            "<dt>결제금액</dt><dd>" + escapeHtml(amountText) + "</dd>" +
-            "<dt>결제수단</dt><dd>" + escapeHtml(payMethod) + "</dd>" +
-            "<dt>상태</dt><dd>" + (paymentRecord.status === "paid" ? "결제 완료" : "접수·입금 대기") + "</dd>";
-        }).catch(function () {
+          await window.STNSettlePG.startPayment({
+            amount: finalAmount,
+            payMethodKey: payMethodKey,
+            orderPrefix: "STN-EB",
+            tier: "얼리버드 할인",
+            programName: "STN 스킬업 1기 집중캠프",
+            cancUrl: "https://stnmedia.kr/payment-earlybird.html",
+            installment: installment ? (installment.value || "00") : "00",
+            customer: {
+              name: elName.value.trim(),
+              phone: elPhone.value.trim(),
+              email: elEmail.value.trim()
+            },
+            referrer: referral ? referral.getReferrerValue() : null,
+            referralCode: referral ? referral.getReferralCode() : null,
+            onPending: function (data) {
+              if (window.STNPaymentService) {
+                window.STNPaymentService.savePending(data);
+              }
+            }
+          });
+        } catch (e) {
+          showToast(e.message || "결제 처리 중 오류가 발생했습니다. 고객센터(1599-1242)로 문의해 주세요.");
+          console.error(e);
+        } finally {
           loading.classList.remove("is-on");
           loading.setAttribute("aria-hidden", "true");
-          showToast("저장 중 오류가 발생했습니다. 고객센터로 문의해 주세요.");
-        });
+        }
       });
 
       function escapeHtml(s) {
@@ -2072,6 +2045,8 @@
       window.addEventListener("wheel", flashOnScroll, { passive: true });
     })();
   </script>
+  <script src="/js/settle-pg-config.js"></script>
+  <script src="/js/settle-pg.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/admin/assets/js/config.js"></script>
   <script src="/js/referral-public.js"></script>

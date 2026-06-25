@@ -832,15 +832,26 @@
       }
 
       function getResultCode(data) {
-        return data.resultCode || data.authResultCode || "";
+        return data.resultCode || data.authResultCode || data.outStatCd || "";
       }
 
       function getResultMsg(data) {
-        return data.resultMsg || data.authResultMsg || "";
+        return data.resultMsg || data.authResultMsg || data.outRsltMsg || "";
       }
 
       function isSuccessCode(code) {
-        return String(code) === "0000";
+        var c = String(code);
+        return c === "0000" || c === "0021";
+      }
+
+      function payMethodLabelFromKey(key, pending) {
+        if (key === "card") return "신용카드";
+        if (key === "transfer") return "계좌이체";
+        if (key === "deposit") return "가상계좌";
+        if (pending && pending.payMethodKey) {
+          return payMethodLabelFromKey(pending.payMethodKey);
+        }
+        return "신용카드";
       }
 
       function buildSummaryHtml(info) {
@@ -866,17 +877,19 @@
 
       function mergeResultInfo(query, pending) {
         var mall = parseMallReserved(query.mallReserved);
+        var methodCode = query.method || "";
+        var payKey = methodCode === "CA" ? "card" : methodCode === "RA" ? "transfer" : methodCode === "VA" ? "deposit" : (pending && pending.payMethodKey) || "card";
         var info = {
-          orderId: query.orderId || (pending && pending.orderId) || "",
-          amount: query.amount || (pending && pending.amount) || "",
-          goodsName: query.goodsName || (pending && pending.programName) || "",
-          programName: query.goodsName || (pending && pending.programName) || "",
+          orderId: query.mchtTrdNo || query.orderId || (pending && pending.orderId) || "",
+          amount: query.trdAmt || query.amount || (pending && pending.amount) || "",
+          goodsName: query.pmtPrdtNm || query.goodsName || (pending && pending.programName) || "",
+          programName: query.pmtPrdtNm || query.goodsName || (pending && pending.programName) || "",
           period: pending && pending.period ? pending.period : "-",
-          applicantName: query.buyerName || (pending && pending.applicantName) || "-",
+          applicantName: query.mchtCustNm || query.buyerName || (pending && pending.applicantName) || "-",
           referrer: mall.referrer || (pending && pending.referrer) || "-",
-          payMethodLabel: "신용카드",
-          tid: query.tid || "",
-          signature: query.signature || query.authToken || "",
+          payMethodLabel: payMethodLabelFromKey(payKey, pending),
+          tid: query.trdNo || query.tid || "",
+          signature: query.signature || query.authToken || query.pktHash || "",
           resultCode: getResultCode(query),
           resultMsg: getResultMsg(query)
         };
@@ -929,8 +942,8 @@
             program_name: pending.programName || info.programName || "STN 스킬업 양성과정",
             tier: pending.tier || "일반 결제",
             amount: Number(info.amount) || pending.amount,
-            pay_method: "신용카드",
-            status: "paid"
+            pay_method: info.payMethodLabel || "신용카드",
+            status: pending.payMethodKey === "card" ? "paid" : "pending"
           }).then(showSuccessUi).catch(function () {
             showSuccessUi();
           });

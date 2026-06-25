@@ -56,16 +56,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <!-- 헥토파이낸셜 결제 JS -->
-  <script src="https://pg.hectofinancial.com/stdpay/js/stdpay.js"></script>
-  <script>
-    (function () {
-      if (typeof HPay !== "undefined") return;
-      var fallback = document.createElement("script");
-      fallback.src = "https://npg.settlebank.co.kr/spay/js/stdpay.js";
-      document.head.appendChild(fallback);
-    })();
-  </script>
   <style>
     :root {
       --bg: #0a0a0a;
@@ -1678,10 +1668,7 @@
 
   <script>
     (function () {
-      var MCHT_ID = "M2665490";
       var PROGRAM_AMOUNT = 1980000;
-      var trdAmt = String(PROGRAM_AMOUNT);
-      var WORKER_URL = "https://stn-api.stnhub210.workers.dev/hecto-hash";
 
       var phoneRe = /^01[016789]-?\d{3,4}-?\d{4}$/;
       var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -1946,82 +1933,39 @@
         try {
           var referral = window.STNReferralPublic || null;
           var finalAmount = referral ? referral.getFinalAmount() : PROGRAM_AMOUNT;
-          trdAmt = String(finalAmount);
+          var payMethodKey = getPayMethod();
 
-          var now = new Date();
-          var pad = function (n) { return String(n).padStart(2, "0"); };
-          var trdDt = now.getFullYear() + pad(now.getMonth() + 1) + pad(now.getDate());
-          var trdTm = pad(now.getHours()) + pad(now.getMinutes()) + pad(now.getSeconds());
-          var rand4 = Math.random().toString(36).substring(2, 6).toUpperCase();
-          var mchtTrdNo = "STN-" + trdDt + "-" + rand4;
-
-          if (window.STNPaymentService) {
-            window.STNPaymentService.savePending({
-              orderId: mchtTrdNo,
-              applicantName: elName.value.trim(),
-              phone: elPhone.value.trim(),
-              email: elEmail.value.trim(),
-              referrer: referral ? referral.getReferrerValue() : null,
-              referral_code: referral ? referral.getReferralCode() : null,
-              amount: finalAmount,
-              programName: "STN 스킬업 양성과정",
-              tier: "일반 결제",
-              period: "2026. 8. 15 ~ 8. 17 (2박 3일)"
-            });
+          if (!window.STNSettlePG) {
+            throw new Error("결제 모듈을 불러오지 못했습니다.");
           }
 
-          var hashRes = await fetch(WORKER_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              mchtId: MCHT_ID,
-              trdDt: trdDt,
-              trdTm: trdTm,
-              mchtTrdNo: mchtTrdNo,
-              trdAmt: trdAmt
-            })
-          });
-          if (!hashRes.ok) throw new Error("해시 API 오류");
-          var hashData = await hashRes.json();
-          if (!hashData.pktHash) throw new Error("해시 생성 실패");
-
-          loading.classList.remove("is-on");
-          loading.setAttribute("aria-hidden", "true");
-
-          var method = getPayMethod();
-          var payParams = {
-            mchtId: MCHT_ID,
-            method: method === "card" ? "card" : method === "transfer" ? "bank" : "vbank",
-            trdDt: trdDt,
-            trdTm: trdTm,
-            mchtTrdNo: mchtTrdNo,
-            mchtName: "STN스킬업",
-            mchtEName: "STNSkillUp",
-            pmtPrdtNm: "STN스킬업 1기 집중캠프",
-            trdAmt: trdAmt,
-            custNm: elName.value.trim(),
-            custMail: elEmail.value.trim(),
-            custMphNo: elPhone.value.replace(/-/g, ""),
-            notiUrl: "https://stn-api.stnhub210.workers.dev/hecto-notify",
-            nextUrl: "https://stnmedia.kr/payment_result.html",
+          await window.STNSettlePG.startPayment({
+            amount: finalAmount,
+            payMethodKey: payMethodKey,
+            orderPrefix: "STN-RG",
+            tier: "일반 결제",
+            programName: "STN 스킬업 1기 집중캠프",
             cancUrl: "https://stnmedia.kr/payment-regular.html",
-            pktHash: hashData.pktHash
-          };
-
-          if (method === "card" && installment) {
-            payParams.quota = installment.value || "00";
-          }
-
-          if (typeof HPay !== "undefined" && typeof HPay.pay === "function") {
-            HPay.pay(payParams);
-          } else {
-            showToast("결제 모듈을 불러오지 못했습니다. 페이지를 새로고침한 뒤 다시 시도해 주세요.");
-          }
+            installment: installment ? (installment.value || "00") : "00",
+            customer: {
+              name: elName.value.trim(),
+              phone: elPhone.value.trim(),
+              email: elEmail.value.trim()
+            },
+            referrer: referral ? referral.getReferrerValue() : null,
+            referralCode: referral ? referral.getReferralCode() : null,
+            onPending: function (data) {
+              if (window.STNPaymentService) {
+                window.STNPaymentService.savePending(data);
+              }
+            }
+          });
         } catch (e) {
+          showToast(e.message || "결제 처리 중 오류가 발생했습니다. 고객센터(1599-1242)로 문의해 주세요.");
+          console.error(e);
+        } finally {
           loading.classList.remove("is-on");
           loading.setAttribute("aria-hidden", "true");
-          showToast("결제 처리 중 오류가 발생했습니다. 고객센터(1599-1242)로 문의해 주세요.");
-          console.error(e);
         }
       });
 
@@ -2037,6 +1981,8 @@
       updateSubmitState();
     })();
   </script>
+  <script src="/js/settle-pg-config.js"></script>
+  <script src="/js/settle-pg.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/admin/assets/js/config.js"></script>
   <script src="/js/referral-public.js"></script>
