@@ -71,11 +71,24 @@
     }
   }
 
+  function looksEncryptedText(value) {
+    var text = String(value || '').trim();
+    return text.length >= 16 && /^[A-Za-z0-9+/=]+$/.test(text);
+  }
+
+  function cleanApplicantName(name, fallback) {
+    var value = String(name || '').trim();
+    if (!value || value === '-' || looksEncryptedText(value)) {
+      return String(fallback || '').trim() || '-';
+    }
+    return value;
+  }
+
   async function savePayment(record) {
     var payload = {
-      order_id: record.order_id,
-      applicant_name: record.applicant_name,
-      applicant_phone: record.applicant_phone,
+      order_id: String(record.order_id || '').trim(),
+      applicant_name: cleanApplicantName(record.applicant_name, record.applicant_name_fallback),
+      applicant_phone: normalizePhone(record.applicant_phone),
       applicant_email: record.applicant_email || null,
       referrer: record.referrer || null,
       program_name: record.program_name || 'STN 스킬업 양성과정',
@@ -87,6 +100,10 @@
       created_at: record.created_at || new Date().toISOString()
     };
 
+    if (!payload.order_id) {
+      throw new Error('order_id가 없습니다.');
+    }
+
     var local = readLocal();
     local.unshift(payload);
     writeLocal(local);
@@ -94,26 +111,45 @@
     if (isSupabaseConfigured()) {
       try {
         var client = getClient();
-        var result = await client.from(TABLE).insert({
-          order_id: payload.order_id,
-          applicant_name: payload.applicant_name,
-          applicant_phone: payload.applicant_phone,
-          applicant_email: payload.applicant_email,
-          referrer: payload.referrer,
-          program_name: payload.program_name,
-          tier: payload.tier,
-          amount: payload.amount,
-          pay_method: payload.pay_method,
-          status: payload.status,
-          notes: payload.notes
+        var rpcResult = await client.rpc('save_payment_application', {
+          p_order_id: payload.order_id,
+          p_applicant_name: payload.applicant_name,
+          p_applicant_phone: payload.applicant_phone,
+          p_applicant_email: payload.applicant_email,
+          p_referrer: payload.referrer,
+          p_program_name: payload.program_name,
+          p_tier: payload.tier,
+          p_amount: payload.amount,
+          p_pay_method: payload.pay_method,
+          p_status: payload.status,
+          p_notes: payload.notes
         });
-        if (result.error) throw result.error;
+
+        if (rpcResult.error) {
+          var directResult = await client.from(TABLE).insert({
+            order_id: payload.order_id,
+            applicant_name: payload.applicant_name,
+            applicant_phone: payload.applicant_phone || null,
+            applicant_email: payload.applicant_email,
+            referrer: payload.referrer,
+            program_name: payload.program_name,
+            tier: payload.tier,
+            amount: payload.amount,
+            pay_method: payload.pay_method,
+            status: payload.status,
+            notes: payload.notes
+          });
+          if (directResult.error) throw directResult.error;
+        } else if (rpcResult.data && rpcResult.data.ok === false) {
+          throw new Error(rpcResult.data.message || '결제 저장에 실패했습니다.');
+        }
 
         if (record.referral_code) {
           await incrementReferralUsage(record.referral_code);
         }
       } catch (err) {
         console.warn('Supabase 저장 실패, localStorage에만 저장됨:', err);
+        throw err;
       }
     }
 
@@ -136,6 +172,9 @@
           p_phone: normalizedPhone
         });
         if (!result.error && result.data) return result.data;
+        if (result.error) {
+          console.warn('Supabase 조회 오류:', result.error);
+        }
       } catch (err) {
         console.warn('Supabase 조회 실패, localStorage 조회로 대체:', err);
       }
@@ -151,13 +190,15 @@
 
   function savePending(data) {
     try {
-      sessionStorage.setItem(PENDING_KEY, JSON.stringify(data));
+      var raw = JSON.stringify(data);
+      localStorage.setItem(PENDING_KEY, raw);
+      sessionStorage.setItem(PENDING_KEY, raw);
     } catch (_) {}
   }
 
   function readPending() {
     try {
-      var raw = sessionStorage.getItem(PENDING_KEY);
+      var raw = localStorage.getItem(PENDING_KEY) || sessionStorage.getItem(PENDING_KEY);
       return raw ? JSON.parse(raw) : null;
     } catch (_) {
       return null;
@@ -166,6 +207,7 @@
 
   function clearPending() {
     try {
+      localStorage.removeItem(PENDING_KEY);
       sessionStorage.removeItem(PENDING_KEY);
     } catch (_) {}
   }

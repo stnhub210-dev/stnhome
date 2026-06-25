@@ -700,11 +700,11 @@
       <div id="state-success" hidden>
         <div class="result-card">
           <div class="result-icon" aria-hidden="true">✅</div>
-          <h1 class="result-title">신청이 접수되었습니다</h1>
-          <p class="result-desc">입력하신 연락처로 영업일 기준 1~2일 내 담당자가 연락드립니다.<br />문의: <a href="tel:1599-1242">1599-1242</a></p>
+          <h1 class="result-title">결제가 완료되었습니다</h1>
+          <p class="result-desc">결제가 정상적으로 처리되었습니다. 아래 내용을 확인해 주세요.<br />문의: <a href="tel:1599-1242">1599-1242</a></p>
           <dl class="result-summary" id="success-summary"></dl>
           <div class="result-actions">
-            <a class="btn btn-primary" href="payment-lookup.html">결제 조회하기</a>
+            <a class="btn btn-primary" id="lookup-link" href="payment-lookup.html">결제 조회하기</a>
             <a class="btn btn-back" href="start.html">강의 소개 페이지로 돌아가기</a>
           </div>
         </div>
@@ -762,11 +762,22 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/admin/assets/js/config.js"></script>
+  <script src="/js/payment-service.js"></script>
   <script>
     (function () {
-      var NICEPAY_MID = "nicepay00m";
-      var NICEPAY_CLIENT_ID = "test_";
-      var PENDING_KEY = "stnPaymentPending";
+      if (window.opener && !window.opener.closed) {
+        try {
+          window.opener.location.assign(window.location.href);
+          window.close();
+        } catch (_) {}
+      }
+    })();
+  </script>
+  <script>
+    (function () {
+      var PENDING_KEY = (window.STNPaymentService && window.STNPaymentService.PENDING_KEY) || 'stnPaymentPending';
 
       var stateLoading = document.getElementById("state-loading");
       var stateSuccess = document.getElementById("state-success");
@@ -808,8 +819,11 @@
       }
 
       function readPending() {
+        if (window.STNPaymentService && window.STNPaymentService.readPending) {
+          return window.STNPaymentService.readPending();
+        }
         try {
-          var raw = sessionStorage.getItem(PENDING_KEY);
+          var raw = localStorage.getItem(PENDING_KEY) || sessionStorage.getItem(PENDING_KEY);
           return raw ? JSON.parse(raw) : null;
         } catch (e) {
           return null;
@@ -817,7 +831,12 @@
       }
 
       function clearPending() {
+        if (window.STNPaymentService && window.STNPaymentService.clearPending) {
+          window.STNPaymentService.clearPending();
+          return;
+        }
         try {
+          localStorage.removeItem(PENDING_KEY);
           sessionStorage.removeItem(PENDING_KEY);
         } catch (e) {}
       }
@@ -875,17 +894,25 @@
         }
       }
 
+      function resolveAmount(query, pending) {
+        if (pending && pending.amount) return pending.amount;
+        var raw = query.trdAmt || query.amount || "";
+        if (raw && /^\d+$/.test(String(raw))) return raw;
+        return "";
+      }
+
       function mergeResultInfo(query, pending) {
         var mall = parseMallReserved(query.mallReserved);
         var methodCode = query.method || "";
         var payKey = methodCode === "CA" ? "card" : methodCode === "RA" ? "transfer" : methodCode === "VA" ? "deposit" : (pending && pending.payMethodKey) || "card";
         var info = {
           orderId: query.mchtTrdNo || query.orderId || (pending && pending.orderId) || "",
-          amount: query.trdAmt || query.amount || (pending && pending.amount) || "",
+          amount: resolveAmount(query, pending),
           goodsName: query.pmtPrdtNm || query.goodsName || (pending && pending.programName) || "",
           programName: query.pmtPrdtNm || query.goodsName || (pending && pending.programName) || "",
           period: pending && pending.period ? pending.period : "-",
           applicantName: query.mchtCustNm || query.buyerName || (pending && pending.applicantName) || "-",
+          applicantPhone: query.cphoneNo || (pending && pending.phone) || "",
           referrer: mall.referrer || (pending && pending.referrer) || "-",
           payMethodLabel: payMethodLabelFromKey(payKey, pending),
           tid: query.trdNo || query.tid || "",
@@ -927,24 +954,36 @@
 
         function showSuccessUi() {
           successSummary.innerHTML = buildSummaryHtml(info);
+          var lookupLink = document.getElementById('lookup-link');
+          if (lookupLink) {
+            var name = (info.applicantName && info.applicantName !== '-') ? info.applicantName : (pending && pending.applicantName) || '';
+            var phone = (pending && pending.phone) || '';
+            if (name && phone) {
+              lookupLink.href =
+                'payment-lookup.html?name=' + encodeURIComponent(name) +
+                '&phone=' + encodeURIComponent(phone);
+            }
+          }
           showState("success");
           clearPending();
         }
 
-        if (window.STNPaymentService && pending) {
+        if (window.STNPaymentService && (pending || info.orderId)) {
           window.STNPaymentService.savePayment({
-            order_id: info.orderId || pending.orderId,
-            applicant_name: info.applicantName || pending.applicantName,
-            applicant_phone: pending.phone,
-            applicant_email: pending.email,
-            referrer: info.referrer && info.referrer !== "-" ? info.referrer : pending.referrer,
-            referral_code: pending.referral_code,
-            program_name: pending.programName || info.programName || "STN 스킬업 양성과정",
-            tier: pending.tier || "일반 결제",
-            amount: Number(info.amount) || pending.amount,
+            order_id: info.orderId || (pending && pending.orderId),
+            applicant_name: (pending && pending.applicantName) || info.applicantName,
+            applicant_name_fallback: (pending && pending.applicantName) || info.applicantName,
+            applicant_phone: (pending && pending.phone) || info.applicantPhone,
+            applicant_email: pending && pending.email,
+            referrer: info.referrer && info.referrer !== "-" ? info.referrer : (pending && pending.referrer),
+            referral_code: pending && pending.referral_code,
+            program_name: (pending && pending.programName) || info.programName || "STN 스킬업 양성과정",
+            tier: (pending && pending.tier) || "일반 결제",
+            amount: Number(info.amount) || (pending && pending.amount),
             pay_method: info.payMethodLabel || "신용카드",
-            status: pending.payMethodKey === "card" ? "paid" : "pending"
-          }).then(showSuccessUi).catch(function () {
+            status: "paid"
+          }).then(showSuccessUi).catch(function (err) {
+            console.warn("결제 저장 실패:", err);
             showSuccessUi();
           });
           return;
@@ -987,29 +1026,12 @@
           return;
         }
 
-        if (pending && pending.orderId) {
-          renderSuccess({
-            orderId: pending.orderId,
-            programName: pending.programName,
-            period: pending.period,
-            applicantName: pending.applicantName,
-            referrer: pending.referrer,
-            amount: pending.amount,
-            amountText: formatWon(pending.amount),
-            payMethodLabel: "신용카드"
-          });
-          return;
-        }
-
         showState("empty");
       }
 
       init();
     })();
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/admin/assets/js/config.js"></script>
-  <script src="/js/payment-service.js"></script>
 
 <script>
     (function () {

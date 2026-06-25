@@ -15,7 +15,8 @@ window.STN_SETTLE_PG = {
   mchtName: 'STN스킬업',
   mchtEName: 'STNSkillUp',
   productName: 'STN 스킬업 1기 집중캠프',
-  nextUrl: 'https://stnmedia.kr/payment_result.html',
+  nextUrl: 'https://stn-api.stnhub210.workers.dev/hecto-return',
+  resultPath: '/payment_result.html',
   taxTypeCd: 'N',
   ui: { type: 'popup', width: '430', height: '660' },
 };

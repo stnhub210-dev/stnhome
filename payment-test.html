@@ -295,6 +295,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="admin/assets/js/config.js"></script>
   <script src="js/payment-service.js"></script>
+  <script src="js/payment-ui.js"></script>
   <script src="js/settle-pg-config.js"></script>
   <script src="js/settle-pg.js"></script>
   <script>
@@ -421,6 +422,10 @@
             programName: "STN 결제 연동 테스트 (100원)",
             cancUrl: "https://stnmedia.kr/payment-test.html",
             installment: "00",
+            onPopupOpen: function () {
+              loading.classList.remove("is-on");
+              loading.setAttribute("aria-hidden", "true");
+            },
             customer: {
               name: elName.value.trim(),
               phone: elPhone.value.trim(),
@@ -433,11 +438,10 @@
             }
           });
         } catch (e) {
-          showToast(e.message || "결제 처리 중 오류가 발생했습니다.");
-          console.error(e);
-        } finally {
           loading.classList.remove("is-on");
           loading.setAttribute("aria-hidden", "true");
+          showToast(e.message || "결제 처리 중 오류가 발생했습니다.");
+          console.error(e);
         }
       });
 

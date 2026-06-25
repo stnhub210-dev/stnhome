@@ -73,6 +73,16 @@ npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY
 |------|------|
 | `POST /hecto-prepare` | pktHash + AES 암호화(trdAmt, 고객명, 이메일) |
 | `POST /hecto-notify` | PG 노티 → Supabase 상태 갱신, 응답 `OK` |
+| `POST /hecto-return` | PG 결제 완료 POST 수신 → `payment_result.html`로 302 리다이렉트 |
+
+## nextUrl (결제 완료 리다이렉트)
+
+프론트 `js/settle-pg-config.js`의 `nextUrl`은 Worker `/hecto-return`을 가리킵니다.
+PG가 POST로 결과를내면 Worker가 쿼리스트링을 붙여 `payment_result.html`로 이동시킵니다.
+
+```
+https://stn-api.stnhub210.workers.dev/hecto-return
+```
 
 ## 해시 공식 (신용카드)
 

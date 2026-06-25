@@ -120,6 +120,86 @@ $$;
 
 grant execute on function public.lookup_payment(text, text) to anon, authenticated;
 
+-- 결제 완료 저장 (anon, RLS 우회 — security definer)
+create or replace function public.save_payment_application(
+  p_order_id text,
+  p_applicant_name text,
+  p_applicant_phone text,
+  p_applicant_email text default null,
+  p_referrer text default null,
+  p_program_name text default null,
+  p_tier text default null,
+  p_amount integer default 0,
+  p_pay_method text default null,
+  p_status text default 'pending',
+  p_notes text default null
+)
+returns json
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_phone text;
+  v_row public.payment_applications%rowtype;
+begin
+  if coalesce(trim(p_order_id), '') = '' then
+    return json_build_object('ok', false, 'message', 'order_id required');
+  end if;
+
+  v_phone := regexp_replace(coalesce(p_applicant_phone, ''), '[^0-9]', '', 'g');
+
+  insert into public.payment_applications (
+    order_id,
+    applicant_name,
+    applicant_phone,
+    applicant_email,
+    referrer,
+    program_name,
+    tier,
+    amount,
+    pay_method,
+    status,
+    notes
+  ) values (
+    trim(p_order_id),
+    coalesce(nullif(trim(p_applicant_name), ''), '-'),
+    nullif(v_phone, ''),
+    nullif(trim(coalesce(p_applicant_email, '')), ''),
+    nullif(trim(coalesce(p_referrer, '')), ''),
+    coalesce(nullif(trim(coalesce(p_program_name, '')), ''), 'STN 스킬업 양성과정'),
+    nullif(trim(coalesce(p_tier, '')), ''),
+    coalesce(p_amount, 0),
+    nullif(trim(coalesce(p_pay_method, '')), ''),
+    coalesce(nullif(trim(coalesce(p_status, '')), ''), 'pending'),
+    nullif(trim(coalesce(p_notes, '')), '')
+  )
+  on conflict (order_id) do update set
+    applicant_name = case
+      when excluded.applicant_name is not null and excluded.applicant_name <> '-'
+        then excluded.applicant_name
+      else payment_applications.applicant_name
+    end,
+    applicant_phone = coalesce(nullif(excluded.applicant_phone, ''), payment_applications.applicant_phone),
+    applicant_email = coalesce(excluded.applicant_email, payment_applications.applicant_email),
+    referrer = coalesce(excluded.referrer, payment_applications.referrer),
+    program_name = coalesce(excluded.program_name, payment_applications.program_name),
+    tier = coalesce(excluded.tier, payment_applications.tier),
+    amount = case when excluded.amount > 0 then excluded.amount else payment_applications.amount end,
+    pay_method = coalesce(excluded.pay_method, payment_applications.pay_method),
+    status = excluded.status,
+    notes = coalesce(excluded.notes, payment_applications.notes),
+    updated_at = now()
+  returning * into v_row;
+
+  return json_build_object('ok', true, 'order_id', v_row.order_id);
+end;
+$$;
+
+grant execute on function public.save_payment_application(
+  text, text, text, text, text, text, text, integer, text, text, text
+) to anon, authenticated;
+
 -- 페이지 방문 기록
 create table if not exists public.page_views (
   id uuid primary key default gen_random_uuid(),

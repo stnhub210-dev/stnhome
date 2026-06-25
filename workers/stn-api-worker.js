@@ -23,6 +23,8 @@ const ALLOW_ORIGINS = [
   'https://stnhub210-dev.github.io',
 ];
 
+const RESULT_PAGE_URL = 'https://stnmedia.kr/payment_result.html';
+
 const CARD_METHOD = 'card';
 
 function json(data, status, request) {
@@ -117,6 +119,35 @@ function parseNotifyPayload(request, rawText) {
   return Object.fromEntries(new URLSearchParams(rawText));
 }
 
+function parseMchtParam(raw) {
+  const out = {};
+  if (!raw || typeof raw !== 'string') return out;
+  raw.split('&').forEach((part) => {
+    const idx = part.indexOf('=');
+    if (idx === -1) return;
+    const key = part.slice(0, idx);
+    const value = part.slice(idx + 1);
+    try {
+      out[key] = decodeURIComponent(value.replace(/\+/g, ' '));
+    } catch (_) {
+      out[key] = value;
+    }
+  });
+  return out;
+}
+
+function looksEncryptedText(value) {
+  const text = String(value || '').trim();
+  return text.length >= 16 && /^[A-Za-z0-9+/=]+$/.test(text);
+}
+
+function plainAmount(trdAmt) {
+  const digits = String(trdAmt || '').replace(/\D/g, '');
+  if (!digits) return 0;
+  const n = Number(digits);
+  return Number.isFinite(n) ? n : 0;
+}
+
 async function syncPaymentToSupabase(payload, env) {
   const supabaseUrl = env.SUPABASE_URL;
   const serviceKey = env.SUPABASE_SERVICE_ROLE_KEY;
@@ -128,43 +159,106 @@ async function syncPaymentToSupabase(payload, env) {
   const outStatCd = String(payload.outStatCd || '');
   const isPaid = outStatCd === '0021';
   const isAuthOnly = outStatCd === '0061';
+  const mcht = parseMchtParam(payload.mchtParam);
+  const nameRaw = String(payload.mchtCustNm || '').trim();
+  const applicantName = looksEncryptedText(nameRaw) ? '-' : nameRaw || '-';
+  const applicantPhone = String(payload.cphoneNo || '').replace(/\D/g, '') || null;
 
-  const patch = {
-    status: isPaid ? 'paid' : isAuthOnly ? 'pending' : 'failed',
+  const row = {
+    order_id: orderId,
+    applicant_name: applicantName,
+    applicant_phone: applicantPhone,
+    program_name: payload.pmtPrdtNm || 'STN 스킬업 양성과정',
+    tier: mcht.tier || null,
+    referrer: mcht.referrer || null,
+    amount: plainAmount(payload.trdAmt),
     pay_method: '신용카드',
+    status: isPaid ? 'paid' : isAuthOnly ? 'pending' : 'failed',
     updated_at: new Date().toISOString(),
   };
 
-  if (payload.authNo) patch.notes = '승인번호:' + payload.authNo;
+  if (payload.authNo) row.notes = '승인번호:' + payload.authNo;
 
   const headers = {
     apikey: serviceKey,
     Authorization: 'Bearer ' + serviceKey,
     'Content-Type': 'application/json',
-    Prefer: 'return=minimal',
+    Prefer: 'resolution=merge-duplicates,return=minimal',
   };
 
-  const updateRes = await fetch(
-    supabaseUrl + '/rest/v1/payment_applications?order_id=eq.' + encodeURIComponent(orderId),
-    { method: 'PATCH', headers, body: JSON.stringify(patch) }
-  );
+  await fetch(supabaseUrl + '/rest/v1/payment_applications?on_conflict=order_id', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(row),
+  });
+}
 
-  if (updateRes.ok) return;
+function buildResultRedirectUrl(payload) {
+  const params = new URLSearchParams();
+  Object.entries(payload || {}).forEach(([key, value]) => {
+    if (value != null && String(value) !== '') {
+      params.set(key, String(value));
+    }
+  });
+  const qs = params.toString();
+  return qs ? RESULT_PAGE_URL + '?' + qs : RESULT_PAGE_URL;
+}
 
-  if (isPaid) {
-    await fetch(supabaseUrl + '/rest/v1/payment_applications', {
-      method: 'POST',
-      headers: { ...headers, Prefer: 'return=minimal' },
-      body: JSON.stringify({
-        order_id: orderId,
-        applicant_name: '-',
-        status: 'paid',
-        pay_method: '신용카드',
-        program_name: 'STN 스킬업 양성과정',
-        amount: 0,
-      }),
+/** POST 수신 후 GET으로 결과 페이지 이동 (302는 POST가 유지되어 GitHub Pages 405 발생) */
+function htmlRedirectResponse(targetUrl) {
+  const escaped = targetUrl
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;');
+  const jsUrl = JSON.stringify(targetUrl);
+  const html =
+    '<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">' +
+    '<meta http-equiv="refresh" content="0;url=' +
+    escaped +
+    '">' +
+    '<title>결제 결과 이동</title></head><body>' +
+    '<p>결제 결과 페이지로 이동 중입니다…</p>' +
+    '<script>location.replace(' +
+    jsUrl +
+    ');</script></body></html>';
+  return new Response(html, {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-store',
+    },
+  });
+}
+
+async function handleReturn(request, env) {
+  let payload = {};
+
+  if (request.method === 'GET') {
+    const url = new URL(request.url);
+    url.searchParams.forEach((value, key) => {
+      payload[key] = value;
     });
+  } else if (request.method === 'POST') {
+    const rawText = await request.text();
+    try {
+      payload = parseNotifyPayload(request, rawText);
+    } catch (_) {
+      payload = {};
+    }
+  } else {
+    return new Response('Method Not Allowed', { status: 405 });
   }
+
+  console.log('hecto-return', JSON.stringify(payload));
+
+  try {
+    await syncPaymentToSupabase(payload, env);
+  } catch (err) {
+    console.error('hecto-return supabase sync error', err);
+  }
+
+  const targetUrl = buildResultRedirectUrl(payload);
+  return htmlRedirectResponse(targetUrl);
 }
 
 async function handleNotify(request, env) {
@@ -215,6 +309,13 @@ export default {
 
       if (request.method === 'POST' && url.pathname.endsWith('/hecto-notify')) {
         return handleNotify(request, env);
+      }
+
+      if (
+        (request.method === 'POST' || request.method === 'GET') &&
+        url.pathname.endsWith('/hecto-return')
+      ) {
+        return handleReturn(request, env);
       }
 
       return json({ error: 'Not Found' }, 404, request);

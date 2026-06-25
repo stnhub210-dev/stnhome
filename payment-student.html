@@ -1757,6 +1757,7 @@
   <script src="js/referral-public.js"></script>
   <script src="js/payment-service.js"></script>
   <script src="js/payment-agreements.js"></script>
+  <script src="js/payment-ui.js"></script>
   <script src="js/settle-pg-config.js"></script>
   <script src="js/settle-pg.js"></script>
   <script>
@@ -2107,6 +2108,10 @@
             },
             referrer: referral ? referral.getReferrerValue() : null,
             referralCode: referral ? referral.getReferralCode() : null,
+            onPopupOpen: function () {
+              loading.classList.remove("is-on");
+              loading.setAttribute("aria-hidden", "true");
+            },
             onPending: function (data) {
               if (window.STNPaymentService) {
                 window.STNPaymentService.savePending(data);
@@ -2114,11 +2119,10 @@
             }
           });
         } catch (e) {
-          showToast(e.message || "결제 처리 중 오류가 발생했습니다. 고객센터(1599-1242)로 문의해 주세요.");
-          console.error(e);
-        } finally {
           loading.classList.remove("is-on");
           loading.setAttribute("aria-hidden", "true");
+          showToast(e.message || "결제 처리 중 오류가 발생했습니다. 고객센터(1599-1242)로 문의해 주세요.");
+          console.error(e);
         }
       });
 

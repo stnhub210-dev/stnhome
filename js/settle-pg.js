@@ -143,6 +143,57 @@
     setTimeout(function () {
       if (form.parentNode) form.parentNode.removeChild(form);
     }, 1000);
+
+    return popup;
+  }
+
+  function resultPageMarker() {
+    var c = cfg();
+    var path = c.resultPath || '/payment_result.html';
+    return path.charAt(0) === '/' ? path : '/' + path.replace(/^https?:\/\/[^/]+/, '');
+  }
+
+  function watchPaymentPopup(popup, options) {
+    if (!popup) return;
+    var completed = false;
+    var marker = resultPageMarker();
+
+    function finishCompleted(href) {
+      if (completed) return;
+      completed = true;
+      clearInterval(timer);
+      if (href) {
+        window.location.href = href;
+      }
+      try {
+        popup.close();
+      } catch (_) {}
+    }
+
+    function handlePopupClosed() {
+      if (completed) return;
+      completed = true;
+      clearInterval(timer);
+      if (typeof options.onPopupClosed === 'function') {
+        options.onPopupClosed();
+      } else if (global.STNPaymentUI && global.STNPaymentUI.showFailModal) {
+        global.STNPaymentUI.showFailModal();
+      }
+    }
+
+    var timer = setInterval(function () {
+      if (completed) return;
+      if (!popup || popup.closed) {
+        handlePopupClosed();
+        return;
+      }
+      try {
+        var href = popup.location.href || '';
+        if (href.indexOf(marker) !== -1) {
+          finishCompleted(href);
+        }
+      } catch (_) {}
+    }, 400);
   }
 
   global.STNSettlePG = {
@@ -184,7 +235,7 @@
         email: options.customer.email,
       });
 
-      openCardPaymentPopup({
+      var popup = openCardPaymentPopup({
         mchtId: c.mchtId,
         trdDt: ts.trdDt,
         trdTm: ts.trdTm,
@@ -205,6 +256,12 @@
         mchtParam: buildMchtParam(options) || undefined,
         ui: c.ui || { type: 'popup', width: '430', height: '660' },
       });
+
+      if (typeof options.onPopupOpen === 'function') {
+        options.onPopupOpen();
+      }
+
+      watchPaymentPopup(popup, options);
     },
 
     startPayment: async function (options) {
