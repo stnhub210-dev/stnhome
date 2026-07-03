@@ -1807,15 +1807,6 @@
       max-width: calc((100% - var(--mentor-preview-gap) * 3) / 4);
       min-width: 0;
     }
-    .mentor-preview--grid .mentor-preview-track {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: clamp(14px, 2vw, 24px);
-      width: 100%;
-      transform: none;
-      transition: none;
-      will-change: auto;
-    }
     @keyframes mentor-preview-neon {
       0%, 100% {
         box-shadow:
@@ -1980,7 +1971,6 @@
         width: min(100%, calc((100% - clamp(12px, 2.5vw, 18px)) / 2));
         justify-self: center;
       }
-      .mentor-preview--grid .mentor-preview-track {
       .mentor-preview--grid .mentor-preview-photo {
         height: clamp(160px, 38vw, 220px);
         max-width: 100%;
