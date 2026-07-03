@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -1775,6 +1775,38 @@
     .mentor-preview--grid .mentor-preview-viewport {
       overflow: visible;
     }
+    .mentor-preview-rows {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(14px, 2vw, 24px);
+      width: 100%;
+      --mentor-preview-gap: clamp(14px, 2vw, 24px);
+    }
+    .mentor-preview--grid .mentor-preview-track--top,
+    .mentor-preview--grid .mentor-preview-track--bottom {
+      width: 100%;
+      transform: none;
+      transition: none;
+      will-change: auto;
+    }
+    .mentor-preview--grid .mentor-preview-track--top {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(14px, 2vw, 24px);
+    }
+    /* 하단 3명: 상단 카드와 동일 너비, 가운데 정렬 */
+    .mentor-preview--grid .mentor-preview-track--bottom {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: stretch;
+      gap: var(--mentor-preview-gap);
+    }
+    .mentor-preview--grid .mentor-preview-track--bottom .mentor-preview-slide {
+      flex: 0 1 calc((100% - var(--mentor-preview-gap) * 3) / 4);
+      max-width: calc((100% - var(--mentor-preview-gap) * 3) / 4);
+      min-width: 0;
+    }
     .mentor-preview--grid .mentor-preview-track {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1865,6 +1897,16 @@
       transform: scale(1.26);
       transform-origin: center top;
     }
+    /* 이지용: PNG 여백·비율 보정 — 확대 후 하단 정렬 */
+    #mentor-preview .mentor-preview-slide:has(.mentor-preview-photo img[src*="이지용.png"]) .mentor-preview-photo img {
+      transform: scale(1.22) translateY(10%);
+      transform-origin: center top;
+    }
+    /* 박정훈: PNG 여백 때문에 작게 보여 다른 강사와 체감 크기 맞춤 */
+    #mentor-preview .mentor-preview-slide:has(.mentor-preview-photo img[src*="bjh.png"]) .mentor-preview-photo img {
+      transform: scale(1.32);
+      transform-origin: center top;
+    }
     .mentor-preview-text {
       flex: 1;
       min-width: 0;
@@ -1920,11 +1962,25 @@
         width: min(55vw, 252px);
         margin-bottom: clamp(10px, 2.8vw, 16px);
       }
-      .mentor-preview--grid .mentor-preview-track {
+      .mentor-preview--grid .mentor-preview-track--top {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-template-rows: repeat(4, auto);
         gap: clamp(12px, 2.5vw, 18px);
       }
+      .mentor-preview--grid .mentor-preview-track--bottom {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(12px, 2.5vw, 18px);
+      }
+      .mentor-preview--grid .mentor-preview-track--bottom .mentor-preview-slide {
+        flex: unset;
+        max-width: none;
+      }
+      .mentor-preview--grid .mentor-preview-track--bottom .mentor-preview-slide:last-child {
+        grid-column: 1 / -1;
+        width: min(100%, calc((100% - clamp(12px, 2.5vw, 18px)) / 2));
+        justify-self: center;
+      }
+      .mentor-preview--grid .mentor-preview-track {
       .mentor-preview--grid .mentor-preview-photo {
         height: clamp(160px, 38vw, 220px);
         max-width: 100%;
@@ -5325,9 +5381,10 @@
     <div class="container mentor-preview-inner">
       <img class="mentor-preview-logo" src="image/LOGOL-PNG.png" alt="STN SKILL UP" width="1024" height="256" loading="lazy" decoding="async" />
       <p class="mentor-preview-kicker">강사진 미리보기</p>
-      <p class="mentor-preview-hint">강사진 8명을 누르면 세부내용 보입니다.</p>
+      <p class="mentor-preview-hint">강사진 7명을 누르면 세부내용 보입니다.</p>
       <div class="mentor-preview-viewport" id="mentor-preview-viewport">
-        <div class="mentor-preview-track" id="mentor-preview-track">
+        <div class="mentor-preview-rows">
+          <div class="mentor-preview-track mentor-preview-track--top" id="mentor-preview-track">
           <a href="#mentor-sticky" class="mentor-preview-slide" aria-label="박문성 해설위원 상세 보기">
             <div class="mentor-preview-photo"><img src="박문성1.png" alt="" width="480" height="540" loading="eager" fetchpriority="high" decoding="async" /></div>
             <div class="mentor-preview-text">
@@ -5342,20 +5399,22 @@
               <p class="mentor-preview-sum">콘텐츠와 커머스의 융합부터 수익화·상품화까지 3교시 실전 커리큘럼.</p>
             </div>
           </a>
-          <a href="#mentor-sticky-editkim" class="mentor-preview-slide" aria-label="에딧킴 강사 상세 보기">
-            <div class="mentor-preview-photo"><img src="image/editkim1.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
+          <a href="#mentor-sticky-editkim" class="mentor-preview-slide" aria-label="이지용 강사 상세 보기">
+            <div class="mentor-preview-photo"><img src="image/이지용.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
             <div class="mentor-preview-text">
-              <p class="mentor-preview-name">에딧킴 강사</p>
-              <p class="mentor-preview-sum">AI·캡컷으로 숏폼 기획·편집·업로드까지 원스톱 실전을 안내합니다.</p>
+              <p class="mentor-preview-name">이지용 강사</p>
+              <p class="mentor-preview-sum">영상 기획·촬영·편집부터 AI 활용까지, 릴스드래곤이 알려주는 실전 강의.</p>
             </div>
           </a>
-          <a href="#mentor-sticky-kcs" class="mentor-preview-slide" aria-label="김창수 강사 상세 보기">
-            <div class="mentor-preview-photo"><img src="image/KCS1.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
+          <a href="#mentor-sticky-kcs" class="mentor-preview-slide" aria-label="강현명 강사 상세 보기">
+            <div class="mentor-preview-photo"><img src="image/강현명.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
             <div class="mentor-preview-text">
-              <p class="mentor-preview-name">김창수 강사</p>
-              <p class="mentor-preview-sum">AI 자동화와 실전 루틴으로 콘텐츠·전환·수익 구조를 설계합니다.</p>
+              <p class="mentor-preview-name">강현명 강사</p>
+              <p class="mentor-preview-sum">블로그 마케팅 기초부터 AI SEO·포스팅까지 실전으로 익힙니다.</p>
             </div>
           </a>
+          </div>
+          <div class="mentor-preview-track mentor-preview-track--bottom">
           <a href="#mentor-sticky-bjh" class="mentor-preview-slide" aria-label="박정훈 강사 상세 보기">
             <div class="mentor-preview-photo"><img src="image/bjh.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
             <div class="mentor-preview-text">
@@ -5377,13 +5436,7 @@
               <p class="mentor-preview-sum">콘텐츠 구성과 전달력을 높이는 실전 코칭으로 채널 완성도를 끌어올립니다.</p>
             </div>
           </a>
-          <a href="#mentor-sticky-pjb" class="mentor-preview-slide" aria-label="편준범 강사 상세 보기">
-            <div class="mentor-preview-photo"><img src="image/PJB.png" alt="" width="480" height="540" loading="lazy" decoding="async" /></div>
-            <div class="mentor-preview-text">
-              <p class="mentor-preview-name">편준범 강사</p>
-              <p class="mentor-preview-sum">스마트폰과 입만으로 배우는 말로하는 AI 실전 교육을 진행합니다.</p>
-            </div>
-          </a>
+          </div>
         </div>
       </div>
     </div>
@@ -5490,41 +5543,41 @@
   <section id="mentor-sticky-editkim" class="mentor-section reveal">
     <div class="container">
       <div class="intensive-head">
-        <h2><span class="intensive-head-phrase">구독자 적어도 수익 나는</span> <span class="intensive-head-phrase">AI 유튜브 자동화 시스템</span></h2>
-        <p>에딧킴 강사 실전 수익화 코칭</p>
+        <h2><span class="intensive-head-phrase">쉽게 배우는</span> <span class="intensive-head-phrase">영상 기획·촬영·편집 & AI 활용</span></h2>
+        <p>이지용 강사 · 릴스드래곤 실전 강의</p>
       </div>
       <div class="mentor-layout">
         <aside class="mentor-sticky-col">
           <article class="mentor-sticky-card">
             <span class="mentor-badge">강사진</span>
             <div class="mentor-photo-wrap">
-              <img id="mentor-photo-editkim" src="image/editkim1.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
+              <img id="mentor-photo-editkim" src="image/이지용.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
             </div>
-            <h3 id="mentor-name-editkim">에딧킴 강사</h3>
-            <p id="mentor-role-editkim" class="mentor-role">AI 숏폼 제작 코치 · CapCut 실전 편집 트레이너</p>
-            <p id="mentor-bio-editkim" class="mentor-bio">"기획, 생성, 편집, 업로드까지 3시간 안에 완성합니다."<br><br>- AI로 주제/대본/썸네일 문구 빠르게 설계<br>- 영상 생성 도구로 제작 속도 극대화<br>- 캡컷 편집과 바이럴 세팅까지 실전 적용</p>
+            <h3 id="mentor-name-editkim">이지용 강사</h3>
+            <p id="mentor-role-editkim" class="mentor-role">영상 기획·촬영·편집 & AI 활용 전문가 · 릴스드래곤</p>
+            <p id="mentor-bio-editkim" class="mentor-bio">"영상 기획부터 편집, AI 활용까지 — 누구나 쉽게 따라할 수 있습니다."<br><br>- 쉽게 배우는 영상 기획, 촬영, 편집<br>- 더 쉽게 AI 활용하는 방법</p>
+            <div class="mentor-career-summary" aria-label="경력 요약">
+              <p class="mentor-career-summary-title">주요 경력</p>
+              <ul class="mentor-career-summary-list">
+                <li><strong>릴스드래곤</strong> 영상 편집 및 AI 활용 꿀팁 계정 운영 (인스타그램 9.5만 · 유튜브 3.5만 · 틱톡 1.4만 팔로워)</li>
+                <li><strong>AI 협업</strong> Kling AI, Higgsfield AI, 필모라, APOB AI 등 다양한 AI 업체와 협업 진행</li>
+              </ul>
+            </div>
           </article>
         </aside>
 
         <div class="mentor-steps">
           <article
             class="mentor-step active"
-            data-name="에딧킴 강사"
-            data-role="AI 숏폼 제작 코치 · CapCut 실전 편집 트레이너"
-            data-image="image/editkim1.png"
-            data-bio="&quot;기획, 생성, 편집, 업로드까지 3시간 안에 완성합니다.&quot;<br><br>- AI로 주제/대본/썸네일 문구 빠르게 설계<br>- 영상 생성 도구로 제작 속도 극대화<br>- 캡컷 편집과 바이럴 세팅까지 실전 적용">
-            <h4><span class="lecture-pill">1교시</span><br><span class="lecture-title">AI로 10분 만에 끝내는 '팔리는' 기획 & 대본 <span class="duration">(60분)</span></span></h4>
-            <p><strong>[이론]</strong> 유튜브 알고리즘이 좋아하는 '초반 3초' 후킹 전략</p>
-            <p><strong>[실습]</strong> ChatGPT/Gemini를 활용해 내 채널 주제에 맞는 숏츠 대본 5개 생성하기</p>
-            <p><strong>[실습]</strong> AI가 제안한 대본 중 가장 조회수 터질만한 '썸네일 문구' 뽑아내기</p>
-            <h4><span class="lecture-pill">2교시</span><br><span class="lecture-title">AI 영상 생성 도구로 화면 구성 끝내기 <span class="duration">(60분)</span></span></h4>
-            <p><strong>[이론]</strong> 저작권 걱정 없는 AI 이미지/비디오 소스 확보 요령</p>
-            <p><strong>[실습]</strong> Vrew나 가상 인간(Avatar) 툴을 활용해 대본을 영상으로 자동 변환하기</p>
-            <p><strong>[실습]</strong> 목소리 입히기: 내 목소리 대신 AI 성우로 감정 전달력을 높이는 팁</p>
-            <h4><span class="lecture-pill">3교시</span><br><span class="lecture-title">캡컷(CapCut) 실전 편집 & 바이럴 세팅 <span class="duration">(60분)</span></span></h4>
-            <p><strong>[실습]</strong> 생성된 AI 소스들을 캡컷에서 합치고 자막 넣기 (컷 편집 + 배경음악)</p>
-            <p><strong>[실습]</strong> AI 자막 자동 생성 기능을 활용해 가독성 극대화하기</p>
-            <p><strong>[마무리]</strong> 3시간 동안 만든 내 영상 피드백 및 오늘 바로 업로드하는 실전 가이드</p>
+            data-name="이지용 강사"
+            data-role="영상 기획·촬영·편집 & AI 활용 전문가 · 릴스드래곤"
+            data-image="image/이지용.png"
+            data-bio="&quot;영상 기획부터 편집, AI 활용까지 — 누구나 쉽게 따라할 수 있습니다.&quot;<br><br>- 쉽게 배우는 영상 기획, 촬영, 편집<br>- 더 쉽게 AI 활용하는 방법">
+            <h4><span class="lecture-title">강의 제목 : 쉽게 배우는 영상 기획,촬영,편집 & AI 활용 강의</span></h4>
+            <p><strong class="mentor-part-title">주요 교육 내용</strong><br>· 쉽게 배우는 영상 기획, 촬영, 편집<br>· 더 쉽게 AI 활용하는 방법</p>
+            <h4>주요 경력 사항</h4>
+            <p>영상 편집 및 AI 활용 꿀팁 알려주는 릴스드래곤 계정 운영<br>( 인스타그램 9.5만 팔로워, 유튜브 3.5만 팔로워, 틱톡 1.4만 팔로워 )</p>
+            <p>Kling AI, Higgsfield AI, 필모라, APOB AI 등등 다양한 AI 업체와 협업 진행</p>
           </article>
         </div>
       </div>
@@ -5534,41 +5587,37 @@
   <section id="mentor-sticky-kcs" class="mentor-section reveal">
     <div class="container">
       <div class="intensive-head">
-        <h2>AI 유튜브 자동화 실전 클래스</h2>
-        <p>구독자 규모와 무관하게 수익 구조를 만드는 실전 코칭</p>
+        <h2><span class="intensive-head-phrase">블로그 마케팅 기초와</span> <span class="intensive-head-phrase">AI SEO 콘텐츠 실전</span></h2>
+        <p>강현명 강사 · AI로 1시간 만에 포스팅 완성하기</p>
       </div>
       <div class="mentor-layout">
         <aside class="mentor-sticky-col">
           <article class="mentor-sticky-card">
             <span class="mentor-badge">강사진</span>
             <div class="mentor-photo-wrap">
-              <img id="mentor-photo-kcs" src="image/KCS1.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
+              <img id="mentor-photo-kcs" src="image/강현명.png" alt="대표 강사 프로필 이미지" loading="lazy" decoding="async" />
             </div>
-            <h3 id="mentor-name-kcs">김창수 강사</h3>
-            <p id="mentor-role-kcs" class="mentor-role">한국AI부동산포럼 & 신문 대표 · 부동삶클래스/부동삶TV/쉽톡 대표</p>
-            <p id="mentor-bio-kcs" class="mentor-bio">"구독자가 적어도 수익이 나는 구조를 만듭니다."<br><br>- AI 자동화 도구를 활용한 채널 운영 시스템 설계<br>- 콘텐츠 제작부터 상위노출·전환까지 실전 적용<br>- 바로 실행 가능한 수익화 루틴 제시</p>
+            <h3 id="mentor-name-kcs">강현명 강사</h3>
+            <p id="mentor-role-kcs" class="mentor-role">블로그 마케팅 · AI SEO 콘텐츠 전문가</p>
+            <p id="mentor-bio-kcs" class="mentor-bio">"AI와 함께하면 블로그 포스팅도 1시간이면 충분합니다."<br><br>- 네이버·티스토리 플랫폼 특성과 수익화 목표 설정<br>- AI 기반 SEO 콘텐츠 기획과 키워드 발굴<br>- 1일 1포스팅 시스템으로 지속 가능한 운영</p>
           </article>
         </aside>
 
         <div class="mentor-steps">
           <article
             class="mentor-step active"
-            data-name="김창수 강사"
-            data-role="한국AI부동산포럼 & 신문 대표 · 부동삶클래스/부동삶TV/쉽톡 대표"
-            data-image="image/KCS1.png"
-            data-bio="&quot;구독자가 적어도 수익이 나는 구조를 만듭니다.&quot;<br><br>- AI 자동화 도구를 활용한 채널 운영 시스템 설계<br>- 콘텐츠 제작부터 상위노출·전환까지 실전 적용<br>- 바로 실행 가능한 수익화 루틴 제시">
-            <h4><span class="lecture-pill">강의 제목</span><br><span class="lecture-title">구독자 적어도 수익 나는 AI 유튜브 자동화 시스템</span></h4>
-            <p>채널 규모가 작아도 실전 수익이 발생하도록, AI 기반 자동화 파이프라인을 설계하고 운영하는 방법을 다룹니다.</p>
-            <h4><span class="lecture-pill">제공 혜택</span><br><span class="lecture-title">실전 자동화 도구 패키지 제공</span></h4>
-            <p>- 쉽톡 3개월 무료 이용권 제공</p>
-            <p>- 카드뉴스 자동제작기 6개월 이용권 제공</p>
-            <p>- AI 상위노출 기사제작기 제공(평생)</p>
-            <p>- AI 썸네일, 대본 제작 봇 제공(평생)</p>
-            <h4><span class="lecture-pill">강사 소개</span><br><span class="lecture-title">김창수(부동삶)</span></h4>
-            <p>- 한국AI부동산포럼 & 신문 대표</p>
-            <p>- 부동삶클래스, 부동삶TV, 쉽톡 대표</p>
-            <p>- 서울사이버대학교 겸임교수</p>
-            <p>- 한국공인중개사협회 전임 교수</p>
+            data-name="강현명 강사"
+            data-role="블로그 마케팅 · AI SEO 콘텐츠 전문가"
+            data-image="image/강현명.png"
+            data-bio="&quot;AI와 함께하면 블로그 포스팅도 1시간이면 충분합니다.&quot;<br><br>- 네이버·티스토리 플랫폼 특성과 수익화 목표 설정<br>- AI 기반 SEO 콘텐츠 기획과 키워드 발굴<br>- 1일 1포스팅 시스템으로 지속 가능한 운영">
+            <h4><span class="lecture-pill">1교시</span><br><span class="lecture-title">블로그 마케팅 기초와 플랫폼</span></h4>
+            <p>- 네이버 vs 티스토리 특성, 수익화 목표 설정</p>
+            <h4><span class="lecture-pill">2교시</span><br><span class="lecture-title">AI와 함께하는 SEO 콘텐츠 기획</span></h4>
+            <p>- 키워드 발굴, AI(챗GPT, 제미나이 등) 기초 프롬프트 작성법</p>
+            <h4><span class="lecture-pill">3교시</span><br><span class="lecture-title">AI로 1시간 만에 포스팅 완성하기</span></h4>
+            <p>- 초안 작성, 팩트 체크 및 윤색, 블로그 글쓰기 템플릿 적용</p>
+            <h4><span class="lecture-pill">4교시</span><br><span class="lecture-title">지속 가능한 운영 및 Q&amp;A</span></h4>
+            <p>- 1일 1포스팅 시스템 구축, 질의응답</p>
           </article>
         </div>
       </div>
@@ -5695,36 +5744,6 @@
       </div>
     </div>
   </section>
-  <section id="mentor-sticky-pjb" class="mentor-section reveal">
-    <div class="container">
-      <div class="intensive-head">
-        <h2><span class="intensive-head-phrase">스마트폰과 입만 가져오세요</span> <span class="intensive-head-phrase">말로하는 AI</span></h2>
-        <p>편준범 강사의 말로하는 인공지능 실전 클래스</p>
-      </div>
-      <div class="mentor-layout">
-        <aside class="mentor-sticky-col">
-          <article class="mentor-sticky-card">
-            <span class="mentor-badge">AI 실용강의</span>
-            <div class="mentor-photo-wrap">
-              <img id="mentor-photo-pjb" src="image/PJB.png" alt="편준범 강사 프로필 이미지" loading="lazy" decoding="async" />
-            </div>
-            <h3 id="mentor-name-pjb">편준범 강사</h3>
-            <p id="mentor-role-pjb" class="mentor-role">말로하는 인공지능 창시 · AI 실용강의 1인자</p>
-            <p id="mentor-bio-pjb" class="mentor-bio">1,200만명 시니어에게 AI를 장착시켜 전국 7만곳 경로당에 인공지능 홀을 만들겠습니다.<br><br>- AI ON Movement!<br>- 말로하는 인공지능 창시<br>- 가장쉬운AI (youtube)<br>- 30년 디자인회사 대표 역임<br>- 인공지능 침대 개발 제조<br>- 산자부 R&amp;D 심사위원<br>- 6500여명 시니어 AI 교육진행</p>
-          </article>
-        </aside>
-        <div class="mentor-steps">
-          <article class="mentor-step active" data-name="편준범 강사" data-role="말로하는 인공지능 창시 · AI 실용강의 1인자" data-image="image/PJB.png" data-bio="말로 하는 인공지능, 말로하는 AI 실전 강의입니다.&lt;br&gt;&lt;br&gt;- 스마트폰과 음성 명령만으로 AI를 바로 활용하는 방법&lt;br&gt;- 복잡한 설정 없이 실생활/콘텐츠에 적용하는 실전 루틴&lt;br&gt;- 초보자도 따라할 수 있는 단계별 활용 가이드">
-            <h4><span class="lecture-pill">대표 세션</span><br><span class="lecture-title">말로 하는 인공지능, 말로하는 AI 실전</span></h4>
-            <p>말로 하는 인공지능, 말로하는 AI 실전 강의입니다.</p>
-            <p>- 스마트폰과 음성 명령만으로 AI를 바로 활용하는 방법</p>
-            <p>- 복잡한 설정 없이 실생활/콘텐츠에 적용하는 실전 루틴</p>
-            <p>- 초보자도 따라할 수 있는 단계별 활용 가이드</p>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
   </div>
 
   <section id="solution" class="reveal">
@@ -5758,7 +5777,7 @@
       <div class="grid-3">
         <article class="card"><h3>사업명</h3><p><span class="overview-em">STN 스킬업 과정</span></p></article>
         <article class="card"><h3>교육형태 / 기간</h3><p><span class="overview-em">온라인·오프라인 동시 집중교육</span></p><p>2026년 8월15일~17일</p></article>
-        <article class="card"><h3>장소</h3><p><span class="overview-em">명지대학교 인문캠퍼스 국제학술관</span></p><p class="overview-location-address">서울특별시 서대문구 가좌로 105 (홍은동)</p></article>
+        <article class="card"><h3>장소</h3><p><span class="overview-em">명지대학교 인문캠퍼스 국제학술관</span></p><p class="overview-location-address">서울특별시 서대문구 거북골로 34</p></article>
       </div>
     </div>
   </section>
@@ -5803,7 +5822,7 @@
               <div class="benefit-pill">2. <span class="benefit-em">수강생에 한해</span> 유튜브 멤버쉽 운영</div>
               <div class="benefit-pill">3. <span class="benefit-em">STN 스킬업 자격증</span> <span class="benefit-note">민간자격 등록 (제2025-002178호)</span></div>
               <div class="benefit-pill">4. <span class="benefit-em">AI자동화 프로그램</span><span class="benefit-note benefit-note--stack">(카드뉴스 자동 생성기, AI 상위노출 기사제작기등)</span></div>
-              <div class="benefit-pill">5. <span class="benefit-em">STN 중계 및 촬영</span> 현장 투입가능</div>
+              <div class="benefit-pill">5. <span class="benefit-em">STN 중계 및 촬영 현장 실습</span> 혜택</div>
               <div class="benefit-pill">6. <span class="benefit-em">지속관리</span></div>
             </div>
           </div>
@@ -5817,7 +5836,7 @@
       <div class="price-cut-layout">
         <div class="price-cut-left">수강료</div>
         <div class="price-cut-right">
-          <div class="price-cut-kicker"><span class="price-kicker-strong">8명 전문강사</span>의 모든 <span class="price-kicker-strong price-kicker-nohow"><span class="price-kicker-char">노</span><span class="price-kicker-char">하</span><span class="price-kicker-char">우</span></span>를 배우는 가격!</div>
+          <div class="price-cut-kicker"><span class="price-kicker-strong">7명 전문강사</span>의 모든 <span class="price-kicker-strong price-kicker-nohow"><span class="price-kicker-char">노</span><span class="price-kicker-char">하</span><span class="price-kicker-char">우</span></span>를 배우는 가격!</div>
           <p class="price-cut-kicker-sub">단 <span class="price-cut-kicker-sub-accent">2일</span>만에 나도 <span class="price-cut-kicker-sub-accent">컨텐츠전문가</span>가 되실수<br>있습니다</p>
           <div class="price-cut-price-stack">
             <del class="price-cut-old">4,500,000</del>
@@ -5834,7 +5853,7 @@
     </div>
   </section>
 
-  <section id="earlybird" class="earlybird reveal" aria-label="얼리버드 할인 혜택" data-earlybird-deadline="2026-06-15">
+  <section id="earlybird" class="earlybird reveal" aria-label="얼리버드 할인 혜택" data-earlybird-deadline="2026-07-15">
     <div class="container">
       <header class="earlybird-head">
         <img class="earlybird-logo" src="image/LOGOL-PNG.png" alt="STN SKILL UP 로고" loading="lazy" decoding="async" />
@@ -5847,7 +5866,7 @@
           <header class="earlybird-card-head">
             <span class="earlybird-badge earlybird-badge--eb">얼리버드 20% 할인</span>
             <p class="earlybird-card-kicker">기간 한정 특가</p>
-            <p class="earlybird-card-cond">2026년 6월 15일까지 결제하면</p>
+            <p class="earlybird-card-cond">2026년 7월 15일까지 결제하면</p>
           </header>
           <div class="earlybird-price-row">
             <p class="earlybird-price-old">1,980,000원</p>
@@ -5855,7 +5874,7 @@
           </div>
           <span class="earlybird-save earlybird-save--eb">396,000원 절약 (20%)</span>
           <div class="earlybird-meta">
-            <div><span class="earlybird-meta-label">할인 마감일</span><span class="earlybird-meta-value">2026년 6월 15일</span></div>
+            <div><span class="earlybird-meta-label">할인 마감일</span><span class="earlybird-meta-value">2026년 7월 15일</span></div>
             <span class="earlybird-dday">D-0</span>
           </div>
           <div class="earlybird-notes">
@@ -5957,7 +5976,7 @@
       <div class="faq-wrap">
         <details><summary>Q. 초보자도 참여할 수 있나요?</summary><p>A. 가능합니다. 기초부터 실습 중심으로 진행해 초보자도 결과물을 만들 수 있도록 설계되어 있습니다.</p></details>
         <details><summary>Q. 콘텐츠는 언제까지 제공하나요?</summary><p>A. 콘텐츠는 수료후 6개월까지 지원합니다. 이후에는 멤버쉽 가입후 지속적으로 분야별 제공받으실 수 있습니다.</p></details>
-        <details><summary>Q. 수료 후에도 관리 해주시나요?</summary><p>A. 네. 수료후에도 지속적으로 관리해드리고 수익이 날 수 있도록 최선을 다하겠습니다.</p></details>
+        <details><summary>Q. 수료 후에는 어떤 혜택을 받을 수 있나요?</summary><p>A. 수료 후 6개월간 콘텐츠를 제공하며, STN 중계 및 촬영 현장 실습 혜택을 통해 실무 경험을 쌓을 수 있습니다. 또한 AI 자동화 도구를 제공해 콘텐츠 제작 효율을 높여드립니다.</p></details>
         <details><summary>Q. 준비물은 무엇인가요?</summary><p>A. 개인 노트북(최소 8GB RAM, 256GB SSD)만 지참하시면 됩니다.</p></details>
       </div>
     </div>
@@ -5969,7 +5988,7 @@
         <h2>오시는길</h2>
         <p class="directions-desc">아래 버튼을 누르면 카카오지도 길찾기로 연결됩니다.</p>
         <p class="directions-place">명지대학교 인문캠퍼스 국제학술관</p>
-        <p class="directions-address">서울특별시 서대문구 가좌로 105 (홍은동)</p>
+        <p class="directions-address">서울특별시 서대문구 거북골로 34</p>
         <a class="directions-map-btn" href="https://kko.to/qsiJh8OrDf" target="_blank" rel="noopener noreferrer">명지대학교 국제관 지도로 연결</a>
         <p class="directions-hint">카카오지도 앱 또는 웹 길찾기 화면으로 이동합니다.</p>
       </article>
@@ -6032,7 +6051,7 @@
       const section = document.getElementById('earlybird');
       if (!section) return;
 
-      const deadlineStr = section.getAttribute('data-earlybird-deadline') || '2026-06-15';
+      const deadlineStr = section.getAttribute('data-earlybird-deadline') || '2026-07-15';
       const deadline = new Date(deadlineStr + 'T23:59:59+09:00');
       const ddayEl = section.querySelector('.earlybird-dday');
       if (ddayEl) {

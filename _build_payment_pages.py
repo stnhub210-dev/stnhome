@@ -146,12 +146,12 @@ TIERS = {
         "fixed_tier": "earlybird",
         "badge": "얼리버드 20% 할인",
         "kicker": "기간 한정 특가",
-        "cond": "2026년 6월 15일까지 결제 시 적용",
+        "cond": "2026년 7월 15일까지 결제 시 적용",
         "old_price": "1,980,000원",
         "price": "1,584,000원",
         "save": "396,000원 절약 (20%)",
         "note": "대학생 할인과 중복 적용되지 않습니다. 마감일 이후 정가가 적용됩니다.",
-        "tier_label": "얼리버드 20% 할인 (~6/15)",
+        "tier_label": "얼리버드 20% 할인 (~7/15)",
         "discount_mode": "earlybird",
     },
     "student": {
@@ -185,7 +185,7 @@ TIERS = {
         "price": "1,980,000원",
         "save": "부가세 포함",
         "note": "할인 혜택이 적용되지 않은 정가입니다.",
-        "tier_label": "정가 (6/15 이후)",
+        "tier_label": "정가 (7/15 이후)",
         "discount_mode": "none",
     },
 }
