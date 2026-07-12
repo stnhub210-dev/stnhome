@@ -828,14 +828,34 @@
       cursor: pointer;
       transition: filter 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
     }
-    .btn-submit:hover:not(:disabled) {
+    .btn-submit:hover:not(.is-disabled):not(:disabled) {
       filter: brightness(1.06);
       transform: translateY(-1px);
     }
+    .btn-submit.is-disabled,
     .btn-submit:disabled {
       opacity: 0.38;
       cursor: not-allowed;
       transform: none;
+    }
+    .submit-guide {
+      margin: 0 0 10px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.5;
+      text-align: center;
+      cursor: pointer;
+    }
+    .submit-guide[hidden] {
+      display: none;
+    }
+    .bank-depositor-note {
+      margin: 8px 0 0;
+      font-size: 0.82rem;
+      color: #c8c8c8;
+      font-weight: 600;
+      line-height: 1.45;
     }
     .submit-hint {
       margin-top: 12px;
@@ -1475,7 +1495,7 @@
             <p class="field-msg" id="err-email" role="alert"></p>
           </div>
           <div class="field">
-            <label class="field-label" for="applicant-discount-code">할인코드</label>
+            <label class="field-label" for="applicant-discount-code">할인코드(선택)</label>
             <div class="input-with-btn">
               <input class="field-input" type="text" id="applicant-discount-code" name="applicant-discount-code" autocomplete="off" placeholder="할인 코드 입력 (선택)" maxlength="20" />
               <button type="button" class="btn btn-ghost btn-sm" id="btn-apply-discount">코드 확인</button>
@@ -1628,14 +1648,16 @@
             <div id="panel-transfer" class="pay-extra" aria-live="polite">
               <p class="pay-extra-label">입금 정보 (계좌이체)</p>
               <div class="bank-lines">
-                은행: <span>우리은행</span><br />
+                은행: <span>기업은행</span><br />
                 계좌번호: <span>483-075628-04-018</span><br />
                 예금주: <span>주식회사 플래닛네이처미디어</span>
+                <p class="bank-depositor-note">(보내시는 분을 수강하시는 분 성명으로 입력 부탁드립니다.)</p>
               </div>
             </div>
             <p class="field-msg" id="err-pay" role="alert"></p>
           </div>
-          <button type="button" class="btn-submit" id="btn-submit" disabled>결제하기 →</button>
+          <p class="submit-guide" id="submit-guide" role="status" aria-live="polite">빠져 있는 항목을 입력하거나 체크해 주세요.</p>
+          <button type="button" class="btn-submit is-disabled" id="btn-submit" aria-disabled="true">결제하기 →</button>
           <p class="submit-hint">결제 버튼 클릭 시 헥토파이낸셜 결제창이 열립니다.<br />입력하신 정보는 결제 및 교육 운영 목적으로만 사용됩니다.</p>
         </section>
 
@@ -1714,6 +1736,7 @@
       var agreeTerms = document.getElementById("agree-terms");
       var agreeMarketing = document.getElementById("agree-marketing");
       var btnSubmit = document.getElementById("btn-submit");
+      var elSubmitGuide = document.getElementById("submit-guide");
       var flow = document.getElementById("payment-flow");
       var complete = document.getElementById("payment-complete");
       var summaryEl = document.getElementById("complete-summary");
@@ -1807,12 +1830,52 @@
         panelTransfer.classList.toggle("is-visible", m === "transfer");
       }
 
+      function getFirstMissingTarget() {
+        if (!elName.value.trim()) return elName;
+        if (!phoneRe.test(elPhone.value.replace(/\s/g, ""))) return elPhone;
+        if (!emailRe.test(elEmail.value.trim())) return elEmail;
+        if (!requiredAgreesOk()) return agreePrivacy || agreeAll;
+        if (!getPayMethod()) return payMethodsWrap;
+        return null;
+      }
+
+      function scrollToFirstMissing() {
+        var target = getFirstMissingTarget();
+        if (!target) return;
+        try {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+          if (typeof target.focus === "function" && target.tagName !== "DIV") {
+            target.focus({ preventScroll: true });
+          }
+        } catch (_) {}
+      }
+
       function updateSubmitState() {
         var formOk =
           elName.value.trim() &&
           phoneRe.test(elPhone.value.replace(/\s/g, "")) &&
           emailRe.test(elEmail.value.trim());
-        btnSubmit.disabled = !(formOk && requiredAgreesOk() && getPayMethod());
+        var canSubmit = !!(formOk && requiredAgreesOk() && getPayMethod());
+        btnSubmit.classList.toggle("is-disabled", !canSubmit);
+        btnSubmit.setAttribute("aria-disabled", canSubmit ? "false" : "true");
+        btnSubmit.disabled = false;
+
+        if (elSubmitGuide) {
+          if (canSubmit) {
+            elSubmitGuide.hidden = true;
+            elSubmitGuide.textContent = "";
+          } else {
+            var missing = [];
+            if (!elName.value.trim()) missing.push("이름");
+            if (!phoneRe.test(elPhone.value.replace(/\s/g, ""))) missing.push("연락처");
+            if (!emailRe.test(elEmail.value.trim())) missing.push("이메일");
+            if (!requiredAgreesOk()) missing.push("필수 약관 동의");
+            if (!getPayMethod()) missing.push("결제 수단");
+            elSubmitGuide.hidden = false;
+            elSubmitGuide.textContent =
+              "빠져 있는 항목을 입력하거나 체크해 주세요. (" + missing.join(", ") + ")";
+          }
+        }
       }
 
       if (window.STNPaymentAgreements) {
@@ -1928,6 +1991,10 @@
       }
 
       btnSubmit.addEventListener("click", async function () {
+        if (btnSubmit.classList.contains("is-disabled") || btnSubmit.getAttribute("aria-disabled") === "true") {
+          scrollToFirstMissing();
+          return;
+        }
         if (!runValidationWithToast()) return;
         if (window.STNReferralPublic && !window.STNReferralPublic.validateBeforeSubmit()) return;
         loading.classList.add("is-on");
@@ -1985,6 +2052,12 @@
 
       updatePanels();
       updateSubmitState();
+
+      if (elSubmitGuide) {
+        elSubmitGuide.addEventListener("click", function () {
+          scrollToFirstMissing();
+        });
+      }
     })();
   </script>
 
