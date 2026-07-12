@@ -6,3 +6,5 @@ compatibility_flags = ["nodejs_compat"]
 # 배포 후 시크릿 설정 (대시보드 또는 CLI):
 #   npx wrangler secret put HECTO_HASH_KEY
 #   npx wrangler secret put HECTO_AES_KEY
+#   npx wrangler secret put RESEND_API_KEY
+#   npx wrangler secret put ADMIN_NOTIFY_EMAIL   # 선택, 기본 lmj@stnsports.co.kr

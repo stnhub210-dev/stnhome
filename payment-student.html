@@ -664,20 +664,30 @@
       min-height: 48px;
       padding: 10px 8px;
       border-radius: 12px;
-      border: 1px solid var(--line);
-      background: #151515;
+      border: 1px solid color-mix(in srgb, var(--lime) 28%, var(--line));
+      background: color-mix(in srgb, var(--lime) 12%, rgba(21, 21, 21, 0.72));
       font-size: 0.88rem;
       font-weight: 800;
       color: #ddd;
       cursor: pointer;
-      transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+      transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
       text-align: center;
+      backdrop-filter: blur(6px);
+    }
+    .pay-method label:hover {
+      border-color: color-mix(in srgb, var(--lime) 45%, var(--line));
+      background: color-mix(in srgb, var(--lime) 18%, rgba(21, 21, 21, 0.65));
+      color: #fff;
     }
     .pay-method input:checked + label {
       border-color: var(--lime);
-      background: rgba(124, 252, 0, 0.1);
+      background: color-mix(in srgb, var(--lime) 22%, transparent);
       color: var(--lime);
-      box-shadow: 0 0 0 1px rgba(124, 252, 0, 0.25);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--lime) 28%, transparent);
+    }
+    .pay-method input:checked + label:hover {
+      background: color-mix(in srgb, var(--lime) 28%, transparent);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--lime) 35%, transparent);
     }
     .pay-method input:focus-visible + label {
       outline: 2px solid var(--lime);

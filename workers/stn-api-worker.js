@@ -9,6 +9,11 @@
  *   SUPABASE_URL
  *   SUPABASE_SERVICE_ROLE_KEY
  *
+ * 선택 (결제 완료 관리자 메일):
+ *   RESEND_API_KEY       — Resend API 키
+ *   ADMIN_NOTIFY_EMAIL   — 수신 메일 (기본 lmj@stnsports.co.kr)
+ *   ADMIN_MAIL_FROM      — 발신 표시 (기본 STN 스킬업 <onboarding@resend.dev>)
+ *
  * 해시: SHA256(mchtId + method + mchtTrdNo + trdDt + trdTm + trdAmt평문 + hashKey)
  * 암호화: AES-256/ECB/PKCS5Padding + Base64
  */
@@ -24,6 +29,8 @@ const ALLOW_ORIGINS = [
 ];
 
 const RESULT_PAGE_URL = 'https://stnmedia.kr/payment_result.html';
+const DEFAULT_ADMIN_EMAIL = 'lmj@stnsports.co.kr';
+const DEFAULT_MAIL_FROM = 'STN 스킬업 <onboarding@resend.dev>';
 
 const CARD_METHOD = 'card';
 
@@ -193,6 +200,130 @@ async function syncPaymentToSupabase(payload, env) {
   });
 }
 
+function isPaymentPaid(payload) {
+  return String(payload.outStatCd || '') === '0021';
+}
+
+function formatWon(amount) {
+  const n = Number(amount) || 0;
+  return n.toLocaleString('ko-KR') + '원';
+}
+
+function escapeHtml(text) {
+  return String(text || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function buildAdminPaymentSummary(payload) {
+  const mcht = parseMchtParam(payload.mchtParam);
+  const nameRaw = String(payload.mchtCustNm || '').trim();
+  const applicantName = looksEncryptedText(nameRaw) ? '(암호화됨)' : nameRaw || '-';
+  const phone = String(payload.cphoneNo || '').replace(/\D/g, '') || '-';
+  const amount = plainAmount(payload.trdAmt);
+  const orderId = String(payload.mchtTrdNo || '-');
+  const programName = String(payload.pmtPrdtNm || 'STN 스킬업 양성과정');
+  const tier = mcht.tier || '-';
+  const referrer = mcht.referrer || '-';
+  const authNo = String(payload.authNo || '-');
+
+  return {
+    applicantName,
+    phone,
+    amount,
+    orderId,
+    programName,
+    tier,
+    referrer,
+    authNo,
+  };
+}
+
+/** 결제 성공 시 관리자 메일 (Resend) — 실패해도 결제 처리는 막지 않음 */
+async function notifyAdminPaymentEmail(payload, env) {
+  const apiKey = env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn('RESEND_API_KEY 미설정 — 관리자 메일 생략');
+    return;
+  }
+  if (!isPaymentPaid(payload)) return;
+
+  const to = String(env.ADMIN_NOTIFY_EMAIL || DEFAULT_ADMIN_EMAIL).trim();
+  const from = String(env.ADMIN_MAIL_FROM || DEFAULT_MAIL_FROM).trim();
+  const info = buildAdminPaymentSummary(payload);
+
+  const subject = '[STN 스킬업] 결제 완료 — ' + info.applicantName + ' / ' + formatWon(info.amount);
+  const text =
+    'STN 스킬업 결제가 완료되었습니다.\n\n' +
+    '주문자: ' + info.applicantName + '\n' +
+    '연락처: ' + info.phone + '\n' +
+    '과정: ' + info.programName + '\n' +
+    '요금제: ' + info.tier + '\n' +
+    '추천인: ' + info.referrer + '\n' +
+    '결제금액: ' + formatWon(info.amount) + '\n' +
+    '주문번호: ' + info.orderId + '\n' +
+    '승인번호: ' + info.authNo + '\n' +
+    '결제수단: 신용카드\n\n' +
+    '관리자: https://stnmedia.kr/admin/dashboard.html\n';
+
+  const html =
+    '<div style="font-family:Apple SD Gothic Neo,Malgun Gothic,sans-serif;line-height:1.6;color:#111">' +
+    '<h2 style="margin:0 0 12px">STN 스킬업 결제 완료</h2>' +
+    '<table style="border-collapse:collapse;width:100%;max-width:520px">' +
+    '<tr><td style="padding:6px 0;color:#666">주문자</td><td style="padding:6px 0;font-weight:700">' +
+    escapeHtml(info.applicantName) +
+    '</td></tr>' +
+    '<tr><td style="padding:6px 0;color:#666">연락처</td><td style="padding:6px 0">' +
+    escapeHtml(info.phone) +
+    '</td></tr>' +
+    '<tr><td style="padding:6px 0;color:#666">과정</td><td style="padding:6px 0">' +
+    escapeHtml(info.programName) +
+    '</td></tr>' +
+    '<tr><td style="padding:6px 0;color:#666">요금제</td><td style="padding:6px 0">' +
+    escapeHtml(info.tier) +
+    '</td></tr>' +
+    '<tr><td style="padding:6px 0;color:#666">추천인</td><td style="padding:6px 0">' +
+    escapeHtml(info.referrer) +
+    '</td></tr>' +
+    '<tr><td style="padding:6px 0;color:#666">결제금액</td><td style="padding:6px 0;font-weight:700">' +
+    escapeHtml(formatWon(info.amount)) +
+    '</td></tr>' +
+    '<tr><td style="padding:6px 0;color:#666">주문번호</td><td style="padding:6px 0">' +
+    escapeHtml(info.orderId) +
+    '</td></tr>' +
+    '<tr><td style="padding:6px 0;color:#666">승인번호</td><td style="padding:6px 0">' +
+    escapeHtml(info.authNo) +
+    '</td></tr>' +
+    '</table>' +
+    '<p style="margin:16px 0 0"><a href="https://stnmedia.kr/admin/dashboard.html">관리자 대시보드 열기</a></p>' +
+    '</div>';
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + apiKey,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from,
+      to: [to],
+      subject,
+      text,
+      html,
+    }),
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    console.error('admin mail send failed', res.status, errText);
+    return;
+  }
+
+  console.log('admin mail sent', to, info.orderId);
+}
+
 function buildResultRedirectUrl(payload) {
   const params = new URLSearchParams();
   Object.entries(payload || {}).forEach(([key, value]) => {
@@ -277,6 +408,12 @@ async function handleNotify(request, env) {
     await syncPaymentToSupabase(payload, env);
   } catch (err) {
     console.error('supabase sync error', err);
+  }
+
+  try {
+    await notifyAdminPaymentEmail(payload, env);
+  } catch (err) {
+    console.error('admin mail error', err);
   }
 
   return new Response('OK', {

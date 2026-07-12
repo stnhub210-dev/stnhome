@@ -67,6 +67,26 @@ npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY
 
 `service_role` 키는 **절대** 프론트엔드에 넣지 마세요.
 
+### 결제 완료 관리자 메일 (Resend)
+
+`/hecto-notify`에서 결제 성공(`outStatCd=0021`) 시 `lmj@stnsports.co.kr`로 메일을 보냅니다.
+
+```bash
+npx wrangler secret put RESEND_API_KEY
+# Resend API 키
+
+# 선택 — 수신/발신 변경 시
+npx wrangler secret put ADMIN_NOTIFY_EMAIL
+# lmj@stnsports.co.kr
+
+npx wrangler secret put ADMIN_MAIL_FROM
+# STN 스킬업 <onboarding@resend.dev>
+# 도메인 인증 후: STN 스킬업 <noreply@stnsports.co.kr>
+```
+
+Resend 테스트 모드에서는 **가입한 본인 메일로만** 수신이 됩니다.  
+`lmj@stnsports.co.kr`로 받으려면 해당 주소로 Resend에 가입했거나, 도메인을 인증해야 합니다.
+
 ## 엔드포인트
 
 | 경로 | 설명 |
