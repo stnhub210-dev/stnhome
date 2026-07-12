@@ -85,7 +85,8 @@ npx wrangler secret put ADMIN_MAIL_FROM
 ```
 
 Resend 테스트 모드에서는 **가입한 본인 메일로만** 수신이 됩니다.  
-`lmj@stnsports.co.kr`로 받으려면 해당 주소로 Resend에 가입했거나, 도메인을 인증해야 합니다.
+현재 Resend 계정 메일: `stnhub210@gmail.com`  
+`lmj@stnsports.co.kr`로 받으려면 Resend에서 `stnsports.co.kr` 도메인을 인증하고, 발신 주소를 해당 도메인으로 바꾼 뒤 `ADMIN_NOTIFY_EMAIL`을 변경하세요.
 
 ## 엔드포인트
 

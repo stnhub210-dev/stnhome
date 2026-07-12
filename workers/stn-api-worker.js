@@ -29,7 +29,8 @@ const ALLOW_ORIGINS = [
 ];
 
 const RESULT_PAGE_URL = 'https://stnmedia.kr/payment_result.html';
-const DEFAULT_ADMIN_EMAIL = 'lmj@stnsports.co.kr';
+/** Resend 테스트 모드는 가입 메일로만 발송 가능 — 도메인 인증 전 기본값 */
+const DEFAULT_ADMIN_EMAIL = 'stnhub210@gmail.com';
 const DEFAULT_MAIL_FROM = 'STN 스킬업 <onboarding@resend.dev>';
 
 const CARD_METHOD = 'card';
@@ -201,7 +202,10 @@ async function syncPaymentToSupabase(payload, env) {
 }
 
 function isPaymentPaid(payload) {
-  return String(payload.outStatCd || '') === '0021';
+  const outStatCd = String(payload.outStatCd || '');
+  const resultCd = String(payload.resultCd || payload.outRsltCd || '');
+  // 0021: 승인완료, 0000: 결과코드 성공
+  return outStatCd === '0021' || resultCd === '0000';
 }
 
 function formatWon(amount) {
@@ -248,9 +252,21 @@ async function notifyAdminPaymentEmail(payload, env) {
     console.warn('RESEND_API_KEY 미설정 — 관리자 메일 생략');
     return;
   }
-  if (!isPaymentPaid(payload)) return;
+  if (!isPaymentPaid(payload)) {
+    console.log('admin mail skip — not paid', {
+      outStatCd: payload.outStatCd,
+      resultCd: payload.resultCd,
+      outRsltCd: payload.outRsltCd,
+    });
+    return;
+  }
 
-  const to = String(env.ADMIN_NOTIFY_EMAIL || DEFAULT_ADMIN_EMAIL).trim();
+  const recipients = String(env.ADMIN_NOTIFY_EMAIL || DEFAULT_ADMIN_EMAIL)
+    .split(/[,;\s]+/)
+    .map((v) => v.trim())
+    .filter(Boolean);
+  if (!recipients.length) recipients.push(DEFAULT_ADMIN_EMAIL);
+
   const from = String(env.ADMIN_MAIL_FROM || DEFAULT_MAIL_FROM).trim();
   const info = buildAdminPaymentSummary(payload);
 
@@ -300,28 +316,30 @@ async function notifyAdminPaymentEmail(payload, env) {
     '<p style="margin:16px 0 0"><a href="https://stnmedia.kr/admin/dashboard.html">관리자 대시보드 열기</a></p>' +
     '</div>';
 
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: 'Bearer ' + apiKey,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from,
-      to: [to],
-      subject,
-      text,
-      html,
-    }),
-  });
+  for (const to of recipients) {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + apiKey,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to: [to],
+        subject,
+        text,
+        html,
+      }),
+    });
 
-  if (!res.ok) {
-    const errText = await res.text();
-    console.error('admin mail send failed', res.status, errText);
-    return;
+    if (!res.ok) {
+      const errText = await res.text();
+      console.error('admin mail send failed', to, res.status, errText);
+      continue;
+    }
+
+    console.log('admin mail sent', to, info.orderId);
   }
-
-  console.log('admin mail sent', to, info.orderId);
 }
 
 function buildResultRedirectUrl(payload) {
@@ -386,6 +404,12 @@ async function handleReturn(request, env) {
     await syncPaymentToSupabase(payload, env);
   } catch (err) {
     console.error('hecto-return supabase sync error', err);
+  }
+
+  try {
+    await notifyAdminPaymentEmail(payload, env);
+  } catch (err) {
+    console.error('hecto-return admin mail error', err);
   }
 
   const targetUrl = buildResultRedirectUrl(payload);
