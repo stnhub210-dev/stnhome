@@ -24,7 +24,7 @@
       'html.stn-protected [contenteditable="true"], html.stn-protected [data-allow-select] {' +
       '-webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }' +
       'html.stn-protected input[type="checkbox"], html.stn-protected input[type="radio"] {' +
-      '-webkit-user-select: auto; user-select: auto; pointer-events: auto; }' +
+      '-webkit-user-select: auto; user-select: auto; }' +
       'html.stn-protected img, html.stn-protected video, html.stn-protected svg,' +
       'html.stn-protected picture, html.stn-protected canvas {' +
       '-webkit-user-drag: none; user-drag: none; pointer-events: auto; }' +

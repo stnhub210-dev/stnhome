@@ -229,7 +229,18 @@
       text-decoration: none;
     }
     .back-link:hover { color: var(--lime); }
-    input[name="payMethod"] { position: absolute; opacity: 0; pointer-events: none; }
+    input[name="payMethod"] {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      margin: -1px !important;
+      padding: 0 !important;
+      border: 0 !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
   </style>
 </head>
 <body>
@@ -271,7 +282,7 @@
           <span class="sum-total-val">100원</span>
         </div>
         <p class="pay-note">결제수단: 신용카드 (일시불)<br />BC카드 할부 제한</p>
-        <input type="radio" name="payMethod" id="pay-card" value="card" checked />
+        <input type="radio" name="payMethod" id="pay-card" value="card" checked hidden aria-hidden="true" />
         <label class="agree-row">
           <input type="checkbox" id="agree-test" />
           <span>테스트 결제임을 확인했으며, 100원이 청구될 수 있음에 동의합니다.</span>
