@@ -1546,14 +1546,14 @@
             <p class="field-msg" id="err-discount-code" role="alert"></p>
           </div>
           <div class="field">
-            <label class="field-label" for="applicant-referrer-code">추천인 코드</label>
-            <input class="field-input" type="text" id="applicant-referrer-code" name="applicant-referrer-code" autocomplete="off" placeholder="추천인 코드 입력 (선택)" maxlength="20" />
+            <label class="field-label" for="applicant-referrer-code">추천인(한글입력)</label>
+            <input class="field-input" type="text" id="applicant-referrer-code" name="applicant-referrer-code" autocomplete="off" placeholder="추천인 한글 입력 (선택)" maxlength="20" />
           </div>
           <div class="field field--full">
             <label class="field-label">재학·휴학 증명서 제출<span class="req" aria-hidden="true">*</span></label>
             <p class="field-hint">카카오 1:1 채팅으로 증명서(PDF, JPG, PNG)를 보내 주세요. 아래 버튼을 누르면 채팅방으로 이동합니다.</p>
             <div class="cert-kakao-box" id="cert-kakao-wrap">
-              <a href="https://open.kakao.com/o/sw0sXbvi" class="cert-kakao-btn" id="btn-cert-kakao" target="_blank" rel="noopener noreferrer">카카오 1:1로 증명서 보내기</a>
+              <a href="http://pf.kakao.com/_vxagxjX/chat" class="cert-kakao-btn" id="btn-cert-kakao" target="_blank" rel="noopener noreferrer">카카오 1:1로 증명서 보내기</a>
               <p class="cert-kakao-note">채팅창에 이름·연락처와 함께 증명서 파일을 첨부해 주세요.</p>
             </div>
             <label class="cert-kakao-check">
@@ -1722,7 +1722,7 @@
           <p class="complete-desc">입력하신 연락처로 영업일 기준 1~2일 내 담당자가 연락드립니다.<br />증명서는 아래 카카오 1:1 채팅으로 꼭 보내 주세요.<br />문의: <a href="tel:1599-5053">1599-5053</a></p>
           <div class="complete-kakao-cert" id="complete-kakao-cert">
             <p class="complete-kakao-lead">신청 완료! 마지막으로 재학·휴학 증명서를 카카오 1:1로 보내 주세요.</p>
-            <a href="https://open.kakao.com/o/sw0sXbvi" class="cert-kakao-btn" id="btn-cert-kakao-complete" target="_blank" rel="noopener noreferrer">카카오 1:1로 증명서 보내기</a>
+            <a href="http://pf.kakao.com/_vxagxjX/chat" class="cert-kakao-btn" id="btn-cert-kakao-complete" target="_blank" rel="noopener noreferrer">카카오 1:1로 증명서 보내기</a>
           </div>
           <dl class="complete-summary" id="complete-summary"></dl>
           <a class="btn-back" href="start.html">← 강의 소개 페이지로 돌아가기</a>
@@ -1776,7 +1776,7 @@
       var elPhone = document.getElementById("applicant-phone");
       var elEmail = document.getElementById("applicant-email");
       var elReferrerCode = document.getElementById("applicant-referrer-code");
-      var KAKAO_CERT_CHAT_URL = "https://open.kakao.com/o/sw0sXbvi";
+      var KAKAO_CERT_CHAT_URL = "http://pf.kakao.com/_vxagxjX/chat";
       var btnCertKakao = document.getElementById("btn-cert-kakao");
       var btnCertKakaoComplete = document.getElementById("btn-cert-kakao-complete");
       var certKakaoWrap = document.getElementById("cert-kakao-wrap");
