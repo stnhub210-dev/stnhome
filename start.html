@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -25,10 +25,12 @@
   <meta property="og:title" content="최고의 강사진이 다 모였다 | STN 스킬업">
   <meta property="og:description" content="2026년 8월15일~17일 명지대학교 인문캠퍼스 국제학술관 | STN 스킬업 양성과정 2박 3일 집중교육">
   <meta property="og:url" content="https://stnmedia.kr/start.html">
-  <meta property="og:image" content="https://stnmedia.kr/image/mainog.png">
-  <meta property="og:image:secure_url" content="https://stnmedia.kr/image/mainog.png">
-  <meta property="og:image:width" content="1024">
-  <meta property="og:image:height" content="556">
+  <!-- v=20260719 : 카카오 OG 캐시 갱신용 쿼리 -->
+  <meta property="og:image" content="https://stnmedia.kr/image/mainog.png?v=20260719">
+  <meta property="og:image:secure_url" content="https://stnmedia.kr/image/mainog.png?v=20260719">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="960">
   <meta property="og:image:alt" content="STN 스킬업 양성과정 카카오톡 공유 이미지">
   <meta property="og:locale" content="ko_KR">
 
@@ -36,7 +38,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="STN 스킬업 양성과정 | STN SKILL UP">
   <meta name="twitter:description" content="유튜브 크리에이터 양성과정 2박 3일 집중교육. 기획부터 수익화까지 실전 완성.">
-  <meta name="twitter:image" content="https://stnmedia.kr/image/mainog.png">
+  <meta name="twitter:image" content="https://stnmedia.kr/image/mainog.png?v=20260719">
   <meta name="twitter:image:alt" content="STN 스킬업 양성과정 카카오톡 공유 이미지">
 
   <!-- ================== Language ================== -->
@@ -941,7 +943,7 @@
     /* 커리큘럼 버튼: 검정 면 + 좌→우 빛 스윕, 호버 네온 점등 */
     .schedule-curriculum-bridge-btn-shell {
       display: inline-flex;
-      border-radius: 16px;
+      border-radius: 20px;
       transition: filter 0.32s ease;
     }
     .schedule-curriculum-bridge-btn {
@@ -951,9 +953,9 @@
       justify-content: center;
       overflow: hidden;
       isolation: isolate;
-      padding: clamp(20px, 3.2vw, 28px) clamp(40px, 6vw, 72px);
-      border-radius: 14px;
-      font-size: clamp(1.28rem, 2.6vw, 1.62rem);
+      padding: clamp(30px, 4.8vw, 42px) clamp(60px, 9vw, 108px);
+      border-radius: 18px;
+      font-size: clamp(1.92rem, 3.9vw, 2.43rem);
       font-weight: 800;
       letter-spacing: -0.02em;
       line-height: 1.35;
@@ -1023,14 +1025,28 @@
     .schedule-curriculum-bridge-btn-shell:has(.schedule-curriculum-bridge-btn:focus-visible) {
       filter: drop-shadow(0 0 10px rgba(198, 255, 0, 0.5));
     }
+    @keyframes curriculum-bridge-char-wave {
+      0%, 100% {
+        transform: scale(1);
+      }
+      40% {
+        transform: scale(1.38);
+      }
+      55% {
+        transform: scale(0.92);
+      }
+      70% {
+        transform: scale(1);
+      }
+    }
     .schedule-curriculum-bridge-tagline {
       margin: clamp(18px, 3.2vw, 28px) 0 0;
       padding: 0 clamp(8px, 2vw, 16px);
-      max-width: 22em;
-      font-size: clamp(1.5rem, 3.8vw, 2.2rem);
+      max-width: 28em;
+      font-size: clamp(1.85rem, 4.6vw, 2.7rem);
       font-weight: 900;
-      line-height: 1.35;
-      letter-spacing: -0.03em;
+      line-height: 1.55;
+      letter-spacing: 0.12em;
       text-align: center;
       color: var(--lime);
       word-break: keep-all;
@@ -1038,6 +1054,36 @@
         0 0 16px rgba(198, 255, 0, 0.45),
         0 0 32px rgba(198, 255, 0, 0.22);
     }
+    .schedule-curriculum-bridge-tagline .char {
+      display: inline-block;
+      padding: 0 0.06em;
+      transform-origin: center bottom;
+      animation: curriculum-bridge-char-wave 1.8s ease-in-out infinite;
+      will-change: transform;
+    }
+    .schedule-curriculum-bridge-tagline .char-space {
+      animation: none;
+      will-change: auto;
+      width: 0.45em;
+      padding: 0;
+    }
+    .schedule-curriculum-bridge-tagline .char:nth-child(1) { animation-delay: 0s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(2) { animation-delay: 0.07s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(3) { animation-delay: 0.14s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(4) { animation-delay: 0.21s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(5) { animation-delay: 0.28s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(6) { animation-delay: 0.35s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(7) { animation-delay: 0.42s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(8) { animation-delay: 0.49s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(9) { animation-delay: 0.56s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(10) { animation-delay: 0.63s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(11) { animation-delay: 0.7s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(12) { animation-delay: 0.77s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(13) { animation-delay: 0.84s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(14) { animation-delay: 0.91s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(15) { animation-delay: 0.98s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(16) { animation-delay: 1.05s; }
+    .schedule-curriculum-bridge-tagline .char:nth-child(17) { animation-delay: 1.12s; }
     .welcome-fit {
       min-height: auto;
       padding: 58px 0 62px;
@@ -4922,16 +4968,17 @@
         margin-bottom: 12px;
       }
       .schedule-curriculum-bridge-btn-shell {
-        max-width: min(100%, 28rem);
+        max-width: min(100%, 38rem);
       }
       .schedule-curriculum-bridge-btn {
         width: 100%;
-        padding: clamp(16px, 2.8vw, 22px) clamp(24px, 4.5vw, 40px);
-        font-size: clamp(1.05rem, 2.2vw + 0.35rem, 1.28rem);
+        padding: clamp(24px, 4.2vw, 33px) clamp(36px, 6.8vw, 60px);
+        font-size: clamp(1.48rem, 3.3vw + 0.4rem, 1.92rem);
         line-height: 1.35;
       }
       .schedule-curriculum-bridge-tagline {
-        font-size: clamp(1.32rem, 4.2vw, 1.72rem);
+        font-size: clamp(1.55rem, 5vw, 2.05rem);
+        letter-spacing: 0.1em;
         margin-top: clamp(14px, 3vw, 22px);
       }
     }
@@ -5132,6 +5179,11 @@
       .schedule-curriculum-bridge-btn::before {
         animation: none;
         opacity: 0;
+      }
+      .schedule-curriculum-bridge-tagline .char {
+        animation: none;
+        will-change: auto;
+        transform: none;
       }
       .schedule-curriculum-bridge-btn-shell:hover .schedule-curriculum-bridge-btn,
       .schedule-curriculum-bridge-btn-shell:has(.schedule-curriculum-bridge-btn:focus-visible) .schedule-curriculum-bridge-btn {
@@ -5438,7 +5490,7 @@
       <div class="schedule-curriculum-bridge-btn-shell">
         <a href="curriculum.html#intensive-schedule" class="schedule-curriculum-bridge-btn">2박 3일 커리큐럼 세부 일정 보러가기</a>
       </div>
-      <p class="schedule-curriculum-bridge-tagline">단 2일만에 모든실무 마스터가능</p>
+      <p class="schedule-curriculum-bridge-tagline" aria-label="단 2일만에 모든실무 마스터가능"><span class="char" aria-hidden="true">단</span><span class="char char-space" aria-hidden="true">&nbsp;</span><span class="char" aria-hidden="true">2</span><span class="char" aria-hidden="true">일</span><span class="char" aria-hidden="true">만</span><span class="char" aria-hidden="true">에</span><span class="char char-space" aria-hidden="true">&nbsp;</span><span class="char" aria-hidden="true">모</span><span class="char" aria-hidden="true">든</span><span class="char" aria-hidden="true">실</span><span class="char" aria-hidden="true">무</span><span class="char char-space" aria-hidden="true">&nbsp;</span><span class="char" aria-hidden="true">마</span><span class="char" aria-hidden="true">스</span><span class="char" aria-hidden="true">터</span><span class="char" aria-hidden="true">가</span><span class="char" aria-hidden="true">능</span></p>
     </div>
   </section>
 
