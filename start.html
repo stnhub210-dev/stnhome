@@ -23,7 +23,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="STN 스킬업 아카데미">
   <meta property="og:title" content="최고의 강사진이 다 모였다 | STN 스킬업">
-  <meta property="og:description" content="2026년 8월15일~17일 명지대학교 인문캠퍼스 국제학술관 | STN 스킬업 양성과정 2박 3일 집중교육">
+  <meta property="og:description" content="유튜브, 하고 싶은데 막막하셨죠? 계정 만들기부터 편집·AI 영상·자동화까지 | STN 스킬업 교육장 (인천 영종)">
   <meta property="og:url" content="https://stnmedia.kr/start.html">
   <!-- v=20260719 : 카카오 OG 캐시 갱신용 쿼리 -->
   <meta property="og:image" content="https://stnmedia.kr/image/mainog.png?v=20260719">
@@ -664,7 +664,8 @@
       width: 100%;
       min-height: auto;
       justify-content: center;
-      padding-bottom: 0;
+      /* 강사진 이미지 삭제 후 부제 아래 여백 확보 */
+      padding-bottom: clamp(36px, 5vw, 64px);
       margin-bottom: 0;
     }
     .hero-copy {
@@ -688,7 +689,7 @@
       margin: 0;
     }
     .hero-main-logo {
-      width: min(74vw, 560px);
+      width: min(86vw, 680px);
       max-width: 100%;
       height: auto;
       display: block;
@@ -700,6 +701,68 @@
       0% { opacity: 0; transform: translateY(10px) scale(.98); }
       60% { opacity: 1; transform: translateY(0) scale(1.01); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    /* 메인 로고 이펙트: 떠 있는 움직임 + SKILLUP 글자별 순차 빛
+       (로고 PNG 배경이 검정이라 blend mode로 검정 부분은 그대로 두고 글자만 빛나게 함) */
+    .hero-logo-fx {
+      position: relative;
+      display: inline-block;
+      line-height: 0;
+    }
+    /* 글자 영역 (SKILLUP 높이: 이미지 세로 44% ~ 73%) */
+    .hero-logo-shine {
+      position: absolute;
+      top: 44%;
+      height: 29.5%;
+      left: var(--l);
+      width: var(--w);
+      pointer-events: none;
+    }
+    /* 기울어진 빛줄기: before = 흰 글자를 라임색으로 물들임(multiply),
+       after = 라임 글자를 밝게(overlay). 둘 다 검정 배경에는 영향 없음 */
+    .hero-logo-shine::before,
+    .hero-logo-shine::after {
+      content: "";
+      position: absolute;
+      inset: -6% -12%;
+      transform: skewX(-38deg);
+      background-repeat: no-repeat;
+      background-size: 260% 100%;
+      background-position: 100% 0;
+      opacity: 0;
+    }
+    .hero-logo-shine::before {
+      background-image: linear-gradient(90deg, transparent 30%, #b8ff3c 45%, #7CFC00 50%, #b8ff3c 55%, transparent 70%);
+      mix-blend-mode: multiply;
+    }
+    .hero-logo-shine::after {
+      background-image: linear-gradient(90deg, transparent 30%, rgba(255,255,255,.95) 50%, transparent 70%);
+      mix-blend-mode: overlay;
+    }
+    @keyframes hero-logo-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    /* 한 주기 4.2s 중 앞 0.7s 동안 글자 위를 왼→오 통과 */
+    @keyframes hero-logo-letter-shine {
+      0% { background-position: 100% 0; opacity: 0; }
+      3% { opacity: 1; }
+      15% { opacity: 1; }
+      18% { background-position: 0% 0; opacity: 0; }
+      100% { background-position: 0% 0; opacity: 0; }
+    }
+    .hero.reveal.active .hero-logo-fx {
+      animation: hero-logo-float 5s ease-in-out 1s infinite;
+    }
+    .hero.reveal.active .hero-logo-shine::before,
+    .hero.reveal.active .hero-logo-shine::after {
+      animation: hero-logo-letter-shine 4.2s ease-in-out infinite;
+      animation-delay: calc(1.1s + var(--i) * 0.22s);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero.reveal.active .hero-logo-fx,
+      .hero.reveal.active .hero-logo-shine::before,
+      .hero.reveal.active .hero-logo-shine::after { animation: none; }
     }
     .hero .sub {
       margin: 12px 0 0;
@@ -1088,9 +1151,9 @@
       min-height: auto;
       padding: 58px 0 62px;
       background:
-        radial-gradient(circle at 15% 15%, rgba(124,252,0,.09), transparent 34%),
-        radial-gradient(circle at 85% 75%, rgba(124,252,0,.08), transparent 38%),
-        #070b08;
+        radial-gradient(circle at 15% 15%, rgba(124,252,0,.16), transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(124,252,0,.12), transparent 42%),
+        linear-gradient(180deg, #0f2414 0%, #0a170d 100%);
     }
     .welcome-fit-wrap {
       padding: 0;
@@ -1115,28 +1178,17 @@
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      border: 1.6px solid rgba(255,255,255,.1);
+      border: 2.5px solid rgba(255,255,255,.2);
       border-radius: 12px;
-      background: rgba(255,255,255,.03);
+      background: rgba(255,255,255,.04);
       padding: 20px 18px;
       font-size: clamp(1.08rem, 2.1vw, 1.45rem);
       font-weight: 700;
       line-height: 1.5;
       color: #f1f1f1;
-      transition: border-color .26s ease, box-shadow .26s ease, background-color .26s ease, transform .26s ease;
       opacity: 0;
       transform: translateY(26px) scale(.97);
       filter: brightness(.92);
-    }
-    .welcome-fit-list li:hover {
-      border-color: rgba(124,252,0,.82);
-      background: rgba(124,252,0,.08);
-      transform: translateY(-2px);
-      box-shadow:
-        0 0 0 1px rgba(124,252,0,.55),
-        0 0 14px rgba(124,252,0,.58),
-        0 0 30px rgba(124,252,0,.3),
-        0 10px 24px rgba(0,0,0,.38);
     }
     .welcome-fit-list li::before {
       content: "\2714";
@@ -1199,8 +1251,8 @@
       100% {
         opacity: 1;
         transform: translateY(0) scale(1);
-        border-color: rgba(255,255,255,.1);
-        background: rgba(255,255,255,.03);
+        border-color: rgba(255,255,255,.2);
+        background: rgba(255,255,255,.04);
         box-shadow: none;
         filter: brightness(1);
       }
@@ -1221,6 +1273,766 @@
         transform: none;
         animation: none !important;
       }
+    }
+    /* 교육과정: 4단계 카드 순차 등장 */
+    .course-steps {
+      min-height: auto;
+      padding: 62px 0 72px;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(56,189,248,.16), transparent 40%),
+        radial-gradient(circle at 15% 85%, rgba(124,252,0,.08), transparent 40%),
+        linear-gradient(180deg, #0e1c3a 0%, #0a1329 100%);
+    }
+    .course-steps .container { text-align: center; }
+    .course-steps-title {
+      margin-bottom: 8px;
+      font-size: clamp(1.95rem, 4.8vw, 3.25rem);
+      font-weight: 900;
+      color: var(--lime);
+      letter-spacing: -0.02em;
+      text-shadow: 0 0 12px rgba(124,252,0,.42), 0 0 30px rgba(124,252,0,.2);
+    }
+    .course-steps-sub {
+      margin: 0 0 clamp(26px, 4vw, 44px);
+      color: #a8a8a8;
+      font-size: clamp(.95rem, 1.8vw, 1.1rem);
+      font-weight: 600;
+    }
+    .course-steps-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(14px, 2.4vw, 28px);
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0;
+    }
+    .course-step {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 28px 16px 26px;
+      border: 2.5px solid rgba(255,255,255,.2);
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      opacity: 0;
+      transform: translateY(30px) scale(.94);
+    }
+    /* 카드 사이 연결선 (오른쪽으로 채워짐) — ::after는 공통 네온 테두리용 */
+    .course-step:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      width: clamp(14px, 2.4vw, 28px);
+      height: 3px;
+      background: var(--lime);
+      box-shadow: 0 0 10px rgba(124,252,0,.7);
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
+    .course-step-num {
+      font-size: .82rem;
+      font-weight: 900;
+      letter-spacing: .2em;
+      color: var(--lime);
+    }
+    .course-step-icon {
+      display: grid;
+      place-items: center;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      border: 2px solid rgba(124,252,0,.5);
+      background: rgba(124,252,0,.08);
+      color: var(--lime);
+    }
+    .course-step-icon svg { width: 32px; height: 32px; }
+    .course-step-name {
+      margin: 0;
+      font-size: clamp(1.1rem, 1.9vw, 1.35rem);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.02em;
+      word-break: keep-all;
+    }
+    @keyframes course-step-in {
+      0% { opacity: 0; transform: translateY(30px) scale(.94); border-color: rgba(255,255,255,.08); box-shadow: none; }
+      45% {
+        opacity: 1;
+        transform: translateY(-6px) scale(1.03);
+        border-color: rgba(124,252,0,.95);
+        background: rgba(124,252,0,.12);
+        box-shadow: 0 0 0 1px rgba(124,252,0,.6), 0 0 18px rgba(124,252,0,.7), 0 0 38px rgba(124,252,0,.35);
+      }
+      100% { opacity: 1; transform: translateY(0) scale(1); border-color: rgba(124,252,0,.4); background: rgba(255,255,255,.04); box-shadow: 0 0 10px rgba(124,252,0,.15); }
+    }
+    @keyframes course-step-line {
+      to { transform: scaleX(1); }
+    }
+    @keyframes course-step-icon-pop {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.18); box-shadow: 0 0 22px rgba(124,252,0,.7); }
+    }
+    #course-steps.reveal.active .course-step {
+      animation: course-step-in 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    #course-steps.reveal.active .course-step .course-step-icon {
+      animation: course-step-icon-pop .7s ease-out both;
+    }
+    #course-steps.reveal.active .course-step:not(:last-child)::before {
+      animation: course-step-line .5s ease-out forwards;
+    }
+    /* 단계별 지연: 카드 → 연결선 → 다음 카드 */
+    #course-steps.reveal.active .course-step:nth-child(1),
+    #course-steps.reveal.active .course-step:nth-child(1) .course-step-icon { animation-delay: .2s; }
+    #course-steps.reveal.active .course-step:nth-child(1)::before { animation-delay: .8s; }
+    #course-steps.reveal.active .course-step:nth-child(2),
+    #course-steps.reveal.active .course-step:nth-child(2) .course-step-icon { animation-delay: 1.1s; }
+    #course-steps.reveal.active .course-step:nth-child(2)::before { animation-delay: 1.7s; }
+    #course-steps.reveal.active .course-step:nth-child(3),
+    #course-steps.reveal.active .course-step:nth-child(3) .course-step-icon { animation-delay: 2s; }
+    #course-steps.reveal.active .course-step:nth-child(3)::before { animation-delay: 2.6s; }
+    #course-steps.reveal.active .course-step:nth-child(4),
+    #course-steps.reveal.active .course-step:nth-child(4) .course-step-icon { animation-delay: 2.9s; }
+    @media (max-width: 900px) {
+      .course-steps-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .course-step:nth-child(2)::before { display: none; }
+    }
+    @media (max-width: 520px) {
+      .course-steps-list { grid-template-columns: 1fr; max-width: 360px; }
+      .course-step {
+        display: grid;
+        grid-template-columns: 52px 1fr;
+        grid-template-areas: "icon num" "icon name";
+        align-items: center;
+        gap: 2px 14px;
+        padding: 16px 18px;
+        text-align: left;
+      }
+      .course-step-icon { grid-area: icon; width: 52px; height: 52px; }
+      .course-step-icon svg { width: 26px; height: 26px; }
+      .course-step-num { grid-area: num; align-self: end; font-size: .72rem; }
+      .course-step-name { grid-area: name; align-self: start; }
+      /* 모바일: 연결선을 세로로 */
+      .course-step:not(:last-child)::before {
+        display: block;
+        top: 100%;
+        left: 43px;
+        width: 3px;
+        height: clamp(14px, 2.4vw, 28px);
+        transform: scaleY(0);
+        transform-origin: top center;
+      }
+      @keyframes course-step-line-v { to { transform: scaleY(1); } }
+      #course-steps.reveal.active .course-step:not(:last-child)::before { animation-name: course-step-line-v; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .course-step,
+      .course-step .course-step-icon,
+      .course-step::before {
+        opacity: 1;
+        transform: none !important;
+        animation: none !important;
+      }
+    }
+    /* 구독자 모으기가 어려운 이유 */
+    .sub-reasons {
+      min-height: auto;
+      padding: 64px 0 76px;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(255,77,77,.16), transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(255,77,77,.08), transparent 42%),
+        linear-gradient(180deg, #2a0f14 0%, #1a090c 100%);
+    }
+    .sub-reasons .container { text-align: center; }
+    .sub-reasons-title {
+      margin-bottom: 10px;
+      font-size: clamp(1.75rem, 4.4vw, 3rem);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.03em;
+      word-break: keep-all;
+    }
+    .sub-reasons-title em {
+      font-style: normal;
+      color: var(--lime);
+      text-shadow: 0 0 12px rgba(124,252,0,.42), 0 0 30px rgba(124,252,0,.2);
+    }
+    .sub-reasons-confess {
+      display: inline-block;
+      margin: 0 0 clamp(28px, 4vw, 44px);
+      font-size: clamp(1.2rem, 2.8vw, 1.8rem);
+      font-weight: 900;
+      color: #ff5a5a;
+      text-shadow: 0 0 14px rgba(255,90,90,.45);
+      opacity: 0;
+      transform: scale(1.4);
+    }
+    .sub-reasons-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(12px, 2vw, 20px);
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0;
+      text-align: left;
+    }
+    .sub-reason {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 24px 22px;
+      border: 2.5px solid rgba(255,255,255,.2);
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      opacity: 0;
+      transform: translateY(26px);
+    }
+    .sub-reason-num {
+      font-size: .8rem;
+      font-weight: 900;
+      letter-spacing: .18em;
+      color: #ff5a5a;
+    }
+    .sub-reason-head {
+      margin: 0;
+      font-size: clamp(1.08rem, 1.9vw, 1.28rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+    .sub-reason-desc {
+      margin: 0;
+      font-size: .95rem;
+      line-height: 1.65;
+      color: #b5b5b5;
+      word-break: keep-all;
+    }
+    .sub-reasons-answer {
+      max-width: 1100px;
+      margin: clamp(28px, 4vw, 44px) auto 0;
+      padding: 22px 20px;
+      border: 2px solid var(--lime);
+      border-radius: 16px;
+      background: rgba(124,252,0,.07);
+      box-shadow: 0 0 22px rgba(124,252,0,.22);
+      font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.55;
+      word-break: keep-all;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .sub-reasons-answer strong { color: var(--lime); }
+    @keyframes sub-confess-in {
+      0% { opacity: 0; transform: scale(1.4); }
+      60% { opacity: 1; transform: scale(.94); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes sub-reason-in {
+      0% { opacity: 0; transform: translateY(26px); }
+      50% { opacity: 1; border-color: rgba(255,90,90,.75); box-shadow: 0 0 16px rgba(255,90,90,.35); }
+      100% { opacity: 1; transform: translateY(0); border-color: rgba(255,255,255,.2); box-shadow: none; }
+    }
+    @keyframes sub-answer-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    #sub-reasons.reveal.active .sub-reasons-confess { animation: sub-confess-in .7s cubic-bezier(0.22, 1, 0.36, 1) .45s forwards; }
+    #sub-reasons.reveal.active .sub-reason { animation: sub-reason-in 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+    #sub-reasons.reveal.active .sub-reason:nth-child(1) { animation-delay: 1.1s; }
+    #sub-reasons.reveal.active .sub-reason:nth-child(2) { animation-delay: 1.4s; }
+    #sub-reasons.reveal.active .sub-reason:nth-child(3) { animation-delay: 1.7s; }
+    #sub-reasons.reveal.active .sub-reason:nth-child(4) { animation-delay: 2s; }
+    #sub-reasons.reveal.active .sub-reason:nth-child(5) { animation-delay: 2.3s; }
+    #sub-reasons.reveal.active .sub-reason:nth-child(6) { animation-delay: 2.6s; }
+    #sub-reasons.reveal.active .sub-reasons-answer { animation: sub-answer-in .8s ease-out 3.1s forwards; }
+    @media (max-width: 900px) {
+      .sub-reasons-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .sub-reasons-list { grid-template-columns: 1fr; }
+      .sub-reason { padding: 18px 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sub-reasons-confess,
+      .sub-reason,
+      .sub-reasons-answer { opacity: 1; transform: none; animation: none !important; }
+    }
+    /* 유튜버 수익원 */
+    .money-ways {
+      min-height: auto;
+      padding: 64px 0 76px;
+      background:
+        radial-gradient(circle at 80% 15%, rgba(255,200,40,.16), transparent 40%),
+        radial-gradient(circle at 15% 85%, rgba(255,200,40,.08), transparent 42%),
+        linear-gradient(180deg, #2a2108 0%, #191405 100%);
+    }
+    .money-ways .container { text-align: center; }
+    .money-ways-title {
+      margin-bottom: 10px;
+      font-size: clamp(1.7rem, 4.3vw, 2.9rem);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.03em;
+      line-height: 1.3;
+      word-break: keep-all;
+    }
+    .money-ways-title em {
+      font-style: normal;
+      color: #ffd23f;
+      text-shadow: 0 0 12px rgba(255,210,63,.45), 0 0 30px rgba(255,210,63,.2);
+    }
+    .money-ways-sub {
+      margin: 0 0 clamp(28px, 4vw, 44px);
+      color: #a8a8a8;
+      font-size: clamp(.98rem, 1.9vw, 1.15rem);
+      font-weight: 600;
+      word-break: keep-all;
+    }
+    .money-ways-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(12px, 2vw, 20px);
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0;
+      text-align: left;
+    }
+    .money-way {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 24px 22px;
+      border: 2.5px solid rgba(255,255,255,.2);
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      opacity: 0;
+      transform: translateY(26px) scale(.96);
+    }
+    .money-way-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .money-way-num {
+      font-size: .8rem;
+      font-weight: 900;
+      letter-spacing: .18em;
+      color: #ffd23f;
+    }
+    .money-way-tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: .74rem;
+      font-weight: 800;
+      color: var(--lime);
+      border: 1px solid rgba(124,252,0,.4);
+      background: rgba(124,252,0,.08);
+      white-space: nowrap;
+    }
+    .money-way-head {
+      margin: 0;
+      font-size: clamp(1.1rem, 1.9vw, 1.3rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+    .money-way-desc {
+      margin: 0;
+      font-size: .95rem;
+      line-height: 1.65;
+      color: #b5b5b5;
+      word-break: keep-all;
+    }
+    .money-ways-note {
+      max-width: 1100px;
+      margin: 14px auto 0;
+      font-size: .8rem;
+      color: #777;
+      text-align: left;
+      word-break: keep-all;
+    }
+    .money-ways-answer {
+      max-width: 1100px;
+      margin: clamp(26px, 4vw, 40px) auto 0;
+      padding: 22px 20px;
+      border: 2px solid #ffd23f;
+      border-radius: 16px;
+      background: rgba(255,210,63,.07);
+      box-shadow: 0 0 22px rgba(255,210,63,.2);
+      font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.55;
+      word-break: keep-all;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .money-ways-answer strong { color: #ffd23f; }
+    @keyframes money-way-in {
+      0% { opacity: 0; transform: translateY(26px) scale(.96); }
+      50% { opacity: 1; transform: translateY(-4px) scale(1.02); border-color: rgba(255,210,63,.85); box-shadow: 0 0 18px rgba(255,210,63,.4); }
+      100% { opacity: 1; transform: translateY(0) scale(1); border-color: rgba(255,255,255,.2); box-shadow: none; }
+    }
+    #money-ways.reveal.active .money-way { animation: money-way-in 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+    #money-ways.reveal.active .money-way:nth-child(1) { animation-delay: .4s; }
+    #money-ways.reveal.active .money-way:nth-child(2) { animation-delay: .7s; }
+    #money-ways.reveal.active .money-way:nth-child(3) { animation-delay: 1s; }
+    #money-ways.reveal.active .money-way:nth-child(4) { animation-delay: 1.3s; }
+    #money-ways.reveal.active .money-way:nth-child(5) { animation-delay: 1.6s; }
+    #money-ways.reveal.active .money-way:nth-child(6) { animation-delay: 1.9s; }
+    #money-ways.reveal.active .money-ways-answer { animation: sub-answer-in .8s ease-out 2.5s forwards; }
+    @media (max-width: 900px) {
+      .money-ways-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .money-ways-list { grid-template-columns: 1fr; }
+      .money-way { padding: 18px 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .money-way,
+      .money-ways-answer { opacity: 1; transform: none; animation: none !important; }
+    }
+    /* 멤버십·쇼핑 판매 조건 */
+    .sell-terms {
+      min-height: auto;
+      padding: 64px 0 76px;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(179,136,255,.18), transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(179,136,255,.09), transparent 42%),
+        linear-gradient(180deg, #1f1236 0%, #140b24 100%);
+    }
+    .sell-terms .container { text-align: center; }
+    .sell-terms-title {
+      margin-bottom: 10px;
+      font-size: clamp(1.7rem, 4.3vw, 2.9rem);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.03em;
+      line-height: 1.3;
+      word-break: keep-all;
+    }
+    .sell-terms-title em {
+      font-style: normal;
+      color: #c7a6ff;
+      text-shadow: 0 0 12px rgba(179,136,255,.5), 0 0 30px rgba(179,136,255,.22);
+    }
+    .sell-terms-sub {
+      margin: 0 0 clamp(28px, 4vw, 44px);
+      color: #b9b0c9;
+      font-size: clamp(.98rem, 1.9vw, 1.15rem);
+      font-weight: 600;
+      word-break: keep-all;
+    }
+    .sell-tiers {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(14px, 2.2vw, 24px);
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .sell-tier {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 26px 24px;
+      border: 2.5px solid rgba(255,255,255,.2);
+      border-radius: 18px;
+      background: rgba(255,255,255,.04);
+      opacity: 0;
+      transform: translateY(26px) scale(.96);
+    }
+    .sell-tier-badge {
+      align-self: flex-start;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: .82rem;
+      font-weight: 900;
+      color: #140b24;
+      background: #c7a6ff;
+      box-shadow: 0 0 14px rgba(179,136,255,.45);
+    }
+    .sell-tier--ad .sell-tier-badge { background: var(--lime); box-shadow: 0 0 14px rgba(124,252,0,.4); }
+    .sell-tier-head {
+      margin: 0;
+      font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+      font-weight: 900;
+      color: #fff;
+      word-break: keep-all;
+    }
+    .sell-tier-label {
+      margin: 0;
+      font-size: .8rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      color: #9d93b3;
+    }
+    .sell-tier-req,
+    .sell-tier-unlock {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+    .sell-tier-req li {
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(0,0,0,.28);
+      font-size: .95rem;
+      font-weight: 700;
+      color: #eee;
+      line-height: 1.5;
+      word-break: keep-all;
+    }
+    .sell-tier-req li strong { color: #c7a6ff; font-weight: 900; }
+    .sell-tier--ad .sell-tier-req li strong { color: var(--lime); }
+    .sell-tier-req .sell-or {
+      padding: 0;
+      background: none;
+      text-align: center;
+      font-size: .78rem;
+      font-weight: 900;
+      color: #9d93b3;
+    }
+    .sell-tier-unlock {
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    }
+    .sell-tier-unlock li {
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(199,166,255,.45);
+      font-size: .86rem;
+      font-weight: 800;
+      color: #e4d6ff;
+      text-align: center;
+      word-break: keep-all;
+    }
+    .sell-tier--ad .sell-tier-unlock li { border-color: rgba(124,252,0,.45); color: #d8ffb0; }
+    .sell-common {
+      max-width: 1100px;
+      margin: clamp(18px, 3vw, 28px) auto 0;
+      padding: 22px 24px;
+      border: 2.5px solid rgba(255,255,255,.2);
+      border-radius: 18px;
+      background: rgba(255,255,255,.04);
+      text-align: left;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .sell-common-head {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: #fff;
+    }
+    .sell-common-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px 16px;
+    }
+    .sell-common-list li {
+      font-size: .92rem;
+      font-weight: 700;
+      color: #d6d0e2;
+      line-height: 1.5;
+      word-break: keep-all;
+    }
+    .sell-common-list li::before {
+      content: "\2714";
+      margin-right: 6px;
+      color: #c7a6ff;
+    }
+    .sell-terms-note {
+      max-width: 1100px;
+      margin: 14px auto 0;
+      font-size: .8rem;
+      color: #8a8199;
+      text-align: left;
+      word-break: keep-all;
+    }
+    @keyframes sell-in {
+      0% { opacity: 0; transform: translateY(26px) scale(.96); }
+      50% { opacity: 1; transform: translateY(-4px) scale(1.02); border-color: rgba(179,136,255,.9); box-shadow: 0 0 20px rgba(179,136,255,.45); }
+      100% { opacity: 1; transform: translateY(0) scale(1); border-color: rgba(255,255,255,.2); box-shadow: none; }
+    }
+    #sell-terms.reveal.active .sell-tier { animation: sell-in 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+    #sell-terms.reveal.active .sell-tier:nth-child(1) { animation-delay: .4s; }
+    #sell-terms.reveal.active .sell-tier:nth-child(2) { animation-delay: .9s; }
+    #sell-terms.reveal.active .sell-common { animation: sell-in 1s cubic-bezier(0.22, 1, 0.36, 1) 1.4s forwards; }
+    @media (max-width: 900px) {
+      .sell-tiers { grid-template-columns: 1fr; }
+      .sell-common-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .sell-common-list { grid-template-columns: 1fr; }
+      .sell-tier, .sell-common { padding: 20px 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sell-tier,
+      .sell-common { opacity: 1; transform: none; animation: none !important; }
+    }
+    /* STN마케팅 바로가기 */
+    .stn-mkt {
+      min-height: auto;
+      padding: 64px 0 76px;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(45,226,230,.18), transparent 40%),
+        radial-gradient(circle at 15% 85%, rgba(45,226,230,.09), transparent 42%),
+        linear-gradient(180deg, #0b2a2c 0%, #071a1c 100%);
+    }
+    .stn-mkt-card {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: clamp(30px, 5vw, 48px) clamp(20px, 4vw, 40px);
+      border: 2.5px solid rgba(255,255,255,.2);
+      border-radius: 20px;
+      background: rgba(255,255,255,.04);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(26px);
+    }
+    /* 호버 시 테두리만 확대 + 네온 (글자·카드 본체는 그대로 → 글씨 선명 유지) */
+    .stn-mkt-card { position: relative; }
+    .stn-mkt-card::after {
+      content: "";
+      position: absolute;
+      inset: -2.5px;
+      border-radius: inherit;
+      border: 2.5px solid #2de2e6;
+      box-shadow: 0 0 10px rgba(45,226,230,.6), 0 0 28px rgba(45,226,230,.35);
+      opacity: 0;
+      transform: scale(1);
+      transition: opacity .3s ease, transform .3s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+    .stn-mkt-card:hover::after {
+      opacity: 1;
+      transform: scale(1.03);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .stn-mkt-card::after { transition: none; }
+      .stn-mkt-card:hover::after { transform: none; }
+    }
+    .stn-mkt-kicker {
+      margin: 0 0 10px;
+      font-size: .85rem;
+      font-weight: 900;
+      letter-spacing: .22em;
+      color: #2de2e6;
+    }
+    .stn-mkt-title {
+      margin-bottom: 12px;
+      font-size: clamp(1.7rem, 4.2vw, 2.7rem);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.03em;
+      line-height: 1.3;
+      word-break: keep-all;
+    }
+    .stn-mkt-title em {
+      font-style: normal;
+      color: #2de2e6;
+    }
+    .stn-mkt-desc {
+      margin: 0 0 clamp(22px, 3.5vw, 32px);
+      color: #b4cfd0;
+      font-size: clamp(.98rem, 1.9vw, 1.12rem);
+      font-weight: 600;
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+    .stn-mkt-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 38px;
+      border-radius: 999px;
+      background: #2de2e6;
+      color: #062022;
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      font-weight: 900;
+      text-decoration: none;
+      transition: background-color .25s ease;
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    .stn-mkt-btn:hover,
+    .stn-mkt-btn:focus-visible {
+      background: #5cf0f3;
+    }
+    .stn-mkt-btn svg { width: 20px; height: 20px; }
+    /* 선명도: 애니메이션 종료 시 transform을 none으로 → 글자 흐림 방지 */
+    @keyframes stn-mkt-card-in {
+      0% { opacity: 0; transform: translateY(26px); }
+      100% { opacity: 1; transform: none; }
+    }
+    @keyframes stn-mkt-btn-in { to { opacity: 1; transform: none; } }
+    #stn-mkt.reveal.active .stn-mkt-card { animation: stn-mkt-card-in .9s cubic-bezier(0.22, 1, 0.36, 1) .3s forwards; }
+    #stn-mkt.reveal.active .stn-mkt-btn { animation: stn-mkt-btn-in .7s ease-out 1s forwards; }
+    @media (prefers-reduced-motion: reduce) {
+      .stn-mkt-card,
+      .stn-mkt-btn { opacity: 1; transform: none; animation: none !important; }
+    }
+    /* ===== 공통 네온 카드 (새 섹션 카드에도 class="neon-card" 적용) =====
+       - 굵은 테두리 2.5px
+       - 호버 시 1.05배 확대 + 섹션 강조색 네온
+       - 확대는 scale 속성, 네온은 ::after 층으로 처리 → 등장 애니메이션(transform)과 충돌 없음
+       - 섹션마다 --neon / --neon-glow 값만 지정하면 색이 바뀜 */
+    .neon-card,
+    .welcome-fit-list li {
+      position: relative;
+      border-width: 2.5px;
+      transition: scale .3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .neon-card::after,
+    .welcome-fit-list li::after {
+      content: "";
+      position: absolute;
+      inset: -2.5px;
+      border-radius: inherit;
+      border: 2.5px solid var(--neon, #7CFC00);
+      box-shadow:
+        0 0 10px var(--neon-glow, rgba(124,252,0,.6)),
+        0 0 28px var(--neon-glow, rgba(124,252,0,.6)),
+        inset 0 0 16px var(--neon-glow-in, rgba(124,252,0,.18));
+      opacity: 0;
+      transition: opacity .3s ease;
+      pointer-events: none;
+    }
+    .neon-card:hover,
+    .welcome-fit-list li:hover {
+      scale: 1.05;
+      z-index: 2;
+    }
+    .neon-card:hover::after,
+    .welcome-fit-list li:hover::after { opacity: 1; }
+    /* 섹션별 네온 색 */
+    #welcome-fit,
+    #course-steps { --neon: #7CFC00; --neon-glow: rgba(124,252,0,.6); --neon-glow-in: rgba(124,252,0,.18); }
+    #sub-reasons { --neon: #ff5a5a; --neon-glow: rgba(255,90,90,.6); --neon-glow-in: rgba(255,90,90,.18); }
+    #money-ways { --neon: #ffd23f; --neon-glow: rgba(255,210,63,.6); --neon-glow-in: rgba(255,210,63,.18); }
+    #sell-terms { --neon: #b388ff; --neon-glow: rgba(179,136,255,.6); --neon-glow-in: rgba(179,136,255,.18); }    @media (hover: none) {
+      .neon-card:hover,
+      .welcome-fit-list li:hover { scale: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .neon-card,
+      .welcome-fit-list li { transition: none; }
     }
     .calendar-wrap { width: 100%; max-width: min(98vw, 980px); margin: 0 auto; }
     .calendar-head { text-align: center; margin-bottom: 16px; }
@@ -4542,7 +5354,7 @@
         line-height: 0;
       }
       .hero-main-logo {
-        width: min(100%, 500px);
+        width: min(100%, 600px);
       }
       .hero .sub {
         margin-top: 10px;
@@ -4674,8 +5486,8 @@
         padding-bottom: 0;
         align-items: stretch;
         justify-content: center;
-        min-height: 100vh;
-        min-height: 100svh;
+        /* 강사진 이미지 삭제로 전체 화면 높이 고정 해제 */
+        min-height: auto;
       }
       #hero.hero > .container {
         flex: 1 1 auto;
@@ -4705,7 +5517,7 @@
         line-height: 0;
       }
       .hero-main-logo {
-        width: min(84vw, 430px);
+        width: min(92vw, 520px);
       }
       .hero .sub {
         margin-top: 8px;
@@ -5001,8 +5813,8 @@
         padding-top: calc(var(--nav-clear) + clamp(12px, 2.8vw, 20px));
         padding-bottom: 0;
         align-items: stretch;
-        min-height: 100vh;
-        min-height: 100svh;
+        /* 강사진 이미지 삭제로 전체 화면 높이 고정 해제 */
+        min-height: auto;
       }
       .hero-copy {
         margin-top: 0;
@@ -5017,7 +5829,7 @@
         line-height: 0;
       }
       .hero-main-logo {
-        width: min(80vw, 350px);
+        width: min(92vw, 420px);
       }
       .hero .sub {
         margin-top: 6px;
@@ -5277,6 +6089,7 @@
       <a href="index.html" class="nav-score-btn--mobile">유튜브 진단하기</a>
       <div class="nav-links">
         <a href="start.html">홈</a>
+        <!-- 메뉴 임시 제외 (다시 쓰려면 이 주석을 풀 것): 커리큐럼 / 얼리버드 할인 / 결제하기
         <a href="curriculum.html#intensive-schedule">커리큐럼</a>
         <a href="payment-earlybird.html">얼리버드 할인</a>
         <div class="nav-dropdown">
@@ -5287,7 +6100,8 @@
             <a href="payment-student.html" role="menuitem"><span>대학생 할인</span><span class="menu-price">990,000원</span></a>
           </div>
         </div>
-        <a href="https://kko.to/qsiJh8OrDf" target="_blank" rel="noopener noreferrer">오시는길</a>
+        -->
+        <a href="https://map.kakao.com/link/search/인천 영종구 하늘달빛로 90-7" target="_blank" rel="noopener noreferrer">오시는길</a>
         <a href="http://pf.kakao.com/_vxagxjX" class="nav-kakao-btn" target="_blank" rel="noopener noreferrer">카카오 채널</a>
         <a href="index.html" class="nav-score-btn">유튜브 진단하기</a>
       </div>
@@ -5299,12 +6113,19 @@
       <div class="hero-layout">
         <div class="hero-copy">
           <h1 class="hero-title-logo">
-            <img class="hero-main-logo" src="image/MAIN-LOGO1.png" alt="STN SKILL UP" width="1024" height="512" loading="eager" decoding="async" />
+            <span class="hero-logo-fx">
+              <img class="hero-main-logo" src="image/MAIN-LOGO1.png" alt="STN SKILL UP" width="1024" height="512" loading="eager" decoding="async" />
+              <!-- SKILLUP 글자별 빛 (left/width = 이미지 대비 % 위치) -->
+              <span class="hero-logo-shine" style="--l:11%;--w:13%;--i:0" aria-hidden="true"></span>
+              <span class="hero-logo-shine" style="--l:24%;--w:12%;--i:1" aria-hidden="true"></span>
+              <span class="hero-logo-shine" style="--l:37.5%;--w:8%;--i:2" aria-hidden="true"></span>
+              <span class="hero-logo-shine" style="--l:44%;--w:10%;--i:3" aria-hidden="true"></span>
+              <span class="hero-logo-shine" style="--l:53%;--w:10%;--i:4" aria-hidden="true"></span>
+              <span class="hero-logo-shine" style="--l:64%;--w:18%;--i:5" aria-hidden="true"></span>
+              <span class="hero-logo-shine" style="--l:79%;--w:15%;--i:6" aria-hidden="true"></span>
+            </span>
           </h1>
           <p class="sub">기초부터 수익화까지, 당신의 스킬을 한 단계 위로</p>
-        </div>
-        <div class="hero-side" aria-label="강사진 소개 이미지">
-          <img class="hero-all-image" src="image/all3.png" alt="전체 강사진 이미지" loading="eager" decoding="async" />
         </div>
       </div>
     </div>
@@ -5315,17 +6136,16 @@
       <h2 class="tracks-title tracks-title-stack">
         <span class="tracks-title-row tracks-date-row">
           <span class="tracks-date-block">
-            <strong class="tracks-hit tracks-date-month tracks-hit-sky tracks-stagger-0">8월 !</strong>
-            <strong class="tracks-hit tracks-date-days tracks-hit-sky tracks-stagger-0b">15일.16일.17일</strong>
+            <strong class="tracks-hit tracks-date-days tracks-hit-sky tracks-stagger-0">유튜브, 하고 싶은데 막막하셨죠?</strong>
           </span>
         </span>
         <span class="tracks-title-row">
-          <span class="tracks-hit tracks-hit-lime tracks-stagger-1">STN 스킬업</span>
-          <span class="tracks-hit tracks-hit-sky tracks-stagger-2">2박 3일!</span>
+          <span class="tracks-hit tracks-hit-lime tracks-stagger-1">기획·촬영·편집·수익화</span>
+          <span class="tracks-hit tracks-hit-sky tracks-stagger-2">한 번에!</span>
         </span>
         <span class="tracks-title-row">
-          <span class="tracks-hit tracks-hit-rose tracks-stagger-3">유튜브 수익화!</span>
-          <span class="tracks-hit tracks-hit-lime tracks-stagger-4">실전 집중교육!</span>
+          <span class="tracks-hit tracks-hit-rose tracks-stagger-3">처음이어도 괜찮아요!</span>
+          <span class="tracks-hit tracks-hit-lime tracks-stagger-4">STN 스킬업!</span>
         </span>
       </h2>
     </div>
@@ -5343,6 +6163,201 @@
           <li>혼자서 하기 막막하신 분</li>
           <li>이번엔 진짜 해보고 싶으신 분</li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 교육과정: 4단계 순차 애니메이션 -->
+  <section id="course-steps" class="course-steps reveal" aria-label="교육과정">
+    <div class="container">
+      <h2 class="course-steps-title">교육과정</h2>
+      <p class="course-steps-sub">처음부터 끝까지, 순서대로 따라오시면 됩니다.</p>
+      <ol class="course-steps-list">
+        <li class="course-step neon-card">
+          <span class="course-step-num">STEP 01</span>
+          <span class="course-step-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4"/><path d="M19 15v6M16 18h6"/></svg>
+          </span>
+          <p class="course-step-name">유튜브 계정 만들기</p>
+        </li>
+        <li class="course-step neon-card">
+          <span class="course-step-num">STEP 02</span>
+          <span class="course-step-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/></svg>
+          </span>
+          <p class="course-step-name">영상 편집하기</p>
+        </li>
+        <li class="course-step neon-card">
+          <span class="course-step-num">STEP 03</span>
+          <span class="course-step-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/><path d="M5 17l.6 1.4L7 19l-1.4.6L5 21l-.6-1.4L3 19l1.4-.6z"/></svg>
+          </span>
+          <p class="course-step-name">AI 영상 만들기</p>
+        </li>
+        <li class="course-step neon-card">
+          <span class="course-step-num">STEP 04</span>
+          <span class="course-step-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          </span>
+          <p class="course-step-name">자동화 올리기</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 구독자 모으기가 어려운 이유 -->
+  <section id="sub-reasons" class="sub-reasons reveal" aria-label="구독자 모으기가 어려운 이유">
+    <div class="container">
+      <h2 class="sub-reasons-title">유튜브 <em>구독자 모으기</em>가 어렵나요?</h2>
+      <p class="sub-reasons-confess">사실 정말 어렵습니다.</p>
+      <ol class="sub-reasons-list">
+        <li class="sub-reason neon-card">
+          <span class="sub-reason-num">REASON 01</span>
+          <p class="sub-reason-head">경쟁 영상이 너무 많습니다</p>
+          <p class="sub-reason-desc">지금 이 순간에도 수많은 영상이 올라옵니다. 같은 주제의 영상 수천 개 사이에서 내 영상이 선택받아야 합니다.</p>
+        </li>
+        <li class="sub-reason neon-card">
+          <span class="sub-reason-num">REASON 02</span>
+          <p class="sub-reason-head">썸네일·제목에서 이미 밀립니다</p>
+          <p class="sub-reason-desc">유튜브는 노출된 영상이 얼마나 클릭되는지를 봅니다. 눌러보고 싶은 썸네일과 제목이 아니면 좋은 영상도 묻힙니다.</p>
+        </li>
+        <li class="sub-reason neon-card">
+          <span class="sub-reason-num">REASON 03</span>
+          <p class="sub-reason-head">초반 몇 초에 시청자가 떠납니다</p>
+          <p class="sub-reason-desc">시청자가 끝까지 보지 않으면 알고리즘은 추천을 줄입니다. 도입부 구성과 편집 리듬이 시청 지속시간을 좌우합니다.</p>
+        </li>
+        <li class="sub-reason neon-card">
+          <span class="sub-reason-num">REASON 04</span>
+          <p class="sub-reason-head">채널의 주제가 흐릿합니다</p>
+          <p class="sub-reason-desc">이것저것 올리면 시청자는 "다음에도 볼 이유"를 찾지 못합니다. 구독은 앞으로 올라올 영상에 대한 기대에서 나옵니다.</p>
+        </li>
+        <li class="sub-reason neon-card">
+          <span class="sub-reason-num">REASON 05</span>
+          <p class="sub-reason-head">꾸준히 올리기가 힘듭니다</p>
+          <p class="sub-reason-desc">기획·촬영·편집을 혼자 하다 보면 영상 하나에 며칠씩 걸립니다. 업로드가 끊기면 쌓아 온 노출도 함께 줄어듭니다.</p>
+        </li>
+        <li class="sub-reason neon-card">
+          <span class="sub-reason-num">REASON 06</span>
+          <p class="sub-reason-head">조회수가 구독으로 이어지지 않습니다</p>
+          <p class="sub-reason-desc">쇼츠 조회수가 잘 나와도 구독은 늘지 않는 경우가 많습니다. 쇼츠와 롱폼을 연결하는 채널 설계가 필요합니다.</p>
+        </li>
+      </ol>
+      <p class="sub-reasons-answer">혼자 부딪히면 어렵지만, <strong>방법을 알면 달라집니다.</strong><br>STN 스킬업이 기획부터 편집·AI·자동화까지 순서대로 알려드립니다.</p>
+    </div>
+  </section>
+
+  <!-- 유튜브로 돈 번 사람들의 수익원 -->
+  <section id="money-ways" class="money-ways reveal" aria-label="유튜브 수익원">
+    <div class="container">
+      <h2 class="money-ways-title">유튜브로 돈 번 사람들은<br><em>무엇으로 돈을 벌었을까?</em></h2>
+      <p class="money-ways-sub">광고 수익은 시작일 뿐입니다. 잘 버는 채널은 여러 수익원을 함께 만듭니다.</p>
+      <ol class="money-ways-list">
+        <li class="money-way neon-card">
+          <div class="money-way-top"><span class="money-way-num">01</span><span class="money-way-tag">기본 수익</span></div>
+          <p class="money-way-head">광고 수익</p>
+          <p class="money-way-desc">유튜브 파트너 프로그램에 가입하면 영상에 붙는 광고 수익을 유튜브와 나눠 받습니다. 가장 먼저 목표로 하는 수익입니다.</p>
+        </li>
+        <li class="money-way neon-card">
+          <div class="money-way-top"><span class="money-way-num">02</span><span class="money-way-tag">빠른 성장</span></div>
+          <p class="money-way-head">쇼츠 수익</p>
+          <p class="money-way-desc">짧은 세로 영상인 쇼츠도 조회수에 따라 광고 수익을 받습니다. 채널을 빠르게 알리는 통로 역할도 합니다.</p>
+        </li>
+        <li class="money-way neon-card">
+          <div class="money-way-top"><span class="money-way-num">03</span><span class="money-way-tag">큰 수익</span></div>
+          <p class="money-way-head">브랜드 협찬·PPL</p>
+          <p class="money-way-desc">기업이 제품 소개를 의뢰하고 제작비를 지급합니다. 구독자가 많지 않아도 주제와 시청층이 분명한 채널을 찾는 기업이 많습니다.</p>
+        </li>
+        <li class="money-way neon-card">
+          <div class="money-way-top"><span class="money-way-num">04</span><span class="money-way-tag">판매 수수료</span></div>
+          <p class="money-way-head">쇼핑·제휴 마케팅</p>
+          <p class="money-way-desc">영상에서 소개한 상품이 내 링크로 팔리면 수수료를 받습니다. 유튜브 쇼핑과 각종 제휴 링크를 활용합니다.</p>
+        </li>
+        <li class="money-way neon-card">
+          <div class="money-way-top"><span class="money-way-num">05</span><span class="money-way-tag">팬 후원</span></div>
+          <p class="money-way-head">멤버십·슈퍼챗</p>
+          <p class="money-way-desc">채널을 아끼는 시청자가 월 구독형 멤버십이나 라이브 방송 후원(슈퍼챗)으로 직접 응원합니다.</p>
+        </li>
+        <li class="money-way neon-card">
+          <div class="money-way-top"><span class="money-way-num">06</span><span class="money-way-tag">확장 수익</span></div>
+          <p class="money-way-head">내 상품·강의 판매</p>
+          <p class="money-way-desc">채널에서 쌓은 신뢰로 전자책, 온라인 강의, 컨설팅, 굿즈 등 나만의 상품을 판매합니다.</p>
+        </li>
+      </ol>
+      <p class="money-ways-note">※ 수익 기능별 참여 조건과 배분 비율은 유튜브 정책에 따라 달라질 수 있습니다.</p>
+      <p class="money-ways-answer">조회수만 기다리지 마세요. <strong>수익은 설계하는 것입니다.</strong><br>STN 스킬업에서 내 채널에 맞는 수익 구조를 함께 만들어 보세요.</p>
+    </div>
+  </section>
+
+  <!-- 멤버십·쇼핑 판매 조건 (YouTube 파트너 프로그램 기준) -->
+  <section id="sell-terms" class="sell-terms reveal" aria-label="멤버십·쇼핑 판매 조건">
+    <div class="container">
+      <h2 class="sell-terms-title">멤버십·쇼핑 판매,<br><em>아무나 열 수 없습니다</em></h2>
+      <p class="sell-terms-sub">유튜브에서 멤버십을 열고 상품을 팔려면 '유튜브 파트너 프로그램' 조건을 먼저 넘어야 합니다.</p>
+      <div class="sell-tiers">
+        <article class="sell-tier neon-card">
+          <span class="sell-tier-badge">1단계</span>
+          <p class="sell-tier-head">팬 후원 · 쇼핑 판매 열기</p>
+          <p class="sell-tier-label">달성 조건</p>
+          <ul class="sell-tier-req">
+            <li>구독자 <strong>500명</strong> 이상</li>
+            <li>최근 90일간 공개 영상 <strong>3개</strong> 이상 업로드</li>
+            <li>최근 12개월 롱폼 공개 시청시간 <strong>3,000시간</strong></li>
+            <li class="sell-or">또는</li>
+            <li>최근 90일 쇼츠 공개 조회수 <strong>300만 회</strong></li>
+          </ul>
+          <p class="sell-tier-label">열리는 기능</p>
+          <ul class="sell-tier-unlock">
+            <li>채널 멤버십</li>
+            <li>슈퍼챗·슈퍼스티커</li>
+            <li>Super Thanks</li>
+            <li>내 상품 쇼핑 판매</li>
+          </ul>
+        </article>
+        <article class="sell-tier sell-tier--ad neon-card">
+          <span class="sell-tier-badge">2단계</span>
+          <p class="sell-tier-head">광고 수익 + 제휴 판매</p>
+          <p class="sell-tier-label">달성 조건</p>
+          <ul class="sell-tier-req">
+            <li>구독자 <strong>1,000명</strong> 이상</li>
+            <li>최근 12개월 롱폼 공개 시청시간 <strong>4,000시간</strong></li>
+            <li class="sell-or">또는</li>
+            <li>최근 90일 쇼츠 공개 조회수 <strong>1,000만 회</strong></li>
+          </ul>
+          <p class="sell-tier-label">열리는 기능</p>
+          <ul class="sell-tier-unlock">
+            <li>영상 광고 수익</li>
+            <li>쇼츠 광고 수익</li>
+            <li>다른 브랜드 상품 제휴</li>
+            <li>1단계 기능 전체</li>
+          </ul>
+        </article>
+      </div>
+      <div class="sell-common neon-card">
+        <p class="sell-common-head">공통 필수 조건</p>
+        <ul class="sell-common-list">
+          <li>커뮤니티 가이드 위반 경고 없음</li>
+          <li>채널 수익 창출 정책 준수</li>
+          <li>Google 계정 2단계 인증 설정</li>
+          <li>애드센스(AdSense) 계정 연결</li>
+          <li>아동용 채널·영상 위주가 아닐 것</li>
+          <li>파트너 프로그램 제공 국가 거주 (한국 포함)</li>
+        </ul>
+      </div>
+      <p class="sell-terms-note">※ YouTube 고객센터에 공개된 파트너 프로그램 기준을 정리한 내용으로, 유튜브 정책에 따라 변경될 수 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- STN마케팅 바로가기 -->
+  <section id="stn-mkt" class="stn-mkt reveal" aria-label="STN마케팅">
+    <div class="container">
+      <div class="stn-mkt-card">
+        <p class="stn-mkt-kicker">CHANNEL GROWTH</p>
+        <h2 class="stn-mkt-title">채널 성장이 필요하다면<br><em>STN마케팅</em></h2>
+        <p class="stn-mkt-desc">유튜브·인스타그램·틱톡 채널 성장을 지원하는 STN마케팅을 만나보세요.</p>
+        <a class="stn-mkt-btn" href="https://stnsns.com/" target="_blank" rel="noopener noreferrer">
+          STN마케팅 바로가기
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
       </div>
     </div>
   </section>
@@ -5417,7 +6432,8 @@
     </div>
   </section>
 
-  <section id="mentor-preview" class="mentor-preview mentor-preview--grid reveal" aria-label="강사진 미리보기">
+  <!-- 강사진 미리보기: 임시 숨김 (다시 보이려면 hidden 속성과 style 제거) -->
+  <section id="mentor-preview" class="mentor-preview mentor-preview--grid reveal" aria-label="강사진 미리보기" hidden style="display: none !important;">
     <div class="mentor-preview-bg" aria-hidden="true"></div>
     <div class="mentor-preview-bg-overlay" aria-hidden="true"></div>
     <div class="container mentor-preview-inner">
@@ -5484,7 +6500,8 @@
     </div>
   </section>
 
-  <section class="schedule-curriculum-bridge reveal" aria-label="커리큐럼 세부 일정 이동">
+  <!-- 커리큘럼 세부 일정 바로가기: 임시 숨김 (다시 보이려면 hidden 속성과 style 제거) -->
+  <section class="schedule-curriculum-bridge reveal" aria-label="커리큐럼 세부 일정 이동" hidden style="display: none !important;">
     <div class="container schedule-curriculum-bridge-inner">
       <img class="schedule-curriculum-bridge-logo" src="image/LOGOL-PNG.png" alt="STN SKILL UP" width="1024" height="256" loading="lazy" decoding="async" />
       <div class="schedule-curriculum-bridge-btn-shell">
@@ -5804,7 +6821,6 @@
             <button type="button" class="solution-topic-btn">문화콘텐츠</button>
             <button type="button" class="solution-topic-btn">예능콘텐츠</button>
           </div>
-          <p class="solution-offer-note">에스티엔미디어 콘텐츠를 수료후 6개월간 제공합니다</p>
         </div>
         <figure class="solution-figure solution-figure--secondary">
           <img class="solution-gift-float" src="image/gift5.png" alt="선물·축하 일러스트" loading="lazy" decoding="async" />
@@ -5813,7 +6829,8 @@
     </div>
   </section>
 
-  <section id="overview" class="reveal">
+  <!-- 프로그램 개요: 임시 숨김 (다시 보이려면 hidden 속성과 style 제거) -->
+  <section id="overview" class="reveal" hidden style="display: none !important;">
     <div class="container">
       <h2>프로그램 개요</h2>
       <div class="grid-3">
@@ -5824,7 +6841,8 @@
     </div>
   </section>
 
-  <section id="june-calendar" class="section-calendar reveal">
+  <!-- 교육일정 달력: 임시 숨김 (다시 보이려면 hidden 속성과 style 제거) -->
+  <section id="june-calendar" class="section-calendar reveal" hidden style="display: none !important;">
       <div class="container calendar-wrap">
         <h2 class="calendar-head">
           <span class="calendar-kicker">교육일정</span>
@@ -5873,7 +6891,8 @@
     </div>
   </section>
 
-  <section id="price-cut" class="price-cut reveal" aria-label="수강료">
+  <!-- 수강료: 임시 숨김 (다시 보이려면 hidden 속성과 style 제거) -->
+  <section id="price-cut" class="price-cut reveal" aria-label="수강료" hidden style="display: none !important;">
     <div class="container">
       <div class="price-cut-layout">
         <div class="price-cut-left">수강료</div>
@@ -5895,7 +6914,8 @@
     </div>
   </section>
 
-  <section id="earlybird" class="earlybird reveal" aria-label="얼리버드 할인 혜택" data-earlybird-deadline="2026-07-15">
+  <!-- 얼리버드 할인혜택: 임시 숨김 (다시 보이려면 hidden 속성과 style 제거) -->
+  <section id="earlybird" class="earlybird reveal" aria-label="얼리버드 할인 혜택" data-earlybird-deadline="2026-07-15" hidden style="display: none !important;">
     <div class="container">
       <header class="earlybird-head">
         <img class="earlybird-logo" src="image/LOGOL-PNG.png" alt="STN SKILL UP 로고" loading="lazy" decoding="async" />
@@ -6017,8 +7037,7 @@
       <h2>FAQ</h2>
       <div class="faq-wrap">
         <details><summary>Q. 초보자도 참여할 수 있나요?</summary><p>A. 가능합니다. 기초부터 실습 중심으로 진행해 초보자도 결과물을 만들 수 있도록 설계되어 있습니다.</p></details>
-        <details><summary>Q. 콘텐츠는 언제까지 제공하나요?</summary><p>A. 콘텐츠는 수료후 6개월까지 지원합니다. 이후에는 멤버쉽 가입후 지속적으로 분야별 제공받으실 수 있습니다.</p></details>
-        <details><summary>Q. 수료 후에는 어떤 혜택을 받을 수 있나요?</summary><p>A. 수료 후 6개월간 콘텐츠를 제공하며, STN 중계 및 촬영 현장 실습 혜택을 통해 실무 경험을 쌓을 수 있습니다. 또한 AI 자동화 도구를 제공해 콘텐츠 제작 효율을 높여드립니다.</p></details>
+        <details><summary>Q. 수료 후에는 어떤 혜택을 받을 수 있나요?</summary><p>A. STN 중계 및 촬영 현장 실습 혜택을 통해 실무 경험을 쌓을 수 있습니다. 또한 AI 자동화 도구를 제공해 콘텐츠 제작 효율을 높여드립니다.</p></details>
         <details><summary>Q. 준비물은 무엇인가요?</summary><p>A. 개인 노트북(최소 8GB RAM, 256GB SSD)만 지참하시면 됩니다.</p></details>
       </div>
     </div>
@@ -6029,9 +7048,9 @@
       <article class="directions-card">
         <h2>오시는길</h2>
         <p class="directions-desc">아래 버튼을 누르면 카카오지도 길찾기로 연결됩니다.</p>
-        <p class="directions-place">명지대학교 인문캠퍼스 국제학술관</p>
-        <p class="directions-address">서울특별시 서대문구 거북골로 34</p>
-        <a class="directions-map-btn" href="https://kko.to/qsiJh8OrDf" target="_blank" rel="noopener noreferrer">명지대학교 국제관 지도로 연결</a>
+        <p class="directions-place">STN 스킬업 교육장</p>
+        <p class="directions-address">인천시 영종구 하늘달빛로 90-7 스카이에비뉴1차 7층 (교육장)</p>
+        <a class="directions-map-btn" href="https://map.kakao.com/link/search/인천 영종구 하늘달빛로 90-7" target="_blank" rel="noopener noreferrer">STN 스킬업 교육장 지도로 연결</a>
         <p class="directions-hint">카카오지도 앱 또는 웹 길찾기 화면으로 이동합니다.</p>
       </article>
     </div>
